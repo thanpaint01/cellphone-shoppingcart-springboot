@@ -1,0 +1,39 @@
+.order_id {
+    font-weight: bold;
+    color: green;
+    text-decoration: underline;
+}
+
+.table-main table td.thumbnail-img {
+    width: 120px;
+}
+
+.text-script-order-managerment {
+    margin-top: 20px;
+}
+.cart-box-main {
+    margin-bottom: 50px;
+    padding: 0;
+}
+.product_img {
+    width: 90px;
+    height: 90px;
+}
+.product-name-content {
+    word-wrap: break-word;
+    white-space: initial;
+}
+.product-name {
+    white-space: initial;
+}
+.td-order-status {
+    pointer-events: none;
+    font-weight: bold;
+    color: green;
+}
+.my-account-page a:hover i {
+    background: rgba(251, 183, 20, 1);
+}
+.option-my-account {
+    text-decoration: underline;
+}

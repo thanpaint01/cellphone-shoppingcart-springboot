@@ -27,6 +27,8 @@
     <link rel="stylesheet" href="css/responsive.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/custom.css">
+    <!-- my-order-custom CSS -->
+    <link rel="stylesheet" href="css/my-order-custom.css">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -36,10 +38,7 @@
 </head>
 
 <body>
-    <!-- Start Main Top -->
-
-    <!-- End Main Top -->
-
+    <!-- heading -->
     <!-- Start Main Top -->
     <header class="main-header">
         <!-- Start Navigation -->
@@ -59,12 +58,13 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-                        <li class="dropdown active">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">SHOP</a>
+                        <li class="nav-item active"><a class="nav-link" href="index.html">Trang chủ</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.html">Thông tin chúng tôi</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">Danh mục</a>
                             <ul class="dropdown-menu">
-                                <li><a href="shop.html">Sidebar Shop</a></li>
+                                <li><a href="shop.html"></a></li>
                                 <li><a href="shop-detail.html">Shop Detail</a></li>
                                 <li><a href="cart.html">Cart</a></li>
                                 <li><a href="checkout.html">Checkout</a></li>
@@ -72,8 +72,7 @@
                                 <li><a href="wishlist.html">Wishlist</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact-us.html">Liên hệ</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -81,12 +80,15 @@
                 <!-- Start Atribute Navigation -->
                 <div class="attr-nav">
                     <ul>
-                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                        <li class="side-menu"><a href="#">
+                        <li class="search"><a href="#"><i class="fa fa-search"></i>Tìm kiếm</a></li>
+
+                        <li class="side-menu">
+                            <a href="#">
                                 <i class="fa fa-shopping-bag"></i>
                                 <span class="badge">3</span>
-                                <p>My Cart</p>
-                            </a></li>
+                                <p>Giỏ hàng</p>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <!-- End Atribute Navigation -->
@@ -120,9 +122,11 @@
             </div>
             <!-- End Side Menu -->
         </nav>
+
+
+
+
         <!-- End Navigation -->
-
-
         <!-- Start Top Search -->
         <div class="top-search">
             <div class="container">
@@ -134,206 +138,197 @@
             </div>
         </div>
         <!-- End Top Search -->
-
-
-
     </header>
     <!-- End Main Top -->
+    <!-- end header -->
 
 
-
-    <!-- Start All Title Box -->
-    <div class="all-title-box">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h2>My Account</h2>
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
-                        <li class="breadcrumb-item active">My Account</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End All Title Box -->
-
-    <!-- Start My Account  -->
-    <div class="my-account-box-main">
-        <div class="container">
-            <div class="my-account-page">
+    <!-- body content order -->
+    <div class="order-manager-content">
+        <!-- Start All Title Box -->
+        <div class="all-title-box">
+            <div class="container">
                 <div class="row">
-                    <div class="col-lg-4 col-md-12">
-                        <div class="account-box">
-                            <div class="service-box">
-                                <div class="service-icon">
-                                    <a href="my-order.html"> <i class="fa fa-gift"></i> </a>
-                                </div>
-                                <div class="service-desc">
-                                    <h4>Đơn hàng của tôi</h4>
-                                    <p>Theo dõi đơn hàng của bạn, hủy đơn hàng</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12">
-                        <div class="account-box">
-                            <div class="service-box">
-                                <div class="service-icon">
-                                    <a href="#"><i class="far fa-address-card"></i> </a>
-                                </div>
-                                <div class="service-desc">
-                                    <h4>Xem &amp; chỉnh sửa thông tin cá nhân</h4>
-                                    <p>Cập nhật ngày sinh, địa chỉ và số điện thoại</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12">
-                        <div class="account-box">
-                            <div class="service-box">
-                                <div class="service-icon">
-                                    <a href="#"> <i class="far fa-comment"></i> </a>
-                                </div>
-                                <div class="service-desc">
-                                    <h4>Bình luận của tôi</h4>
-                                    <p>Quản lý các bình luận về sản phẩm đã mua</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12">
-                        <div class="account-box">
-                            <div class="service-box">
-                                <div class="service-icon">
-                                    <a href="#"> <i class="far fa-heart"></i> </a>
-                                </div>
-                                <div class="service-desc">
-                                    <h4>Danh sách yêu thích</h4>
-                                    <p>Sản phẩm xem sau, yêu thích</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12">
-                        <div class="account-box">
-                            <div class="service-box">
-                                <div class="service-icon">
-                                    <a href="#"> <i class="fa fa-lock"></i> </a>
-                                </div>
-                                <div class="service-desc">
-                                    <h4>Đổi mật khẩu</h4>
-                                    <p>Mật khẩu đủ mạnh để xác thực</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12">
-                        <div class="account-box">
-                            <div class="service-box">
-                                <div class="service-icon">
-                                    <a href="#"> <i class="fas fa-sign-out-alt"></i> </a>
-                                </div>
-                                <div class="service-desc">
-                                    <h4>Đăng xuất</h4>
-                                    <p>Thoát khỏi tài khoản</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <div class="col-lg-12">
+                        <h2>Đơn hàng của tôi</h2>
 
-            </div>
-        </div>
-    </div>
-    <!-- End My Account -->
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                            <li class="breadcrumb-item"><a href="my-account.html" class="option-my-account">My
+                                    Account</a></li>
+                            <li class="breadcrumb-item active">Đơn hàng của tôi</li>
 
-    <!-- Start Instagram Feed  -->
-    <div class="instagram-box">
-        <div class="main-instagram owl-carousel owl-theme">
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-01.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-02.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-03.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-04.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-05.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-06.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-07.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-08.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-09.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-05.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- End All Title Box -->
+
+        <p class="container text-script-order-managerment">Quản lý các đơn hàng bạn đã đặt, nhấn vào mã đơn hàng để xem chi tiết<br />Lưu ý*: Chỉ những đơn
+            hàng ở trạng
+            thái đang tiếp nhận bạn mới có thể
+            hủy đơn hàng!</p>
+        <!-- Start main Cart  -->
+        <div class="cart-box-main container">
+            <div class="order-content container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="table-main table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Mã đơn hàng</th>
+                                        <th>Hình ảnh</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Giá/sản phẩm</th>
+                                        <th>Trạng thái đơn hàng</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Theo dõi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><a class="order_id" href="#">DH00001</a></td>
+                                        <td class="thumbnail-img">
+                                            <a href="#">
+                                                <img class="img-fluid product_img" src="images/img-pro-01.jpg" alt="" />
+                                            </a>
+                                        </td>
+                                        <td class="name-pr">
+                                            <div class="product-name-content">
+                                                <a href="#" class="product-name">
+                                                    Đơn hàng bao gồm samsung galaxy note 10 plus
+                                                    & 10 sản phẩm khác
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td class="price-pr">
+                                            <p>1.000.000.000 đ</p>
+                                        </td>
+                                        <td class="quantity-box">
+                                            <span>Đang giao hàng</span>
+
+                                        </td>
+                                        <td class="total-pr">
+                                            <p>1.000.000.000 đ</p>
+                                        </td>
+                                        <td class="remove-pr">
+                                            <a class="td-order-status">
+                                                <i class="fas fa-times"></i>Hủy đơn hàng
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <!-- tr2 -->
+                                    <tr>
+                                        <td><a class="order_id" href="#">DH00001</a></td>
+                                        <td class="thumbnail-img">
+                                            <a href="#">
+                                                <img class="img-fluid product_img" src="images/img-pro-01.jpg" alt="" />
+                                            </a>
+                                        </td>
+                                        <td class="name-pr">
+                                            <div class="product-name-content">
+                                                <a href="#" class="product-name">
+                                                    Đơn hàng bao gồm samsung galaxy note 10 plus
+                                                    & 10 sản phẩm khác
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td class="price-pr">
+                                            <p>1.000.000.000 đ</p>
+                                        </td>
+                                        <td class="quantity-box">
+                                            <span>Đang tiếp nhận</span>
+
+                                        </td>
+                                        <td class="total-pr">
+                                            <p>1.000.000.000 đ</p>
+                                        </td>
+                                        <td class="remove-pr">
+                                            <a href="#" class="td-order-status">
+                                                <i class="fas fa-times"></i>Hủy đơn hàng
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <!-- end tr2 -->
+                                    <!-- tr3 -->
+                                    <tr>
+                                        <td><a class="order_id" href="#">DH00001</a></td>
+                                        <td class="thumbnail-img">
+                                            <a href="#">
+                                                <img class="img-fluid product_img" src="images/img-pro-01.jpg" alt="" />
+                                            </a>
+                                        </td>
+                                        <td class="name-pr">
+                                            <div class="product-name-content">
+                                                <a href="#" class="product-name">
+                                                    Đơn hàng bao gồm samsung galaxy note 10 plus
+                                                    & 10 sản phẩm khác
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td class="price-pr">
+                                            <p>1.000.000.000 đ</p>
+                                        </td>
+                                        <td class="quantity-box">
+                                            <span>Đang tiếp nhận</span>
+
+                                        </td>
+                                        <td class="total-pr">
+                                            <p>1.000.000.000 đ</p>
+                                        </td>
+                                        <td class="remove-pr">
+                                            <a href="#" class="td-order-status">
+                                                <i class="fas fa-times"></i>Giao thành công
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <!-- end tr3 -->
+                                    <!-- tr4 -->
+                                    <tr>
+                                        <td><a class="order_id" href="#">DH00001</a></td>
+                                        <td class="thumbnail-img">
+                                            <a href="#">
+                                                <img class="img-fluid product_img" src="images/img-pro-01.jpg" alt="" />
+                                            </a>
+                                        </td>
+                                        <td class="name-pr">
+                                            <div class="product-name-content">
+                                                <a href="#" class="product-name">
+                                                    Đơn hàng bao gồm samsung galaxy note 10 plus
+                                                    & 10 sản phẩm khác
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td class="price-pr">
+                                            <p>1.000.000.000 đ</p>
+                                        </td>
+                                        <td class="quantity-box">
+                                            <span>Đang tiếp nhận</span>
+
+                                        </td>
+                                        <td class="total-pr">
+                                            <p>1.000.000.000 đ</p>
+                                        </td>
+                                        <td class="remove-pr">
+                                            <a href="#" class="td-order-status">
+                                                <i class="fas fa-times"></i>Đang vận chuyển
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <!-- end tr4 -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End main content -->
     </div>
-    <!-- End Instagram Feed  -->
+    <!-- end body content order -->
+
 
 
     <!-- Start Footer  -->
