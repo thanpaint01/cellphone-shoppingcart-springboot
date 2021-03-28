@@ -18,6 +18,7 @@
     <!-- Site Icons -->
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="stylesheet" href="fontawesome/css/font-awesome.min.css">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -165,166 +166,320 @@
         </div>
         <!-- End All Title Box -->
 
-        <p class="container text-script-order-managerment">Quản lý các đơn hàng bạn đã đặt, nhấn vào mã đơn hàng để xem chi tiết<br />Lưu ý*: Chỉ những đơn
-            hàng ở trạng
-            thái đang tiếp nhận bạn mới có thể
-            hủy đơn hàng!</p>
+        <!-- <p class="container text-script-order-managerment">Quản lý các đơn hàng bạn đã đặt, nhấn vào mã đơn hàng để xem
+                    chi tiết<br />Lưu ý*: Chỉ những đơn
+                    hàng ở trạng
+                    thái đang tiếp nhận bạn mới có thể
+                    hủy đơn hàng!</p> -->
+
         <!-- Start main Cart  -->
-        <div class="cart-box-main container">
-            <div class="order-content container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="table-main table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Mã đơn hàng</th>
-                                        <th>Hình ảnh</th>
-                                        <th>Tên sản phẩm</th>
-                                        <th>Giá/sản phẩm</th>
-                                        <th>Trạng thái đơn hàng</th>
-                                        <th>Tổng tiền</th>
-                                        <th>Theo dõi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><a class="order_id" href="#">DH00001</a></td>
-                                        <td class="thumbnail-img">
-                                            <a href="#">
-                                                <img class="img-fluid product_img" src="images/img-pro-01.jpg" alt="" />
-                                            </a>
-                                        </td>
-                                        <td class="name-pr">
-                                            <div class="product-name-content">
-                                                <a href="#" class="product-name">
-                                                    Đơn hàng bao gồm samsung galaxy note 10 plus
-                                                    & 10 sản phẩm khác
-                                                </a>
-                                            </div>
-                                        </td>
-                                        <td class="price-pr">
-                                            <p>1.000.000.000 đ</p>
-                                        </td>
-                                        <td class="quantity-box">
-                                            <span>Đang giao hàng</span>
+        <!-- start main order by status -->
+        <div class="container">
+            <div class="table-responsive">
+                <div class="container table-wrapper">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h2>Quản lý đơn hàng<br /></h2><span>Danh sách các đơn hàng đã đặt.<br />Lưu ý*: Chỉ
+                                    những
+                                    đơn hàng ở trạng thái đang tiếp nhận mới có thể hủy đơn hàng!</b>
+                            </div>
+                            <div class="col-sm-8">
 
-                                        </td>
-                                        <td class="total-pr">
-                                            <p>1.000.000.000 đ</p>
-                                        </td>
-                                        <td class="remove-pr">
-                                            <a class="td-order-status">
-                                                <i class="fas fa-times"></i>Hủy đơn hàng
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <!-- tr2 -->
-                                    <tr>
-                                        <td><a class="order_id" href="#">DH00001</a></td>
-                                        <td class="thumbnail-img">
-                                            <a href="#">
-                                                <img class="img-fluid product_img" src="images/img-pro-01.jpg" alt="" />
-                                            </a>
-                                        </td>
-                                        <td class="name-pr">
-                                            <div class="product-name-content">
-                                                <a href="#" class="product-name">
-                                                    Đơn hàng bao gồm samsung galaxy note 10 plus
-                                                    & 10 sản phẩm khác
-                                                </a>
-                                            </div>
-                                        </td>
-                                        <td class="price-pr">
-                                            <p>1.000.000.000 đ</p>
-                                        </td>
-                                        <td class="quantity-box">
-                                            <span>Đang tiếp nhận</span>
-
-                                        </td>
-                                        <td class="total-pr">
-                                            <p>1.000.000.000 đ</p>
-                                        </td>
-                                        <td class="remove-pr">
-                                            <a href="#" class="td-order-status">
-                                                <i class="fas fa-times"></i>Hủy đơn hàng
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <!-- end tr2 -->
-                                    <!-- tr3 -->
-                                    <tr>
-                                        <td><a class="order_id" href="#">DH00001</a></td>
-                                        <td class="thumbnail-img">
-                                            <a href="#">
-                                                <img class="img-fluid product_img" src="images/img-pro-01.jpg" alt="" />
-                                            </a>
-                                        </td>
-                                        <td class="name-pr">
-                                            <div class="product-name-content">
-                                                <a href="#" class="product-name">
-                                                    Đơn hàng bao gồm samsung galaxy note 10 plus
-                                                    & 10 sản phẩm khác
-                                                </a>
-                                            </div>
-                                        </td>
-                                        <td class="price-pr">
-                                            <p>1.000.000.000 đ</p>
-                                        </td>
-                                        <td class="quantity-box">
-                                            <span>Đang tiếp nhận</span>
-
-                                        </td>
-                                        <td class="total-pr">
-                                            <p>1.000.000.000 đ</p>
-                                        </td>
-                                        <td class="remove-pr">
-                                            <a href="#" class="td-order-status">
-                                                <i class="fas fa-times"></i>Giao thành công
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <!-- end tr3 -->
-                                    <!-- tr4 -->
-                                    <tr>
-                                        <td><a class="order_id" href="#">DH00001</a></td>
-                                        <td class="thumbnail-img">
-                                            <a href="#">
-                                                <img class="img-fluid product_img" src="images/img-pro-01.jpg" alt="" />
-                                            </a>
-                                        </td>
-                                        <td class="name-pr">
-                                            <div class="product-name-content">
-                                                <a href="#" class="product-name">
-                                                    Đơn hàng bao gồm samsung galaxy note 10 plus
-                                                    & 10 sản phẩm khác
-                                                </a>
-                                            </div>
-                                        </td>
-                                        <td class="price-pr">
-                                            <p>1.000.000.000 đ</p>
-                                        </td>
-                                        <td class="quantity-box">
-                                            <span>Đang tiếp nhận</span>
-
-                                        </td>
-                                        <td class="total-pr">
-                                            <p>1.000.000.000 đ</p>
-                                        </td>
-                                        <td class="remove-pr">
-                                            <a href="#" class="td-order-status">
-                                                <i class="fas fa-times"></i>Đang vận chuyển
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <!-- end tr4 -->
-                                </tbody>
-                            </table>
+                            </div>
                         </div>
+                    </div>
+                    <div class="table-filter">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="show-entries">
+                                    <span>Hiển thị</span>
+                                    <select class="form-control">
+                                        <option>5</option>
+                                        <option>10</option>
+                                        <option>15</option>
+                                        <option>20</option>
+                                    </select>
+                                    <span>đơn hàng/trang</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-9">
+                                <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                <div class="filter-group">
+                                    <label></label>
+                                    <input type="text" class="form-control" hint="Tìm kiếm"
+                                        placeholder="Nhập mã đơn hàng">
+                                </div>
+
+                                <div class="filter-group">
+                                    <label>Trạng thái đơn hàng</label>
+                                    <select class="form-control">
+                                        <option>Tất cả</option>
+                                        <option>Giao thành công</option>
+                                        <option>Đang giao hàng </option>
+                                        <option>Đang tiếp nhận </option>
+                                        <option>Đã hủy</option>
+                                    </select>
+                                </div>
+                                <span class="filter-icon"><i class="fa fa-filter"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-hover table-content">
+                        <thead>
+                            <tr>
+                                <th>Mã</th>
+                                <th>Sản phẩm</th>
+                                <th>Giá/sản phẩm</th>
+                                <th>Ngày đặt hàng</th>
+                                <th>Trạng thái đơn hàng</th>
+                                <th>Tổng đơn hàng</th>
+                                <th>Chi tiết</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b class="order-id">DH0001</b></td>
+                                <td class="td-product"><a href="#"><img src="images/img-pro-01.jpg" class="product-img"
+                                            alt="Avatar">
+                                    </a>
+                                    <b class="product-name">
+                                        Đơn hàng bao gồm điện thoại SamSung Galaxy Note 10 plus và 10 sản phẩm
+                                        khác</b>
+                                </td>
+                                <td>1.000.000.000 đ</td>
+                                <td>Jun 15, 2017</td>
+                                <td><span class="status text-success">&bull;</span>Đang giao hàng</td>
+                                <td>1.000.000.000 đ</td>
+                                <td><a href="#" class="view" title="View Details" data-toggle="modal"
+                                        data-target="#exampleModal"><i
+                                            class="fas fa-arrow-circle-right">&#xE5C8;</i></a></td>
+                            </tr>
+
+                            <tr>
+                                <td>2</td>
+                                <td class="td-product"><a href="#"><img src="images/img-pro-01.jpg" class="product-img"
+                                            alt="Avatar">
+                                    </a>
+                                    <b class="product-name">
+                                        Đơn hàng bao gồm điện thoại SamSung Galaxy Note 10 plus và 10 sản phẩm
+                                        khác</b>
+                                </td>
+                                <td>1.000.000.000 đ</td>
+                                <td>Jun 15, 2017</td>
+                                <td><span class="status text-success">&bull;</span>Đang giao hàng</td>
+                                <td>1.000.000.000 đ</td>
+                                <td><a href="/order-detail.html" class="view" title="View Details"
+                                        data-toggle="tooltip"><i class="fas fa-arrow-circle-right">&#xE5C8;</i></a></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td class="td-product"><a href="#"><img src="images/img-pro-01.jpg" class="product-img"
+                                            alt="Avatar">
+                                    </a>
+                                    <b class="product-name">
+                                        Đơn hàng bao gồm điện thoại SamSung Galaxy Note 10 plus và 10 sản phẩm
+                                        khác</b>
+                                </td>
+                                <td>1.000.000.000 đ</td>
+                                <td>Jun 15, 2017</td>
+                                <td><span class="status text-success">&bull;</span>Đang giao hàng</td>
+                                <td>1.000.000.000 đ</td>
+                                <td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i
+                                            class="fas fa-arrow-circle-right">&#xE5C8;</i></a></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td class="td-product"><a href="#"><img src="images/img-pro-01.jpg" class="product-img"
+                                            alt="Avatar">
+                                    </a>
+                                    <b class="product-name">
+                                        Đơn hàng bao gồm điện thoại SamSung Galaxy Note 10 plus và 10 sản phẩm
+                                        khác</b>
+                                </td>
+                                <td>1.000.000.000 đ</td>
+                                <td>Jun 15, 2017</td>
+                                <td><span class="status text-success">&bull;</span>Đang giao hàng</td>
+                                <td>1.000.000.000 đ</td>
+                                <td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i
+                                            class="fas fa-arrow-circle-right">&#xE5C8;</i></a></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td class="td-product"><a href="#"><img src="images/img-pro-01.jpg" class="product-img"
+                                            alt="Avatar">
+                                    </a>
+                                    <b class="product-name">
+                                        Đơn hàng bao gồm điện thoại SamSung Galaxy Note 10 plus và 10 sản phẩm
+                                        khác</b>
+                                </td>
+                                <td>1.000.000.000 đ</td>
+                                <td>Jun 15, 2017</td>
+                                <td><span class="status text-success">&bull;</span>Đang giao hàng</td>
+                                <td>1.000.000.000 đ</td>
+                                <td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i
+                                            class="fas fa-arrow-circle-right">&#xE5C8;</i></a></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <!-- modal order-detail -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Order Details</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container">
+                                        <!-- modal-body -->
+                                        <div class="d-flex flex-column justify-content-center align-items-center"
+                                            id="order-heading">
+                                            <div class="text-uppercase">
+                                                <p>Order detail</p>
+                                            </div>
+                                            <div class="h4">Thursday, July 24, 2017</div>
+                                            <div class="pt-1">
+                                                <p>Order #12615 is currently<b class="text-dark"> processing</b>
+                                                </p>
+                                            </div>
+                                            <div class="btn close text-white"> &times; </div>
+                                        </div>
+                                        <div class="wrapper bg-white">
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless">
+                                                    <thead>
+                                                        <tr class="text-uppercase text-muted">
+                                                            <th scope="col">product</th>
+                                                            <th scope="col" class="text-right">total</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th scope="row">Babyblends: 1meal/day</th>
+                                                            <td class="text-right"><b>$69.86</b></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="d-flex justify-content-start align-items-center list py-1">
+                                                <div><b>1px</b></div>
+                                                <div class="mx-3"> <img
+                                                        src="https://images.pexels.com/photos/206959/pexels-photo-206959.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                                                        alt="apple" class="rounded-circle" width="30" height="30">
+                                                </div>
+                                                <div class="order-item">Apple</div>
+                                            </div>
+                                            <div class="d-flex justify-content-start align-items-center list my-2 py-1">
+                                                <div><b>4px</b></div>
+                                                <div class="mx-3"> <img
+                                                        src="https://images.unsplash.com/photo-1602081593819-65e7a8cee0dd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
+                                                        alt="apple" class="rounded-circle" width="30" height="30">
+                                                </div>
+                                                <div class="order-item">Mango</div>
+                                            </div>
+                                            <div class="d-flex justify-content-start align-items-center list my-2 py-1">
+                                                <div><b>2px</b></div>
+                                                <div class="mx-3"> <img
+                                                        src="https://images.unsplash.com/photo-1584183187885-071d53d42531?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                                                        alt="apple" class="rounded-circle" width="30" height="30">
+                                                </div>
+                                                <div class="order-item">Carrot Apple Ginger</div>
+                                            </div>
+                                            <div class="d-flex justify-content-start align-items-center list my-2 py-1">
+                                                <div><b>3px</b></div>
+                                                <div class="mx-3"> <img
+                                                        src="https://images.unsplash.com/photo-1602096934878-5028bf10ca50?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                                                        alt="apple" class="rounded-circle" width="30" height="30">
+                                                </div>
+                                                <div class="order-item">Pear</div>
+                                            </div>
+                                            <div class="pt-2 border-bottom mb-3"></div>
+                                            <div class="d-flex justify-content-start align-items-center pl-3">
+                                                <div class="text-muted">Payment Method</div>
+                                                <div class="ml-auto"> <img
+                                                        src="https://www.freepnglogos.com/uploads/mastercard-png/mastercard-logo-logok-15.png"
+                                                        alt="" width="30" height="30"> <label>Mastercard
+                                                        ******5342</label> </div>
+                                            </div>
+                                            <div class="d-flex justify-content-start align-items-center py-1 pl-3">
+                                                <div class="text-muted">Shipping</div>
+                                                <div class="ml-auto"> <label>Free</label> </div>
+                                            </div>
+                                            <div
+                                                class="d-flex justify-content-start align-items-center pb-4 pl-3 border-bottom">
+                                                <div class="text-muted"> <button class="text-white btn">50%
+                                                        Discount</button> </div>
+                                                <div class="ml-auto price"> -$34.94 </div>
+                                            </div>
+                                            <div
+                                                class="d-flex justify-content-start align-items-center pl-3 py-3 mb-4 border-bottom">
+                                                <div class="text-muted"> Today's Total </div>
+                                                <div class="ml-auto h5"> $34.94 </div>
+                                            </div>
+                                            <div class="row border rounded p-1 my-3">
+                                                <div class="col-md-6 py-3">
+                                                    <div class="d-flex flex-column align-items start">
+                                                        <b>Billing
+                                                            Address</b>
+                                                        <p class="text-justify pt-2">James Thompson, 356
+                                                            Jonathon
+                                                            Apt.220,</p>
+                                                        <p class="text-justify">New York</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 py-3">
+                                                    <div class="d-flex flex-column align-items start">
+                                                        <b>Shipping
+                                                            Address</b>
+                                                        <p class="text-justify pt-2">James Thompson, 356
+                                                            Jonathon
+                                                            Apt.220,</p>
+                                                        <p class="text-justify">New York</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="pl-3 font-weight-bold">Related Subsriptions</div>
+                                            <div class="d-sm-flex justify-content-between rounded my-3 subscriptions">
+                                                <div> <b>#9632</b> </div>
+                                                <div>May 22, 2017</div>
+                                                <div>Status: Processing</div>
+                                                <div> Total: <b> $68.8 for 10 items</b> </div>
+                                            </div>
+                                        </div>
+                                        <!-- end model body -->
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end model detail -->
+                    <div class="clearfix">
+                        <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+                        <ul class="pagination">
+                            <li class="page-item disabled"><a href="#">Previous</a></li>
+                            <li class="page-item"><a href="#" class="page-link">1</a></li>
+                            <li class="page-item"><a href="#" class="page-link">2</a></li>
+                            <li class="page-item"><a href="#" class="page-link">3</a></li>
+                            <li class="page-item active"><a href="#" class="page-link">4</a></li>
+                            <li class="page-item"><a href="#" class="page-link">5</a></li>
+                            <li class="page-item"><a href="#" class="page-link">6</a></li>
+                            <li class="page-item"><a href="#" class="page-link">7</a></li>
+                            <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- end main order by status -->
         <!-- End main content -->
     </div>
     <!-- end body content order -->
