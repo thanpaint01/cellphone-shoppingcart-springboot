@@ -591,7 +591,7 @@
     }
 }
  .arrow::before{
-     font-family: 'FontAwesome';
+     font-family: 'Font Awesome 5 Free';
      content: "\f0d7";
      margin-left: 5px;
      margin-top: 2px;
@@ -615,6 +615,8 @@
  }
  nav.navbar.bootsnav li.dropdown ul.dropdown-menu{
      left: auto;
+     position: absolute;
+     top:88px;
 }
 .custom-select-box .dropdown-item{
 	padding: 5px 10px;
@@ -1418,7 +1420,7 @@
      -ms-transition: all .3s ease-in-out;
 }
  .footer-link ul li a::before {
-     font-family: FontAwesome;
+     font-family: 'Font Awesome 5 Free';
      content: "\f105";
      position: absolute;
      left: 5px;
@@ -1502,7 +1504,7 @@
 }
 /*------------------------------------------------------------------ All Pages -------------------------------------------------------------------*/
  .all-title-box{
-     background: url("../images/all-bg-title.jpg") no-repeat center center;
+     background: url("../images/screenshoot.png") no-repeat center center;
      -webkit-background-size: cover;
      -moz-background-size: cover;
      -ms-background-size: cover;

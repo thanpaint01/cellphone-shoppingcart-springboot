@@ -1,27 +1,21 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : demo
  Source Server Type    : MySQL
- Source Server Version : 100416
+ Source Server Version : 100411
  Source Host           : localhost:3306
  Source Schema         : cellphone_springboot_db
 
  Target Server Type    : MySQL
- Target Server Version : 100416
- File Encoding         : 65001
-
- Date: 03/04/2021 14:28:53
-*/
-
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for brand
 -- ----------------------------
 DROP TABLE IF EXISTS `brand`;
 CREATE TABLE `brand`  (
+<<<<<<< HEAD
   `id` int NOT NULL,
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `logo` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
@@ -34,7 +28,6 @@ CREATE TABLE `brand`  (
 -- ----------------------------
 INSERT INTO `brand` VALUES (1, 'SamSung', 'img/brand/samsung.jpg', 1);
 INSERT INTO `brand` VALUES (2, 'Xiaomi', 'img/brand/xiaomi.png', 1);
-INSERT INTO `brand` VALUES (3, 'Huawei', 'img/brand/huawei.jpg', 1);
 INSERT INTO `brand` VALUES (4, 'Realme', 'img/brand/realme.png', 1);
 INSERT INTO `brand` VALUES (5, 'Oppo', 'img/brand/oppo.png', 1);
 INSERT INTO `brand` VALUES (6, 'VSmart', 'img/brand/vsmart.png', 1);
@@ -45,6 +38,7 @@ INSERT INTO `brand` VALUES (7, 'Vivo', 'img/brand/vivo.jpg', 1);
 -- ----------------------------
 DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart`  (
+<<<<<<< HEAD
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `product_id` int NOT NULL,
@@ -59,12 +53,28 @@ CREATE TABLE `cart`  (
 -- ----------------------------
 -- Records of cart
 -- ----------------------------
+=======
+  `id` int(10) NOT NULL,
+  `order_id` int(10) NULL DEFAULT NULL,
+  `user_id` int(10) NOT NULL,
+  `product_name` varchar(225) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `amount` int(10) NULL DEFAULT NULL,
+  `total_price` int(10) NULL DEFAULT NULL,
+  `active` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '1',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `iduser`(`user_id`) USING BTREE,
+  INDEX `iddonhang`(`order_id`) USING BTREE,
+  CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+>>>>>>> origin/master
 
 -- ----------------------------
 -- Table structure for comment
 -- ----------------------------
 DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment`  (
+<<<<<<< HEAD
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NULL DEFAULT NULL,
   `review_id` int NULL DEFAULT NULL,
@@ -80,39 +90,83 @@ CREATE TABLE `comment`  (
 -- ----------------------------
 -- Records of comment
 -- ----------------------------
+=======
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) NULL DEFAULT NULL,
+  `product_id` int(10) NULL DEFAULT NULL,
+  `content` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `active` int(255) NULL DEFAULT 1,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `user_id`(`user_id`) USING BTREE,
+  INDEX `product_id`(`product_id`) USING BTREE,
+  CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+>>>>>>> origin/master
 
 -- ----------------------------
 -- Table structure for favorite
 -- ----------------------------
 DROP TABLE IF EXISTS `favorite`;
 CREATE TABLE `favorite`  (
+<<<<<<< HEAD
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NULL DEFAULT NULL,
   `product_id` int NULL DEFAULT NULL,
   `active` int NULL DEFAULT 1,
+=======
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) NULL DEFAULT NULL,
+  `product_id` int(10) NULL DEFAULT NULL,
+  `active` int(1) NULL DEFAULT 1,
+>>>>>>> origin/master
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `yeuthich1`(`user_id`) USING BTREE,
   INDEX `yeuthich2`(`product_id`) USING BTREE,
   CONSTRAINT `yeuthich1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `yeuthich2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+<<<<<<< HEAD
 ) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of favorite
 -- ----------------------------
+=======
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for forgotpass
+-- ----------------------------
+DROP TABLE IF EXISTS `forgotpass`;
+CREATE TABLE `forgotpass`  (
+  `idforgot` int(10) NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `dayforgot` date NULL DEFAULT NULL,
+  PRIMARY KEY (`idforgot`) USING BTREE,
+  INDEX `forgotpass`(`email`) USING BTREE,
+  CONSTRAINT `forgotpass` FOREIGN KEY (`email`) REFERENCES `user` (`email`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+>>>>>>> origin/master
 
 -- ----------------------------
 -- Table structure for order
 -- ----------------------------
 DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order`  (
+<<<<<<< HEAD
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `order_status` int NULL DEFAULT NULL,
+=======
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) NOT NULL,
+  `order_status` int(10) NULL DEFAULT NULL,
+>>>>>>> origin/master
   `created_date` date NULL DEFAULT NULL,
   `address_delivery` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `name_consumer` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `phone_number` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+<<<<<<< HEAD
   `active` int NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `iduser`(`user_id`) USING BTREE,
@@ -123,12 +177,22 @@ CREATE TABLE `order`  (
 -- ----------------------------
 -- Records of order
 -- ----------------------------
+=======
+  `active` int(1) NULL DEFAULT 1,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `iduser`(`user_id`) USING BTREE,
+  INDEX `donhang2`(`order_status`) USING BTREE,
+  CONSTRAINT `order_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `order_ibfk_2` FOREIGN KEY (`order_status`) REFERENCES `order_status` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+>>>>>>> origin/master
 
 -- ----------------------------
 -- Table structure for order_detail
 -- ----------------------------
 DROP TABLE IF EXISTS `order_detail`;
 CREATE TABLE `order_detail`  (
+<<<<<<< HEAD
   `id` int NOT NULL AUTO_INCREMENT,
   `order_id` int NULL DEFAULT NULL,
   `product_id` int NULL DEFAULT NULL,
@@ -138,27 +202,69 @@ CREATE TABLE `order_detail`  (
   `total_price` bigint NULL DEFAULT NULL,
   `price` int NULL DEFAULT NULL,
   `active` int NULL DEFAULT 1,
+=======
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `order_id` int(10) NULL DEFAULT NULL,
+  `product_id` int(10) NULL DEFAULT NULL,
+  `amount` int(10) NULL DEFAULT NULL,
+  `initail_price` bigint(255) NULL DEFAULT NULL,
+  `saled_price` bigint(255) NULL DEFAULT NULL,
+  `total_price` bigint(255) NULL DEFAULT NULL,
+  `price` int(255) NULL DEFAULT NULL,
+  `active` int(255) NULL DEFAULT 1,
+>>>>>>> origin/master
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `chitietdonhang2`(`product_id`) USING BTREE,
   INDEX `chitietdonhang1`(`order_id`) USING BTREE,
   CONSTRAINT `order_detail_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `order_detail_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+<<<<<<< HEAD
 ) ENGINE = InnoDB AUTO_INCREMENT = 55 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of order_detail
 -- ----------------------------
+=======
+) ENGINE = InnoDB AUTO_INCREMENT = 55 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for order_status
+-- ----------------------------
+DROP TABLE IF EXISTS `order_status`;
+CREATE TABLE `order_status`  (
+  `id` int(10) NOT NULL,
+  `status_order` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `active` int(1) NULL DEFAULT 1,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of order_status
+-- ----------------------------
+INSERT INTO `order_status` VALUES (1, 'Đang tiếp nhận', 1);
+INSERT INTO `order_status` VALUES (2, 'Đang vận chuyển', 1);
+INSERT INTO `order_status` VALUES (3, 'Đã giao hàng', 1);
+INSERT INTO `order_status` VALUES (4, 'Hùy đơn hàng', 1);
+>>>>>>> origin/master
 
 -- ----------------------------
 -- Table structure for pin
 -- ----------------------------
 DROP TABLE IF EXISTS `pin`;
 CREATE TABLE `pin`  (
+<<<<<<< HEAD
   `id` int NOT NULL AUTO_INCREMENT,
   `pin` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '',
   `active` int NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+=======
+  `id` int(2) NOT NULL AUTO_INCREMENT,
+  `pin` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '',
+  `active` int(10) NULL DEFAULT 1,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+>>>>>>> origin/master
 
 -- ----------------------------
 -- Records of pin
@@ -174,6 +280,7 @@ INSERT INTO `pin` VALUES (5, '5000 mAh\r\n', 1);
 -- ----------------------------
 DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product`  (
+<<<<<<< HEAD
   `id` int NOT NULL AUTO_INCREMENT,
   `img` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
@@ -184,6 +291,18 @@ CREATE TABLE `product`  (
   `rom_id` int NULL DEFAULT NULL,
   `pin_id` int NULL DEFAULT NULL,
   `warranty` int NULL DEFAULT NULL,
+=======
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `img` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `brand_id` int(2) NULL DEFAULT NULL,
+  `price` decimal(20, 0) NULL DEFAULT NULL,
+  `amount` int(10) NULL DEFAULT NULL,
+  `ram_id` int(2) NULL DEFAULT NULL,
+  `rom_id` int(2) NULL DEFAULT NULL,
+  `pin_id` int(2) NULL DEFAULT NULL,
+  `warranty` int(4) NULL DEFAULT NULL,
+>>>>>>> origin/master
   `img01` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `img02` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `img03` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
@@ -191,7 +310,11 @@ CREATE TABLE `product`  (
   `size` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `selfie_camera` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `main_camera` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+<<<<<<< HEAD
   `active` int NULL DEFAULT 1,
+=======
+  `active` int(2) NULL DEFAULT 1,
+>>>>>>> origin/master
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `sanpham_hang`(`brand_id`) USING BTREE,
   INDEX `sanpham_ram`(`ram_id`) USING BTREE,
@@ -201,7 +324,11 @@ CREATE TABLE `product`  (
   CONSTRAINT `product_ibfk_2` FOREIGN KEY (`ram_id`) REFERENCES `ram` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `product_ibfk_3` FOREIGN KEY (`rom_id`) REFERENCES `rom` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `product_ibfk_4` FOREIGN KEY (`pin_id`) REFERENCES `pin` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+<<<<<<< HEAD
 ) ENGINE = InnoDB AUTO_INCREMENT = 17130022 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+=======
+) ENGINE = InnoDB AUTO_INCREMENT = 17130022 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+>>>>>>> origin/master
 
 -- ----------------------------
 -- Records of product
@@ -337,7 +464,11 @@ INSERT INTO `product` VALUES (125, 'img/sanpham/vivo/y15/d1.jpg', 'Vivo Y15 ', 7
 -- ----------------------------
 DROP TABLE IF EXISTS `product_detail`;
 CREATE TABLE `product_detail`  (
+<<<<<<< HEAD
   `id` int NOT NULL AUTO_INCREMENT,
+=======
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+>>>>>>> origin/master
   `title1` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `title2` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `title3` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
@@ -350,7 +481,11 @@ CREATE TABLE `product_detail`  (
   `active` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '1',
   PRIMARY KEY (`id`) USING BTREE,
   CONSTRAINT `product_detail_ibfk_1` FOREIGN KEY (`id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+<<<<<<< HEAD
 ) ENGINE = InnoDB AUTO_INCREMENT = 126 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+=======
+) ENGINE = InnoDB AUTO_INCREMENT = 126 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+>>>>>>> origin/master
 
 -- ----------------------------
 -- Records of product_detail
@@ -486,11 +621,19 @@ INSERT INTO `product_detail` VALUES (125, 'Thiết kế sang trọng, hiện đ�
 -- ----------------------------
 DROP TABLE IF EXISTS `ram`;
 CREATE TABLE `ram`  (
+<<<<<<< HEAD
   `id` int NOT NULL AUTO_INCREMENT,
   `ram` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `active` int NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+=======
+  `id` int(2) NOT NULL AUTO_INCREMENT,
+  `ram` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `active` int(10) NULL DEFAULT 1,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+>>>>>>> origin/master
 
 -- ----------------------------
 -- Records of ram
@@ -503,6 +646,7 @@ INSERT INTO `ram` VALUES (5, '8 GB', 1);
 INSERT INTO `ram` VALUES (6, '12 GB', 1);
 
 -- ----------------------------
+<<<<<<< HEAD
 -- Table structure for review
 -- ----------------------------
 DROP TABLE IF EXISTS `review`;
@@ -525,15 +669,25 @@ CREATE TABLE `review`  (
 -- ----------------------------
 
 -- ----------------------------
+=======
+>>>>>>> origin/master
 -- Table structure for rom
 -- ----------------------------
 DROP TABLE IF EXISTS `rom`;
 CREATE TABLE `rom`  (
+<<<<<<< HEAD
   `id` int NOT NULL AUTO_INCREMENT,
   `rom` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `active` int NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+=======
+  `id` int(2) NOT NULL AUTO_INCREMENT,
+  `rom` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `active` int(10) NULL DEFAULT 1,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+>>>>>>> origin/master
 
 -- ----------------------------
 -- Records of rom
@@ -549,11 +703,19 @@ INSERT INTO `rom` VALUES (5, '256 GB', 1);
 -- ----------------------------
 DROP TABLE IF EXISTS `scope_price`;
 CREATE TABLE `scope_price`  (
+<<<<<<< HEAD
   `id` int NOT NULL AUTO_INCREMENT,
   `scope_price` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `active` int NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+=======
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `scope_price` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `active` int(255) NULL DEFAULT 1,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+>>>>>>> origin/master
 
 -- ----------------------------
 -- Records of scope_price
@@ -568,11 +730,19 @@ INSERT INTO `scope_price` VALUES (4, 'trên 13 triệu', 1);
 -- ----------------------------
 DROP TABLE IF EXISTS `slide`;
 CREATE TABLE `slide`  (
+<<<<<<< HEAD
   `id` int NOT NULL,
   `img` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `active` tinyint NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+=======
+  `id` int(10) NOT NULL,
+  `img` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `active` tinyint(2) NULL DEFAULT 1,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+>>>>>>> origin/master
 
 -- ----------------------------
 -- Records of slide
@@ -586,7 +756,11 @@ INSERT INTO `slide` VALUES (3, 'img/slide/3.png', 1);
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
+<<<<<<< HEAD
   `id` int NOT NULL AUTO_INCREMENT,
+=======
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+>>>>>>> origin/master
   `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `full_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '',
@@ -595,6 +769,7 @@ CREATE TABLE `user`  (
   `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '',
   `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '',
   `gender` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '',
+<<<<<<< HEAD
   `birth` date NULL DEFAULT NULL,
   `provide_pass_time` datetime(0) NULL DEFAULT NULL,
   `password_key` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
@@ -603,10 +778,24 @@ CREATE TABLE `user`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `email`(`email`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+=======
+  `dob` date NULL DEFAULT NULL,
+  `created_date` date NULL DEFAULT NULL,
+  `modified_date` date NULL DEFAULT NULL,
+  `access` int(10) NULL DEFAULT NULL,
+  `active` tinyint(2) NULL DEFAULT 1,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `email`(`email`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+>>>>>>> origin/master
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
+<<<<<<< HEAD
 INSERT INTO `user` VALUES (18, '1BcAIPniBKNcdno/Qi/5ow==', '3d221bb57164fa7209bfba49da9ea0bb', 'oabaWPbEo5tH+WysnMqhmA==', 'img/user/6.PNG', '70DiPd3Tq+rJHIU+hgRrig==', '+j6AIYdDdR76PoAhh0N1Hvo+gCGHQ3Ue+j6AIYdDdR7p5Mcm/+cyTAq6qAf86MBS+j6AIYdDdR76PoAhh0N1Hvo+gCGHQ3UeYzfpboMuTAQ=', 'V9OW13XD8sKAxfsVIbT8ImMjGkBk1sIR', '92DcNBgOJCw=', '1999-11-10', NULL, NULL, 2, 1);
+=======
+INSERT INTO `user` VALUES (18, '1BcAIPniBKNcdno/Qi/5ow==', '3d221bb57164fa7209bfba49da9ea0bb', 'oabaWPbEo5tH+WysnMqhmA==', 'img/user/6.PNG', '70DiPd3Tq+rJHIU+hgRrig==', '+j6AIYdDdR76PoAhh0N1Hvo+gCGHQ3Ue+j6AIYdDdR7p5Mcm/+cyTAq6qAf86MBS+j6AIYdDdR76PoAhh0N1Hvo+gCGHQ3UeYzfpboMuTAQ=', 'V9OW13XD8sKAxfsVIbT8ImMjGkBk1sIR', '92DcNBgOJCw=', '1999-11-10', '2020-10-15', NULL, 2, 1);
+>>>>>>> origin/master
 
 SET FOREIGN_KEY_CHECKS = 1;
