@@ -1,0 +1,6 @@
+.carousel-indicators{
+    background-color: white;
+}
+.favorite-active{
+    color: yellowgreen  !important;
+}
