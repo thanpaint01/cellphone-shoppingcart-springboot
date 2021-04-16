@@ -28,6 +28,9 @@
   font-size: 25px;
   color: #b0b435;
 }
+.icon.disabled{
+  color: darkred;
+}
 th{
   font-size: 13px;
   font-weight: bold;

@@ -145,9 +145,11 @@
                         <div class="row ">
                             <div class="col-sm-3">
                                 <div class="show-entries">
-                                    <a class="btn btn-success text-light" data-toggle="modal" data-target="#modal_1"
-                                        value="Thêm mới sản phẩm"><i class="fas fa-plus"></i>&ensp;Thêm mới sản
-                                        phẩm</a>
+                                    <button type="button" class="btn btn-success" data-toggle="modal"
+                                        data-target="#exampleModalLong">
+                                        <i class="fas fa-plus"></i>
+                                        Thêm mới sản phẩm
+                                    </button>
                                 </div>
                             </div>
                             <div class="col-sm-9 d-flex justify-content-end">
@@ -206,8 +208,9 @@
                                             <td class="col-md-1 col2 text-center text-wrapper align-middle">30</td>
                                             <td class="col-md-1 col1 text-center text-wrapper align-middle"><i
                                                     class="fas fa-check icon float-center"></td>
-                                            <td class="col-md-1 col1 text-center text-wrapper align-middle"><a
-                                                    href=""><i class="fas fa-edit icon"></i></a></td>
+                                            <td class="col-md-1 col1 text-center text-wrapper align-middle"><a href=""
+                                                    data-toggle="modal" data-target="#exampleModalLong"><i
+                                                       class="fas fa-edit icon"></i></a></td>
 
                                         </tr>
 
@@ -230,8 +233,7 @@
                                             <td class="col-md-1 col2 text-center text-wrapper align-middle">25.000.000 đ
                                             </td>
                                             <td class="col-md-1 col2 text-center text-wrapper align-middle">30</td>
-                                            <td class="col-md-1 col1 text-center text-wrapper align-middle"><i
-                                                    class="fas fa-check icon float-center"></td>
+                                            <td class="col-md-1 col1 text-center text-wrapper align-middle"><i class="fas fa-times icon disabled float-center"></i></td>
                                             <td class="col-md-1 col1 text-center text-wrapper align-middle"><a
                                                     href=""><i class="fas fa-edit icon"></i></a></td>
 
@@ -409,6 +411,8 @@
                 </div>
             </main>
 
+
+
             <!-- start footer -->
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid">
@@ -426,6 +430,143 @@
         </div>
 
         <!-- end body main -->
+        <!-- div modal product info-->
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Thông tin sản phẩm</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- start form product info-->
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <div class="input-group mb-1">
+                                        <div class="input-group-prepend">
+                                            <button class="input-group btn btn-success" id="btnUploadImage">Tải ảnh
+                                                lên</span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Đường dẫn liên kết">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputProductName">Tên sản phẩm</label>
+                                    <input type="text" class="form-control" id="inputProductName"
+                                        placeholder="Nhập tên sản phẩm">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputProductBrand">Thương hiệu</label>
+                                    <select id="inputProductBrand" class="form-control">
+                                        <option selected>Chọn...</option>
+                                        <option>Samsung</option>
+                                        <option>Huawei</option>
+                                        <option>Vsmart</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputProductPrice">Giá sản phẩm</label>
+                                <input type="text" class="form-control" id="inputProductPrice"
+                                    placeholder="Nhập giá sản phẩm (24.000.000)">
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="inputProductRam">Dung lượng Ram</label>
+                                    <select id="inputProductRam" class="form-control">
+                                        <option selected>Chọn...</option>
+                                        <option>2 GB</option>
+                                        <option>3 GB</option>
+                                        <option>4 GB</option>
+                                        <option>8 GB</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="inputProductRom">Dung lượng Rom</label>
+                                    <select id="inputProductRom" class="form-control">
+                                        <option selected>Chọn...</option>
+                                        <option>12 GB</option>
+                                        <option>24 GB</option>
+                                        <option>32 GB</option>
+                                        <option>64 GB</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="inputProductPin">Pin</label>
+                                    <select id="inputProductPin" class="form-control">
+                                        <option selected>Chọn...</option>
+                                        <option>1500 mAh</option>
+                                        <option>3200 mAh</option>
+                                        <option>3570 mAh</option>
+                                        <option>5000 mAh</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputProductSize">Thông tin màn hình</label>
+                                <input type="text" class="form-control" id="inputProductSize"
+                                    placeholder="Nhập thông tin màn hình">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputProductSelfieCamera">Camera trước</label>
+                                    <input type="text" class="form-control" id="inputProductSelfieCamera"
+                                        placeholder="Nhập thông tin camera trước">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputProductMainCamera">Camera sau</label>
+                                    <input type="text" class="form-control" id="inputProductMainCamera"
+                                        placeholder="Nhập thông tin camera sau">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputProductImgDes1">Hình ảnh mô tả 1</label>
+                                <input type="text" class="form-control" id="inputProductImgDes1"
+                                    placeholder="Đường dẫn liên kết">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputProductImgDes2">Hình ảnh mô tả 2</label>
+                                <input type="text" class="form-control" id="inputProductImgDes1"
+                                    placeholder="Đường dẫn liên kết">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputProductImgDes3">Hình ảnh mô tả 3</label>
+                                <input type="text" class="form-control" id="inputProductImgDes3"
+                                    placeholder="Đường dẫn liên kết">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputProductImgDes4">Hình ảnh mô tả 4</label>
+                                <input type="text" class="form-control" id="inputProductImgDes4"
+                                    placeholder="Đường dẫn liên kết">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputProductPin">Active</label>
+                                <select id="inputProductPin" class="form-control">
+                                    <option selected>Chọn...</option>
+                                    <option>Active</option>
+                                    <option>Disable</option>
+                                </select>
+                            </div>
+                        </form>
+                        <!-- end form product info -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-success">Lưu thay đổi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end div modal product info-->
     </div>
 
 
