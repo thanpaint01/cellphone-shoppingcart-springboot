@@ -1,0 +1,25 @@
+.control-slide-icon {
+    height: 47px;
+    background-color: #0d0d0e;
+}
+.control-slide-icon:hover {
+    background-color: #b0b435;
+}
+h1 {
+    font-size: 50px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.cart-image {
+    background-color: whitesmoke;
+    border-radius: 20px;
+}
+
+.btn-detail {
+    display: none;
+  
+}
+
+div.cart-image:hover  .btn-detail {
+    display: initial;
+    background-color: #b0b435;
+}
