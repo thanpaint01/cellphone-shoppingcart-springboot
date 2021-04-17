@@ -66,8 +66,8 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                             Sản phẩm
                         </a>
-                        <a class="nav-link collapsed active" href="#" data-toggle="collapse"
-                            data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts"
+                            aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-tags"></i></div>
                             Tags
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -77,12 +77,12 @@
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="admin-brand-tag-managerment.html">Thương hiệu</a>
                                 <a class="nav-link" href="admin-ram-tag-managerment.html">Ram</a>
-                                <a class="nav-link active" href="admin-rom-tag-managerment.html">Rom</a>
+                                <a class="nav-link" href="admin-rom-tag-managerment.html">Rom</a>
                                 <a class="nav-link" href="admin-pin-tag-managerment.html">Pin</a>
                             </nav>
                         </div>
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                            aria-expanded="false" aria-controls="collapsePages">
+                        <a class="nav-link collapsed active" href="#" data-toggle="collapse"
+                            data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                             <div class="sb-nav-link-icon"><i class="far fa-list-alt"></i></div>
                             Đơn hàng
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -96,7 +96,7 @@
                                 <a class="nav-link collapsed" href="admin-delivering-order-managerment.html">
                                     Đang vận chuyển
                                 </a>
-                                <a class="nav-link collapsed" href="admin-finished-order-managerment.html">
+                                <a class="nav-link collapsed active" href="admin-finished-order-managerment.html">
                                     Giao thành công
                                 </a>
                                 <a class="nav-link collapsed" href="admin-deny-order-managerment.html">
@@ -108,7 +108,7 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             Người dùng
                         </a>
-                        <a class="nav-link" href="admin-review-rating-managerment.html">
+                        <a class="nav-link" href="#">
                             <div class="sb-nav-link-icon"><i class="fas fa-comment-alt"></i></div>
                             Bình luận đánh giá
                         </a>
@@ -125,11 +125,12 @@
         <div id="layoutSidenav_content">
             <main class="c-main">
                 <div class="container-fluid pt-5">
-                    <h1 class="mt-4">Quản lý rom</h1>
+                    <h1 class="mt-4">Quản lý đơn hàng</h1>
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active">Danh mục quản lý <i class="fas fa-chevron-right p-1"></i>
-                            <span>Tags</span><i class="fas fa-chevron-right p-1"></i>
-                            <b>Rom</b>
+                            <span>Đơn hàng</span>
+                            <i class="fas fa-chevron-right p-1"></i>
+                            <b>Giao thành công</b>
                         </li>
                     </ol>
                     <!-- table data -->
@@ -137,12 +138,8 @@
                         <div class="fade-in">
                             <div class="card">
                                 <div class="card-header">
-                                    <span><i class="fas fa-list-ul mr-1"></i>Danh sách rom (1/1)</span>
-                                    <button type="button" class="btn btn-success float-right" data-toggle="modal"
-                                        data-target="#exampleModalLong">
-                                        <i class="fas fa-plus"></i>
-                                        Thêm mới rom
-                                    </button>
+                                    <span><i class="fa fa-list-alt mr-1"></i>Danh sách đơn hàng đã giao thành công
+                                        (10/125)</span>
                                 </div>
                                 <div class="card-body">
                                     <div id="DataTables_Table_0_wrapper"
@@ -164,8 +161,8 @@
                                             <div class="col-sm-12 col-md-6">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text"
-                                                        placeholder="Nhập thông tin rom (mã, dung lượng,...)"
-                                                        aria-label="Search" aria-describedby="basic-addon2">
+                                                        placeholder="Nhập thông tin mã đơn hàng" aria-label="Search"
+                                                        aria-describedby="basic-addon2">
                                                     <div class="input-group-append">
                                                         <button class="btn btn-success" type="button"><i
                                                                 class="fas fa-search"></i></button>
@@ -179,91 +176,93 @@
                                                     cellspacing="0">
                                                     <thead class="col-md-12 thead align-middle text-center">
                                                         <tr>
-                                                            <th class="col-md-1 col2">Mã</th>
-                                                            <th class="col-md-1 col3">Dung lượng</th>
-                                                            <th class="col-md-1 col2">Active</th>
-                                                            <th class="col-md-1 col3">Action</th>
+                                                            <th class="col-md-1 col1">Mã đơn hàng</th>
+                                                            <th class="col-md-1 col3">Thông tin khách hàng</th>
+                                                            <th class="col-md-3 col2">Ngày đặt hàng</th>
+                                                            <th class="col-md-3 col2">Tổng tiền</th>
+                                                            <th class="col-md-1 col2">Xem chi tiết</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody class="col-md-12">
                                                         <!-- tr1 -->
                                                         <tr>
-                                                            <td class="text-center align-middle col-md-1 col2"><b
-                                                                    class="col-md-3">01</b>
+                                                            <td class="text-center align-middle col-md-1 col1"><b
+                                                                    class="col-md-3">DH00001</b>
+                                                            </td>
+                                                            <td class="text-left col-md-3 col3">
+                                                                <small><b>Khách hàng tên: </b>Nguyễn Văn A</small><br />
+                                                                <small>Địa chỉ: 47/16 đường số 10, phường Linh Xuân,
+                                                                    Thành phố Thủ Đức</small></br>
+                                                                <small>Số điện thoại: 035 8058 540</small></br>
                                                             </td>
                                                             <td class="text-center align-middle col-md-3 col2">
-                                                                16 GB
+                                                                10/07/2020
                                                             </td>
-                                                            <td
-                                                                class="col-md-1 col1 text-center text-wrapper align-middle">
-                                                                <span class="badge badge-danger">Disable</span>
+                                                            <td class="text-center align-middle col-md-3 col2">
+                                                                24.000.000 đ
+
                                                             </td>
                                                             <td
                                                                 class="col-md-1 col2 text-center text-wrapper align-middle">
-                                                                <a class="btn btn-success text-light"
-                                                                    data-toggle="modal" data-target="#exampleModalLong">
-                                                                    <i class="fas fa-edit"></i>
-
-                                                                </a>
-                                                                <a class="btn btn-danger text-light" data-toggle="modal"
-                                                                    data-target="#exampleModalConfirmDelete">
-                                                                    <i class="fas fa-trash"></i>
-                                                                </a>
+                                                                <a class="btn btn-success" href="order-detail.html">Xem
+                                                                    chi tiết</a>
                                                             </td>
 
                                                         </tr>
                                                         <!-- tr1 -->
                                                         <tr>
-                                                            <td class="text-center align-middle col-md-1 col2"><b
-                                                                    class="col-md-3">01</b>
+                                                            <td class="text-center align-middle col-md-1 col1"><b
+                                                                    class="col-md-3">DH00001</b>
+                                                            </td>
+                                                            <td class="text-left col-md-3 col3">
+                                                                <small><b>Khách hàng tên: </b>Nguyễn Văn A</small><br />
+                                                                <small>Địa chỉ: 47/16 đường số 10, phường Linh Xuân,
+                                                                    Thành phố Thủ Đức</small></br>
+                                                                <small>Số điện thoại: 035 8058 540</small></br>
                                                             </td>
                                                             <td class="text-center align-middle col-md-3 col2">
-                                                                3 GB
+                                                                10/07/2020
                                                             </td>
-                                                            <td
-                                                                class="col-md-1 col1 text-center text-wrapper align-middle">
-                                                                <span class="badge badge-success">Active</span>
+                                                            <td class="text-center align-middle col-md-3 col2">
+                                                                24.000.000 đ
+
                                                             </td>
                                                             <td
                                                                 class="col-md-1 col2 text-center text-wrapper align-middle">
-                                                                <a class="btn btn-success text-light"
-                                                                    data-toggle="modal" data-target="#exampleModalLong">
-                                                                    <i class="fas fa-edit"></i>
-
-                                                                </a>
-                                                                <a class="btn btn-danger text-light" data-toggle="modal"
-                                                                    data-target="#exampleModalConfirmDelete">
-                                                                    <i class="fas fa-trash"></i>
-                                                                </a>
+                                                                <a class="btn btn-success" href="order-detail.html">Xem
+                                                                    chi tiết</a>
                                                             </td>
 
                                                         </tr>
                                                         <!-- tr1 -->
                                                         <tr>
-                                                            <td class="text-center align-middle col-md-1 col2"><b
-                                                                    class="col-md-3">01</b>
+                                                            <td class="text-center align-middle col-md-1 col1"><b
+                                                                    class="col-md-3">DH00001</b>
+                                                            </td>
+                                                            <td class="text-left col-md-3 col3">
+                                                                <small><b>Khách hàng tên: </b>Nguyễn Văn A</small><br />
+                                                                <small>Địa chỉ: 47/16 đường số 10, phường Linh Xuân,
+                                                                    Thành phố Thủ Đức</small></br>
+                                                                <small>Số điện thoại: 035 8058 540</small></br>
                                                             </td>
                                                             <td class="text-center align-middle col-md-3 col2">
-                                                                4 GB
+                                                                10/07/2020
                                                             </td>
-                                                            <td
-                                                                class="col-md-1 col1 text-center text-wrapper align-middle">
-                                                                <span class="badge badge-success">Active</span>
+                                                            <td class="text-center align-middle col-md-3 col2">
+                                                                24.000.000 đ
+
                                                             </td>
                                                             <td
                                                                 class="col-md-1 col2 text-center text-wrapper align-middle">
-                                                                <a class="btn btn-success text-light"
-                                                                    data-toggle="modal" data-target="#exampleModalLong">
-                                                                    <i class="fas fa-edit"></i>
-
-                                                                </a>
-                                                                <a class="btn btn-danger text-light" data-toggle="modal"
-                                                                    data-target="#exampleModalConfirmDelete">
-                                                                    <i class="fas fa-trash"></i>
-                                                                </a>
+                                                                <a class="btn btn-success" href="order-detail.html">Xem
+                                                                    chi tiết</a>
                                                             </td>
 
                                                         </tr>
+
+
+
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -317,81 +316,18 @@
         </div>
 
         <!-- end body main -->
-        <!-- div modal product info-->
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Thông tin rom</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- start form product info-->
-                        <form>
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="inputBrandName">Dung lượng rom</label>
-                                    <input type="text" class="form-control" id="inputBrandName"
-                                        placeholder="Nhập dung lượng rom (16 GB)">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="inputProductPin">Active</label>
-                                <select id="inputProductPin" class="form-control">
-                                    <option selected>Chọn...</option>
-                                    <option>Active</option>
-                                    <option>Disable</option>
-                                </select>
-                            </div>
-                        </form>
-                        <!-- end form product info -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
-                        <button type="button" class="btn btn-success">Lưu thay đổi</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- end div modal product info-->
-
-        <!-- modal confirm delete -->
-        <div class="modal fade" id="exampleModalConfirmDelete" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Xóa rom</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Bạn muốn xóa rom này ?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
-                        <button type="button" class="btn btn-primary">Có</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--    end modal confrim delete -->
+    </div>
 
 
-        <!-- script -->
-        <script src="js/my-js/modal-add-product.js"></script>
-        <script src="js/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
-        <script src="admin-static/dist/js/scripts.js"></script>
-        <script src="admin-static/src/js/scripts.js"></script>
-        <script src="admin-static/scripts/bootstrap.bundle.min.js"></script>
-        <script src="extensions/sticky-header/bootstrap-table-sticky-header.js"></script>
-        <script src="extensions/fixed-columns/bootstrap-table-fixed-columns.js"></script>
+
+    <!-- script -->
+    <script src="js/my-js/modal-add-product.js"></script>
+    <script src="js/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="admin-static/dist/js/scripts.js"></script>
+    <script src="admin-static/src/js/scripts.js"></script>
+    <script src="admin-static/scripts/bootstrap.bundle.min.js"></script>
+    <script src="extensions/sticky-header/bootstrap-table-sticky-header.js"></script>
+    <script src="extensions/fixed-columns/bootstrap-table-fixed-columns.js"></script>
 </body>
 
 
