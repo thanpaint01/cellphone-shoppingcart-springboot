@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Quản lý sản phẩm</title>
+    <link href="admin-static/dist/css/styles.css" rel="stylesheet" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="admin-static/my/css/admin.css">
+    <link rel="stylesheet" href="admin-static/my/css/product-manage.css">
+    <!-- fixed column -->
+    <link rel="stylesheet" href="extensions/sticky-header/bootstrap-table-sticky-header.css">
+    <link rel="stylesheet" href="extensions/fixed-columns/bootstrap-table-fixed-columns.css">
+</head>
+
+<body class="sb-nav-fixed">
+    <!-- startheader -->
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark pt-4 pb-4 h-auto">
+        <a class="navbar-brand p-0" href="index.html"><img src="images/logo-admin.png" class="logo" alt=""></a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 d-none" id="sidebarToggle" href="#"><i
+                class="fas fa-bars"></i></button>
+        <!-- Navbar Search-->
+        <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0 col-md-4">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search"
+                    aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-success" type="button"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </form>
+        <!-- Navbar-->
+        <ul class="navbar-nav ml-auto ml-md-0">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i>Administrator</a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                    <a class="dropdown-item" href="#">Cài đặt</a>
+                    <a class="dropdown-item" href="#">...</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="login.html">Đăng xuất</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <!-- end header -->
+    <div id="layoutSidenav">
+        <!-- left-menu -->
+        <div id="layoutSidenav_nav" class="pt-5">
+            <nav class="sb-sidenav accordion sb-sidenav-dark pt-5" id="sidenavAccordion">
+                <div class="sb-sidenav-menu pl-3">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">THỐNG KÊ</div>
+                        <a class="nav-link" href="admin-index.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
+                        </a>
+                        <div class="sb-sidenav-menu-heading">DANH MỤC QUẢN LÝ</div>
+                        <a class="nav-link" href="admin-product-managerment.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Sản phẩm
+                        </a>
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts"
+                            aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tags"></i></div>
+                            Tags
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                            data-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="admin-brand-tag-managerment.html">Thương hiệu</a>
+                                <a class="nav-link" href="admin-ram-tag-managerment.html">Ram</a>
+                                <a class="nav-link" href="admin-rom-tag-managerment.html">Rom</a>
+                                <a class="nav-link" href="admin-pin-tag-managerment.html">Pin</a>
+                            </nav>
+                        </div>
+                        <a class="nav-link collapsed active" href="#" data-toggle="collapse"
+                            data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                            <div class="sb-nav-link-icon"><i class="far fa-list-alt"></i></div>
+                            Đơn hàng
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
+                            data-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                <a class="nav-link collapsed" href="admin-pending-order-managerment.html">
+                                    Chờ xử lý
+                                </a>
+                                <a class="nav-link collapsed active" href="admin-delivering-order-managerment.html">
+                                    Đang vận chuyển
+                                </a>
+                                <a class="nav-link collapsed" href="admin-finished-order-managerment.html">
+                                    Giao thành công
+                                </a>
+                                <a class="nav-link collapsed" href="admin-deny-order-managerment.html">
+                                    Hủy đơn hàng
+                                </a>
+                            </nav>
+                        </div>
+                        <a class="nav-link" href="admin-user-managerment.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                            Người dùng
+                        </a>
+                        <a class="nav-link" href="#">
+                            <div class="sb-nav-link-icon"><i class="fas fa-comment-alt"></i></div>
+                            Bình luận đánh giá
+                        </a>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer p-1">
+                    <div class="small">Quản trị viên:</div>
+                    DHMOBILE
+                </div>
+            </nav>
+        </div>
+        <!-- end left menu -->
+        <!-- start body main -->
+        <div id="layoutSidenav_content">
+            <main class="c-main">
+                <div class="container-fluid pt-5">
+                    <h1 class="mt-4">Quản lý đơn hàng</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active">Danh mục quản lý <i class="fas fa-chevron-right p-1"></i>
+                            <span>Đơn hàng</span>
+                            <i class="fas fa-chevron-right p-1"></i>
+                            <b>Đang vận chuyển</b>
+                        </li>
+                    </ol>
+                    <!-- table data -->
+                    <div class="container p-0">
+                        <div class="fade-in">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span><i class="fa fa-list-alt mr-1"></i>Danh sách đơn hàng đang vận chuyển
+                                        (10/125)</span>
+                                </div>
+                                <div class="card-body">
+                                    <div id="DataTables_Table_0_wrapper"
+                                        class="dataTables_wrapper dt-bootstrap4 no-footer">
+                                        <div class="row mb-4">
+                                            <div class="fomr-group form-inline col-sm-12 col-md-6">
+                                                <div class="dataTables_length" id="DataTables_Table_0_length">
+                                                    <label>Show
+                                                        <select name="DataTables_Table_0_length"
+                                                            aria-controls="DataTables_Table_0"
+                                                            class="custom-select custom-select-sm form-control form-control-sm">
+                                                            <option value="10">10</option>
+                                                            <option value="25">25</option>
+                                                            <option value="50">50</option>
+                                                            <option value="100">100</option>
+                                                        </select> entries</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="input-group">
+                                                    <input class="form-control" type="text"
+                                                        placeholder="Nhập thông tin mã đơn hàng" aria-label="Search"
+                                                        aria-describedby="basic-addon2">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-success" type="button"><i
+                                                                class="fas fa-search"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <table class="table table-bordered col-md-12" id="dataTable"
+                                                    cellspacing="0">
+                                                    <thead class="col-md-12 thead align-middle text-center">
+                                                        <tr>
+                                                            <th class="col-md-1 col1">Mã đơn hàng</th>
+                                                            <th class="col-md-1 col3">Thông tin khách hàng</th>
+                                                            <th class="col-md-3 col2">Ngày đặt hàng</th>
+                                                            <th class="col-md-3 col2">Tổng tiền</th>
+                                                            <th class="col-md-1 col2">Xem chi tiết</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="col-md-12">
+                                                        <!-- tr1 -->
+                                                        <tr>
+                                                            <td class="text-center align-middle col-md-1 col1"><b
+                                                                    class="col-md-3">DH00001</b>
+                                                            </td>
+                                                            <td class="text-left col-md-3 col3">
+                                                                <small><b>Khách hàng tên: </b>Nguyễn Văn A</small><br />
+                                                                <small>Địa chỉ: 47/16 đường số 10, phường Linh Xuân,
+                                                                    Thành phố Thủ Đức</small></br>
+                                                                <small>Số điện thoại: 035 8058 540</small></br>
+                                                            </td>
+                                                            <td class="text-center align-middle col-md-3 col2">
+                                                                10/07/2020
+                                                            </td>
+                                                            <td class="text-center align-middle col-md-3 col2">
+                                                                24.000.000 đ
+
+                                                            </td>
+                                                            <td
+                                                                class="col-md-1 col2 text-center text-wrapper align-middle">
+                                                                <a class="btn btn-success" href="order-detail.html">Xem
+                                                                    chi tiết</a>
+                                                            </td>
+
+                                                        </tr>
+                                                        <!-- tr1 -->
+                                                        <tr>
+                                                            <td class="text-center align-middle col-md-1 col1"><b
+                                                                    class="col-md-3">DH00001</b>
+                                                            </td>
+                                                            <td class="text-left col-md-3 col3">
+                                                                <small><b>Khách hàng tên: </b>Nguyễn Văn A</small><br />
+                                                                <small>Địa chỉ: 47/16 đường số 10, phường Linh Xuân,
+                                                                    Thành phố Thủ Đức</small></br>
+                                                                <small>Số điện thoại: 035 8058 540</small></br>
+                                                            </td>
+                                                            <td class="text-center align-middle col-md-3 col2">
+                                                                10/07/2020
+                                                            </td>
+                                                            <td class="text-center align-middle col-md-3 col2">
+                                                                24.000.000 đ
+
+                                                            </td>
+                                                            <td
+                                                                class="col-md-1 col2 text-center text-wrapper align-middle">
+                                                                <a class="btn btn-success" href="order-detail.html">Xem
+                                                                    chi tiết</a>
+                                                            </td>
+
+                                                        </tr>
+                                                        <!-- tr1 -->
+                                                        <tr>
+                                                            <td class="text-center align-middle col-md-1 col1"><b
+                                                                    class="col-md-3">DH00001</b>
+                                                            </td>
+                                                            <td class="text-left col-md-3 col3">
+                                                                <small><b>Khách hàng tên: </b>Nguyễn Văn A</small><br />
+                                                                <small>Địa chỉ: 47/16 đường số 10, phường Linh Xuân,
+                                                                    Thành phố Thủ Đức</small></br>
+                                                                <small>Số điện thoại: 035 8058 540</small></br>
+                                                            </td>
+                                                            <td class="text-center align-middle col-md-3 col2">
+                                                                10/07/2020
+                                                            </td>
+                                                            <td class="text-center align-middle col-md-3 col2">
+                                                                24.000.000 đ
+
+                                                            </td>
+                                                            <td
+                                                                class="col-md-1 col2 text-center text-wrapper align-middle">
+                                                                <a class="btn btn-success" href="order-detail.html">Xem
+                                                                    chi tiết</a>
+                                                            </td>
+
+                                                        </tr>
+
+
+
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <!-- paging -->
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-5">
+                                                <div class="dataTables_info" id="DataTables_Table_0_info" role="status"
+                                                    aria-live="polite">Showing 1 to 10 of 32 entries</div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-7">
+                                                <div class="clearfix">
+                                                    <ul class="pagination float-right">
+                                                        <li class="page-item"><a href="#" class="page-link">Previous</a>
+                                                        </li>
+                                                        <li class="page-item"><a href="#" class="page-link">1</a></li>
+                                                        <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                                        <li class="page-item"><a href="#" class="page-link">3</a></li>
+                                                        <li class="page-item active"><a href="#" class="page-link">4</a>
+                                                        </li>
+                                                        <li class="page-item"><a href="#" class="page-link">5</a></li>
+                                                        <li class="page-item"><a href="#" class="page-link">6</a></li>
+                                                        <li class="page-item"><a href="#" class="page-link">7</a></li>
+                                                        <li class="page-item"><a href="#" class="page-link">Next</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </main>
+
+            <!-- start footer -->
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright © Your Website 2020</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            ·
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- end footer -->
+        </div>
+
+        <!-- end body main -->
+    </div>
+
+
+
+    <!-- script -->
+    <script src="js/my-js/modal-add-product.js"></script>
+    <script src="js/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="admin-static/dist/js/scripts.js"></script>
+    <script src="admin-static/src/js/scripts.js"></script>
+    <script src="admin-static/scripts/bootstrap.bundle.min.js"></script>
+    <script src="extensions/sticky-header/bootstrap-table-sticky-header.js"></script>
+    <script src="extensions/fixed-columns/bootstrap-table-fixed-columns.js"></script>
+</body>
+
+
+
+
+</html>
