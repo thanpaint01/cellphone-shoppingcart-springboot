@@ -20,6 +20,8 @@ jQuery(document).ready(function($){
 		this.navigation = this.table.children('.cd-table-navigation');
 		// bind table events
 		this.bindEvents();
+		this.resetProductsVisibility(0);
+		this.updateNavigationVisibility(0);
 	}
 
 	productsTable.prototype.bindEvents = function() {
@@ -223,7 +225,6 @@ jQuery(document).ready(function($){
 	productsTable.prototype.updateSlider = function(bool) {
 		var scrollLeft = this.productsWrapper.scrollLeft();
 		scrollLeft = ( bool ) ? scrollLeft + this.productWidth : scrollLeft - this.productWidth;
-
 		if( scrollLeft < 0 ) scrollLeft = 0;
 		if( scrollLeft > this.tableColumns.outerWidth(true) - this.productsWrapper.width() ) scrollLeft = this.tableColumns.outerWidth(true) - this.productsWrapper.width();
 		
@@ -267,7 +268,6 @@ jQuery(document).ready(function($){
 		comparisonTables.forEach(function(element){
 			element.updateProperties();
 		});
-
 		windowResize = false;
 	}
 
