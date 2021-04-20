@@ -150,7 +150,7 @@
         <div class="all-title-box">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="box-manager col-lg-12">
                         <h2>Đơn hàng của tôi</h2>
 
                         <ul class="breadcrumb">
@@ -175,21 +175,27 @@
         <!-- Start main Cart  -->
         <!-- start main order by status -->
         <div class="container">
-            <div class="table-responsive">
-                <div class="container table-wrapper">
-                    <div class="table-title bg-dark">
+            <div class="table-responsive col-12">
+                <div class="container table">
+                    <div class="table-title bg-dark pl-4 pt-4">
                         <div class="row">
-                            <div class="col-sm-8">
-                                <h2>Quản lý đơn hàng<br /></h2><span>Danh sách các đơn hàng đã đặt.<br />Lưu ý*: Chỉ
-                                    những
-                                    đơn hàng ở trạng thái đang tiếp nhận mới có thể hủy đơn hàng! Nhấn vào xem chi tiết để hủy đơn hàng.</b>
+                            <div class="col-sm-8 col-12 col-sm-12 col-xs-12">
+                                <h2>Quản lý đơn hàng<br /></h2>
+                                <div class="des">
+                                    <span>Danh sách các đơn hàng đã đặt.<br />Lưu ý*: Chỉ
+                                        những
+                                        đơn hàng ở trạng thái đang tiếp nhận mới có thể hủy đơn hàng! Nhấn vào xem chi
+                                        tiết
+                                        để hủy đơn hàng.</b>
+                                    </span>
+                                </div>
                             </div>
                             <div class="col-sm-8">
 
                             </div>
                         </div>
                     </div>
-                    <div class="table-filter">
+                    <div class="table-filter table-wrapper">
                         <div class="row">
                             <div class="col-sm-3">
                                 <div class="show-entries">
@@ -239,13 +245,15 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td><b class="order-id">DH0001</b></td>
+                                <td class="order-id"><b class="order-id">DH0001</b></td>
                                 <td class="td-product"><a href="#"><img src="images/img-pro-01.jpg" class="product-img"
                                             alt="Avatar">
                                     </a>
                                     <b class="product-name">
                                         Đơn hàng bao gồm điện thoại SamSung Galaxy Note 10 plus và 10 sản phẩm
                                         khác</b>
+                                        <span class="totalPrice"></span>
+                                        <span class="denyBtn"></span>
                                 </td>
                                 <td>1.000.000.000 đ</td>
                                 <td>Jun 15, 2017</td>
@@ -323,7 +331,7 @@
 
                         </tbody>
                     </table>
-                   
+
                     <div class="clearfix">
                         <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
                         <ul class="pagination">
@@ -345,134 +353,133 @@
         <!-- End main content -->
     </div>
     <!-- end body content order -->
-     <!-- modal order-detail -->
-     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-     aria-labelledby="exampleModalLabel" aria-hidden="true">
-     <div class="modal-dialog modal-lg" role="document">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <h5 class="modal-title" id="exampleModalLabel">Chi tiết đơn hàng</h5>
-                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true">&times;</span>
-                 </button>
-             </div>
-             <div class="modal-body">
-                 <div class="container">
-                     <!-- modal-body -->
-                     <div class="d-flex flex-column justify-content-center align-items-center"
-                         id="order-heading">
-                         <div class="text-uppercase">
-                             <p>CHI TIẾT ĐƠN HÀNG</p>
-                         </div>
-                         <div class="h4">Ngày đặt hàng: 10/11/2020</div>
-                         <div class="pt-1">
-                             <p>Mã đơn hàng: <b class="text-dark"> DH0001</b>
-                             </p>
-                         </div>
-                     </div>
-                     <div class="wrapper bg-white">
-                        <h1 class="my-2 border p-0"></h1>
-                        <!-- order item1 -->
-                         <div class="d-flex justify-content-start align-items-center list py-1">
-                             <div><b>1px</b></div>
-                             <div class="mx-3"> <img
-                                     src="https://salt.tikicdn.com/cache/280x280/ts/product/86/dd/0c/116f1383ebab5e5af8e71301a80d1b17.jpg"
-                                     alt="apple" width="100" height="100">
-                             </div>
-                             <div class="order-item item-detail col-md-10 d-inline-flex">
-                                 <div class="col-md-6">Điện thoại Iphone 12 Max Pro - Hàng chính hãng</div>
-                                 <div class="col-md-3">Iphone</div>
-                                 <div class="col-md-3">24.000.000 đ/cái</div>
-                             </div>
-                         </div>
-                         
-                        <!-- order item2 -->
-                         <div class="d-flex justify-content-start align-items-center list py-1">
-                             <div><b>1px</b></div>
-                             <div class="mx-3"> <img
-                                     src="https://salt.tikicdn.com/cache/280x280/ts/product/86/dd/0c/116f1383ebab5e5af8e71301a80d1b17.jpg"
-                                     alt="apple" width="100" height="100">
-                             </div>
-                             <div class="order-item item-detail col-md-10 d-inline-flex">
-                                 <div class="col-md-6">Điện thoại Iphone 12 Max Pro - Hàng chính hãng</div>
-                                 <div class="col-md-3">Iphone</div>
-                                 <div class="col-md-3">24.000.000 đ/cái</div>
-                             </div>
-                         </div>
-                         
-                        <!-- order item3 -->
-                         <div class="d-flex justify-content-start align-items-center list py-1">
-                             <div><b>1px</b></div>
-                             <div class="mx-3"> <img
-                                     src="https://salt.tikicdn.com/cache/280x280/ts/product/86/dd/0c/116f1383ebab5e5af8e71301a80d1b17.jpg"
-                                     alt="apple" width="100" height="100">
-                             </div>
-                             <div class="order-item item-detail col-md-10 d-inline-flex">
-                                 <div class="col-md-6">Điện thoại Iphone 12 Max Pro - Hàng chính hãng</div>
-                                 <div class="col-md-3">Iphone</div>
-                                 <div class="col-md-3">24.000.000 đ/cái</div>
-                             </div>
-                         </div>
-                         
+    <!-- modal order-detail -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Chi tiết đơn hàng</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <!-- modal-body -->
+                        <div class="d-flex flex-column justify-content-center align-items-center" id="order-heading">
+                            <div class="text-uppercase">
+                                <p>CHI TIẾT ĐƠN HÀNG</p>
+                            </div>
+                            <div class="h4">Ngày đặt hàng: 10/11/2020</div>
+                            <div class="pt-1">
+                                <p>Mã đơn hàng: <b class="text-dark"> DH0001</b>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="wrapper bg-white">
+                            <h1 class="my-2 border p-0"></h1>
+                            <!-- order item1 -->
+                            <div class="d-flex justify-content-start align-items-center list py-1">
+                                <div><b>1px</b></div>
+                                <div class="mx-3"> <img
+                                        src="https://salt.tikicdn.com/cache/280x280/ts/product/86/dd/0c/116f1383ebab5e5af8e71301a80d1b17.jpg"
+                                        alt="apple" width="100" height="100">
+                                </div>
+                                <div class="order-item item-detail col-md-10 d-inline-flex">
+                                    <div class="col-md-6">Điện thoại Iphone 12 Max Pro - Hàng chính hãng</div>
+                                    <div class="col-md-3">Iphone</div>
+                                    <div class="col-md-3">24.000.000 đ/cái</div>
+                                </div>
+                            </div>
+
+                            <!-- order item2 -->
+                            <div class="d-flex justify-content-start align-items-center list py-1">
+                                <div><b>1px</b></div>
+                                <div class="mx-3"> <img
+                                        src="https://salt.tikicdn.com/cache/280x280/ts/product/86/dd/0c/116f1383ebab5e5af8e71301a80d1b17.jpg"
+                                        alt="apple" width="100" height="100">
+                                </div>
+                                <div class="order-item item-detail col-md-10 d-inline-flex">
+                                    <div class="col-md-6">Điện thoại Iphone 12 Max Pro - Hàng chính hãng</div>
+                                    <div class="col-md-3">Iphone</div>
+                                    <div class="col-md-3">24.000.000 đ/cái</div>
+                                </div>
+                            </div>
+
+                            <!-- order item3 -->
+                            <div class="d-flex justify-content-start align-items-center list py-1">
+                                <div><b>1px</b></div>
+                                <div class="mx-3"> <img
+                                        src="https://salt.tikicdn.com/cache/280x280/ts/product/86/dd/0c/116f1383ebab5e5af8e71301a80d1b17.jpg"
+                                        alt="apple" width="100" height="100">
+                                </div>
+                                <div class="order-item item-detail col-md-10 d-inline-flex">
+                                    <div class="col-md-6">Điện thoại Iphone 12 Max Pro - Hàng chính hãng</div>
+                                    <div class="col-md-3">Iphone</div>
+                                    <div class="col-md-3">24.000.000 đ/cái</div>
+                                </div>
+                            </div>
 
 
 
-                         <div class="pt-2 border-bottom mb-3"></div>
-                         <div class="d-flex justify-content-start align-items-center pl-3">
-                             <div class="text-muted">Tạm tính: </div>
-                             <div class="ml-auto"><label>42.000.000 VNĐ</label></div>
-                         </div>
-                         <div class="d-flex justify-content-start align-items-center pl-3">
-                             <div class="text-muted">Phí vận chuyển: </div>
-                             <div class="ml-auto"> <label>2.000.000 VNĐ</label> </div>
-                         </div>
-                         <div
-                             class="d-flex justify-content-start align-items-center pb-4 pl-3 border-bottom">
-                             <div class="text-muted"> <button class="text-white btn btn-danger">50%
-                                     Discount</button> </div>
-                             <div class="ml-auto price"> -0 đ </div>
-                         </div>
-                         <div
-                             class="d-flex justify-content-start align-items-center pl-3 py-3 mb-4 border-bottom">
-                             <div class="text-muted"> Thành tiền:  </div>
-                             <div class="ml-auto h5"> 40.000.000 VNĐ </div>
-                         </div>
-                         <div class="row border rounded p-1 my-3">
-                             <div class="col-md-6 py-3">
-                                 <div class="d-flex flex-column align-items start">
-                                     <b>Thông tin giao hàng</b>
-                                     <p class="text-justify pt-2">
-                                         <b>Khách hàng: </b>Nguyễn Văn A<br/>
-                                         <b>Địa chỉ: </b>47/16 đường số 10, khu phố 3, phường Linh Xuân, Thành phố Thủ Đức<br/>
-                                     </p>
-                                     <p class="text-justify">
-                                         <b>Số điện thoại: </b>035 8058 540<br/>
-                                     </p>
-                                 </div>
-                             </div>
-                             <div class="col-md-6 py-3">
-                                 <div class="d-flex flex-column align-items start">
-                                     <b>Thông tin xuất hóa đơn</b>
-                                     <p class="text-justify pt-2">
-                                         <b>Địa chỉ cửa hàng: </b>Đường số 6, phường Linh Trung, Thành phố Thủ Đức</p><br/>
-                                     <p class="text-justify">
-                                         <b>Hot line:</b>0909 999 099
-                                     </p>
-                                 </div>
-                             </div>
-                         </div>
-                     </div>
-                     <!-- end model body -->
-                 </div>
-             </div>
-             <div class="modal-footer">
-                 <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
-                 <button type="button" class="btn btn-danger">Hủy đơn hàng</button>
-             </div>
-         </div>
-     </div>
- </div>
- <!-- end model detail -->
+
+                            <div class="pt-2 border-bottom mb-3"></div>
+                            <div class="d-flex justify-content-start align-items-center pl-3">
+                                <div class="text-muted">Tạm tính: </div>
+                                <div class="ml-auto"><label>42.000.000 VNĐ</label></div>
+                            </div>
+                            <div class="d-flex justify-content-start align-items-center pl-3">
+                                <div class="text-muted">Phí vận chuyển: </div>
+                                <div class="ml-auto"> <label>2.000.000 VNĐ</label> </div>
+                            </div>
+                            <div class="d-flex justify-content-start align-items-center pb-4 pl-3 border-bottom">
+                                <div class="text-muted"> <button class="text-white btn btn-danger">50%
+                                        Discount</button> </div>
+                                <div class="ml-auto price"> -0 đ </div>
+                            </div>
+                            <div class="d-flex justify-content-start align-items-center pl-3 py-3 mb-4 border-bottom">
+                                <div class="text-muted"> Thành tiền: </div>
+                                <div class="ml-auto h5"> 40.000.000 VNĐ </div>
+                            </div>
+                            <div class="row border rounded p-1 my-3">
+                                <div class="col-md-6 py-3">
+                                    <div class="d-flex flex-column align-items start">
+                                        <b>Thông tin giao hàng</b>
+                                        <p class="text-justify pt-2">
+                                            <b>Khách hàng: </b>Nguyễn Văn A<br />
+                                            <b>Địa chỉ: </b>47/16 đường số 10, khu phố 3, phường Linh Xuân, Thành phố
+                                            Thủ Đức<br />
+                                        </p>
+                                        <p class="text-justify">
+                                            <b>Số điện thoại: </b>035 8058 540<br />
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 py-3">
+                                    <div class="d-flex flex-column align-items start">
+                                        <b>Thông tin xuất hóa đơn</b>
+                                        <p class="text-justify pt-2">
+                                            <b>Địa chỉ cửa hàng: </b>Đường số 6, phường Linh Trung, Thành phố Thủ Đức
+                                        </p><br />
+                                        <p class="text-justify">
+                                            <b>Hot line:</b>0909 999 099
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end model body -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-danger">Hủy đơn hàng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end model detail -->
 
 
 
