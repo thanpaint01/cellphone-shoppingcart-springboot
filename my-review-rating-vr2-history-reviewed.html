@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Site Metas -->
-    <title>Phản hồi từ cửa hàng</title>
+    <title>ThewayShop - Ecommerce Bootstrap 4 HTML Template</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -21,15 +21,15 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="fontawesome/css/font-awesome.min.css">
     <!-- Site CSS -->
     <link rel="stylesheet" href="css/style.css">
     <!-- Responsive CSS -->
     <link rel="stylesheet" href="css/responsive.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/custom.css">
-    <link rel="stylesheet" href="css/my-css/custom-feedback-page.css">
     <!--header_custom CSS-->
+    <link rel="stylesheet" href="css/header_custom.css">
+    <link rel="stylesheet" href="css/my-css/custom-my-review-rating-v2-history-reviewed.css">
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -139,73 +139,107 @@
         <!-- End Top Search -->
     </header>
     <!-- End Main Top -->
+    <!-- Start All Title Box -->
+    <div class="all-title-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Bình luận và đánh giá của tôi</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                        <li class="breadcrumb-item active"><a href="my-account.html">Quản lý tài khoản</a></li>
+                        <li class="breadcrumb-item active">Quản lý bình luận</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End All Title Box -->
     <!-- Start Body -->
-    <section>
-        <!-- Start All Title Box -->
-        <div class="all-title-box">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h2>Phản hồi từ quản trị viên</h2>
-                        <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                            <li class="breadcrumb-item active">Quản lý tài khoản</li>
-                            <li class="breadcrumb-item active">Quản lý bình luận</li>
-                        </ul>
-                    </div>
+    <div class="container mb-3">
+        <div class="table-title bg-dark mt-3 p-4">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h2 class="text-light">Quản lý danh sách các bình luận và đánh giá<br></h2><span
+                        class="text-light">Nhấn
+                        vào "Xem chi tiết" để xem chi tiết phản hồi.<br>
+                    </span>
                 </div>
-            </div>
-        </div>
-        <!-- End All Title Box -->
-        <!-- Start Contact Us  -->
-        <div class="contact-box-main p-3">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 col-sm-12">
-                        <div class="contact-form-right change-password-form p-0">
-                            <div class="bg-dark p-4">
-                                <h2 class="text-form-title text-light">Phản hồi cho đơn hàng DH0001</h2>
-                            </div>
-
-                            <div class="row p-4">
-                                <div class="col-md-12 h-75">
-                                    <span class="border bg-success text-light float-left col-md-1">Tôi</span>
-                                    <div class=" border form-group mb-3 col-md-7 float-left">
-                                        Sản phẩm tốt, giao đúng hẹn, nhân viên tư vấn tận tình. Rating 5 sao.
-                                    </div>
-                                </div>
-                                <div class="col-md-12 h-75 d-block">
-                                    <span class="border bg-success text-light float-right">Quản trị viên: Nguyễn Văn
-                                        A</span>
-                                    <div class=" border form-group mb-3 col-md-7 float-right">
-                                        Cảm ơn quý khách đã tin tưởng và ủng hộ chúng tôi! Hãy tiếp tục mua hàng để
-                                        nhận thêm nhiều khuyến mãi từ cửa hàng.<br />
-                                        Nếu có thắc mắc hay các câu hỏi liên quan đến sản phẩm, vui lòng gọi đến
-                                        hotline: 0909-990-099
-                                    </div>
-                                </div>
-                                <div class="col-md-12 h-75">
-                                    <div class="submit-button text-center">
-                                        <a class="text-light btn hvr-hover" href="my-review-and-rating.html">Quay lại
-                                            bình luận</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
+                <div class="col-sm-8">
 
                 </div>
             </div>
         </div>
-        <!-- End Cart -->
+        <div class="inner cart mt-3 mb-3">
+            <!-- MAIN TABLE DATA-->
+            <div class="main">
+                <!-- Reviewed -->
+                <div class="reviewed d-flex p-0 m-0">
+                    <ul class="d-flex">
+                        <li class="nav nav-link text-light hvr-hover"><a href="#" class="text-light">Chưa viết đánh giá</a></h3>
+                        <li class="nav nav-link"><a href="#">Lịch sử đánh
+                                giá</a></h3>
+                    </ul>
+                </div>
+                <hr class="p-0 m-0">
+                <!-- start table -->
+                <div class="list table-data mt-3">
+                    <ul class="list-review">
+                        <!-- li1 -->
+                        <li class="card p-3 review-card">
+                            <div class="review-item d-flex">
+                                <img class="img-order" src="images/index-img/1-removebg.png">
+                                <div class="order-item d-flex pl-3">
+                                    <div class="order-detail">
+                                        <p class="product-order-name">Điện thoại SamSung Galaxy Note 10 và 3 sản phẩm
+                                            khác</p>
+                                        <p class="order-id">Đơn hàng: <b>DH0001</b></p>
+                                        <p class="order-status">Tình trạng: <span>Giao thành công</span></p>
+                                        <p class="order-date">Ngày đặt hàng: <span>21/04/2021</span></p>
+                                    </div>
+                                    <div class="content-review">
+                                        <p>Đánh giá của tôi:</p>
+                                        <p>Sản phẩm chính hãng, chất lượng tuyệt vời, nhân viên thân thiện, cửa hàng uy tín (5/5 sao)</p>
+
+                                        <!-- STAR RATED -->
+                                        <div class="star-rated">
+                                            <span class="fa fa-star star-checked"></span>
+                                            <span class="fa fa-star star-checked"></span>
+                                            <span class="fa fa-star star-checked"></span>
+                                            <span class="fa fa-star star-checked"></span>
+                                            <span class="fa fa-star star-checked"></span>
+                                        </div>
+                                        <!-- END STAR RATED -->
+                                    </div>
+                                    <div class="action-feedback float-right">
+                                        <button class="btn text-light hvr-hover float-right"><a href="feedback-review-and-rating.html" class="text-light">Xem phản hồi</a></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- end table -->
+            </div>
+            <!-- END MAIN TABLE DATA -->
+        </div>
+        <div class="clearfix">
+            <div class="hint-text float-left">Showing <b>5</b> out of <b>25</b> entries</div>
+            <ul class="pagination float-right">
+                <li class="page-item disabled"><a href="#" class="page-link">Previous</a></li>
+                <li class="page-item"><a href="#" class="page-link">1</a></li>
+                <li class="page-item"><a href="#" class="page-link">2</a></li>
+                <li class="page-item"><a href="#" class="page-link">3</a></li>
+                <li class="page-item active"><a href="#" class="page-link">4</a></li>
+                <li class="page-item"><a href="#" class="page-link">5</a></li>
+                <li class="page-item"><a href="#" class="page-link">6</a></li>
+                <li class="page-item"><a href="#" class="page-link">7</a></li>
+                <li class="page-item"><a href="#" class="page-link">Next</a></li>
+            </ul>
+        </div>
+    </div>
 
 
-
-    </section>
-
-    <!-- End Body -->
-    <!-- Start Footer -->
     <!-- Start Footer  -->
     <footer>
         <div class="footer-main">
@@ -299,17 +333,8 @@
     </footer>
     <!-- End Footer  -->
 
-    <!-- Start copyright  -->
-    <div class="footer-copyright">
-        <p class="footer-company">All Rights Reserved. &copy; 2018 <a href="#">ThewayShop</a> Design By :
-            <a href="https://html.design/">html design</a>
-        </p>
-    </div>
-    <!-- End copyright  -->
 
-    <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
-
-    <!-- End Footer -->
+    <!-- End Body -->
     <!-- ALL JS FILES -->
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/popper.min.js"></script>
