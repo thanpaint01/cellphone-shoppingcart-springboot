@@ -17,6 +17,12 @@
     padding-right: 10px;
     width: 50px !important;
 }
+.filter-left{
+    width:40%;
+}
+.filter-search{
+    width: 60%;
+}
 
 /* queries media */
 /* tablet & mobile */
@@ -43,11 +49,8 @@
         width: 50% !important;
     }
     /* filter */
-    div.col-md-8{
-        display: none;
-    }
     div.filter-search{
-        display: contents;
+        width: 100%;
     }
     /* end filter */
 }
