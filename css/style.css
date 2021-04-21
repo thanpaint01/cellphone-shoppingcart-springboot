@@ -1917,6 +1917,7 @@
      padding-right: 15px;
      float: left;
 }
+
  /* .product-item-filter .toolbar-sorter-right{
      width: 65%;
 } */
@@ -1938,6 +1939,7 @@
      background: #000000;
      color: #ffffff;
 }
+
  .toolbar-sorter-right .btn-light:hover{
      background: #b0b435;
      border-radius: 0px;
@@ -2188,7 +2190,7 @@
 }
  .new-account-login h5 {
      font-size: 18px;
-     color: #1111111;
+     color: 1111111;
      font-weight: 600;
 }
  .new-account-login h5 a:hover{
