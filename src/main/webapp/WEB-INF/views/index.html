@@ -35,7 +35,9 @@
 
 <body>
 <!-- replace header -->
-<header th:insert="header.html::header"></header>
+<header th:replace="header.html::header">
+
+</header>
 <!-- end header -->
 
 <!-- body -->
@@ -267,8 +269,7 @@
 <!-- end slider tai tro -->
 <!-- end body -->
 <!-- footer -->
-<div th:insert="lrf-modal.html::modals"></div>
-<footer th:insert="footer.html::footer"></footer>
+<footer th:replace="footer.html::footer"></footer>
 <!-- end footer -->
 
 

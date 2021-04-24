@@ -1,13 +1,62 @@
-<div th:fragments="modals" xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:fragments="mymodal" class="modal fade" xmlns:th="http://www.thymeleaf.org">
+    <!-- Start Log In Modal-->
+    <div class="modal fade" id="signInModel" tabindex="-1" role="dialog" aria-labelledby="signInModelTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class=" modal-title ml-3 font-weight-bold" id="signInModelTitle">Đăng Nhập</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form>
+                            <p class="mt-1 mb-1 font-weight-bold">Tài Khoản:</p>
+                            <input type="text" id="inputUser_signIn" class="mb-3 form-control"
+                                   placeholder="Nhập Tài Khoản" required="" autofocus="true">
+                            <p class="mt-3 mb-1 font-weight-bold">Mật Khẩu:</p>
+                            <input type="password" id="inputPassword_signIn" class="mb-3 form-control"
+                                   placeholder="Nhập Mật Khẩu" required="">
+                            <button
+                                    class="rounded-lg my-3 mt-2 btn-lg btn hvr-hover text-light col-sm-12 rounded-lg"
+                                    type="submit">Đăng Nhập
+                            </button>
+
+                            <div class="row">
+                                <div class="col-6 mx-auto">
+                                    <p class="text-center font-weight-bold"><a href="#" class="mx-auto"
+                                                                               data-toggle="modal"
+                                                                               data-target="#forgetPass"
+                                                                               data-dismiss="modal"
+                                                                               aria-label="Close">Quên
+                                        Mật Khẩu</a></p>
+                                </div>
+                                <div class="col-6 mx-auto">
+                                    <p class="text-center font-weight-bold">
+                                        <a href="#" class="mx-auto" data-toggle="modal"
+                                           data-target="#createAccountModel" data-dismiss="modal"
+                                           aria-label="Close">Đăng Ký</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Finish  Log In  Modal-->
+    <!-- Start Sign Up Modal-->
     <div class="modal fade" id="createAccountModel" tabindex="-1" role="dialog"
          aria-labelledby="createAccountModelTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class=" modal-title ml-3 font-weight-bold" id="signInModelTitle">Đăng Ký</h2>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h2 class=" modal-title ml-3 font-weight-bold" id="signInModelTitle">Đăng Ký</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                 </div>
                 <div class="modal-body">
                     <div class="container">
@@ -47,14 +96,12 @@
                                                                                data-toggle="modal"
                                                                                data-target="#forgetPass"
                                                                                data-dismiss="modal"
-                                                                               aria-label="Close">Quên Mật Khẩu</a>
-                                    </p>
+                                                                               aria-label="Close">Quên Mật Khẩu</a></p>
                                 </div>
                                 <div class="col-6 mx-auto">
                                     <p class="text-center font-weight-bold">
-                                        <a href="#" class="mx-auto" data-toggle="modal"
-                                           data-target="#signInModel" data-dismiss="modal"
-                                           aria-label="Close">Đăng Nhập</a>
+                                        <a href="#" class="mx-auto" data-toggle="modal" data-target="#signInModel"
+                                           data-dismiss="modal" aria-label="Close">Đăng Nhập</a>
                                     </p>
                                 </div>
                             </div>
@@ -71,10 +118,10 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="modal-title ml-3 font-weight-bold" id="forgetPassTitle">Quên Mật Khẩu</h2>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h2 class="modal-title ml-3 font-weight-bold" id="forgetPassTitle">Quên Mật Khẩu</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                 </div>
                 <div class="modal-body">
                     <div class="container">
@@ -95,9 +142,8 @@
                                 </div>
                                 <div class="col-6 mx-auto">
                                     <p class="text-center font-weight-bold">
-                                        <a href="#" class="mx-auto" data-toggle="modal"
-                                           data-target="#signInModel" data-dismiss="modal"
-                                           aria-label="Close">Đăng Nhập</a>
+                                        <a href="#" class="mx-auto" data-toggle="modal" data-target="#signInModel"
+                                           data-dismiss="modal" aria-label="Close">Đăng Nhập</a>
                                     </p>
                                 </div>
                             </div>
@@ -107,5 +153,5 @@
             </div>
         </div>
     </div>
+    <!-- Finish Forgot Pass Modal-->
 </div>
-<!-- Finish Forgot Pass Modal-->
