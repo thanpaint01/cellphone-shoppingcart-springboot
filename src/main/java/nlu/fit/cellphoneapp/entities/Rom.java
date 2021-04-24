@@ -19,8 +19,7 @@ public class Rom {
     private int active;
 
     //OneToMany Relation product table
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "rom_id")
+    @OneToMany(mappedBy = "rom", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products = new ArrayList<>();
 
 }

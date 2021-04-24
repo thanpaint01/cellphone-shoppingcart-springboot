@@ -20,8 +20,7 @@ public class Brand {
     private int active;
 
     //OneToMany Relation product table
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "brand_id")
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products = new ArrayList<>();
 
 }

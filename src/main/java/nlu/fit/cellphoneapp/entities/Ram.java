@@ -19,9 +19,9 @@ public class Ram {
     private int active;
 
     //OneToMany Relation product table
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "ram_id")
+    @OneToMany(mappedBy = "ram", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products = new ArrayList<>();
+
 
 
 }

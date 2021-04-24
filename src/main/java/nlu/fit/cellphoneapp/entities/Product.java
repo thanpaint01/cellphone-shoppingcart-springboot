@@ -1,17 +1,18 @@
 package nlu.fit.cellphoneapp.entities;
 
+
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "product")
 @Getter
 @Setter
 public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String img;
     private String name;
@@ -30,6 +31,14 @@ public class Product {
     private int active;
 
     //relationship to other table
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Ram ram;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Rom rom;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Pin pin;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Brand brand;
 
 
 
