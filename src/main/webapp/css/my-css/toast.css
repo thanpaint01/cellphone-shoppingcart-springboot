@@ -1,0 +1,54 @@
+.toast--error{
+    position: fixed;
+    top: auto;
+    bottom: 15px;
+    left: 75%;
+    width: 25%;
+    background-color: whitesmoke;
+    box-shadow: 0px 5px 8px #dddddd;
+    padding: 0px 15px 0px 15px;
+    height: 80px;
+    display: flex;
+    align-self: center;
+    z-index: 9999;
+    animation: slideLeft ease .5s, fadeOut linear 1s 5s forwards;
+    border-left: 5px red solid;
+}
+.toast:hover{
+    box-shadow: 0 15px 18px #dddddd;
+}
+.toast__icon{
+    justify-content: center;
+    align-self: center;
+}
+.toast__content.fas{
+    align-items: center;
+    top: 20%;
+}
+
+.fas.fa-times-circle{
+    color: red;
+}
+.toast__content{
+    display: block;
+    align-self: center;
+    flex-grow: 1;
+    min-width: 80%;
+    max-width: 80%;
+    margin: 0px 15px 0px 15px;
+}
+@keyframes slideLeft{
+    from{
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to{
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+@keyframes fadeOut{
+    to{
+        opacity: 0;
+    }
+}

@@ -26,8 +26,7 @@
                                                             data-toggle="dropdown" href="#">Hãng<i
                                     class="fas fa-caret-down float-right mt-2"></i></a>
                                 <ul class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Samsung</a>
-                                    <a class="dropdown-item" href="#">Toyota</a>
+                                    <a class="dropdown-item" th:each="brand : ${brands}" th:href="@{/shop(brand=${brand.id})}" th:text="${brand.name}"></a>
                                 </ul>
                             </li>
                             <li><a href="shop.html">Danh sách sản phẩm</a></li>
@@ -65,7 +64,7 @@
                     <li class="side-menu">
                         <a href="#">
                             <i class="fa fa-shopping-bag"></i>
-                            <span class="badge">3</span>
+                            <span class="badge" id="sumOfCart" th:text="0"></span>
                             <p>Giỏ hàng</p>
                         </a>
                     </li>

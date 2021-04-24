@@ -39,6 +39,9 @@ public class Product {
     private Pin pin;
     @ManyToOne(fetch = FetchType.LAZY)
     private Brand brand;
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, optional = false)
+    private Cart cart;
 
 
 
