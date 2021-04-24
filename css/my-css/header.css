@@ -1,7 +1,4 @@
-body .modal-open {
-  overflow: auto !important;
-}
-header .modal-header {
+.modal-header {
   background-color: #b0b435;
 }
 .dropdown-submenu {
@@ -23,7 +20,7 @@ header .modal-header {
   margin-top: -30px;
   left: 100%;
 }
-header .modal a:hover {
+.modal a:hover {
   color: #b0b435;
 }
 
