@@ -9,6 +9,7 @@ import nlu.fit.cellphoneapp.services.IBrandService;
 import nlu.fit.cellphoneapp.services.ICartService;
 import nlu.fit.cellphoneapp.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +38,7 @@ public class HomeController {
     @GetMapping("/shop{brand}")
     public String getListProductByBrandID(Model model, @RequestParam("brand") int brandID) {
         getListBrand(model);
-        return "index";
+        return "shop";
     }
 
     public List<Brand> getListBrand(Model model) {
@@ -46,16 +47,28 @@ public class HomeController {
         return brands;
     }
 
-    public List<Product> getListProduct(Model model){
+    public List<Product> getListProduct(Model model) {
         List<Product> products = productService.findAll();
         model.addAttribute("products", products);
         return products;
     }
 
     @GetMapping("/shop")
-    public String getShopPage(Model model) {
+    public String getShopPage(@RequestParam(value = "page", required = false, defaultValue = "1") int page, @RequestParam(value = "limit", required = false, defaultValue = "15") int limit, Model model) {
         getListBrand(model);
         getListProduct(model);
+        //default page khi vào trang shop
+        return getByPaging(page, limit, model);
+    }
+    public String getByPaging(int page, int limit, Model model) {
+        System.out.println("page = " + page + ",limit = " + limit);
+        Page<Product> shopPage = productService.findPaginated(page, limit);
+        List<Product> products = shopPage.getContent();
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", shopPage.getTotalPages());
+        model.addAttribute("totalElements", shopPage.getTotalElements());
+        model.addAttribute("products", products);
+
         return "shop";
     }
 
@@ -65,8 +78,9 @@ public class HomeController {
         Phương thức hiện đang dùng để checkAjax
      */
     @PostMapping("/add-to-cart")
-    public @ResponseBody boolean ajaxCheckAddToCart(@RequestBody CartDTO infoCartItem,
-                     HttpServletResponse resp) throws IOException {
+    public @ResponseBody
+    boolean ajaxCheckAddToCart(@RequestBody CartDTO infoCartItem,
+                               HttpServletResponse resp) throws IOException {
         int productID = infoCartItem.getProductID();
         int amount = infoCartItem.getAmount();
         int userID = infoCartItem.getUserID();
@@ -74,11 +88,11 @@ public class HomeController {
 
         //kiểm tra số lượng trong kho còn đủ sản phẩm hay không ?
         int amountProductRest = productService.findOneByID(productID).getAmount();
-        if(amount > amountProductRest) return false; //không còn hàng để cung ứng
+        if (amount > amountProductRest) return false; //không còn hàng để cung ứng
 
         //còn hàng kiểm tra xem sản phẩm đó đã có ở trong giỏ hàng hay chưa ?
-        if(!cartService.isInCart(productID, amount, userID)){
-            System.out.println("Sản phẩm "+productID+" đã có trong giỏ hàng!");
+        if (!cartService.isInCart(productID, amount, userID)) {
+            System.out.println("Sản phẩm " + productID + " đã có trong giỏ hàng!");
             return false;
         }
         /*

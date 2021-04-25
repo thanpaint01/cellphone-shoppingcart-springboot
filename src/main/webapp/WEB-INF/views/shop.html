@@ -30,6 +30,7 @@
     <script src="../../js/jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" href="../../css/my-css/toast.css">
 
+
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -59,7 +60,7 @@
 </div>
 <!-- End All Title Box -->
 <div class="container pt-2">
-    Có 200 sản phẩm
+    Có <span th:text="${totalElements}"></span> sản phẩm
 </div>
 
 <!-- Start Shop Page  -->
@@ -150,229 +151,11 @@
                                             </div>
                                             <div class="why-text text-center">
                                                 <h4 th:text="${product.name}"></h4>
-                                                <h5 th:text="${product.price}+'VND'"></h5>
+                                                <h5 class="product-price" th:text="${product.price}+'VND'"></h5>
                                             </div>
                                         </div>
                                     </div>
 
-
-                                    <!--  static product -->
-                                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                                        <div class="products-single fix">
-                                            <div class="box-img-hover">
-                                                <div class="type-lb">
-                                                    <p class="new">New</p>
-                                                </div>
-                                                <img src="images/img-pro-02.jpg" class="img-fluid" alt="Image">
-                                                <div class="mask-icon">
-                                                    <ul>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                               title="View"><i class="fas fa-eye"></i></a></li>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                               title="Compare"><i class="fas fa-sync-alt"></i></a>
-                                                        </li>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                               title="Add to Wishlist"><i
-                                                                class="far fa-heart"></i></a></li>
-                                                    </ul>
-                                                    <a class="cart" href="#">Add to Cart</a>
-                                                </div>
-                                            </div>
-                                            <div class="why-text">
-                                                <h4>Lorem ipsum dolor sit amet</h4>
-                                                <h5> $9.79</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                                        <div class="products-single fix">
-                                            <div class="box-img-hover">
-                                                <div class="type-lb">
-                                                    <p class="sale">Sale</p>
-                                                </div>
-                                                <img src="images/img-pro-03.jpg" class="img-fluid" alt="Image">
-                                                <div class="mask-icon">
-                                                    <ul>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                               title="View"><i class="fas fa-eye"></i></a></li>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                               title="Compare"><i class="fas fa-sync-alt"></i></a>
-                                                        </li>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                               title="Add to Wishlist"><i
-                                                                class="far fa-heart"></i></a></li>
-                                                    </ul>
-                                                    <a class="cart" href="#">Add to Cart</a>
-                                                </div>
-                                            </div>
-                                            <div class="why-text">
-                                                <h4>Lorem ipsum dolor sit amet</h4>
-                                                <h5> $9.79</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                                        <div class="products-single fix">
-                                            <div class="box-img-hover">
-                                                <div class="type-lb">
-                                                    <p class="new">New</p>
-                                                </div>
-                                                <img src="images/img-pro-01.jpg" class="img-fluid" alt="Image">
-                                                <div class="mask-icon">
-                                                    <ul>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                               title="View"><i class="fas fa-eye"></i></a></li>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                               title="Compare"><i class="fas fa-sync-alt"></i></a>
-                                                        </li>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                               title="Add to Wishlist"><i
-                                                                class="far fa-heart"></i></a></li>
-                                                    </ul>
-                                                    <a class="cart" href="#">Add to Cart</a>
-                                                </div>
-                                            </div>
-                                            <div class="why-text">
-                                                <h4>Lorem ipsum dolor sit amet</h4>
-                                                <h5> $9.79</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                                        <div class="products-single fix">
-                                            <div class="box-img-hover">
-                                                <div class="type-lb">
-                                                    <p class="sale">Sale</p>
-                                                </div>
-                                                <img src="images/img-pro-02.jpg" class="img-fluid" alt="Image">
-                                                <div class="mask-icon">
-                                                    <ul>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                               title="View"><i class="fas fa-eye"></i></a></li>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                               title="Compare"><i class="fas fa-sync-alt"></i></a>
-                                                        </li>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                               title="Add to Wishlist"><i
-                                                                class="far fa-heart"></i></a></li>
-                                                    </ul>
-                                                    <a class="cart" href="#">Add to Cart</a>
-                                                </div>
-                                            </div>
-                                            <div class="why-text">
-                                                <h4>Lorem ipsum dolor sit amet</h4>
-                                                <h5> $9.79</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                                        <div class="products-single fix">
-                                            <div class="box-img-hover">
-                                                <div class="type-lb">
-                                                    <p class="sale">Sale</p>
-                                                </div>
-                                                <img src="images/img-pro-03.jpg" class="img-fluid" alt="Image">
-                                                <div class="mask-icon">
-                                                    <ul>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                               title="View"><i class="fas fa-eye"></i></a></li>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                               title="Compare"><i class="fas fa-sync-alt"></i></a>
-                                                        </li>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                               title="Add to Wishlist"><i
-                                                                class="far fa-heart"></i></a></li>
-                                                    </ul>
-                                                    <a class="cart" href="#">Add to Cart</a>
-                                                </div>
-                                            </div>
-                                            <div class="why-text">
-                                                <h4>Lorem ipsum dolor sit amet</h4>
-                                                <h5> $9.79</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                                        <div class="products-single fix">
-                                            <div class="box-img-hover">
-                                                <div class="type-lb">
-                                                    <p class="sale">Sale</p>
-                                                </div>
-                                                <img src="images/img-pro-01.jpg" class="img-fluid" alt="Image">
-                                                <div class="mask-icon">
-                                                    <ul>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                               title="View"><i class="fas fa-eye"></i></a></li>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                               title="Compare"><i class="fas fa-sync-alt"></i></a>
-                                                        </li>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                               title="Add to Wishlist"><i
-                                                                class="far fa-heart"></i></a></li>
-                                                    </ul>
-                                                    <a class="cart" href="#">Add to Cart</a>
-                                                </div>
-                                            </div>
-                                            <div class="why-text">
-                                                <h4>Lorem ipsum dolor sit amet</h4>
-                                                <h5> $9.79</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                                        <div class="products-single fix">
-                                            <div class="box-img-hover">
-                                                <div class="type-lb">
-                                                    <p class="sale">Sale</p>
-                                                </div>
-                                                <img src="images/img-pro-02.jpg" class="img-fluid" alt="Image">
-                                                <div class="mask-icon">
-                                                    <ul>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                               title="View"><i class="fas fa-eye"></i></a></li>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                               title="Compare"><i class="fas fa-sync-alt"></i></a>
-                                                        </li>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                               title="Add to Wishlist"><i
-                                                                class="far fa-heart"></i></a></li>
-                                                    </ul>
-                                                    <a class="cart" href="#">Add to Cart</a>
-                                                </div>
-                                            </div>
-                                            <div class="why-text">
-                                                <h4>Lorem ipsum dolor sit amet</h4>
-                                                <h5> $9.79</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                                        <div class="products-single fix">
-                                            <div class="box-img-hover">
-                                                <div class="type-lb">
-                                                    <p class="new">New</p>
-                                                </div>
-                                                <img src="images/img-pro-03.jpg" class="img-fluid" alt="Image">
-                                                <div class="mask-icon">
-                                                    <ul>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                               title="View"><i class="fas fa-eye"></i></a></li>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                               title="Compare"><i class="fas fa-sync-alt"></i></a>
-                                                        </li>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                               title="Add to Wishlist"><i
-                                                                class="far fa-heart"></i></a></li>
-                                                    </ul>
-                                                    <a class="cart" href="#">Add to Cart</a>
-                                                </div>
-                                            </div>
-                                            <div class="why-text">
-                                                <h4>Lorem ipsum dolor sit amet</h4>
-                                                <h5> $9.79</h5>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="list-view">
@@ -530,20 +313,38 @@
                         </div>
                     </div>
 
-                    <!--      END              -->
+                    <!--   THYMELEAF PAGINATION -->
                     <div class="clearfix d-flex justify-content-center">
                         <ul class="pagination">
-                            <li class="page-item"><a href="#" class="page-link page-icon">&#x25C0</a></li>
-                            <li class="page-item"><a href="#" class="page-link">1</a></li>
-                            <li class="page-item"><a href="#" class="page-link">2</a></li>
-                            <li class="page-item"><a href="#" class="page-link">3</a></li>
-                            <li class="page-item active"><a href="#" class="page-link">4</a></li>
-                            <li class="page-item"><a href="#" class="page-link">5</a></li>
-                            <li class="page-item"><a href="#" class="page-link">6</a></li>
-                            <li class="page-item"><a href="#" class="page-link">7</a></li>
-                            <li class="page-item"><a href="#" class="page-link page-icon">&#x25BA;</a></li>
+                            <li th:class="${currentPage == 1}? 'page-item disabled' : 'page-item'">
+                                <a class="page-link w-100" th:href="@{/shop}">First</a>
+                            </li>
+                            <li th:class="${currentPage == 1}? 'page-item disabled': 'page-item' ">
+                                <a class="page-link" aria-label="Previous"
+                                   th:href="@{/shop(page=${currentPage - 1}, limit=15)}"
+                                   title='Go to previous page'><span aria-hidden="true">«</span>
+                                    <span class="sr-only">Previous</span></a>
+                            </li>
+                            <li th:each="item : ${#numbers.sequence(1,totalPages)}"
+                                th:class="${item == currentPage ? 'page-item active' :'page-item' }">
+                                <a class="page-link" th:href="@{/shop(page = ${item}, limit =15)}"> <span
+                                        th:text='${item}'>1</span>
+                                </a>
+                            </li>
+                            <li
+                                    th:class="${currentPage == totalPages}? 'page-item disabled': 'page-item'">
+                                <a class="page-link" aria-label="Next"
+                                   th:href="@{/shop(page =${currentPage + 1}, limit = 15)}"
+                                   title='Go to next page'><span
+                                        aria-hidden="true">»</span> <span class="sr-only">Next</span></a>
+                            </li>
+                            <li
+                                    th:class="${currentPage == totalPages}? 'page-item disabled':'page-item'">
+                                <a class="page-link w-100" th:href="@{/shop(page=${totalPages}, limit =15)}">Last</a>
+                            </li>
                         </ul>
                     </div>
+                    <!--      END THYMELEAF PAGINATION              -->
                 </div>
             </div>
             <div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12 sidebar-shop-left">
@@ -714,6 +515,7 @@
 <script src="../../js/contact-form-script.js"></script>
 <script src="../../js/custom.js"></script>
 <script src="../../js/my-js/add-to-cart.js"></script>
+<script src="../../js/my-js/format-price-of-product.js"></script>
 </body>
 
 </html>
