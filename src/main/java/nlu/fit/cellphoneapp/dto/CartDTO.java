@@ -1,5 +1,9 @@
 package nlu.fit.cellphoneapp.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+
 public class CartDTO {
     private int id;
     private int productID;

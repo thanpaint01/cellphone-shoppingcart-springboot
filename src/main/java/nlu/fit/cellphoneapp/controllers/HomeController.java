@@ -1,9 +1,7 @@
 package nlu.fit.cellphoneapp.controllers;
 
-import nlu.fit.cellphoneapp.converters.MyConverter;
 import nlu.fit.cellphoneapp.dto.CartDTO;
 import nlu.fit.cellphoneapp.entities.Brand;
-import nlu.fit.cellphoneapp.entities.Cart;
 import nlu.fit.cellphoneapp.entities.Product;
 import nlu.fit.cellphoneapp.services.IBrandService;
 import nlu.fit.cellphoneapp.services.ICartService;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-
 @Controller
 public class HomeController {
 
@@ -31,6 +28,7 @@ public class HomeController {
     @GetMapping({"/", "/home"})
     public String getIndex(Model model) {
         getListBrand(model);
+        model.addAttribute("CONTENT_TITLE","Trang chủ");
         return "index";
     }
 
@@ -41,11 +39,6 @@ public class HomeController {
         return "shop";
     }
 
-    public List<Brand> getListBrand(Model model) {
-        List<Brand> brands = brandService.findAll();
-        model.addAttribute("brands", brands);
-        return brands;
-    }
 
     public List<Product> getListProduct(Model model) {
         List<Product> products = productService.findAll();
@@ -60,6 +53,12 @@ public class HomeController {
         //default page khi vào trang shop
         return getByPaging(page, limit, model);
     }
+    public List<Brand> getListBrand(Model model) {
+        List<Brand> brands = brandService.findAll();
+        model.addAttribute("brands", brands);
+        return brands;
+    }
+
     public String getByPaging(int page, int limit, Model model) {
         System.out.println("page = " + page + ",limit = " + limit);
         Page<Product> shopPage = productService.findPaginated(page, limit);
@@ -68,7 +67,6 @@ public class HomeController {
         model.addAttribute("totalPages", shopPage.getTotalPages());
         model.addAttribute("totalElements", shopPage.getTotalElements());
         model.addAttribute("products", products);
-
         return "shop";
     }
 
