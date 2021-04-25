@@ -5,7 +5,7 @@
     left: 75%;
     width: 25%;
     background-color: whitesmoke;
-    box-shadow: 0px 5px 8px #dddddd;
+    box-shadow: 0px 15px 18px #dddddd;
     padding: 0px 15px 0px 15px;
     height: 80px;
     display: flex;
@@ -13,9 +13,10 @@
     z-index: 9999;
     animation: slideLeft ease .5s, fadeOut linear 1s 5s forwards;
     border-left: 5px red solid;
+    font-size: 16px;
 }
 .toast:hover{
-    box-shadow: 0 15px 18px #dddddd;
+    box-shadow: 0 35px 38px #dddddd;
 }
 .toast__icon{
     justify-content: center;
