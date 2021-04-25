@@ -25,10 +25,9 @@ public class User {
     private String address;
     private String gender;
     private Date birth;
-    @Column(name="pass_key")
-    private String passKey;
-    @Column(name="provided_pass")
-    private Date providedPass;
+    private String key;
+    @Column(name="expired_key")
+    private Date expiredKey;
     private int active;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,
