@@ -1,7 +1,7 @@
 package nlu.fit.cellphoneapp.services.impl;
 
 import nlu.fit.cellphoneapp.entities.Brand;
-import nlu.fit.cellphoneapp.repositories.IBrandRepository;
+import nlu.fit.cellphoneapp.repositories.interfaces.IBrandRepository;
 import nlu.fit.cellphoneapp.services.IBrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

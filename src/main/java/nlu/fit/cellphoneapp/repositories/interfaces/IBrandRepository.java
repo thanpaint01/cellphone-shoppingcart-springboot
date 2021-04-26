@@ -1,4 +1,4 @@
-package nlu.fit.cellphoneapp.repositories;
+package nlu.fit.cellphoneapp.repositories.interfaces;
 
 import nlu.fit.cellphoneapp.entities.Brand;
 import org.springframework.data.jpa.repository.JpaRepository;

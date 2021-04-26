@@ -1,11 +1,3 @@
-body .modal-open {
-    overflow: auto !important;
-}
-
-header .modal-header {
-    background-color: #b0b435;
-}
-
 .dropdown-submenu {
     position: relative;
 }
@@ -26,9 +18,6 @@ header .modal-header {
     left: 100%;
 }
 
-header .modal a:hover {
-    color: #b0b435;
-}
 
 @media (max-width: 992px) {
     .dropdown-menu {
@@ -39,7 +28,6 @@ header .modal a:hover {
         width: auto;
     }
 }
-
 .custom-radio .custom-control-label::before {
     background-color: whitesmoke;
 }
@@ -59,7 +47,6 @@ header .modal a:hover {
 .custom-radio .custom-control-input:focus ~ .custom-control-label::before {
     box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(255, 123, 255, 0.25);
 }
-
 .attr-nav > ul > li > a span.badge {
     top: 44%;
     right: 67px;
@@ -69,11 +56,24 @@ header .modal a:hover {
     padding-top: 6px;
     border-radius: 50%;
 }
-
 .side-menu > a:hover span {
     color: black !important;
 }
-
 .attr-nav > ul > li > a span.badge:hover {
     color: black;
+}
+.modal-header {
+    background-color: #b0b435;
+}
+.modal a:hover {
+    color: #b0b435;
+}
+.modal .show-message {
+    font-size: 1.2rem;
+}
+.modal .show-message.error{
+    background-color: #c1002a;
+}
+.modal .show-message.success{
+    background-color: #05c148;
 }
