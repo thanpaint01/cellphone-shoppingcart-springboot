@@ -1,4 +1,4 @@
-.toast--error{
+.toast{
     position: fixed;
     top: auto;
     bottom: 15px;
@@ -12,8 +12,13 @@
     align-self: center;
     z-index: 9999;
     animation: slideLeft ease .5s, fadeOut linear 1s 5s forwards;
-    border-left: 5px red solid;
     font-size: 16px;
+}
+div.toast.toast--error{
+    border-left: 5px red solid;
+}
+div.toast.toast--success{
+    border-left: 5px green solid;
 }
 .toast:hover{
     box-shadow: 0 35px 38px #dddddd;

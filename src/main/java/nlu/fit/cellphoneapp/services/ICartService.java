@@ -4,5 +4,5 @@ import nlu.fit.cellphoneapp.dto.CartDTO;
 
 public interface ICartService {
     boolean isInCart(int productID, int amount, int userID);
-    boolean insertIntoTable(CartDTO cartDTO);
+    CartDTO insertIntoTable(CartDTO cartDTO);
 }

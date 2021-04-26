@@ -81,4 +81,19 @@ public class CartDTO {
     public void setActive(int active) {
         this.active = active;
     }
+
+    @Override
+    public String toString() {
+        return "CartDTO{" +
+                "id=" + id +
+                ", productID=" + productID +
+                ", userID=" + userID +
+                ", amount=" + amount +
+                ", totalPrice=" + totalPrice +
+                ", productName='" + productName + '\'' +
+                ", productImg='" + productImg + '\'' +
+                ", active=" + active +
+                '}';
+    }
 }
+

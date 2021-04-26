@@ -1,27 +1,22 @@
 package nlu.fit.cellphoneapp.controllers;
 
-import nlu.fit.cellphoneapp.dto.CartDTO;
 import nlu.fit.cellphoneapp.entities.Brand;
 import nlu.fit.cellphoneapp.entities.Product;
 import nlu.fit.cellphoneapp.services.IBrandService;
-import nlu.fit.cellphoneapp.services.ICartService;
 import nlu.fit.cellphoneapp.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 @Controller
 public class HomeController {
 
     @Autowired
     IBrandService brandService;
-    @Autowired
-    ICartService cartService;
     @Autowired
     IProductService productService;
 
@@ -48,6 +43,7 @@ public class HomeController {
 
     @GetMapping("/shop")
     public String getShopPage(@RequestParam(value = "page", required = false, defaultValue = "1") int page, @RequestParam(value = "limit", required = false, defaultValue = "15") int limit, Model model) {
+        model.addAttribute("CONTENT_TITLE","Danh sách sản phẩm");
         getListBrand(model);
         getListProduct(model);
         //default page khi vào trang shop
@@ -70,35 +66,6 @@ public class HomeController {
         return "shop";
     }
 
-    /*
-        Phương thức thêm sản phẩm vào giỏ
-        Tham số nhận vào bao gồm: productID, amount, userID
-        Phương thức hiện đang dùng để checkAjax
-     */
-    @PostMapping("/add-to-cart")
-    public @ResponseBody
-    boolean ajaxCheckAddToCart(@RequestBody CartDTO infoCartItem,
-                               HttpServletResponse resp) throws IOException {
-        int productID = infoCartItem.getProductID();
-        int amount = infoCartItem.getAmount();
-        int userID = infoCartItem.getUserID();
-        resp.setContentType("text/plain");
 
-        //kiểm tra số lượng trong kho còn đủ sản phẩm hay không ?
-        int amountProductRest = productService.findOneByID(productID).getAmount();
-        if (amount > amountProductRest) return false; //không còn hàng để cung ứng
-
-        //còn hàng kiểm tra xem sản phẩm đó đã có ở trong giỏ hàng hay chưa ?
-        if (!cartService.isInCart(productID, amount, userID)) {
-            System.out.println("Sản phẩm " + productID + " đã có trong giỏ hàng!");
-            return false;
-        }
-        /*
-            Không gặp bất kỳ lỗi nào thì thực hiện thêm vào csdl
-            Tuy nhiên, Spring Data JPA làm việc với entity nên ta cần set lại giá trị cho entity, được thực hiện bởi cart service
-         */
-        cartService.insertIntoTable(infoCartItem);
-        return true;
-    }
 
 }
