@@ -1,10 +1,8 @@
-function format2(n, currency) {
-    return currency + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-}
+var formatter = new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+});
 
-let x = document.getElementsByClassName(".product-price");
-for (let i = 0, len = x.length; i < len; i++) {
-    let num = Number(x[i].innerHTML)
-        .toLocaleString('vi-VN');
-    x[i].innerHTML = format2(num, 'VND');
-}
+const price = $('.product-price').html(function () {
+    $(this).html(formatter.format($(this).text()));
+})

@@ -20,6 +20,8 @@ public class MyConverter {
         cart.setUserID(cartItemEntity.getUser().getId());
         cart.setProductID(cartItemEntity.getProduct().getId());
         cart.setProductName(cartItemEntity.getProduct().getName());
+        cart.setProductImg(cartItemEntity.getProduct().getImg());
+        cart.setProductPrice(cartItemEntity.getProduct().getPrice());
         return cart;
     }
 }

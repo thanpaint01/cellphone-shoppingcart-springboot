@@ -26,7 +26,8 @@
                                                             data-toggle="dropdown" href="#">Hãng<i
                                     class="fas fa-caret-down float-right mt-2"></i></a>
                                 <ul class="dropdown-menu">
-                                    <a class="dropdown-item" th:each="brand : ${brands}" th:href="@{/shop(brand=${brand.id})}" th:text="${brand.name}"></a>
+                                    <a class="dropdown-item" th:each="brand : ${brands}"
+                                       th:href="@{/shop(brand=${brand.id})}" th:text="${brand.name}"></a>
                                 </ul>
                             </li>
                             <li><a href="../shop.html">Danh sách sản phẩm</a></li>
@@ -77,25 +78,14 @@
             <a href="#" class="close-side"><i class="fa fa-times"></i></a>
             <li class="cart-box">
                 <ul class="cart-list">
-                    <li>
-                        <a href="#" class="photo"><img src="images/img-pro-01.jpg" class="cart-thumb" alt=""/></a>
-                        <h6><a href="#">Delica omtantur </a></h6>
-                        <p>1x - <span class="price">$80.00</span></p>
-                    </li>
-                    <li>
-                        <a href="#" class="photo"><img src="images/img-pro-02.jpg" class="cart-thumb" alt=""/></a>
-                        <h6><a href="#">Omnes ocurreret</a></h6>
-                        <p>1x - <span class="price">$60.00</span></p>
-                    </li>
-                    <li>
-                        <a href="#" class="photo"><img src="images/img-pro-03.jpg" class="cart-thumb" alt=""/></a>
-                        <h6><a href="#">Agam facilisis</a></h6>
-                        <p>1x - <span class="price">$40.00</span></p>
-                    </li>
+                    <!-- upload cart item using ajax -->
+                    <!--  end upload cart item  -->
+                    <!--  start li total -->
                     <li class="total">
-                        <a href="#" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
-                        <span class="float-right"><strong>Total</strong>: $180.00</span>
+                        <a href="#" class="btn btn-default hvr-hover btn-cart">CHI TIẾT</a>
+                        <span class="float-right"><strong>Tổng</strong>: <span class="product-price total-cart">580000000</span> </span>
                     </li>
+                    <!-- end li total -->
                 </ul>
             </li>
         </div>

@@ -11,6 +11,7 @@ public class CartDTO {
     private double totalPrice;
     private String productName;
     private String productImg;
+    private double productPrice;
     private int active;
 
 
@@ -79,6 +80,14 @@ public class CartDTO {
 
     public void setActive(int active) {
         this.active = active;
+    }
+
+    public double getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(double productPrice) {
+        this.productPrice = productPrice;
     }
 
     @Override
