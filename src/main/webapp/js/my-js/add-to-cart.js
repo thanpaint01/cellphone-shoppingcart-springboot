@@ -15,15 +15,15 @@ $(function () {
             type: 'POST',
             data: JSON.stringify({productID: productID, amount: 1}),
             contentType: 'application/json',
-            accept: 'text/plain',
             url: 'add-to-cart',
             success: function (result) {
-                if (result === false) {
+                if (result === 'error') {
                     showWarning();
                 } else {
                     let sum = parseInt($("#sumOfCart").text(), 10) + 1;
                     $('#sumOfCart').text(sum);
                     showSuccess();
+                    $('.cart-list').append(result);
                 }
             }
         })

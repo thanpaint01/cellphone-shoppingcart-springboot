@@ -1,7 +1,7 @@
 package nlu.fit.cellphoneapp.dto;
 
 
-
+import nlu.fit.cellphoneapp.others.Link;
 
 public class CartDTO {
     private int id;
@@ -11,6 +11,7 @@ public class CartDTO {
     private double totalPrice;
     private String productName;
     private String productImg;
+    private double productPrice;
     private int active;
 
 
@@ -70,7 +71,7 @@ public class CartDTO {
     }
 
     public void setProductImg(String productImg) {
-        this.productImg = productImg;
+        this.productImg = Link.HOST+productImg;
     }
 
     public int getActive() {
@@ -79,6 +80,14 @@ public class CartDTO {
 
     public void setActive(int active) {
         this.active = active;
+    }
+
+    public double getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(double productPrice) {
+        this.productPrice = productPrice;
     }
 
     @Override

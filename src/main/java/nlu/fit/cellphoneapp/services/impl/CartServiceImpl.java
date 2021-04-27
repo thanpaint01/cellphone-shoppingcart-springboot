@@ -11,6 +11,7 @@ import nlu.fit.cellphoneapp.services.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -56,6 +57,8 @@ public class CartServiceImpl implements ICartService {
             cartItemEntity = MyConverter.toEntity(cartDTO);
         } else {
             System.out.println("Cập nhật số lượng");
+            CartItem oldCartItem = cartRepo.getOne(cartDTO.getId());
+            cartItemEntity = MyConverter.toEntity(cartDTO, oldCartItem);
         }
         Product productItem = productRepo.getOne(cartDTO.getProductID());
         cartItemEntity.setProduct(productItem);
@@ -65,5 +68,15 @@ public class CartServiceImpl implements ICartService {
         cartItemEntity = cartRepo.save(cartItemEntity);
         System.out.println(cartItemEntity);
         return MyConverter.toDTO(cartItemEntity);
+    }
+
+    @Override
+    public List<CartDTO> getAllByUserID(int userID) {
+        List<CartItem> cartItemList = cartRepo.getAllByUser(userRepo.getOne(userID));
+        List<CartDTO> listResult = new ArrayList<>();
+        for (CartItem cartItem: cartItemList) {
+            listResult.add(MyConverter.toDTO(cartItem));
+        }
+        return listResult;
     }
 }
