@@ -5,14 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class RegisterForm {
-    String email;
-    String fullname;
-    int gender;
-    String password;
-    String confirmPassword;
+    public String newemail;
+    public String newfullname;
+    public String newgender;
+    public String newpassword;
+    public String confirmpassword;
+
 }

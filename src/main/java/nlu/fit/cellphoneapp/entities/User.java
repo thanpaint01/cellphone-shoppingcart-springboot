@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 @Setter
 public class User {
     public enum ACCESS {
-        CONSUMEER(0), ADMIN(1);
+        CONSUMEER(1), ADMIN(2);
         private final int value;
 
         ACCESS(int value) {
@@ -57,22 +57,14 @@ public class User {
     @Column(name = "expired_key")
     private Date expiredKey;
     private int active;
+    private int role;
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     private List<CartItem> cartItems = new ArrayList<>();
-    //ManyToMany user_role
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private List<Role> roles = new ArrayList<>();
+
 
     public static boolean validName(String name) {
         String expression = "^\\p{L}+[\\p{L}\\p{Z}\\p{P}]{0,}";
@@ -93,10 +85,14 @@ public class User {
             return false;
         return pat.matcher(email).matches();
     }
+    public static String toStringGender(int gender){
+        return gender==1?"Nam":"Nữ";
+    }
     public static boolean validGender(int gender) {
         return gender == 1 || gender == 2;
     }
     public static boolean validGender(String gender) {
         return gender.equals("Nam") || gender.equals("Nữ") ;
     }
+
 }

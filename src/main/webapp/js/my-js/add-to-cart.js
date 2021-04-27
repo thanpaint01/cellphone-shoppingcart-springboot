@@ -10,6 +10,7 @@
 $(function () {
     $('.btnAddToCart').click(function () {
         var productID = $(this).val();
+        console.log(JSON.stringify({productID: productID, amount: 1}));
         $.ajax({
             type: 'POST',
             data: JSON.stringify({productID: productID, amount: 1}),
