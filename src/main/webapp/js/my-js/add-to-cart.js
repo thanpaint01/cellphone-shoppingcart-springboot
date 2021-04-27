@@ -9,16 +9,17 @@
  */
 $(function () {
     $('.btnAddToCart').click(function () {
+        var productID = $(this).val();
         $.ajax({
             type: 'POST',
-            data: JSON.stringify({productID: 1, amount: 1, userID: 1}),
+            data: JSON.stringify({productID: productID, amount: 1}),
             contentType: 'application/json',
             accept: 'text/plain',
             url: 'add-to-cart',
             success: function (result) {
                 if (result === false) {
                     showWarning();
-                }else{
+                } else {
                     let sum = parseInt($("#sumOfCart").text(), 10) + 1;
                     $('#sumOfCart').text(sum);
                     showSuccess();
@@ -42,7 +43,6 @@ var toast = function ({title = "", type = "", message = "", duration = 3000}) {
     if (main) {
         //tao ra mot div chua noi dung toast
         const toast = document.createElement('div');
-        toast.classList.add('toast');
 
         const autoRemove = setTimeout(function () {
             main.removeChild(toast);
@@ -55,7 +55,7 @@ var toast = function ({title = "", type = "", message = "", duration = 3000}) {
             }
         }
         toast.innerHTML = `
-            <div class="toast--${type}">
+            <div class="toast toast--${type}">
                     <div class="toast__icon">
                         <i class="${iconToast}"></i>
                     </div>
@@ -76,7 +76,7 @@ var toast = function ({title = "", type = "", message = "", duration = 3000}) {
 function showSuccess() {
     toast({
         type: "success",
-        title: "Thành công !",
+        title: "Thành công!",
         message: 'Sản phẩm đã được thêm vào giỏ hàng.',
         duration: 5000
     })

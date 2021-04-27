@@ -57,10 +57,12 @@ public class User {
     @Column(name = "expired_key")
     private Date expiredKey;
     private int active;
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY, optional = false)
-    private Cart cart;
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<CartItem> cartItems = new ArrayList<>();
     //ManyToMany user_role
     @ManyToMany(cascade = {
             CascadeType.PERSIST,

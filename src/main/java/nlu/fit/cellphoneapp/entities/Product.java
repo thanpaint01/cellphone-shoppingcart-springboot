@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "product")
@@ -39,9 +41,12 @@ public class Product {
     private Pin pin;
     @ManyToOne(fetch = FetchType.LAZY)
     private Brand brand;
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY, optional = false)
-    private Cart cart;
+    @OneToMany(
+            mappedBy = "product",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<CartItem> cartItems = new ArrayList<>();
 
 
 
