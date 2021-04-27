@@ -1,4 +1,4 @@
-var formatter = new Intl.NumberFormat('vi-VN', {
+var formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'VND',
 });

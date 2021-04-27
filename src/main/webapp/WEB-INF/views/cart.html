@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/consumer-layout.html}">
+
+<head>
+    <title th:text="${CONTENT_TITLE}"></title>
+    <th:block layout:fragment="css">
+
+    </th:block>
+</head>
+<body>
+<!-- Start block body -->
+<div layout:fragment="body">
+    <!-- Start All Title Box -->
+    <div class="all-title-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Chi Tiết Giỏ Hàng</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/home}">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Giỏ hàng</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End All Title Box -->
+
+    <!-- Start Cart  -->
+    <div class="cart-box-main pt-5 pb-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-main table-responsive">
+                        <table class="table border">
+                            <thead>
+                            <tr class="text-center">
+                                <th>Thông tin sản phẩm</th>
+                                <th></th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Tổng cộng</th>
+                                <th>Xóa</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="cartItem : ${carts}" th:class="'text-center tr-update tr' + ${cartItem.id}">
+                                <td class="thumbnail-img">
+                                    <a href="#">
+                                        <img class="img-fluid" th:src="${cartItem.productImg}" alt=""/>
+                                    </a>
+                                </td>
+                                <td class="text-left font-weight-bold text-dark">
+                                    <a class="product-name" th:text="${cartItem.productName}">
+
+                                    </a>
+                                </td>
+                                <td class="price-pr">
+                                    <p class="product-price current-price-product" th:text="${cartItem.productPrice}"
+                                       th:value="${cartItem.productPrice}"></p>
+                                </td>
+                                <td class="quantity-box">
+                                    <input type="number" size="4" value="1" min="0" step="1"
+                                           class="c-input-text qty text"></td>
+                                <td class="total-pr">
+                                    <p class="product-price total-by-product" th:text="${cartItem.totalPrice}"></p>
+                                </td>
+                                <td class="remove-pr">
+                                    <a href="#">
+                                        <i class="fas fa-times"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row my-5">
+                <div class="col-lg-6 col-sm-6">
+                    <div class="coupon-box">
+                        <div class="input-group input-group-sm">
+                            <input class="form-control" placeholder="Nhập mã giảm giá tại đây" aria-label="Coupon code"
+                                   type="text">
+                            <div class="input-group-append">
+                                <button class="btn btn-theme" type="button">Mã giảm giá</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row col-lg-6 col-sm-6 m-0">
+                    <div class="col-lg-3 col-sm-12"></div>
+                    <div class="border col-lg-9 col-sm-12 p-0">
+                        <h1 class="bg-dark text-light p-3">Thông tin hóa đơn</h1>
+                        <div class="order-box p-3">
+                            <div class="d-flex">
+                                <h4>Tổng cộng</h4>
+                                <div class="ml-auto font-weight-bold product-price total-price">240000000</div>
+                            </div>
+                            <div class="d-flex">
+                                <h4>Giảm giá</h4>
+                                <div class="ml-auto font-weight-bold product-price discount-price">4000000</div>
+                            </div>
+                            <hr class="my-1">
+                            <div class="d-flex">
+                                <h4>Phí vận chuyển</h4>
+                                <div class="ml-auto font-weight-bold"><small>Miễn phí</small></div>
+                            </div>
+                            <hr>
+                            <div class="d-flex gr-total">
+                                <h5>Thành tiền</h5>
+                                <div class="ml-auto h5 product-price last-price">236000000</div>
+                            </div>
+                            <div class="d-flex gr-total">
+                                <small>*Đã bao gồm VAT</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 d-flex shopping-box mt-3"><a href="checkout.html"
+                                                                    class="ml-auto btn hvr-hover">Đặt hàng</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Cart -->
+</div>
+<!-- end block body -->
+<!-- block file script for shop page -->
+<th:block layout:fragment="scripts">
+    <script src="../../js/my-js/format-price-of-product.js"></script>
+    <script src="../../js/my-js/auto-increment-price.js"></script>
+</th:block>
+</body>
+
+</html>

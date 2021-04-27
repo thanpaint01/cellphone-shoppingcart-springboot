@@ -7,14 +7,17 @@ import nlu.fit.cellphoneapp.services.ICartService;
 import nlu.fit.cellphoneapp.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class CartController {
@@ -51,12 +54,25 @@ public class CartController {
             System.out.println("AddToCart " + c);
             resp.getWriter().print(
                     "<li class=\"cart-item\">" +
-                            "<a href=\"#\" class=\"photo\"><img src=\"" + Link.HOST + c.getProductImg() + "\" class=\"cart-thumb\"/></a>" +
+                            "<a href=\"#\" class=\"photo\"><img src=\"" + c.getProductImg() + "\" class=\"cart-thumb\"/></a>" +
                             "<h6><a href=\"#\">" + c.getProductName() + "</a></h6>" +
                             "<p>1x - <span class=\"product-price\">" + StringHelper.formatNumber((long) c.getProductPrice()) + "đ </span></p>" +
                     "</li>"
             );
         }
+    }
+
+    @GetMapping("/cart")
+    public ModelAndView goToCartView(){
+        ModelAndView mv = new ModelAndView("cart");
+        int userID = 19;
+        //lấy user từ session
+        List<CartDTO> carts = cartService.getAllByUserID(userID);
+        for (CartDTO c: carts) {
+            System.out.println(c);
+        }
+        mv.addObject("carts", carts);
+        return mv;
     }
 
 
