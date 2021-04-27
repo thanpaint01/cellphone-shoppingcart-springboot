@@ -14,6 +14,33 @@ import java.util.regex.Pattern;
 @Getter
 @Setter
 public class User {
+    public enum ACCESS {
+        CONSUMEER(0), ADMIN(1);
+        private final int value;
+
+        ACCESS(int value) {
+            this.value = value;
+        }
+
+        public int value() {
+            return value;
+        }
+    }
+
+    public enum ACTIVE {
+        ACTIVE(1), INACTIVE(2), UNVERTIFIED(-1);
+        private final int value;
+
+        ACTIVE(int constValue) {
+            this.value = constValue;
+        }
+
+        public int value() {
+            return value;
+        }
+    }
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -55,10 +82,6 @@ public class User {
         return password.matches(expression);
     }
 
-    public static boolean validUsername(String username) {
-        return username.matches("^[a-zA-Z0-9._-]{8,}$");
-    }
-
     public static boolean validEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z"
                 + "A-Z]{2,7}$";
@@ -67,5 +90,11 @@ public class User {
         if (email == null)
             return false;
         return pat.matcher(email).matches();
+    }
+    public static boolean validGender(int gender) {
+        return gender == 1 || gender == 2;
+    }
+    public static boolean validGender(String gender) {
+        return gender.equals("Nam") || gender.equals("Nữ") ;
     }
 }

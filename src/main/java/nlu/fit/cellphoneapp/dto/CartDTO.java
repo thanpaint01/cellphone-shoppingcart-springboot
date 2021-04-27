@@ -1,7 +1,6 @@
 package nlu.fit.cellphoneapp.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+
 
 
 public class CartDTO {
