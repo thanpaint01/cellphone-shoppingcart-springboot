@@ -57,6 +57,8 @@ public class CartServiceImpl implements ICartService {
             cartItemEntity = MyConverter.toEntity(cartDTO);
         } else {
             System.out.println("Cập nhật số lượng");
+            CartItem oldCartItem = cartRepo.getOne(cartDTO.getId());
+            cartItemEntity = MyConverter.toEntity(cartDTO, oldCartItem);
         }
         Product productItem = productRepo.getOne(cartDTO.getProductID());
         cartItemEntity.setProduct(productItem);

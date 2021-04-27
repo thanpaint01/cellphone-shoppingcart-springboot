@@ -8,9 +8,17 @@ public class MyConverter {
 
     public static CartItem toEntity(CartDTO cartDTO){
         CartItem cartItem = new CartItem();
+        cartItem.setId(cartDTO.getId());
         cartItem.setActive(1);
         cartItem.setAmount(cartDTO.getAmount());
         return cartItem;
+    }
+    //cho cập nhật
+    public static CartItem toEntity(CartDTO cartDTO, CartItem oldCartItem){
+        oldCartItem.setId(cartDTO.getId());
+        oldCartItem.setActive(1);
+        oldCartItem.setAmount(cartDTO.getAmount());
+        return oldCartItem;
     }
 
     public static CartDTO toDTO(CartItem cartItemEntity) {

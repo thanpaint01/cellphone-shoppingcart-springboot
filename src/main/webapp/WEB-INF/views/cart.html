@@ -4,8 +4,9 @@
 
 <head>
     <title th:text="${CONTENT_TITLE}"></title>
-    <th:block layout:fragment="css">
 
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" href="../../css/my-css/custom-cart.css">
     </th:block>
 </head>
 <body>
@@ -45,7 +46,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="cartItem : ${carts}" th:class="'text-center tr-update tr' + ${cartItem.id}">
+                            <tr th:each="cartItem : ${carts}" th:class="'text-center tr-update tr'+${cartItem.id}"
+                                th:id="${cartItem.id}">
                                 <td class="thumbnail-img">
                                     <a href="#">
                                         <img class="img-fluid" th:src="${cartItem.productImg}" alt=""/>
@@ -58,7 +60,7 @@
                                 </td>
                                 <td class="price-pr">
                                     <p class="product-price current-price-product" th:text="${cartItem.productPrice}"
-                                       th:value="${cartItem.productPrice}"></p>
+                                       th:value="${cartItem.productPrice}" th:id="${cartItem.productID}"></p>
                                 </td>
                                 <td class="quantity-box">
                                     <input type="number" size="4" value="1" min="0" step="1"
@@ -67,7 +69,7 @@
                                     <p class="product-price total-by-product" th:text="${cartItem.totalPrice}"></p>
                                 </td>
                                 <td class="remove-pr">
-                                    <a href="#">
+                                    <a href="#" data-toggle="modal" data-target="#removeCartItemModal">
                                         <i class="fas fa-times"></i>
                                     </a>
                                 </td>
@@ -126,10 +128,36 @@
                 </div>
             </div>
         </div>
+
+        <!-- my modal confirm remove cart item-->
+        <!-- Modal -->
+        <div class="modal fade" id="removeCartItemModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="exampleModalLabel">Xác nhận</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body modalConfirmDeleteBody">
+                        <div class="imgQuestion"></div>
+                        Bạn muốn xóa sản phẩm này khỏi giỏ hàng!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="rounded-0 btn btn-secondary" data-dismiss="modal">Không</button>
+                        <button type="button" class="btn btn-primary hvr-hover">Xóa</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end my modal confirm remove cart item-->
     </div>
     <!-- End Cart -->
+
 </div>
 <!-- end block body -->
+
 <!-- block file script for shop page -->
 <th:block layout:fragment="scripts">
     <script src="../../js/my-js/format-price-of-product.js"></script>

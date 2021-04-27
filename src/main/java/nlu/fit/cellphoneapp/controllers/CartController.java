@@ -42,9 +42,9 @@ public class CartController {
         infoCartItem.setUserID(userID);
         CartDTO c = null;
         //còn hàng kiểm tra xem sản phẩm đó đã có ở trong giỏ hàng hay chưa ?
-        if (cartService.isInCart(productID, amount, userID)) {
-            System.out.println("Sản phẩm " + productID + " đã có trong giỏ hàng!");
-            resp.getWriter().print("error");
+        if (cartService.isInCart(productID, amount, userID) && infoCartItem.getId() == 0) {
+                System.out.println("Lỗi khi thêm sản phẩm đã có trong giỏ");
+                resp.getWriter().print("error");
         } else {
         /*
             Không gặp bất kỳ lỗi nào thì thực hiện thêm vào csdl
@@ -57,18 +57,18 @@ public class CartController {
                             "<a href=\"#\" class=\"photo\"><img src=\"" + c.getProductImg() + "\" class=\"cart-thumb\"/></a>" +
                             "<h6><a href=\"#\">" + c.getProductName() + "</a></h6>" +
                             "<p>1x - <span class=\"product-price\">" + StringHelper.formatNumber((long) c.getProductPrice()) + "đ </span></p>" +
-                    "</li>"
+                            "</li>"
             );
         }
     }
 
     @GetMapping("/cart")
-    public ModelAndView goToCartView(){
+    public ModelAndView goToCartView() {
         ModelAndView mv = new ModelAndView("cart");
         int userID = 19;
         //lấy user từ session
         List<CartDTO> carts = cartService.getAllByUserID(userID);
-        for (CartDTO c: carts) {
+        for (CartDTO c : carts) {
             System.out.println(c);
         }
         mv.addObject("carts", carts);
