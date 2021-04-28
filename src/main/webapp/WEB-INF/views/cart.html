@@ -7,6 +7,7 @@
 
     <th:block layout:fragment="css">
         <link rel="stylesheet" href="../../css/my-css/custom-cart.css">
+        <link rel="stylesheet" href="../../css/my-css/toast.css">
     </th:block>
 </head>
 <body>
@@ -63,14 +64,15 @@
                                        th:value="${cartItem.productPrice}" th:id="${cartItem.productID}"></p>
                                 </td>
                                 <td class="quantity-box">
-                                    <input type="number" size="4" value="1" min="0" step="1"
+                                    <input type="number" size="4" th:value="${cartItem.amount}" min="1" step="1"
                                            class="c-input-text qty text"></td>
                                 <td class="total-pr">
                                     <p class="product-price total-by-product" th:text="${cartItem.totalPrice}"></p>
                                 </td>
                                 <td class="remove-pr">
-                                    <a href="#" data-toggle="modal" data-target="#removeCartItemModal">
-                                        <i class="fas fa-times"></i>
+                                    <a href="#" data-toggle="modal" class="remove-action"
+                                       data-target="#removeCartItemModal" th:value="${cartItem.id}">
+                                        <i class="fas fa-times" th:value="${cartItem.id}"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -131,22 +133,24 @@
 
         <!-- my modal confirm remove cart item-->
         <!-- Modal -->
-        <div class="modal fade" id="removeCartItemModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="removeCartItemModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h2 class="modal-title" id="exampleModalLabel">Xác nhận</h2>
+                    <div class="modal-header d-flex">
+                        <div class="imgQuestion"></div>
+                        <h2 class="modal-title p-1" id="exampleModalLabel">Xác nhận</h2>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body modalConfirmDeleteBody">
-                        <div class="imgQuestion"></div>
+
                         Bạn muốn xóa sản phẩm này khỏi giỏ hàng!
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="rounded-0 btn btn-secondary" data-dismiss="modal">Không</button>
-                        <button type="button" class="btn btn-primary hvr-hover">Xóa</button>
+                        <button type="button" id="btnDeleteModalConfirm" class="btn hvr-hover text-light">Xóa</button>
                     </div>
                 </div>
             </div>
@@ -154,7 +158,11 @@
         <!-- end my modal confirm remove cart item-->
     </div>
     <!-- End Cart -->
+    <!--   Toast show message when delete     -->
+    <div id="toast">
 
+    </div>
+    <!--   End Toast     -->
 </div>
 <!-- end block body -->
 
@@ -162,6 +170,7 @@
 <th:block layout:fragment="scripts">
     <script src="../../js/my-js/format-price-of-product.js"></script>
     <script src="../../js/my-js/auto-increment-price.js"></script>
+    <script src="../../js/my-js/add-to-cart.js"></script>
 </th:block>
 </body>
 

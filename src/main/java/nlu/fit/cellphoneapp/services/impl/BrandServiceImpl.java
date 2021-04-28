@@ -23,4 +23,9 @@ public class BrandServiceImpl implements IBrandService {
     public Brand findOneByById(int id) {
         return null;
     }
+
+    @Override
+    public List<Brand> findAllByActive(int active) {
+        return brandRepo.findAllByActive(active);
+    }
 }

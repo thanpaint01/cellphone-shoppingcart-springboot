@@ -11,4 +11,5 @@ public interface IProductService {
     Product findOneByID(int productID);
     List<Product> findAll();
     Page<Product> findPaginated(int page, int limit);
+    List<Product> findAllByActive(int active);
 }

@@ -74,9 +74,19 @@ public class CartServiceImpl implements ICartService {
     public List<CartDTO> getAllByUserID(int userID) {
         List<CartItem> cartItemList = cartRepo.getAllByUser(userRepo.getOne(userID));
         List<CartDTO> listResult = new ArrayList<>();
-        for (CartItem cartItem: cartItemList) {
+        for (CartItem cartItem : cartItemList) {
             listResult.add(MyConverter.toDTO(cartItem));
         }
         return listResult;
+    }
+
+    @Override
+    public CartItem getOneCartItem(int id) {
+        return cartRepo.getOne(id);
+    }
+
+    @Override
+    public void deleteOne(int id) {
+        cartRepo.deleteById(id);
     }
 }

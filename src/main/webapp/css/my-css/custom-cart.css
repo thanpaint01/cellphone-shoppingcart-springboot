@@ -1,11 +1,8 @@
 
 
-div.modal-body.modalConfirmDeleteBody{
-    background-color: darkred;
-
-}
 div.imgQuestion{
-    height: 100px;
+    height: 37px;
+    width: 10%;
     background-image: url("../../static/question.svg");
-    background-repeat: repeat-y;
+    background-repeat: no-repeat;
 }

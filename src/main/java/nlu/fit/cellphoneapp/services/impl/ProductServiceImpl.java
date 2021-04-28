@@ -34,4 +34,9 @@ public class ProductServiceImpl implements IProductService {
         return productRepo.findAll(pageable);
     }
 
+    @Override
+    public List<Product> findAllByActive(int active) {
+        return productRepo.findAllByActive(active);
+    }
+
 }

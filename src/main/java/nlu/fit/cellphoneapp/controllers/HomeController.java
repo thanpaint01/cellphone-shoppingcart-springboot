@@ -36,7 +36,7 @@ public class HomeController {
 
 
     public List<Product> getListProduct(Model model) {
-        List<Product> products = productService.findAll();
+        List<Product> products = productService.findAllByActive(1);
         model.addAttribute("products", products);
         return products;
     }
@@ -50,7 +50,7 @@ public class HomeController {
         return getByPaging(page, limit, model);
     }
     public List<Brand> getListBrand(Model model) {
-        List<Brand> brands = brandService.findAll();
+        List<Brand> brands = brandService.findAllByActive(1);
         model.addAttribute("brands", brands);
         return brands;
     }

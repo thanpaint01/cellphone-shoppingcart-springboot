@@ -7,10 +7,7 @@ import nlu.fit.cellphoneapp.services.ICartService;
 import nlu.fit.cellphoneapp.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,8 +40,8 @@ public class CartController {
         CartDTO c = null;
         //còn hàng kiểm tra xem sản phẩm đó đã có ở trong giỏ hàng hay chưa ?
         if (cartService.isInCart(productID, amount, userID) && infoCartItem.getId() == 0) {
-                System.out.println("Lỗi khi thêm sản phẩm đã có trong giỏ");
-                resp.getWriter().print("error");
+            System.out.println("Lỗi khi thêm sản phẩm đã có trong giỏ");
+            resp.getWriter().print("error");
         } else {
         /*
             Không gặp bất kỳ lỗi nào thì thực hiện thêm vào csdl
@@ -73,6 +70,20 @@ public class CartController {
         }
         mv.addObject("carts", carts);
         return mv;
+    }
+
+    @DeleteMapping("/cart")
+    public @ResponseBody
+    String ajaxDeleteCartItem(@RequestParam int id, HttpServletRequest req) {
+        String rs = "";
+        int userID = 0;
+        //tránh trường hợp nhập trên url
+        HttpSession session = req.getSession(true);
+        if (null != cartService.getOneCartItem(id) && userID != 0) {
+            cartService.deleteOne(id);
+            rs = "Xoá thành công!";
+        }
+        return rs;
     }
 
 
