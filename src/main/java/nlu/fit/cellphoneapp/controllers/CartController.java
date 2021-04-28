@@ -1,6 +1,7 @@
 package nlu.fit.cellphoneapp.controllers;
 
 import nlu.fit.cellphoneapp.dto.CartDTO;
+import nlu.fit.cellphoneapp.entities.User;
 import nlu.fit.cellphoneapp.helper.StringHelper;
 import nlu.fit.cellphoneapp.others.Link;
 import nlu.fit.cellphoneapp.services.ICartService;
@@ -34,9 +35,11 @@ public class CartController {
         HttpSession session = req.getSession(true);
         int productID = infoCartItem.getProductID();
         int amount = infoCartItem.getAmount();
-        int userID = 19;
-        //int userID = session.getAttribute("user").getId();
-        infoCartItem.setUserID(userID);
+//        int userID = infoCartItem.getUserID();
+        User user = (User) session.getAttribute(User.SESSION);
+        int userID = 0;
+        if(null!=user) user.getId();
+        infoCartItem.setUserID(user.getId());
         CartDTO c = null;
         //còn hàng kiểm tra xem sản phẩm đó đã có ở trong giỏ hàng hay chưa ?
         if (cartService.isInCart(productID, amount, userID) && infoCartItem.getId() == 0) {
@@ -60,9 +63,11 @@ public class CartController {
     }
 
     @GetMapping("/cart")
-    public ModelAndView goToCartView() {
+    public ModelAndView goToCartView(HttpSession session) {
         ModelAndView mv = new ModelAndView("cart");
-        int userID = 19;
+        User user = (User) session.getAttribute(User.SESSION);
+        int userID = 0;
+        if(null!=user) user.getId();
         //lấy user từ session
         List<CartDTO> carts = cartService.getAllByUserID(userID);
         for (CartDTO c : carts) {
@@ -79,6 +84,8 @@ public class CartController {
         int userID = 0;
         //tránh trường hợp nhập trên url
         HttpSession session = req.getSession(true);
+        User user =(User) session.getAttribute(User.SESSION);
+        if(null!=user) userID = user.getId();
         if (null != cartService.getOneCartItem(id) && userID != 0) {
             cartService.deleteOne(id);
             rs = "Xoá thành công!";
