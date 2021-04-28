@@ -19,8 +19,6 @@ public class StringHelper {
         }
         return sb.toString();
     }
-
-
     public static boolean isListNoValue(List<String> inputs) {
         for (String input : inputs)
             if (isNoValue(input)) return false;

@@ -3,20 +3,21 @@ package nlu.fit.cellphoneapp.controllers;
 import nlu.fit.cellphoneapp.entities.User;
 import nlu.fit.cellphoneapp.helper.DateHelper;
 import nlu.fit.cellphoneapp.helper.StringHelper;
+import nlu.fit.cellphoneapp.others.BcryptEncoder;
+import nlu.fit.cellphoneapp.others.Link;
 import nlu.fit.cellphoneapp.receiver.RegisterForm;
 import nlu.fit.cellphoneapp.services.EmailSenderService;
 import nlu.fit.cellphoneapp.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 @Controller
@@ -28,14 +29,22 @@ public class UserController {
     EmailSenderService emailSenderService;
 
     @ResponseBody
-    public String login() {
-        return "";
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String login(@Param("email") String email, @Param("password") String password, HttpSession session) {
+        User user;
+        if (StringHelper.isNoValue(email) || StringHelper.isNoValue(password))
+            return "emptyfield";
+        else if ((user = userService.findOneByLogin(email, password)) != null) {
+            session.setAttribute(User.SESSION, user);
+            return "success";
+        } else
+            return "failed";
+
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-
     public @ResponseBody
-    String register(@RequestBody RegisterForm form
+    String register(@RequestBody RegisterForm form, HttpServletRequest request
     ) {
         List<String> toCheck = new ArrayList<>();
         toCheck.add(form.newemail);
@@ -60,14 +69,12 @@ public class UserController {
             User user = userService.findOneByEmail(form.newemail, User.ACTIVE.UNVERTIFIED.value());
             if (user == null)
                 user = new User();
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            String encodedPassword = encoder.encode(form.newpassword);
             user.setEmail(form.newemail);
             user.setGender(User.toStringGender(Integer.valueOf(form.newgender)));
-            user.setPassword(encodedPassword);
+            user.setPassword(BcryptEncoder.encode(form.newpassword));
             user.setFullName(form.newfullname);
             user.setActive(User.ACTIVE.UNVERTIFIED.value());
-            user.setRole(User.ACCESS.CONSUMEER.value());
+            user.setRole(User.ROLE.CONSUMEER.value());
             String token;
             while (userService.isTokenUnique((token = StringHelper.getAlphaNumericString(50)))) ;
             user.setKey(token);
@@ -75,11 +82,25 @@ public class UserController {
             if (!userService.save(user)) {
                 return "error";
             } else {
-                if (!emailSenderService.sendEmail(form.newemail, "hello", "HELLO")) {
+                if (!emailSenderService.sendEmailVertification(form.newemail, form.newfullname, Link.createAbsolutePath(request, "/user/email/verify/" + token))) {
                     return "errsendmail";
                 }
                 return "success";
             }
+        }
+    }
+
+    @RequestMapping(value = "/email/verify/{token}")
+    public ModelAndView vertificateEmail(@PathVariable("token") String token) {
+        User u;
+        if ((u = userService.verifyEmail(token)) == null)
+            return new ModelAndView("redirect:/");
+        else {
+            u.setKey("");
+            u.setExpiredKey(null);
+            u.setActive(User.ACTIVE.ACTIVE.value());
+            userService.save(u);
+            return new ModelAndView("email-vertification");
         }
     }
 

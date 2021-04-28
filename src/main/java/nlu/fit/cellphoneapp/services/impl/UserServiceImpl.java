@@ -1,6 +1,7 @@
 package nlu.fit.cellphoneapp.services.impl;
 
 import nlu.fit.cellphoneapp.entities.User;
+import nlu.fit.cellphoneapp.others.BcryptEncoder;
 import nlu.fit.cellphoneapp.repositories.interfaces.IUserRepository;
 import nlu.fit.cellphoneapp.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,15 +29,31 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public boolean save(User user) {
-
         userRepo.save(user);
         return true;
-
     }
 
     @Override
     public boolean isTokenUnique(String token) {
         return userRepo.numberOfToken(token) >= 1;
+    }
+
+    @Override
+    public User findOneByLogin(String email, String password) {
+        User user;
+        if ((user = userRepo.findOneByEmail(email, User.ACTIVE.ACTIVE.value())) == null)
+            return null;
+        else {
+            if (BcryptEncoder.matches(password, user.getPassword())) return user;
+            else return null;
+        }
+
+
+    }
+
+    @Override
+    public User verifyEmail(String token) {
+        return userRepo.vertifyToken(token);
     }
 
 }
