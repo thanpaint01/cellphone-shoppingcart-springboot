@@ -15,6 +15,10 @@ import java.util.Optional;
 public interface IUserRepository extends JpaRepository<User, Integer> {
     @Query("select u from User u where u.email=:email and u.active=:active")
     User findOneByEmail(@Param("email") String email, @Param("active") int active);
+
     @Query("SELECT COUNT(u) FROM User u WHERE u.key=?1")
     long numberOfToken(String token);
+
+    @Query(value = "select * from user u  where u.key=:token and u.expired_key >= (select now())", nativeQuery = true)
+    User vertifyToken(@Param("token") String token);
 }

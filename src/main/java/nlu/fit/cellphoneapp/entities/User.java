@@ -14,11 +14,12 @@ import java.util.regex.Pattern;
 @Getter
 @Setter
 public class User {
-    public enum ACCESS {
+    public static final String SESSION = "currentUser";
+    public enum ROLE {
         CONSUMEER(1), ADMIN(2);
         private final int value;
 
-        ACCESS(int value) {
+        ROLE(int value) {
             this.value = value;
         }
 
@@ -85,14 +86,17 @@ public class User {
             return false;
         return pat.matcher(email).matches();
     }
-    public static String toStringGender(int gender){
-        return gender==1?"Nam":"Nữ";
+
+    public static String toStringGender(int gender) {
+        return gender == 1 ? "Nam" : "Nữ";
     }
+
     public static boolean validGender(int gender) {
         return gender == 1 || gender == 2;
     }
+
     public static boolean validGender(String gender) {
-        return gender.equals("Nam") || gender.equals("Nữ") ;
+        return gender.equals("Nam") || gender.equals("Nữ");
     }
 
 }
