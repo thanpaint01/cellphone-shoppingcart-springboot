@@ -18,7 +18,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public boolean isEmailUnique(String email) {
-        return userRepo.findOneByEmail(email, User.ACTIVE.ACTIVE.value()) != null;
+        return findOneByEmail(email, User.ACTIVE.INACTIVE.value()) != null || findOneByEmail(email, User.ACTIVE.ACTIVE.value()) != null;
     }
 
     @Override
@@ -52,8 +52,9 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public User verifyEmail(String token) {
+    public User vertifyToken(String token) {
         return userRepo.vertifyToken(token);
     }
+
 
 }

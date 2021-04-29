@@ -14,7 +14,9 @@ public interface IUserService {
 
     User findOneByLogin(String email, String password);
 
-    User verifyEmail(String token);
+    User vertifyToken(String token);
+
+
 
 
 }

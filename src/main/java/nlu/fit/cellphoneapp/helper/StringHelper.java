@@ -19,10 +19,10 @@ public class StringHelper {
         }
         return sb.toString();
     }
-    public static boolean isListNoValue(List<String> inputs) {
+    public static boolean isNoValue(List<String> inputs) {
         for (String input : inputs)
-            if (isNoValue(input)) return false;
-        return true;
+            if (isNoValue(input)) return true;
+        return false;
     }
 
     public static String formatNumber(long input) {

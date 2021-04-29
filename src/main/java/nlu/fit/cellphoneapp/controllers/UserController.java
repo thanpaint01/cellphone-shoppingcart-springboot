@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -51,7 +50,7 @@ public class UserController {
         toCheck.add(form.newfullname);
         toCheck.add(form.newpassword);
         toCheck.add(form.confirmpassword);
-        if (!StringHelper.isListNoValue(toCheck)) {
+        if (StringHelper.isNoValue(toCheck)) {
             return "emptyfield";
         } else if (User.validGender(form.newgender)) {
             return "emptyfield";
@@ -93,10 +92,10 @@ public class UserController {
     @RequestMapping(value = "/email/verify/{token}")
     public ModelAndView vertificateEmail(@PathVariable("token") String token) {
         User u;
-        if ((u = userService.verifyEmail(token)) == null)
+        if ((u = userService.vertifyToken(token)) == null)
             return new ModelAndView("redirect:/");
         else {
-            u.setKey("");
+            u.setKey(null);
             u.setExpiredKey(null);
             u.setActive(User.ACTIVE.ACTIVE.value());
             userService.save(u);
@@ -104,10 +103,52 @@ public class UserController {
         }
     }
 
-    @ResponseBody
-    public String forgotPass() {
-        return "";
 
+    @RequestMapping(value = "/forgot-pass", method = RequestMethod.POST)
+    public @ResponseBody
+    String forgotPass(@Param("email") String email) {
+        User user;
+        if (StringHelper.isNoValue(email)) return "emptyfield";
+        else if (!userService.isEmailUnique(email))
+            return "notexistemail";
+        else if ((user = userService.findOneByEmail(email, User.ACTIVE.ACTIVE.value())) == null) {
+            return "unactive";
+        } else {
+            String token;
+            while (userService.isTokenUnique((token = StringHelper.getAlphaNumericString(10)))) ;
+            user.setKey(token);
+            user.setExpiredKey(DateHelper.addMinute(15));
+            userService.save(user);
+            if (emailSenderService.sendEmailResetPassword(email, user.getFullName(), token))
+                return "success";
+            else
+                return "failed";
+        }
+    }
+
+    @RequestMapping(value = "/reset-pass", method = RequestMethod.POST)
+    @ResponseBody
+    public String resetPass(@Param("resetcode") String resetCode, @Param("newpass") String newpass, @Param("confirmpass") String confirmpass) {
+        User user;
+        List<String> toCheck = new ArrayList<>();
+        toCheck.add(resetCode);
+        toCheck.add(newpass);
+        toCheck.add(confirmpass);
+        if (StringHelper.isNoValue(toCheck)) {
+            return "emptyfield";
+        } else if (!User.validPassword(newpass))
+            return "validpass";
+        else if (newpass.equals(confirmpass))
+            return "notequate";
+        else if ((user = userService.vertifyToken(resetCode)) == null) {
+            return "failcode";
+        } else {
+            user.setPassword(BcryptEncoder.encode(newpass));
+            user.setKey(null);
+            user.setExpiredKey(null);
+            userService.save(user);
+            return "success";
+        }
     }
 
 

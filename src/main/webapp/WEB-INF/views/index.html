@@ -182,8 +182,8 @@
     </div>
     <!-- end script -->
     <th:block layout:fragment="scripts">
+        <script src="../../js/my-js/format-price-of-product.js"></script>
         <script>
-
             $.fn.serializeObject = function () {
                 var o = {};
                 var a = this.serializeArray();
@@ -228,14 +228,16 @@
                 var btn = $('#btn-register');
                 var carrier = $('#show-register-message');
                 e.preventDefault();
-                showMessage(true, "Đang xử lý", carrier);
-                btn.prop('disabled', true);
                 $.ajax({
                     type: 'POST',
                     data: JSON.stringify($(this).serializeObject()),
                     contentType: 'application/json',
                     accept: 'text/plain',
                     url: '/user/register',
+                    beforeSend: function () {
+                        showMessage(true, "Đang xử lý", carrier);
+                        btn.prop('disabled', true);
+                    },
                     success: function (result) {
                         switch (result) {
                             case 'emptyfield':
@@ -267,27 +269,31 @@
                                 showMessage(false, "Đã xảy ra lỗi", carrier);
                                 break;
                         }
-                        btn.prop('disabled', false);
+
                     },
                     error: function (request, status, error) {
                         showMessage(false, "Đã có lỗi xảy ra với hệ thống", carrier);
+                    }, complete: function () {
                         btn.prop('disabled', false);
                     }
                 });
-                
+
             });
             $('#login-form').submit(function (e) {
-                var password = $('#password');
                 e.preventDefault();
                 var btn = $('#btn-login');
                 var carrier = $('#show-login-message');
-                btn.prop('disabled', true);
+                var password = $('#password');
                 $.ajax({
                     type: 'POST',
                     data: $(this).serialize(),
                     contentType: 'application/x-www-form-urlencoded',
                     accept: 'text/plain',
                     url: '/user/login',
+                    beforeSend: function () {
+                        showMessage(true, "Đang xử lý", carrier);
+                        btn.prop('disabled', true);
+                    },
                     success: function (result) {
                         switch (result) {
                             case 'emptyfield':
@@ -295,26 +301,70 @@
                                 break;
                             case 'success':
                                 showMessage(true, "Đăng nhập thành công", carrier);
-                                window.location.href="/";
+                                window.location.href = "/";
                                 break;
                             case 'failed':
                                 showMessage(false, "Email hoặc mật khẩu của bạn có thể đã sai", carrier);
+                                password.val('');
+                                break;
+                            default:
+                                showMessage(false, "Đã xảy ra lỗi", carrier);
+                                password.val('');
+                                break;
+                        }
+                    },
+                    error: function (request, status, error) {
+                        showMessage(false, "Đã có lỗi xảy ra với hệ thống", carrier);
+                    }, complete: function () {
+                        btn.prop('disabled', false);
+                    }
+                });
+            });
+            $('#forgotpass-form').submit(function (e) {
+                e.preventDefault();
+                var btn = $('#btn-forgotpass');
+                var carrier = $('#show-forgotpass-message');
+                $.ajax({
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    contentType: 'application/x-www-form-urlencoded',
+                    accept: 'text/plain',
+                    url: '/user/forgot-pass',
+                    beforeSend: function () {
+                        showMessage(true, "Đang xử lý", carrier);
+                        btn.prop('disabled', true);
+                    },
+                    success: function (result) {
+                        switch (result) {
+                            case 'noexistemail':
+                                showMessage(false, "Tài khoản của bạn không tồn tại trong hệ thống", carrier);
+                                break;
+                            case 'success':
+                                showMessage(true, "Hãy kiểm tra email của bạn", carrier);
+                                setTimeout(function () {
+                                    $(this).modal('hide');
+                                    $('#resetPass').modal('show');;
+                                }, 2000);
+                                break;
+                            case 'unactive':
+                                showMessage(false, "Tài khoản của bị đã bị khóa", carrier);
+                                break;
+                            case 'failed':
+                                showMessage(false, "Đã xảy ra lỗi khi gửi email hãy thử lại", carrier);
                                 break;
                             default:
                                 showMessage(false, "Đã xảy ra lỗi", carrier);
                                 break;
                         }
-                        btn.prop('disabled', false);
                     },
                     error: function (request, status, error) {
                         showMessage(false, "Đã có lỗi xảy ra với hệ thống", carrier);
+                    }, complete: function () {
                         btn.prop('disabled', false);
                     }
                 });
-                btn.prop('disabled', false);
             });
         </script>
-        <script src="../../js/my-js/format-price-of-product.js"></script>
     </th:block>
 </body>
 

@@ -19,6 +19,16 @@ public class EmailSenderService {
         return body;
     }
 
+    public String createBodyResetPassword(String name, String token) {
+        String body = "<p>Chào " + name + ",</p>" + "<p>Bạn đã yêu cầu hồi phục mật khảu</p>" + "<p><span style=\"font-weight: bold;\">" + "Mã code: " +
+                "</span>" + token + "</p>" + "<p>Mã code trên sẽ bị hủy sau 15 phút.<p>" + "<p>Chúc bạn một ngày vui vẻ.</p>" + "<p>DHMOBILE</p>";
+        return body;
+    }
+
+    public boolean sendEmailResetPassword(String recipient, String name, String token) {
+        return (sendEmail(recipient, createBodyResetPassword(name, token), "Reset Mật Khẩu"));
+    }
+
     public boolean sendEmailVertification(String recipient, String name, String url) {
         return sendEmail(recipient, createBodyVertifyEmail(name, url), "Xác Nhận Địa Chỉ Email");
     }
