@@ -47,7 +47,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="cartItem : ${carts}" th:class="'text-center tr-update tr'+${cartItem.id}"
+                            <tr th:each="cartItem : ${cartItems}" th:class="'text-center tr-update tr'+${cartItem.id}"
                                 th:id="${cartItem.id}">
                                 <td class="thumbnail-img">
                                     <a href="#">
@@ -70,9 +70,9 @@
                                     <p class="product-price total-by-product" th:text="${cartItem.totalPrice}"></p>
                                 </td>
                                 <td class="remove-pr">
-                                    <a href="#" data-toggle="modal" class="remove-action"
-                                       data-target="#removeCartItemModal" th:value="${cartItem.id}">
-                                        <i class="fas fa-times" th:value="${cartItem.id}"></i>
+                                    <a href="#" data-toggle="modal" class="remove-action" th:alt="${cartItem.totalPrice}"
+                                       data-target="#removeCartItemModal" th:value="${cartItem.id}" th:name="${cartItem.amount}">
+                                        <i class="fas fa-times" th:value="${cartItem.id}" ></i>
                                     </a>
                                 </td>
                             </tr>
@@ -102,11 +102,11 @@
                         <div class="order-box p-3">
                             <div class="d-flex">
                                 <h4>Tổng cộng</h4>
-                                <div class="ml-auto font-weight-bold product-price total-price">240000000</div>
+                                <div class="ml-auto font-weight-bold product-price total-price" th:text="${totalPriceForBox}"></div>
                             </div>
                             <div class="d-flex">
                                 <h4>Giảm giá</h4>
-                                <div class="ml-auto font-weight-bold product-price discount-price">4000000</div>
+                                <div class="ml-auto font-weight-bold product-price discount-price" th:text="0"></div>
                             </div>
                             <hr class="my-1">
                             <div class="d-flex">
@@ -116,7 +116,7 @@
                             <hr>
                             <div class="d-flex gr-total">
                                 <h5>Thành tiền</h5>
-                                <div class="ml-auto h5 product-price last-price">236000000</div>
+                                <div class="ml-auto h5 product-price last-price" th:text="${totalPriceForBox}"></div>
                             </div>
                             <div class="d-flex gr-total">
                                 <small>*Đã bao gồm VAT</small>
@@ -170,7 +170,7 @@
 <th:block layout:fragment="scripts">
     <script src="../../js/my-js/format-price-of-product.js"></script>
     <script src="../../js/my-js/auto-increment-price.js"></script>
-    <script src="../../js/my-js/add-to-cart.js"></script>
+    <script src="../../js/my-js/toast.js"></script>
 </th:block>
 </body>
 

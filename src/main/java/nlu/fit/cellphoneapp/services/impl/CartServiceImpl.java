@@ -54,11 +54,11 @@ public class CartServiceImpl implements ICartService {
         //sau khi có được Entity thì ta nhờ repo lưu giùm
         if (cartDTO.getId() == 0) {//thêm mới
             System.out.println("Thêm mới");
-            cartItemEntity = MyConverter.toEntity(cartDTO);
+            cartItemEntity = MyConverter.toCartEntity(cartDTO);
         } else {
             System.out.println("Cập nhật số lượng");
             CartItem oldCartItem = cartRepo.getOne(cartDTO.getId());
-            cartItemEntity = MyConverter.toEntity(cartDTO, oldCartItem);
+            cartItemEntity = MyConverter.toCartEntity(cartDTO, oldCartItem);
         }
         Product productItem = productRepo.getOne(cartDTO.getProductID());
         cartItemEntity.setProduct(productItem);
@@ -67,7 +67,7 @@ public class CartServiceImpl implements ICartService {
         cartItemEntity.setTotalPrice(totalPrice);
         cartItemEntity = cartRepo.save(cartItemEntity);
         System.out.println(cartItemEntity);
-        return MyConverter.toDTO(cartItemEntity);
+        return MyConverter.toCartDTO(cartItemEntity);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class CartServiceImpl implements ICartService {
         List<CartItem> cartItemList = cartRepo.getAllByUser(userRepo.getOne(userID));
         List<CartDTO> listResult = new ArrayList<>();
         for (CartItem cartItem : cartItemList) {
-            listResult.add(MyConverter.toDTO(cartItem));
+            listResult.add(MyConverter.toCartDTO(cartItem));
         }
         return listResult;
     }

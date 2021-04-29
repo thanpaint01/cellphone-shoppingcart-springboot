@@ -6,7 +6,7 @@ import nlu.fit.cellphoneapp.helper.StringHelper;
 
 public class MyConverter {
 
-    public static CartItem toEntity(CartDTO cartDTO){
+    public static CartItem toCartEntity(CartDTO cartDTO){
         CartItem cartItem = new CartItem();
         cartItem.setId(cartDTO.getId());
         cartItem.setActive(1);
@@ -14,14 +14,14 @@ public class MyConverter {
         return cartItem;
     }
     //cho cập nhật
-    public static CartItem toEntity(CartDTO cartDTO, CartItem oldCartItem){
+    public static CartItem toCartEntity(CartDTO cartDTO, CartItem oldCartItem){
         oldCartItem.setId(cartDTO.getId());
         oldCartItem.setActive(1);
         oldCartItem.setAmount(cartDTO.getAmount());
         return oldCartItem;
     }
 
-    public static CartDTO toDTO(CartItem cartItemEntity) {
+    public static CartDTO toCartDTO(CartItem cartItemEntity) {
         CartDTO cart = new CartDTO();
         cart.setId(cartItemEntity.getId());
         cart.setActive(1);

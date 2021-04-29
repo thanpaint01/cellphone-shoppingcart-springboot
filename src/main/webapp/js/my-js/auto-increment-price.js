@@ -15,7 +15,6 @@ $('.tr-update').change(function () {
     var cartItemID = $(this).prop('id');
     var productID = $(this).find('p.product-price.current-price-product').prop('id');
     var amount = $(this).find('input.c-input-text.qty.text').val();
-
     var currentPrice = $(this).find('p.product-price.current-price-product').text();
     var total = amount * convert(currentPrice);
     $(this).find('p.product-price.total-by-product').html(total.toLocaleString("en-US"),
@@ -47,9 +46,17 @@ $('.tr-update').change(function () {
     var lastPrice = result - convert($('.discount-price').text());
     $('.last-price').html(lastPrice.toLocaleString("en-US") + " đ");
 })
+
+
+var sumAmount = $('#sumOfCart').text();
 //xóa sản phẩm
 $('.remove-action').click(function () {
     var cartID = $(this).attr('value');
+    var amountRemove = $(this).attr('name');
+    let resetAmount = parseInt(sumAmount - amountRemove);
+    let totalPriceBefore = convert($('.total-price').text());
+    let priceRemove = convert($(this).attr('alt'));
+    let resetTotalPrice = totalPriceBefore - priceRemove;
     $('#btnDeleteModalConfirm').click(function () {
         $.ajax({
             type: 'DELETE',
@@ -58,7 +65,11 @@ $('.remove-action').click(function () {
             success: function (result) {
                 if (result !== "") {
                     $('#removeCartItemModal').modal('toggle');
-                    $('#'+cartID).remove();
+                    $('#' + cartID).remove();
+                    $('#sumOfCart').html(resetAmount);
+                    $('#li' + cartID).remove();
+                    $('.total-price').html(resetTotalPrice.toLocaleString("en-US")+"đ");
+                    $('.last-price').html((resetTotalPrice - convert($('.discount-price').text())).toLocaleString("en-US")+"đ");
                     deleteSuccess();
                 } else {
                     showFailDelete();
@@ -67,6 +78,7 @@ $('.remove-action').click(function () {
         })
     })
 })
+
 function deleteSuccess() {
     toast({
         type: 'success',

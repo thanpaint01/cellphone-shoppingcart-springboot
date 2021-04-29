@@ -56,7 +56,8 @@
                         </li>
                     </th:block>
                     <th:block th:if="${session.currentUser != null}">
-                        <li class="nav-item"><a href="#" class="nav-link"><i class="far fa-user mr-1"></i>TÀI KHOẢN CỦA TÔI</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link"><i class="far fa-user mr-1"></i>TÀI KHOẢN CỦA
+                            TÔI</a></li>
                     </th:block>
 
                 </ul>
@@ -70,7 +71,8 @@
                     <li class="side-menu">
                         <a href="#">
                             <i class="fa fa-shopping-bag"></i>
-                            <span class="badge" id="sumOfCart" th:text="0"></span>
+                            <!--/*@thymesVar id="sumOfCart" type="java"*/-->
+                            <span class="badge" id="sumOfCart" th:text="${sumAmount}"></span>
                             <p>Giỏ hàng</p>
                         </a>
                     </li>
@@ -84,15 +86,36 @@
             <li class="cart-box">
                 <ul class="cart-list">
                     <!-- upload cart item using ajax -->
-                    <!--  end upload cart item  -->
-                    <!--  start li total -->
-                    <li class="total">
-                        <a th:href="@{/cart}" class="btn btn-default hvr-hover btn-cart">CHI TIẾT</a>
-                        <span class="float-right"><strong>Tổng</strong>: <span class="product-price total-cart">580000000</span> </span>
-                    </li>
-                    <!-- end li total -->
+                    <th:block th:if="${session.currentUser != null}">
+                        <!--/*@thymesVar id="cartItems" type="java"*/-->
+                        <li class="cart-item" th:each="c : ${cartItems}" th:id="'li'+${c.id}">
+                            <a href="#" class="photo">
+                                <img th:src="${c.productImg}" class="cart-thumb"/></a>
+                            <h6><a href="#" th:text="${c.productName}"></a></h6>
+                            <span th:text="${c.amount}+'x - '"></span>
+                            <span class="product-price" th:text="${c.productPrice}"></span>đ
+                        </li>
+                        <!--  end upload cart item  -->
+                    </th:block>
+                    <!--   session cart           -->
+<!--                    <th:block th:unless="${null == session.currentUser}">-->
+                    <!--                        &lt;!&ndash;/*@thymesVar id="cartItems" type="java"*/&ndash;&gt;-->
+                    <!--                        <li class="cart-item">-->
+                    <!--                            <a href="#" class="photo">-->
+                    <!--                                <img th:src="" class="cart-thumb"/></a>-->
+                    <!--                            <h6><a href="#" th:text="${c.productName}"></a></h6>-->
+                    <!--                            <span>Giỏ hàng hiện đang trống!</span>-->
+                    <!--                        </li>-->
+                    <!--                        &lt;!&ndash;  end upload cart item  &ndash;&gt;-->
+                    <!--                    </th:block>-->
                 </ul>
-            </li>
+                <!--  start li total -->
+                <div class="total p-2">
+                    <a th:href="@{/cart}" class="btn btn-default hvr-hover btn-cart text-light">CHI TIẾT</a>
+                    <span class="float-right"><strong>Tổng</strong>: <!--/*@thymesVar id="totalAll" type="java"*/-->
+                        <span class="product-price total-cart" th:text="${totalPriceForBox}">đ</span> </span>
+                </div>
+                <!-- end li total -->
         </div>
         <!-- End Side Menu -->
     </nav>
