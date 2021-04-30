@@ -1,4 +1,4 @@
-package nlu.fit.cellphoneapp.controllers;
+package nlu.fit.cellphoneapp.controllers.consumer;
 
 import nlu.fit.cellphoneapp.dto.CartDTO;
 import nlu.fit.cellphoneapp.entities.User;
