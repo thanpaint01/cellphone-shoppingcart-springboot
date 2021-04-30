@@ -2,13 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html">
 <head>
-    <title layout:title-pattern=" $CONTENT_TITLE"></title>
+    <title th:text="${CONTENT_TITLE}"></title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Site Icons -->
-    <link rel="shortcut icon" th:href="@{'images/mylogo.png'}" type="image/x-icon">
-    <link rel="apple-touch-icon" th:href="@{'images/mylogo.png'}">
+    <link rel="shortcut icon" th:href="@{'/images/mylogo.png'}" type="image/x-icon">
+    <link rel="apple-touch-icon" th:href="@{'/images/mylogo.png'}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" th:href="@{'/css/bootstrap.min.css'}">
     <!-- FontAwesome CSS -->
@@ -21,7 +21,8 @@
     <link rel="stylesheet" th:href="@{'/css/custom.css'}">
     <!-- Header CSS -->
     <link rel="stylesheet" th:href="@{'/css/my-css/header.css'}">
-
+    <th:block layout:fragment="css">
+    </th:block>
 </head>
 <body>
 <header th:replace="static-fragment/header :: header"></header>
@@ -44,7 +45,7 @@
     <div class="main-instagram owl-carousel owl-theme mt-5">
         <div class="item">
             <div class="ins-inner-box">
-                <img src="images/brand/samsung.jpg" alt=""/>
+                <img th:src="@{/images/brand/samsung.jpg}" alt=""/>
                 <div class="hov-in">
                     <a href="#">
                         <i class="fab fa-instagram"></i>
@@ -54,7 +55,16 @@
         </div>
         <div class="item">
             <div class="ins-inner-box">
-                <img src="images/brand/huawei.jpg" alt=""/>
+                <img th:src="@{/images/brand/huawei.jpg}" alt=""/>
+                <div class="hov-in">
+                    <a href="#">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="ins-inner-box">
+                <img th:src="@{/images/brand/oppo.png}" alt=""/>
                 <div class="hov-in">
                     <a href="#">
                         <i class="fab fa-instagram"></i>
@@ -64,7 +74,7 @@
         </div>
         <div class="item">
             <div class="ins-inner-box">
-                <img src="images/brand/oppo.png" alt=""/>
+                <img th:src="@{/images/brand/vivo.jpg}" alt=""/>
                 <div class="hov-in">
                     <a href="#">
                         <i class="fab fa-instagram"></i>
@@ -74,7 +84,7 @@
         </div>
         <div class="item">
             <div class="ins-inner-box">
-                <img src="images/brand/vivo.jpg" alt=""/>
+                <img th:src="@{/images/brand/realme.png}" alt=""/>
                 <div class="hov-in">
                     <a href="#">
                         <i class="fab fa-instagram"></i>
@@ -84,7 +94,7 @@
         </div>
         <div class="item">
             <div class="ins-inner-box">
-                <img src="images/brand/realme.png" alt=""/>
+                <img th:src="@{/images/brand/vsmart.png}" alt=""/>
                 <div class="hov-in">
                     <a href="#">
                         <i class="fab fa-instagram"></i>
@@ -94,17 +104,7 @@
         </div>
         <div class="item">
             <div class="ins-inner-box">
-                <img src="images/brand/vsmart.png" alt=""/>
-                <div class="hov-in">
-                    <a href="#">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="ins-inner-box">
-                <img src="images/brand/xiaomi.jpg" alt=""/>
+                <img th:src="@{/images/brand/xiaomi.jpg}" alt=""/>
                 <div class="hov-in">
                     <a href="#">
                         <i class="fab fa-instagram"></i>
@@ -129,22 +129,22 @@
 <!-- End copyright  -->
 
 
-<script src="../../js/jquery-3.2.1.min.js"></script>
-<script src="../../js/popper.min.js"></script>
-<script src="../../js/bootstrap.min.js"></script>
+<script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
 <!-- ALL PLUGINS -->
-<script src="../../js/jquery.superslides.min.js"></script>
-<script src="../../js/bootstrap-select.js"></script>
-<script src="../../js/inewsticker.js"></script>
-<script src="../../js/bootsnav.js"></script>
-<script src="../../js/images-loded.min.js"></script>
-<script src="../../js/isotope.min.js"></script>
-<script src="../../js/owl.carousel.min.js"></script>
-<script src="../../js/baguetteBox.min.js"></script>
-<script src="../../js/form-validator.min.js"></script>
-<script src="../../js/contact-form-script.js"></script>
-<script src="../../js/custom.js"></script>
-<script src="../../js/my-js/slider-home-page.js"></script>
+<script th:src="@{/js/jquery.superslides.min.js}"></script>
+<script th:src="@{/js/bootstrap-select.js}"></script>
+<script th:src="@{/js/inewsticker.js}"></script>
+<script th:src="@{/js/bootsnav.js}"></script>
+<script th:src="@{/js/images-loded.min.js}"></script>
+<script th:src="@{/js/isotope.min.js}"></script>
+<script th:src="@{/js/owl.carousel.min.js}"></script>
+<script th:src="@{/js/baguetteBox.min.js}"></script>
+<script th:src="@{/js/form-validator.min.js}"></script>
+<script th:src="@{/js/contact-form-script.js}"></script>
+<script th:src="@{/js/custom.js}"></script>
+<script th:src="@{/js/my-js/slider-home-page.js}"></script>
 <th:block th:if="${session.currentUser == null}">
     <script th:src="@{/js/my-js/lrf-modal.js}"></script>
 </th:block>

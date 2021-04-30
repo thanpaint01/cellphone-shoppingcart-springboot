@@ -9,7 +9,7 @@
                         aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="../consumer/index.html"><img src="images/dhmobilelogo.png" class="logo"
+                <a class="navbar-brand" th:href="@{/}"><img th:src="@{/images/dhmobilelogo.png}" class="logo"
                                                                            alt=""></a>
             </div>
             <!-- End Header Navigation -->
@@ -17,7 +17,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="navbar-menu">
                 <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                    <li class="nav-item active"><a class="nav-link" href="../consumer/index.html">Trang chủ</a></li>
+                    <li class="nav-item active"><a class="nav-link" th:href="@{/}">Trang chủ</a></li>
                     <li class="dropdown">
                         <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">Danh mục</a>
@@ -34,7 +34,6 @@
                             <li><a href="shop-detail.html">Chi tiết sản phẩm</a></li>
                             <li><a href="cart.html">Giỏ hàng</a></li>
                             <li><a href="checkout.html">Đặt hàng</a></li>
-                            <li><a href="my-account.html">My Account</a></li>
                             <li><a href="wishlist.html">Wishlist</a></li>
                         </ul>
                     </li>

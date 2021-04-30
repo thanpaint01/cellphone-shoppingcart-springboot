@@ -82,9 +82,9 @@ public class CartController {
                 System.out.println(c);
             }
             headController.getCartOnHeader(session, model);
-            return "cart";
+            return "/consumer/cart";
         }else{
-            return "cart-empty";
+            return "/consumer/cart-empty";
         }
     }
 

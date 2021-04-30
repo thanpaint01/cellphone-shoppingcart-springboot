@@ -3,13 +3,10 @@
       layout:decorate="~{layout/consumer-layout.html}">
 <!-- Basic -->
 
-<head>
-    <title th:text="${CONTENT_TITLE}"></title>
-    <th:block layout:fragment="css">
-        <link rel="stylesheet" href="../../../css/my-css/shop.css">
-        <link rel="stylesheet" href="../../../css/my-css/toast.css">
-    </th:block>
-</head>
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="../../../css/my-css/shop.css">
+    <link rel="stylesheet" href="../../../css/my-css/toast.css">
+</th:block>
 <body>
 <div layout:fragment="body">
     <!-- Start All Title Box -->
@@ -115,7 +112,8 @@
                                                         </ul>
                                                         <a class="cart p-1">
                                                             <button class="cart btn border-0 btnAddToCart hvr-hover text-light"
-                                                                    th:action="@{/add-to-cart}" th:value="${product.id}">Thêm vào giỏ
+                                                                    th:action="@{/add-to-cart}"
+                                                                    th:value="${product.id}">Thêm vào giỏ
                                                             </button>
                                                         </a>
                                                     </div>

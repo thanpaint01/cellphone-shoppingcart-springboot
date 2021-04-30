@@ -50,7 +50,7 @@ public class HomeController {
     public String getListProductByBrandID(HttpSession session,Model model, @RequestParam("brand") int brandID) {
         getListBrand(model);
         headController.getCartOnHeader(session, model);
-        return "shop";
+        return "/consumer/shop";
     }
 
     public List<Product> getListProduct(Model model) {
@@ -82,7 +82,7 @@ public class HomeController {
         model.addAttribute("totalPages", shopPage.getTotalPages());
         model.addAttribute("totalElements", shopPage.getTotalElements());
         model.addAttribute("products", products);
-        return "shop";
+        return "/consumer/shop";
     }
 
 

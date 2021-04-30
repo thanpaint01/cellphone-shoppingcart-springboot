@@ -28,8 +28,8 @@ public class UserController {
 
     @RequestMapping(value = "my-account", method = RequestMethod.GET)
     public ModelAndView myAccountPage() {
-        ModelAndView model=new ModelAndView("my-account");
-        model.addObject("CONTENT_TITLE","Trang chủ");
+        ModelAndView model=new ModelAndView("/consumer/my-account");
+        model.addObject("CONTENT_TITLE","Tài Khoản Của Tôi");
         return model;
     }
     @RequestMapping(value = "/email/verify/{token}")
@@ -42,7 +42,7 @@ public class UserController {
             u.setExpiredKey(null);
             u.setActive(User.ACTIVE.ACTIVE.value());
             userService.save(u);
-            return new ModelAndView("email-vertification");
+            return new ModelAndView("/consumer/email-vertification");
         }
     }
 
@@ -161,6 +161,4 @@ public class UserController {
             return "success";
         }
     }
-
-
 }
