@@ -5,8 +5,8 @@
     <title th:text="${CONTENT_TITLE}"></title>
 
     <th:block layout:fragment="css">
-        <link rel="stylesheet" href="../../css/my-css/custom-cart.css">
-        <link rel="stylesheet" href="../../css/my-css/toast.css">
+        <link rel="stylesheet" href="../../../css/my-css/custom-cart.css">
+        <link rel="stylesheet" href="../../../css/my-css/toast.css">
     </th:block>
 </head>
 <body>
@@ -33,7 +33,7 @@
         <div class="container m-auto text-center">
             <h2>Giỏ hàng hiện đang trống! Đăng nhập để tiến hành mua sắm.</h2>
             <div class="img m-auto">
-                <img src="../../images/cam-ket/empty-cart.png" height="80" width="80"/>
+                <img src="../../../images/cam-ket/empty-cart.png" height="80" width="80"/>
             </div>
             <div class="for-btn p-5">
                 <a class="btn hvr-hover text-light" th:href="@{/shop}">Tiếp tục mua sắm</a>
@@ -44,9 +44,9 @@
 
     <!-- block file script for shop page -->
     <th:block layout:fragment="scripts">
-        <script src="../../js/my-js/format-price-of-product.js"></script>
-        <script src="../../js/my-js/auto-increment-price.js"></script>
-        <script src="../../js/my-js/toast.js"></script>
+        <script src="../../../js/my-js/format-price-of-product.js"></script>
+        <script src="../../../js/my-js/auto-increment-price.js"></script>
+        <script src="../../../js/my-js/toast.js"></script>
     </th:block>
 </body>
 

@@ -34,7 +34,7 @@ public class HomeController {
         getListBrand(model);
         model.addAttribute("CONTENT_TITLE","Trang chủ");
         headController.getCartOnHeader(session, model);
-        return "index";
+        return "/consumer/index";
     }
     public void showCartBox(HttpSession session, Model model){
         User user = (User) session.getAttribute(User.SESSION);
@@ -46,7 +46,7 @@ public class HomeController {
 
 
     //shop là trang danh sách sản phẩm, phương thức lấy danh sách sản phẩm theo id hãng
-    @GetMapping("/shop{brand}")
+    @GetMapping("/shop/{brand}")
     public String getListProductByBrandID(HttpSession session,Model model, @RequestParam("brand") int brandID) {
         getListBrand(model);
         headController.getCartOnHeader(session, model);

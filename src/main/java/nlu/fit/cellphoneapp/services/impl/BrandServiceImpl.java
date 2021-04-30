@@ -27,7 +27,6 @@ public class BrandServiceImpl implements IBrandService {
     }
 
     @Override
-    @Bean(name = "allbrands")
     public List<Brand> findAllByActive(int active) {
         return brandRepo.findAllByActive(active);
     }
