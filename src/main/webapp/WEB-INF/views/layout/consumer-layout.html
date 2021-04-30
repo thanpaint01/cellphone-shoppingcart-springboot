@@ -12,15 +12,15 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" th:href="@{'/css/bootstrap.min.css'}">
     <!-- FontAwesome CSS -->
-    <link rel="stylesheet" th:href="@{'fontawesome/css/all.min.css'}">
+    <link rel="stylesheet" th:href="@{'/fontawesome/css/all.min.css'}">
     <!-- Site CSS -->
-    <link rel="stylesheet" th:href="@{'css/style.css'}">
+    <link rel="stylesheet" th:href="@{'/css/style.css'}">
     <!-- Responsive CSS -->
-    <link rel="stylesheet" th:href="@{'css/responsive.css'}">
+    <link rel="stylesheet" th:href="@{'/css/responsive.css'}">
     <!-- Custom CSS -->
-    <link rel="stylesheet" th:href="@{'css/custom.css'}">
+    <link rel="stylesheet" th:href="@{'/css/custom.css'}">
     <!-- Header CSS -->
-    <link rel="stylesheet" th:href="@{'css/my-css/header.css'}">
+    <link rel="stylesheet" th:href="@{'/css/my-css/header.css'}">
 
 </head>
 <body>
@@ -145,6 +145,9 @@
 <script src="../../js/contact-form-script.js"></script>
 <script src="../../js/custom.js"></script>
 <script src="../../js/my-js/slider-home-page.js"></script>
+<th:block th:if="${session.currentUser == null}">
+    <script th:src="@{/js/my-js/lrf-modal.js}"></script>
+</th:block>
 <th:block layout:fragment="scripts">
 </th:block>
 </body>

@@ -9,7 +9,6 @@ import nlu.fit.cellphoneapp.receiver.RegisterForm;
 import nlu.fit.cellphoneapp.services.EmailSenderService;
 import nlu.fit.cellphoneapp.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,9 +26,35 @@ public class UserController {
     @Autowired
     EmailSenderService emailSenderService;
 
+    @RequestMapping(value = "my-account", method = RequestMethod.GET)
+    public ModelAndView myAccountPage() {
+        ModelAndView model=new ModelAndView("my-account");
+        model.addObject("CONTENT_TITLE","Trang chủ");
+        return model;
+    }
+    @RequestMapping(value = "/email/verify/{token}")
+    public ModelAndView vertificateEmail(@PathVariable("token") String token) {
+        User u;
+        if ((u = userService.vertifyToken(token)) == null)
+            return new ModelAndView("redirect:/");
+        else {
+            u.setKey(null);
+            u.setExpiredKey(null);
+            u.setActive(User.ACTIVE.ACTIVE.value());
+            userService.save(u);
+            return new ModelAndView("email-vertification");
+        }
+    }
+
+    @RequestMapping(value = "logout", method = RequestMethod.GET)
+    public ModelAndView logout(HttpSession session) {
+        session.setAttribute(User.SESSION, null);
+        return new ModelAndView("redirect:/");
+    }
+
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@Param("email") String email, @Param("password") String password, HttpSession session) {
+    public String login(@RequestParam(name = "email") String email, @RequestParam(name = "password") String password, HttpSession session) {
         User user;
         if (StringHelper.isNoValue(email) || StringHelper.isNoValue(password))
             return "emptyfield";
@@ -89,24 +114,10 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/email/verify/{token}")
-    public ModelAndView vertificateEmail(@PathVariable("token") String token) {
-        User u;
-        if ((u = userService.vertifyToken(token)) == null)
-            return new ModelAndView("redirect:/");
-        else {
-            u.setKey(null);
-            u.setExpiredKey(null);
-            u.setActive(User.ACTIVE.ACTIVE.value());
-            userService.save(u);
-            return new ModelAndView("email-vertification");
-        }
-    }
-
 
     @RequestMapping(value = "/forgot-pass", method = RequestMethod.POST)
     public @ResponseBody
-    String forgotPass(@Param("email") String email) {
+    String forgotPass(@RequestParam(name = "email") String email) {
         User user;
         if (StringHelper.isNoValue(email)) return "emptyfield";
         else if (!userService.isEmailUnique(email))
@@ -128,19 +139,19 @@ public class UserController {
 
     @RequestMapping(value = "/reset-pass", method = RequestMethod.POST)
     @ResponseBody
-    public String resetPass(@Param("resetcode") String resetCode, @Param("newpass") String newpass, @Param("confirmpass") String confirmpass) {
+    public String resetPass(@RequestParam(name = "resetcode") String resetcode, @RequestParam(name = "newpass") String newpass, @RequestParam(name = "confirmpass") String confirmpass) {
         User user;
         List<String> toCheck = new ArrayList<>();
-        toCheck.add(resetCode);
+        toCheck.add(resetcode);
         toCheck.add(newpass);
         toCheck.add(confirmpass);
         if (StringHelper.isNoValue(toCheck)) {
             return "emptyfield";
         } else if (!User.validPassword(newpass))
             return "validpass";
-        else if (newpass.equals(confirmpass))
+        else if (!newpass.equals(confirmpass))
             return "notequate";
-        else if ((user = userService.vertifyToken(resetCode)) == null) {
+        else if ((user = userService.vertifyToken(resetcode)) == null) {
             return "failcode";
         } else {
             user.setPassword(BcryptEncoder.encode(newpass));
