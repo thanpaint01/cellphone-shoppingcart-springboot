@@ -14,7 +14,7 @@ public class Pin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String pin;
+    private String capacity;
     private int active;
 
     //OneToMany Relation product table

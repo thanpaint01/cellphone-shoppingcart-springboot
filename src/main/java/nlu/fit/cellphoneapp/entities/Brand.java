@@ -18,7 +18,6 @@ public class Brand {
     private String logo;
     private String name;
     private int active;
-
     //OneToMany Relation product table
     @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products = new ArrayList<>();

@@ -11,7 +11,7 @@
  Target Server Version : 100416
  File Encoding         : 65001
 
- Date: 25/04/2021 22:22:48
+ Date: 01/05/2021 00:04:25
 */
 
 SET NAMES utf8mb4;
@@ -95,6 +95,7 @@ CREATE TABLE `item_cart`  (
   `amount` int NULL DEFAULT NULL,
   `img` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `total_price` int NULL DEFAULT NULL,
+  `active` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `iduser`(`user_id`) USING BTREE,
   INDEX `cart_ibfk_1`(`product_id`) USING BTREE,
@@ -161,7 +162,7 @@ CREATE TABLE `order_detail`  (
 DROP TABLE IF EXISTS `pin`;
 CREATE TABLE `pin`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `pin` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '',
+  `capacity` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '',
   `active` int NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
@@ -502,7 +503,7 @@ INSERT INTO `product_detail` VALUES (125, 'Thiết kế sang trọng, hiện đ�
 DROP TABLE IF EXISTS `ram`;
 CREATE TABLE `ram`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `ram` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `capacity` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `active` int NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
@@ -565,7 +566,7 @@ CREATE TABLE `role`  (
 DROP TABLE IF EXISTS `rom`;
 CREATE TABLE `rom`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `rom` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `capacity` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `active` int NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
@@ -628,20 +629,20 @@ CREATE TABLE `user`  (
   `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '',
   `phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '',
   `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '',
-  `gender` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '',
+  `gender` enum('Nam','Nữ') CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `birth` date NULL DEFAULT NULL,
   `key` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `expired_key` datetime(0) NULL DEFAULT NULL,
-  `role_id` int NULL DEFAULT 1 COMMENT '1: user, 2: admin, 0:other',
+  `role` int NULL DEFAULT 1 COMMENT '1: user, 2: admin, 0:other',
   `active` tinyint NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `email`(`email`) USING BTREE,
-  INDEX `role_id`(`role_id`) USING BTREE,
-  CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+  INDEX `role_id`(`role`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
+INSERT INTO `user` VALUES (21, 'daochichaoden@gmail.com', '$2a$10$OgLRQuaKIyJN/mLoJ1m5Ou41lpnkHb138Vm.tsnMenKAWfYqKeLs2', 'Vũ Minh Hiếu', NULL, NULL, NULL, 'Nam', NULL, NULL, NULL, 1, 1);
 
 SET FOREIGN_KEY_CHECKS = 1;

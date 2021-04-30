@@ -15,7 +15,7 @@ public class Rom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
+    private String capacity;
     private int active;
 
     //OneToMany Relation product table

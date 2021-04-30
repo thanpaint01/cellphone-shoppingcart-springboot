@@ -15,7 +15,7 @@ public class Ram {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String ram;
+    private String capacity;
     private int active;
 
     //OneToMany Relation product table

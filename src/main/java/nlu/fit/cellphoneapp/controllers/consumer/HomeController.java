@@ -1,6 +1,5 @@
 package nlu.fit.cellphoneapp.controllers.consumer;
 
-import nlu.fit.cellphoneapp.controllers.consumer.HeadController;
 import nlu.fit.cellphoneapp.dto.CartDTO;
 import nlu.fit.cellphoneapp.entities.Brand;
 import nlu.fit.cellphoneapp.entities.Product;
@@ -31,7 +30,6 @@ public class HomeController {
 
     @GetMapping({"/", "/home"})
     public String getIndex(HttpSession session, Model model) {
-        getListBrand(model);
         model.addAttribute("CONTENT_TITLE","Trang chủ");
         headController.getCartOnHeader(session, model);
         return "/consumer/index";
@@ -48,7 +46,6 @@ public class HomeController {
     //shop là trang danh sách sản phẩm, phương thức lấy danh sách sản phẩm theo id hãng
     @GetMapping("/shop/{brand}")
     public String getListProductByBrandID(HttpSession session,Model model, @RequestParam("brand") int brandID) {
-        getListBrand(model);
         headController.getCartOnHeader(session, model);
         return "/consumer/shop";
     }
@@ -62,17 +59,12 @@ public class HomeController {
     @GetMapping("/shop")
     public String getShopPage(@RequestParam(value = "page", required = false, defaultValue = "1") int page, @RequestParam(value = "limit", required = false, defaultValue = "15") int limit, Model model, HttpSession session) {
         model.addAttribute("CONTENT_TITLE","Danh sách sản phẩm");
-        getListBrand(model);
         getListProduct(model);
         headController.getCartOnHeader(session, model);
         //default page khi vào trang shop
         return getByPaging(page, limit, model);
     }
-    public List<Brand> getListBrand(Model model) {
-        List<Brand> brands = brandService.findAllByActive(1);
-        model.addAttribute("brands", brands);
-        return brands;
-    }
+
 
     public String getByPaging(int page, int limit, Model model) {
         System.out.println("page = " + page + ",limit = " + limit);

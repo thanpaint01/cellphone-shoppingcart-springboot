@@ -10,7 +10,7 @@
                     <i class="fa fa-bars"></i>
                 </button>
                 <a class="navbar-brand" th:href="@{/}"><img th:src="@{/images/dhmobilelogo.png}" class="logo"
-                                                                           alt=""></a>
+                                                            alt=""></a>
             </div>
             <!-- End Header Navigation -->
 
@@ -23,18 +23,39 @@
                            aria-haspopup="true" aria-expanded="false">Danh mục</a>
                         <ul class="dropdown-menu">
                             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle"
-                                                            data-toggle="dropdown" href="#">Hãng<i
+                                                            href="#">Hãng<i
                                     class="fas fa-caret-down float-right mt-2"></i></a>
                                 <ul class="dropdown-menu">
-                                    <a class="dropdown-item" th:each="brand : ${brands}"
+                                    <a class="dropdown-item" th:each="brand : ${allBrands}"
                                        th:href="@{/shop(brand=${brand.id})}" th:text="${brand.name}"></a>
                                 </ul>
                             </li>
-                            <li><a href="../consumer/shop.html">Danh sách sản phẩm</a></li>
-                            <li><a href="shop-detail.html">Chi tiết sản phẩm</a></li>
-                            <li><a href="cart.html">Giỏ hàng</a></li>
-                            <li><a href="checkout.html">Đặt hàng</a></li>
-                            <li><a href="wishlist.html">Wishlist</a></li>
+
+                            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle"
+                                                            href="#">Ram<i
+                                    class="fas fa-caret-down float-right mt-2"></i></a>
+                                <ul class="dropdown-menu">
+                                    <a class="dropdown-item" th:each="ram : ${allRams}"
+                                       th:href="@{/shop(brand=${ram.id})}" th:text="${ram.capacity}"></a>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle"
+                                                            href="#">Rom<i
+                                    class="fas fa-caret-down float-right mt-2"></i></a>
+                                <ul class="dropdown-menu">
+                                    <a class="dropdown-item" th:each="rom : ${allRoms}"
+                                       th:href="@{/shop(brand=${rom.id})}" th:text="${rom.capacity}"></a>
+                                </ul>
+                            </li>
+
+                            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle"
+                                                            href="#">Pin<i
+                                    class="fas fa-caret-down float-right mt-2"></i></a>
+                                <ul class="dropdown-menu">
+                                    <a class="dropdown-item" th:each="pin : ${allPins}"
+                                       th:href="@{/shop(brand=${pin.id})}" th:text="${pin.capacity}"></a>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="about.html">Thông tin</a></li>
@@ -55,7 +76,8 @@
                         </li>
                     </th:block>
                     <th:block th:if="${session.currentUser != null}">
-                        <li class="nav-item"><a th:href="@{/user/my-account}" class="nav-link"><i class="far fa-user mr-1"></i>TÀI KHOẢN CỦA
+                        <li class="nav-item"><a th:href="@{/user/my-account}" class="nav-link"><i
+                                class="far fa-user mr-1"></i>TÀI KHOẢN CỦA
                             TÔI</a></li>
                     </th:block>
 
@@ -97,7 +119,7 @@
                         <!--  end upload cart item  -->
                     </th:block>
                     <!--   session cart           -->
-<!--                    <th:block th:unless="${null == session.currentUser}">-->
+                    <!--                    <th:block th:unless="${null == session.currentUser}">-->
                     <!--                        &lt;!&ndash;/*@thymesVar id="cartItems" type="java"*/&ndash;&gt;-->
                     <!--                        <li class="cart-item">-->
                     <!--                            <a href="#" class="photo">-->
