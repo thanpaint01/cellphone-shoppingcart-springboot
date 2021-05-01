@@ -29,7 +29,6 @@ public class GlobalController {
     public List<Brand> allBrands() {
         return brandService.findAllByActive(1);
     }
-
     @ModelAttribute("allRams")
     public List<Ram> allRams() {
         return ramService.findAllByActive(1);

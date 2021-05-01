@@ -29,12 +29,18 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public Page<Product> findPaginated(int page, int limit) {
-        Pageable pageable = PageRequest.of(page-1, limit);
+        Pageable pageable = PageRequest.of(page - 1, limit);
         return productRepo.findAll(pageable);
     }
+
     @Override
     public List<Product> findAllByActive(int active) {
         return productRepo.findAllByActive(active);
+    }
+
+    @Override
+    public Product findOneForConsumer(int id) {
+        return productRepo.findOneForConsumer(id);
     }
 
 }

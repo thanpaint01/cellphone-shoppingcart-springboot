@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/consumer-layout.html}">
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/my-css/shop-detail.css}">
+</th:block>
+<body>
+<!-- Start Shop Detail  -->
+<div layout:fragment="body" class="shop-detail-box-main">
+    <div class="container">
+        <div class="row">
+            <th:block th:replace="/consumer/product-detail-fragments/summary :: summary"></th:block>
+            <th:block th:replace="/consumer/product-detail-fragments/specification :: specification"></th:block>
+            <th:block th:replace="/consumer/product-detail-fragments/description :: description"></th:block>
+            <th:block th:replace="/consumer/product-detail-fragments/reviews :: reviews"></th:block>
+        </div>
+        <div th:replace="/consumer/product-detail-fragments/related-products :: related-products"></div>
+    </div>
+    <hr/>
+</div>
+
+<th:block layout:fragment="scripts">
+    <script th:src="@{/js/jquery.simpleLoadMore.js}"></script>
+    <script th:src="@{/js/Jquery.autoResize.js}"></script>
+    <script th:src="@{/js/my-js/shop-detail-custom.js}"></script>
+    <script th:src="@{/js/my-js/format-price-of-product.js}"></script>
+</th:block>
+</body>
+</html>

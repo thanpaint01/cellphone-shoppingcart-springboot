@@ -3,6 +3,8 @@ package nlu.fit.cellphoneapp.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import nlu.fit.cellphoneapp.converters.ImageAddress;
+import nlu.fit.cellphoneapp.converters.ImageAddressConventer;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,15 +18,20 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String img;
+    @Convert(converter = ImageAddressConventer.class)
+    private ImageAddress img;
     private String name;
     private double price;
     private int amount;
     private int warranty;
-    private String img01;
-    private String img02;
-    private String img03;
-    private String img04;
+    @Convert(converter = ImageAddressConventer.class)
+    private ImageAddress img01;
+    @Convert(converter = ImageAddressConventer.class)
+    private ImageAddress img02;
+    @Convert(converter = ImageAddressConventer.class)
+    private ImageAddress img03;
+    @Convert(converter = ImageAddressConventer.class)
+    private ImageAddress img04;
     private String size;
     @Column(name = "selfie_camera")
     private String selfieCamera;

@@ -71,7 +71,7 @@ public class CartDTO {
     }
 
     public void setProductImg(String productImg) {
-        this.productImg = Link.HOST+productImg;
+        this.productImg = Link.HOST +productImg;
     }
 
     public int getActive() {

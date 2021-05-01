@@ -30,7 +30,7 @@ public class MyConverter {
         cart.setUserID(cartItemEntity.getUser().getId());
         cart.setProductID(cartItemEntity.getProduct().getId());
         cart.setProductName(cartItemEntity.getProduct().getName());
-        cart.setProductImg(cartItemEntity.getProduct().getImg());
+        cart.setProductImg(cartItemEntity.getProduct().getImg().getRelativePath());
         double price = cartItemEntity.getProduct().getPrice();
         cart.setProductPrice(price);
         double totalPrice = amount*price;

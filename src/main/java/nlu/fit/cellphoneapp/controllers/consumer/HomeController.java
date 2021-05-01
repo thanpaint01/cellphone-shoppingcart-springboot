@@ -19,10 +19,7 @@ import java.util.List;
 @Controller
 public class HomeController {
 
-    @Autowired
-    IBrandService brandService;
-    @Autowired
-    IProductService productService;
+
     @Autowired
     ICartService cartService;
     @Autowired
@@ -32,50 +29,49 @@ public class HomeController {
     public String getIndex(HttpSession session, Model model) {
         model.addAttribute("CONTENT_TITLE","Trang chủ");
         headController.getCartOnHeader(session, model);
-        return "/consumer/index";
+        return "consumer/index";
     }
-    public void showCartBox(HttpSession session, Model model){
-        User user = (User) session.getAttribute(User.SESSION);
-        int userID = 0;
-        if(null!=user) userID = user.getId();
-        List<CartDTO> carts = cartService.getAllByUserID(userID);
-        model.addAttribute("cartItems", carts);
-    }
-
-
-    //shop là trang danh sách sản phẩm, phương thức lấy danh sách sản phẩm theo id hãng
-    @GetMapping("/shop/{brand}")
-    public String getListProductByBrandID(HttpSession session,Model model, @RequestParam("brand") int brandID) {
-        headController.getCartOnHeader(session, model);
-        return "/consumer/shop";
-    }
-
-    public List<Product> getListProduct(Model model) {
-        List<Product> products = productService.findAllByActive(1);
-        model.addAttribute("products", products);
-        return products;
-    }
-
-    @GetMapping("/shop")
-    public String getShopPage(@RequestParam(value = "page", required = false, defaultValue = "1") int page, @RequestParam(value = "limit", required = false, defaultValue = "15") int limit, Model model, HttpSession session) {
-        model.addAttribute("CONTENT_TITLE","Danh sách sản phẩm");
-        getListProduct(model);
-        headController.getCartOnHeader(session, model);
-        //default page khi vào trang shop
-        return getByPaging(page, limit, model);
-    }
-
-
-    public String getByPaging(int page, int limit, Model model) {
-        System.out.println("page = " + page + ",limit = " + limit);
-        Page<Product> shopPage = productService.findPaginated(page, limit);
-        List<Product> products = shopPage.getContent();
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", shopPage.getTotalPages());
-        model.addAttribute("totalElements", shopPage.getTotalElements());
-        model.addAttribute("products", products);
-        return "/consumer/shop";
-    }
+//    public void showCartBox(HttpSession session, Model model){
+//        User user = (User) session.getAttribute(User.SESSION);
+//        int userID = 0;
+//        if(null!=user) userID = user.getId();
+//        List<CartDTO> carts = cartService.getAllByUserID(userID);
+//        model.addAttribute("cartItems", carts);
+//    }
+//
+//
+//    @GetMapping("/shop/{brand}")
+//    public String getListProductByBrandID(HttpSession session,Model model, @RequestParam("brand") int brandID) {
+//        headController.getCartOnHeader(session, model);
+//        return "/consumer/shop";
+//    }
+//
+//    public List<Product> getListProduct(Model model) {
+//        List<Product> products = productService.findAllByActive(1);
+//        model.addAttribute("products", products);
+//        return products;
+//    }
+//
+//    @GetMapping("/shop")
+//    public String getShopPage(@RequestParam(value = "page", required = false, defaultValue = "1") int page, @RequestParam(value = "limit", required = false, defaultValue = "15") int limit, Model model, HttpSession session) {
+//        model.addAttribute("CONTENT_TITLE","Danh sách sản phẩm");
+//        getListProduct(model);
+//        headController.getCartOnHeader(session, model);
+//        //default page khi vào trang shop
+//        return getByPaging(page, limit, model);
+//    }
+//
+//
+//    public String getByPaging(int page, int limit, Model model) {
+//        System.out.println("page = " + page + ",limit = " + limit);
+//        Page<Product> shopPage = productService.findPaginated(page, limit);
+//        List<Product> products = shopPage.getContent();
+//        model.addAttribute("currentPage", page);
+//        model.addAttribute("totalPages", shopPage.getTotalPages());
+//        model.addAttribute("totalElements", shopPage.getTotalElements());
+//        model.addAttribute("products", products);
+//        return "/consumer/shop";
+//    }
 
 
 

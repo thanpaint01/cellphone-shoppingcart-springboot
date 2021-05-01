@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="options-search" class="product-item-filter row no-gutters ">
+    <div class="col-3 text-center text-sm-left px-1 ">
+        <div class="toolbar-sorter-right">
+            <select id="brand" class="selectpicker show-tick form-control"
+                    data-placeholder="$ USD">
+                <option data-display="Select">Hãng</option>
+                <option th:each="brand:${allBrands}" th:value="${brand.id}" th:text="${brand.name}"
+                ></option>
+            </select>
+        </div>
+    </div>
+    <div class="col-3 text-center text-sm-left px-1 ">
+        <div class="toolbar-sorter-right">
+            <select id="pin" class="selectpicker show-tick form-control"
+                    data-placeholder="$ USD">
+                <option data-display="Select">Pin</option>
+                <option th:each="pin:${allPins}" th:value="${pin.id}" th:text="${pin.capacity}"></option>
+            </select>
+        </div>
+    </div>
+    <div class="col-3 text-center text-sm-left px-1 ">
+        <div class="toolbar-sorter-right">
+            <select id="ram" class="selectpicker show-tick form-control"
+                    data-placeholder="$ USD">
+                <option data-display="Select">Ram</option>
+                <option th:each="ram:${allRams}" th:value="${ram.id}" th:text="${ram.capacity}"
+                ></option>
+            </select>
+        </div>
+    </div>
+    <div class="col-3 text-center text-sm-left px-1 ">
+        <div class="toolbar-sorter-right">
+            <select id="rom" class="selectpicker show-tick form-control"
+                    data-placeholder="$ USD">
+                <option data-display="Select">Rom</option>
+                <option th:each="rom:${allRoms}" th:value="${rom.id}" th:text="${rom.capacity}"></option>
+            </select>
+        </div>
+    </div>
+</div>
+
+</html>

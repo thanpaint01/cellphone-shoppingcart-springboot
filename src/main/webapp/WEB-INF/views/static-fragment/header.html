@@ -13,7 +13,6 @@
                                                             alt=""></a>
             </div>
             <!-- End Header Navigation -->
-
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="navbar-menu">
                 <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
@@ -27,7 +26,7 @@
                                     class="fas fa-caret-down float-right mt-2"></i></a>
                                 <ul class="dropdown-menu">
                                     <a class="dropdown-item" th:each="brand : ${allBrands}"
-                                       th:href="@{/shop(brand=${brand.id})}" th:text="${brand.name}"></a>
+                                       th:href="@{/product(brand=${brand.id})}" th:text="${brand.name}"></a>
                                 </ul>
                             </li>
 
@@ -36,7 +35,7 @@
                                     class="fas fa-caret-down float-right mt-2"></i></a>
                                 <ul class="dropdown-menu">
                                     <a class="dropdown-item" th:each="ram : ${allRams}"
-                                       th:href="@{/shop(brand=${ram.id})}" th:text="${ram.capacity}"></a>
+                                       th:href="@{/product(ram=${ram.id})}" th:text="${ram.capacity}"></a>
                                 </ul>
                             </li>
                             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle"
@@ -44,7 +43,7 @@
                                     class="fas fa-caret-down float-right mt-2"></i></a>
                                 <ul class="dropdown-menu">
                                     <a class="dropdown-item" th:each="rom : ${allRoms}"
-                                       th:href="@{/shop(brand=${rom.id})}" th:text="${rom.capacity}"></a>
+                                       th:href="@{/product(rom=${rom.id})}" th:text="${rom.capacity}"></a>
                                 </ul>
                             </li>
 
@@ -53,7 +52,7 @@
                                     class="fas fa-caret-down float-right mt-2"></i></a>
                                 <ul class="dropdown-menu">
                                     <a class="dropdown-item" th:each="pin : ${allPins}"
-                                       th:href="@{/shop(brand=${pin.id})}" th:text="${pin.capacity}"></a>
+                                       th:href="@{/product(pin=${pin.id})}" th:text="${pin.capacity}"></a>
                                 </ul>
                             </li>
                         </ul>
@@ -114,7 +113,7 @@
                                 <img th:src="${c.productImg}" class="cart-thumb"/></a>
                             <h6><a href="#" th:text="${c.productName}"></a></h6>
                             <span th:text="${c.amount}+'x - '"></span>
-                            <span class="product-price" th:text="${c.productPrice}"></span>đ
+                            <span class="product-price" th:text="${c.productPrice}"></span>
                         </li>
                         <!--  end upload cart item  -->
                     </th:block>
