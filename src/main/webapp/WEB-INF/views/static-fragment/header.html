@@ -16,10 +16,11 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="navbar-menu">
                 <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                    <li class="nav-item active"><a class="nav-link" th:href="@{/}">Trang chủ</a></li>
-                    <li class="dropdown">
+                    <li class="nav-item" th:classappend="${isHomePage} ? active: ''"><a class="nav-link" th:href="@{/}">Trang
+                        chủ</a></li>
+                    <li class="dropdown" th:classappend="${isProductPage} ? active: ''">
                         <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">Danh mục</a>
+                           aria-haspopup="true" aria-expanded="false">Sản Phẩm</a>
                         <ul class="dropdown-menu">
                             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle"
                                                             href="#">Hãng<i
@@ -75,7 +76,8 @@
                         </li>
                     </th:block>
                     <th:block th:if="${session.currentUser != null}">
-                        <li class="nav-item"><a th:href="@{/user/my-account}" class="nav-link"><i
+                        <li class="nav-item" th:classappend="${isUserPage}? active:''"><a th:href="@{/user/my-account}"
+                                                                                       class="nav-link"><i
                                 class="far fa-user mr-1"></i>TÀI KHOẢN CỦA
                             TÔI</a></li>
                     </th:block>

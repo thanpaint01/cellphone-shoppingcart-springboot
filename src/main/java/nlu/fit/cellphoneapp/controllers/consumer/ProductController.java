@@ -34,6 +34,7 @@ public class ProductController {
         model.addObject("totalPages", shopPage.getTotalPages());
         model.addObject("totalRecords", shopPage.getTotalElements());
         model.addObject("products", products);
+        model.addObject("CONTENT_TITLE","DANH SÁCH SẢN PHẨM");
         return model;
     }
     @RequestMapping(value = "/search", method = RequestMethod.GET)

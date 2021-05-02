@@ -3,6 +3,7 @@ package nlu.fit.cellphoneapp.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import nlu.fit.cellphoneapp.converters.ImageAddress;
 import nlu.fit.cellphoneapp.converters.ImageAddressConventer;
 

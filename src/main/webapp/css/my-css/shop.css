@@ -28,7 +28,7 @@
     background-color: #000 !important;
     color: white;
 }
-/* slider tai tro */
-.instagram-box {
-    background: url("/images/screenshoot.png");
+.toolbar-sorter-right.sort .bootstrap-select.btn-group .dropdown-toggle .filter-option{
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
