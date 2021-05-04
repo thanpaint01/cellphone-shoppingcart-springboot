@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/consumer-layout.html}">
+
+<head>
+    <title th:text="${CONTENT_TITLE}"></title>
+
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" href="../../../css/my-css/custom-cart.css">
+        <link rel="stylesheet" href="../../../css/my-css/toast.css">
+        <link rel="stylesheet" href="css/my-css/check-out.css">
+    </th:block>
+
+</head>
+<body>
+<div layout:fragment="body">
+    <!-- Start All Title Box -->
+    <div class="all-title-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Checkout</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                        <li class="breadcrumb-item active">Checkout</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End All Title Box -->
+
+    <!-- Start Cart  -->
+    <div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-lg-6 mb-3">
+                    <div class="checkout-address">
+                        <div class="title-left">
+                            <h3>Thông Tin Nhận Hàng</h3>
+                        </div>
+                        <form class="needs-validation" novalidate>
+                            <div class="mb-3">
+                                <label for="username">Họ và tên *</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="username" placeholder=""
+                                           th:value="${user.fullName}" required>
+                                    <div class="invalid-feedback" style="width: 100%;"> Không được để trống trường này!
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="address">Số điện thoại *</label>
+                                <input type="text" class="form-control" id="phoneNumber" placeholder=""
+                                       th:value="${user.phone}" required>
+                                <div class="invalid-feedback"> Vui lòng nhập số điện thoại người nhận.</div>
+                            </div>
+                            <div class="row no-gutters">
+                                <div class="col-md-4 mb-3">
+                                    <label for="country">Thành phố/Tỉnh *</label>
+                                    <select class=" wide w-100" id="province">
+                                    </select>
+                                    <div class="invalid-feedback"> Please select a valid country.</div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="state">Quận/Huyện *</label>
+                                    <select class="wide w-100" id="district">
+
+                                    </select>
+                                    <div class="invalid-feedback"> Please provide a valid state.</div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="zip">Phường/Xã *</label>
+                                    <select class="wide w-100" id="ward" required></select>
+                                    <div class="invalid-feedback"> Zip code required.</div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="state">Địa chỉ *</label>
+                                <textarea id="address" class="w-100"></textarea>
+                            </div>
+
+                            <hr class="mb-4">
+                            <!-- <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="same-address">
+                                <label class="custom-control-label" for="same-address">Shipping address is the same as
+                                    my billing address</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="save-info">
+                                <label class="custom-control-label" for="save-info">Save this information for next
+                                    time</label>
+                            </div>
+                            <hr class="mb-4"> -->
+                            <div class="title"><span>Thanh toán</span></div>
+                            <div class="d-block my-3">
+                                <div class="custom-control custom-radio">
+                                    <input id="credit" name="paymentMethod" type="radio" class="custom-control-input"
+                                           checked required>
+                                    <label class="custom-control-label" for="credit">Trực Tiếp</label>
+                                </div>
+                                <!-- <div class="custom-control custom-radio">
+                                    <input id="debit" name="paymentMethod" type="radio" class="custom-control-input"
+                                        required>
+                                    <label class="custom-control-label" for="debit">Debit card</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input"
+                                        required>
+                                    <label class="custom-control-label" for="paypal">Paypal</label>
+                                </div> -->
+                            </div>
+                            <!-- <div class="row" >
+                                <div class="col-md-6 mb-3">
+                                    <label for="cc-name">Name on card</label>
+                                    <input type="text" class="form-control" id="cc-name" placeholder="" required> <small
+                                        class="text-muted">Full name as displayed on card</small>
+                                    <div class="invalid-feedback"> Name on card is required </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="cc-number">Credit card number</label>
+                                    <input type="text" class="form-control" id="cc-number" placeholder="" required>
+                                    <div class="invalid-feedback"> Credit card number is required </div>
+                                </div>
+                            </div>
+                            <div class="row" style="visibility: hidden;">
+                                <div class="col-md-3 mb-3">
+                                    <label for="cc-expiration">Expiration</label>
+                                    <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
+                                    <div class="invalid-feedback"> Expiration date required </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="cc-expiration">CVV</label>
+                                    <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+                                    <div class="invalid-feedback"> Security code required </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="payment-icon">
+                                        <ul>
+                                            <li><img class="img-fluid" src="images/payment-icon/1.png" alt=""></li>
+                                            <li><img class="img-fluid" src="images/payment-icon/2.png" alt=""></li>
+                                            <li><img class="img-fluid" src="images/payment-icon/3.png" alt=""></li>
+                                            <li><img class="img-fluid" src="images/payment-icon/5.png" alt=""></li>
+                                            <li><img class="img-fluid" src="images/payment-icon/7.png" alt=""></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <hr class="mb-1">
+                        </form>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-6 mb-3">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <div class="shipping-method-box">
+                                <div class="title-left">
+                                    <h3>Giao hàng</h3>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="custom-control custom-radio">
+                                        <input id="shippingOption1" name="shipping-option" class="custom-control-input"
+                                               checked="checked" type="radio">
+                                        <label class="custom-control-label" for="shippingOption1">Giao Hàng Tiêu
+                                            Chuẩn</label> <span class="float-right font-weight-bold">Miễn phí</span>
+                                    </div>
+                                    <div class="ml-4 mb-2 small">(3-7 ngày làm việc)</div>
+                                    <!-- <div class="custom-control custom-radio">
+                                        <input id="shippingOption2" name="shipping-option" class="custom-control-input"
+                                            type="radio">
+                                        <label class="custom-control-label" for="shippingOption2">Express
+                                            Delivery</label> <span class="float-right font-weight-bold">$10.00</span>
+                                    </div>
+                                    <div class="ml-4 mb-2 small">(2-4 ngày làm việc)</div>
+                                    <div class="custom-control custom-radio">
+                                        <input id="shippingOption3" name="shipping-option" class="custom-control-input"
+                                            type="radio">
+                                        <label class="custom-control-label" for="shippingOption3">Next Business
+                                            day</label> <span class="float-right font-weight-bold">$20.00</span>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-12">
+                            <div class="odr-box">
+                                <div class="title-left">
+                                    <h3>Thông tin kiện hàng</h3>
+                                </div>
+                                <div class="rounded p-2 bg-light">
+                                    <div class="media mb-2 border-bottom">
+                                        <div class="media-body">
+                                            <div class="row">
+                                                <div class="col-3">
+                                                    <a href="">
+                                                        <img src="images/shop-detail/1.jpg" class="img-fluid" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="col-9 text-left">
+                                                    <a href="">Samsung Galaxy A51</a>
+                                                    <div class="small text-muted">Giá: $10.000.000.000 <span
+                                                            class="mx-2">|</span> Số lượng:
+                                                        1<span class="mx-2">|</span> Đơn Giá: $80.00
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="media mb-2 border-bottom">
+                                        <div class="media-body">
+                                            <div class="row">
+                                                <div class="col-3">
+                                                    <a href="">
+                                                        <img src="images/shop-detail/1.jpg" class="img-fluid" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="col-9 text-left">
+                                                    <a href="">Samsung Galaxy A51</a>
+                                                    <div class="small text-muted">Giá: $10.000.000.000 <span
+                                                            class="mx-2">|</span> Số lượng:
+                                                        1<span class="mx-2">|</span> Đơn Giá: $80.00
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="media mb-2 border-bottom">
+                                        <div class="media-body">
+                                            <div class="row">
+                                                <div class="col-3">
+                                                    <a href="">
+                                                        <img src="images/shop-detail/1.jpg" class="img-fluid" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="col-9 text-left">
+                                                    <a href="">Samsung Galaxy A51</a>
+                                                    <div class="small text-muted">Giá: $10.000.000.000 <span
+                                                            class="mx-2">|</span> Số lượng:
+                                                        1<span class="mx-2">|</span> Đơn Giá: $80.00
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-12">
+                            <div class="order-box">
+                                <div class="title-left">
+                                    <h3>Đơn hàng của bạn</h3>
+                                </div>
+                                <div class="d-flex">
+                                    <h4>Tạm tính</h4>
+                                    <div class="ml-auto font-weight-bold product-price"></div>
+                                </div>
+                                <div class="d-flex">
+                                    <h4>Giảm giá</h4>
+                                    <div class="ml-auto font-weight-bold product-price"></div>
+                                </div>
+                                <hr class="my-1">
+                                <div class="d-flex">
+                                    <h4>Phí vận chuyển</h4>
+                                    <div class="ml-auto font-weight-bold product-price"></div>
+                                </div>
+                                <div class="d-flex">
+                                    <h4>Thành tiền</h4>
+                                    <div class="ml-auto font-weight-bold product-price"></div>
+                                </div>
+                                <hr>
+                                <div class="d-flex gr-total">
+                                    <h5>Tổng tiền</h5>
+                                    <div class="ml-auto h5 product-price"></div>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="col-12 d-flex shopping-box"><a href="checkout.html"
+                                                                   class="ml-auto btn hvr-hover">Tiến hành đặt hàng</a></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- End Cart -->
+
+
+</div>
+
+<!-- ALL JS FILES -->
+<th:block layout:fragment="scripts">
+    <script src="../../../js/my-js/format-price-of-product.js"></script>
+    <script src="../../../js/my-js/auto-increment-price.js"></script>
+    <script src="../../../js/my-js/toast.js"></script>
+    <script th:src="@{js/Jquery.autoResize.js}"></script>
+    <script th:src="@{js/vietnamlocalselector.js}"></script>
+    <script>
+        $("textarea").autoResize();
+        var localpicker = new LocalPicker({
+            province: "#province",
+            district: "#district",
+            ward: "#ward"
+        });
+    </script>
+</th:block>
+
+</body>
+
+</html>

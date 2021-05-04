@@ -16,13 +16,8 @@ $('.tr-update').change(function () {
     var productID = $(this).find('p.product-price.current-price-product').prop('id');
     var amount = $(this).find('input.c-input-text.qty.text').val();
     var currentPrice = $(this).find('p.product-price.current-price-product').text();
-    var total = amount * convert(currentPrice);
-    $(this).find('p.product-price.total-by-product').html(total.toLocaleString("en-US"),
-        {
-            style: 'currency',
-            currency: 'VND'
-        }
-    );
+    var total = amount * convert(reverseFormatNumber(currentPrice, "vi-VN"));
+    $(this).find('p.product-price.total-by-product').html(formatter.format(total));
 
     $.ajax({
         type: 'POST',
@@ -38,13 +33,13 @@ $('.tr-update').change(function () {
     var allTotalPriceByProductID = document.querySelectorAll('.total-by-product');
     let result = 0;
     for (var i = 0, len = allTotalPriceByProductID.length | 0; i < len; i = i + 1 | 0) {
-        result += convert(allTotalPriceByProductID[i].textContent);
+        result += convert(reverseFormatNumber(allTotalPriceByProductID[i].textContent, "vi-VN"));
     }
-    $('.total-price').html(result.toLocaleString("en-US") + " đ");
+    $('.total-price').html(formatter.format(result));
 
     //giá cuối cùng (Thành tiền)
-    var lastPrice = result - convert($('.discount-price').text());
-    $('.last-price').html(lastPrice.toLocaleString("en-US") + " đ");
+    var lastPrice = result - convert(reverseFormatNumber($('.discount-price').text(), "vi-VN"));
+    $('.last-price').html(formatter.format(lastPrice));
 })
 
 
@@ -54,7 +49,7 @@ $('.remove-action').click(function () {
     var cartID = $(this).attr('value');
     var amountRemove = $(this).attr('name');
     let resetAmount = parseInt(sumAmount - amountRemove);
-    let totalPriceBefore = convert($('.total-price').text());
+    let totalPriceBefore = convert(reverseFormatNumber($('.total-price').text(), "vi-VN"));
     let priceRemove = convert($(this).attr('alt'));
     let resetTotalPrice = totalPriceBefore - priceRemove;
     $('#btnDeleteModalConfirm').click(function () {
@@ -68,8 +63,8 @@ $('.remove-action').click(function () {
                     $('#' + cartID).remove();
                     $('#sumOfCart').html(resetAmount);
                     $('#li' + cartID).remove();
-                    $('.total-price').html(resetTotalPrice.toLocaleString("en-US")+"đ");
-                    $('.last-price').html((resetTotalPrice - convert($('.discount-price').text())).toLocaleString("en-US")+"đ");
+                    $('.total-price').html(formatter.format(resetTotalPrice));
+                    $('.last-price').html(formatter.format(resetTotalPrice - convert($('.discount-price').text())));
                     deleteSuccess();
                 } else {
                     showFailDelete();

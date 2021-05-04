@@ -38,7 +38,7 @@ public class CartController {
         int amount = infoCartItem.getAmount();
         User user = (User) session.getAttribute(User.SESSION);
         int userID = 0;
-        if (null != user){
+        if (null != user) {
             System.out.println(user);
             userID = user.getId();
             infoCartItem.setUserID(userID);
@@ -60,7 +60,7 @@ public class CartController {
                         "<li class=\"cart-item\">" +
                                 "<a href=\"#\" class=\"photo\"><img src=\"" + c.getProductImg() + "\" class=\"cart-thumb\"/></a>" +
                                 "<h6><a href=\"#\">" + c.getProductName() + "</a></h6>" +
-                                "<p>1x - <span class=\"\">" + StringHelper.formatNumber((long) c.getProductPrice()) + "đ </span></p>" +
+                                "<p>1x - <span class=\"product-price\">" + StringHelper.formatNumber((long) c.getProductPrice()) + " </span></p>" +
                                 "</li>"
                 );
             }
@@ -83,7 +83,7 @@ public class CartController {
             }
             headController.getCartOnHeader(session, model);
             return "/consumer/cart";
-        }else{
+        } else {
             return "/consumer/cart-empty";
         }
     }

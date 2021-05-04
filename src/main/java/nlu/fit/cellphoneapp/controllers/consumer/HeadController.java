@@ -32,7 +32,7 @@ public class HeadController {
             cartDTOs = cartService.getAllByUserID(user.getId());
             System.out.println("lenOfArr="+cartDTOs.size());
             for (CartDTO c : cartDTOs) {
-                sumAmount += c.getAmount();
+                sumAmount += 1;
                 totalPriceForBox += c.getTotalPrice();
             }
         }

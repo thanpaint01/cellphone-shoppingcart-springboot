@@ -5,12 +5,14 @@ import nlu.fit.cellphoneapp.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -18,6 +20,9 @@ import java.util.List;
 public class ProductController {
     @Autowired
     IProductService productService;
+    @Autowired
+    HeadController headController;
+
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView listProductPage
@@ -26,7 +31,7 @@ public class ProductController {
                     , @RequestParam(value = "ram", required = false, defaultValue = "-1") int ram
                     , @RequestParam(value = "rom", required = false, defaultValue = "-1") int rom
                     , @RequestParam(value = "pin", required = false, defaultValue = "-1") int pin
-                    , @RequestParam(value = "name", required = false, defaultValue = "") String name) {
+                    , @RequestParam(value = "name", required = false, defaultValue = "") String name, HttpSession session, Model md) {
         ModelAndView model = new ModelAndView("consumer/product-list");
         Page<Product> shopPage = productService.findPaginated(page, 15);
         List<Product> products = shopPage.getContent();
@@ -34,9 +39,12 @@ public class ProductController {
         model.addObject("totalPages", shopPage.getTotalPages());
         model.addObject("totalRecords", shopPage.getTotalElements());
         model.addObject("products", products);
-        model.addObject("CONTENT_TITLE","DANH SÁCH SẢN PHẨM");
+        model.addObject("CONTENT_TITLE", "DANH SÁCH SẢN PHẨM");
+
+        headController.getCartOnHeader(session, md);
         return model;
     }
+
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public ModelAndView listProductPageSearch
             (@RequestParam(value = "page", required = false, defaultValue = "1") int page
