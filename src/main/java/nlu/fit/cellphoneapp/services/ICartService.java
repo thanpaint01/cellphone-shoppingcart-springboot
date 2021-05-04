@@ -10,5 +10,5 @@ public interface ICartService {
     CartDTO insertIntoTable(CartDTO cartDTO);
     List<CartDTO> getAllByUserID(int userID);
     CartItem getOneCartItem(int id);
-    void deleteOne(int id);
+    boolean deleteOne(int id);
 }

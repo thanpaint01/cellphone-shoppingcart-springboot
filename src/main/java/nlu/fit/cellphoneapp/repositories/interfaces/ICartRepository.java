@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface ICartRepository extends JpaRepository<CartItem, Integer> {
     List<CartItem> getAllByUser(User user);
+    void deleteById(int id);
 
 }

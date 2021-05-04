@@ -2,6 +2,7 @@ package nlu.fit.cellphoneapp.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -20,7 +21,7 @@ public class CartItem {
     private int active;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Product product;
 
 
@@ -35,4 +36,10 @@ public class CartItem {
                 ", product=" + product +
                 '}';
     }
+
+
+
+
+
+
 }

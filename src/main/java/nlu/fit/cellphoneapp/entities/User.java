@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 @Setter
 public class User {
     public static final String SESSION = "currentUser";
+
     public enum ROLE {
         CONSUMEER(1), ADMIN(2);
         private final int value;
@@ -62,7 +63,8 @@ public class User {
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,
-            orphanRemoval = true
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
     )
     private List<CartItem> cartItems = new ArrayList<>();
 
@@ -97,6 +99,14 @@ public class User {
 
     public static boolean validGender(String gender) {
         return gender.equals("Nam") || gender.equals("Nữ");
+    }
+
+    public double getTotalPrice() {
+        double rs = 0.0;
+        for (CartItem c : cartItems) {
+            rs += (c.getAmount() * c.getProduct().getPrice());
+        }
+        return rs;
     }
 
 }

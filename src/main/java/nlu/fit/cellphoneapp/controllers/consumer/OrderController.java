@@ -5,21 +5,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpSession;
 
 @Controller
 public class OrderController {
 
-    @Autowired
-    HeadController headController;
-
     @GetMapping("/checkout")
-    public String getOrderPage(Model model, HttpSession session){
-        headController.getCartOnHeader(session, model);
-        model.addAttribute("user", session.getAttribute(User.SESSION));
-
-        if(null == session.getAttribute(User.SESSION)) return "consumer/cart-empty";
+    public String goToCheckoutPage(@ModelAttribute("userDelivery") User user, Model model, HttpSession session) {
+        if (null == session.getAttribute(User.SESSION)) return "consumer/cart-empty";
         return "consumer/checkout";
+    }
+
+    @GetMapping("/order")
+    public String goToOrderPage(HttpSession session, Model model) {
+        User userDelivery;
+        if(null != (userDelivery = (User) model.getAttribute("userDelivery"))){
+            //            //checkAttr
+
+        }
+        if (null == session.getAttribute(User.SESSION)) return "redirect:/home";
+            return "order";
     }
 }

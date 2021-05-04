@@ -77,7 +77,7 @@
                     </th:block>
                     <th:block th:if="${session.currentUser != null}">
                         <li class="nav-item" th:classappend="${isUserPage}? active:''"><a th:href="@{/user/my-account}"
-                                                                                       class="nav-link"><i
+                                                                                          class="nav-link"><i
                                 class="far fa-user mr-1"></i>TÀI KHOẢN CỦA
                             TÔI</a></li>
                     </th:block>
@@ -94,7 +94,10 @@
                         <a href="#">
                             <i class="fa fa-shopping-bag"></i>
                             <!--/*@thymesVar id="sumOfCart" type="java"*/-->
-                            <span class="badge" id="sumOfCart" th:text="${sumAmount}"></span>
+                            <th:block th:if="${null != session.currentUser}">
+                                <span class="badge" id="sumOfCart"
+                                      th:text="${session.currentUser.getCartItems().size()}"></span>
+                            </th:block>
                             <p>Giỏ hàng</p>
                         </a>
                     </li>
@@ -110,12 +113,13 @@
                     <!-- upload cart item using ajax -->
                     <th:block th:if="${session.currentUser != null}">
                         <!--/*@thymesVar id="cartItems" type="java"*/-->
-                        <li class="cart-item" th:each="c : ${cartItems}" th:id="'li'+${c.id}">
+                        <li class="cart-item" th:each="c : ${session.currentUser.getCartItems()}" th:id="'li'+${c.id}">
                             <a href="#" class="photo">
-                                <img th:src="${c.productImg}" class="cart-thumb"/></a>
-                            <h6><a href="#" th:text="${c.productName}"></a></h6>
-                            <span th:text="${c.amount}+'x - '"></span>
-                            <span class="product-price" th:text="${c.productPrice}"></span>
+                                <img th:src="${c.getProduct().getImg().getHost()+c.getProduct().getImg().getRelativePath()}"
+                                     class="cart-thumb"/></a>
+                            <h6><a href="#" th:text="${c.getProduct().getName()}"></a></h6>
+                            <span th:text="${c.getAmount()}+'x - '"></span>
+                            <span class="product-price" th:text="${c.getProduct().getPrice()}"></span>
                         </li>
                         <!--  end upload cart item  -->
                     </th:block>
@@ -135,7 +139,10 @@
                 <div class="total p-2">
                     <a th:href="@{/cart}" class="btn btn-default hvr-hover btn-cart text-light">CHI TIẾT</a>
                     <span class="float-right"><strong>Tổng</strong>: <!--/*@thymesVar id="totalAll" type="java"*/-->
-                        <span class="product-price total-cart" th:text="${totalPriceForBox}">đ</span> </span>
+                        <th:block th:if="${null != session.currentUser}">
+                        <span class="product-price total-cart" th:text="${session.currentUser.getTotalPrice()}"></span>
+                        </th:block>
+                    </span>
                 </div>
                 <!-- end li total -->
         </div>

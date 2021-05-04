@@ -22,13 +22,10 @@ public class HomeController {
 
     @Autowired
     ICartService cartService;
-    @Autowired
-    HeadController headController;
 
     @GetMapping({"/", "/home"})
     public String getIndex(HttpSession session, Model model) {
         model.addAttribute("CONTENT_TITLE","Trang chủ");
-        headController.getCartOnHeader(session, model);
         return "consumer/index";
     }
 //    public void showCartBox(HttpSession session, Model model){

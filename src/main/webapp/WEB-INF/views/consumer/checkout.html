@@ -41,9 +41,9 @@
                         </div>
                         <form class="needs-validation" novalidate>
                             <div class="mb-3">
-                                <label for="username">Họ và tên *</label>
+                                <label for="fullName">Họ và tên *</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="username" placeholder=""
+                                    <input type="text" class="form-control" id="fullName" placeholder=""
                                            th:value="${user.fullName}" required>
                                     <div class="invalid-feedback" style="width: 100%;"> Không được để trống trường này!
                                     </div>
@@ -57,27 +57,29 @@
                             </div>
                             <div class="row no-gutters">
                                 <div class="col-md-4 mb-3">
-                                    <label for="country">Thành phố/Tỉnh *</label>
+                                    <label for="province">Thành phố/Tỉnh *</label>
                                     <select class=" wide w-100" id="province">
                                     </select>
-                                    <div class="invalid-feedback"> Please select a valid country.</div>
+                                    <div class="invalid-feedback"> Vui lòng chọn tỉnh/thành.</div>
                                 </div>
                                 <div class="col-md-4 mb-3">
-                                    <label for="state">Quận/Huyện *</label>
+                                    <label for="district">Quận/Huyện *</label>
                                     <select class="wide w-100" id="district">
 
                                     </select>
-                                    <div class="invalid-feedback"> Please provide a valid state.</div>
+                                    <div class="invalid-feedback"> Vui lòng chọn quận/huyện.</div>
                                 </div>
                                 <div class="col-md-4 mb-3">
-                                    <label for="zip">Phường/Xã *</label>
+                                    <label for="ward">Phường/Xã *</label>
                                     <select class="wide w-100" id="ward" required></select>
-                                    <div class="invalid-feedback"> Zip code required.</div>
+                                    <div class="invalid-feedback"> Vui lòng chọn phường/xã.</div>
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label for="state">Địa chỉ *</label>
-                                <textarea id="address" class="w-100"></textarea>
+                                <label for="address">Địa chỉ *</label>
+                                <textarea id="address" required class="w-100" th:value="${user.address}"
+                                          placeholder="Cung cấp số nhà cụ thể để thuận tiện cho việc giao nhận&#10;Ví dụ:47/16 đường số 10"></textarea>
+                                <div class="invalid-feedback"> Vui lòng chọn cung cấp địa chỉ cụ thể như số nhà.</div>
                             </div>
 
                             <hr class="mb-4">
@@ -187,55 +189,25 @@
                                     <h3>Thông tin kiện hàng</h3>
                                 </div>
                                 <div class="rounded p-2 bg-light">
-                                    <div class="media mb-2 border-bottom">
+                                    <div class="media mb-2 border-bottom" th:if="${null != session.currentUser}"
+                                         th:each="c:${session.currentUser.getCartItems()}">
                                         <div class="media-body">
                                             <div class="row">
                                                 <div class="col-3">
                                                     <a href="">
-                                                        <img src="images/shop-detail/1.jpg" class="img-fluid" alt="">
+                                                        <img th:src="${c.getProduct().getImg().getHost()+c.getProduct().getImg().getRelativePath()}"
+                                                             class="img-fluid" alt="">
                                                     </a>
                                                 </div>
                                                 <div class="col-9 text-left">
-                                                    <a href="">Samsung Galaxy A51</a>
-                                                    <div class="small text-muted">Giá: $10.000.000.000 <span
-                                                            class="mx-2">|</span> Số lượng:
-                                                        1<span class="mx-2">|</span> Đơn Giá: $80.00
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="media mb-2 border-bottom">
-                                        <div class="media-body">
-                                            <div class="row">
-                                                <div class="col-3">
-                                                    <a href="">
-                                                        <img src="images/shop-detail/1.jpg" class="img-fluid" alt="">
-                                                    </a>
-                                                </div>
-                                                <div class="col-9 text-left">
-                                                    <a href="">Samsung Galaxy A51</a>
-                                                    <div class="small text-muted">Giá: $10.000.000.000 <span
-                                                            class="mx-2">|</span> Số lượng:
-                                                        1<span class="mx-2">|</span> Đơn Giá: $80.00
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="media mb-2 border-bottom">
-                                        <div class="media-body">
-                                            <div class="row">
-                                                <div class="col-3">
-                                                    <a href="">
-                                                        <img src="images/shop-detail/1.jpg" class="img-fluid" alt="">
-                                                    </a>
-                                                </div>
-                                                <div class="col-9 text-left">
-                                                    <a href="">Samsung Galaxy A51</a>
-                                                    <div class="small text-muted">Giá: $10.000.000.000 <span
-                                                            class="mx-2">|</span> Số lượng:
-                                                        1<span class="mx-2">|</span> Đơn Giá: $80.00
+                                                    <a href="" th:text="${c.getProduct().getName()}"></a>
+                                                    <div class="small text-muted">Giá: <span class="product-price"
+                                                                                             th:text="${c.getTotalPrice()}"></span>
+                                                        <span
+                                                                class="mx-2">|</span> Số lượng: <span
+                                                                th:text="${c.getAmount()}"></span>
+                                                        <span class="mx-2">|</span> Đơn Giá: <span class="product-price"
+                                                                                                   th:text="${c.getProduct().getPrice()}"></span>/cái
                                                     </div>
                                                 </div>
                                             </div>
@@ -251,11 +223,13 @@
                                 </div>
                                 <div class="d-flex">
                                     <h4>Tạm tính</h4>
-                                    <div class="ml-auto font-weight-bold product-price"></div>
+                                    <div class="ml-auto font-weight-bold product-price"
+                                         th:if="${null != session.currentUser}"
+                                         th:text="${session.currentUser.getTotalPrice()}"></div>
                                 </div>
                                 <div class="d-flex">
                                     <h4>Giảm giá</h4>
-                                    <div class="ml-auto font-weight-bold product-price"></div>
+                                    <div class="ml-auto font-weight-bold product-price" th:text="'500000'"></div>
                                 </div>
                                 <hr class="my-1">
                                 <div class="d-flex">
@@ -264,18 +238,21 @@
                                 </div>
                                 <div class="d-flex">
                                     <h4>Thành tiền</h4>
-                                    <div class="ml-auto font-weight-bold product-price"></div>
+                                    <div class="ml-auto font-weight-bold product-price"
+                                         th:if="${null != session.currentUser}"
+                                         th:text="${session.currentUser.getTotalPrice()}"></div>
                                 </div>
                                 <hr>
                                 <div class="d-flex gr-total">
                                     <h5>Tổng tiền</h5>
-                                    <div class="ml-auto h5 product-price"></div>
+                                    <div class="ml-auto h5 product-price" th:if="${null != session.currentUser}"
+                                         th:text="${session.currentUser.getTotalPrice()-500000}"></div>
                                 </div>
                                 <hr>
                             </div>
                         </div>
-                        <div class="col-12 d-flex shopping-box"><a href="checkout.html"
-                                                                   class="ml-auto btn hvr-hover">Tiến hành đặt hàng</a></div>
+                        <div class="col-12 d-flex shopping-box"><a id="btnOrder" type="button" class="ml-auto btn hvr-hover">Tiến hành đặt hàng</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -283,6 +260,7 @@
         </div>
     </div>
     <!-- End Cart -->
+    <div id="toast"></div>
 
 
 </div>
@@ -294,6 +272,7 @@
     <script src="../../../js/my-js/toast.js"></script>
     <script th:src="@{js/Jquery.autoResize.js}"></script>
     <script th:src="@{js/vietnamlocalselector.js}"></script>
+    <script th:src="@{js/my-js/checkout.js}"></script>
     <script>
         $("textarea").autoResize();
         var localpicker = new LocalPicker({

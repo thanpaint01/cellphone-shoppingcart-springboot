@@ -52,12 +52,15 @@ public class Product {
     @OneToMany(
             mappedBy = "product",
             cascade = CascadeType.ALL,
-            orphanRemoval = true
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
     )
     private List<CartItem> cartItems = new ArrayList<>();
 
-
-
+    public void deleteCartItem(CartItem c){
+        cartItems.remove(c);
+        c.getProduct().cartItems.remove(this);
+    }
 
 
 }

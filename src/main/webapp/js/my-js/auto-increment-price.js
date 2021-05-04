@@ -47,6 +47,7 @@ var sumAmount = $('#sumOfCart').text();
 //xóa sản phẩm
 $('.remove-action').click(function () {
     var cartID = $(this).attr('value');
+    alert(cartID);
     var amountRemove = $(this).attr('name');
     let resetAmount = parseInt(sumAmount - amountRemove);
     let totalPriceBefore = convert(reverseFormatNumber($('.total-price').text(), "vi-VN"));

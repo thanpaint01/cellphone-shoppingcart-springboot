@@ -20,8 +20,6 @@ import java.util.List;
 public class ProductController {
     @Autowired
     IProductService productService;
-    @Autowired
-    HeadController headController;
 
 
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -41,7 +39,6 @@ public class ProductController {
         model.addObject("products", products);
         model.addObject("CONTENT_TITLE", "DANH SÁCH SẢN PHẨM");
 
-        headController.getCartOnHeader(session, md);
         return model;
     }
 
