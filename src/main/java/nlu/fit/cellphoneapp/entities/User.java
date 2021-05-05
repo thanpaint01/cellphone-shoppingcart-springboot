@@ -2,6 +2,8 @@ package nlu.fit.cellphoneapp.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -67,6 +69,15 @@ public class User {
             fetch = FetchType.EAGER
     )
     private List<CartItem> cartItems = new ArrayList<>();
+
+
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Order> orders = new ArrayList<>();
 
 
     public static boolean validName(String name) {

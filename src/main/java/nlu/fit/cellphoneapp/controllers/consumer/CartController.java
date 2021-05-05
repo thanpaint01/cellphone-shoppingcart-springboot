@@ -43,17 +43,11 @@ public class CartController {
             userID = user.getId();
             infoCartItem.setUserID(userID);
 
-
             CartDTO c = null;
-            //còn hàng kiểm tra xem sản phẩm đó đã có ở trong giỏ hàng hay chưa ?
             if (cartService.isInCart(productID, amount, userID) && infoCartItem.getId() == 0) {
                 System.out.println("Lỗi khi thêm sản phẩm đã có trong giỏ");
                 resp.getWriter().print("error");
             } else {
-        /*
-            Không gặp bất kỳ lỗi nào thì thực hiện thêm vào csdl
-            Tuy nhiên, Spring Data JPA làm việc với entity nên ta cần set lại giá trị cho entity, được thực hiện bởi cart service
-         */
                 c = cartService.insertIntoTable(infoCartItem);
                 user.getCartItems().add(cartService.getOneCartItem(c.getId()));
                 resp.getWriter().print(
@@ -76,12 +70,13 @@ public class CartController {
         int userID = 0;
         if (null != user) {
             userID = user.getId();
-            //lấy user từ session
             List<CartDTO> carts = cartService.getAllByUserID(userID);
             for (CartDTO c : carts) {
                 System.out.println(c);
             }
-
+            if (carts.size() == 0) {
+                return "/consumer/cart-empty";
+            }
             return "/consumer/cart";
         } else {
             return "/consumer/cart-empty";
@@ -102,7 +97,7 @@ public class CartController {
             //user.getCartItems().remove(cartService.getOneCartItem(id));
             boolean del = cartService.deleteOne(id);
             for (CartItem c : user.getCartItems()) {
-                if(c.getId() == id) user.getCartItems().remove(c);
+                if (c.getId() == id) user.getCartItems().remove(c);
                 System.out.println("CartItem in sessionUserNEW= " + c.getId());
 
             }

@@ -11,4 +11,5 @@ public interface ICartService {
     List<CartDTO> getAllByUserID(int userID);
     CartItem getOneCartItem(int id);
     boolean deleteOne(int id);
+    boolean removeAllByUserId(int userID);
 }

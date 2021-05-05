@@ -39,12 +39,14 @@
                         <div class="title-left">
                             <h3>Thông Tin Nhận Hàng</h3>
                         </div>
-                        <form class="needs-validation" novalidate th:if="${session.currentUser != null}">
+                        <form class="needs-validation" th:action="@{order}" method="post" id="userDelivery" th:if="${session.currentUser != null}"
+                              >
                             <div class="mb-3">
                                 <label for="fullName">Họ và tên *</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="fullName" placeholder=""
-                                           th:value="${session.currentUser.getFullName()}" required>
+                                           th:value="${session.currentUser.getFullName()}"
+                                           required>
                                     <div class="invalid-feedback" style="width: 100%;"> Không được để trống trường này!
                                     </div>
                                 </div>
@@ -77,8 +79,9 @@
                             </div>
                             <div class="mb-3">
                                 <label for="address">Địa chỉ *</label>
-                                <textarea id="address" required class="w-100"  th:value="${session.currentUser.getAddress()}"
-                                          placeholder="Cung cấp số nhà cụ thể để thuận tiện cho việc giao nhận&#10;Ví dụ:47/16 đường số 10">
+                                <textarea id="address" required class="w-100"
+                                          th:value="${session.currentUser.getAddress()}"
+                                          >
 
                                 </textarea>
                                 <div class="invalid-feedback"> Vui lòng chọn cung cấp địa chỉ cụ thể như số nhà.</div>
@@ -151,6 +154,10 @@
                                 </div>
                             </div> -->
                             <hr class="mb-1">
+                            <div class="col-12 d-flex shopping-box mt-5 justify-content-center"><a id="btnOrder" type="button"
+                                                                       class="btn hvr-hover justify-content-center mt-5 text-light">Tiến hành đặt
+                                hàng</a>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -231,7 +238,7 @@
                                 </div>
                                 <div class="d-flex">
                                     <h4>Giảm giá</h4>
-                                    <div class="ml-auto font-weight-bold product-price" th:text="'500000'"></div>
+                                    <div class="ml-auto font-weight-bold product-price" th:text="'0'"></div>
                                 </div>
                                 <hr class="my-1">
                                 <div class="d-flex">
@@ -247,14 +254,13 @@
                                 <hr>
                                 <div class="d-flex gr-total">
                                     <h5>Tổng tiền</h5>
-                                    <div class="ml-auto h5 product-price" th:if="${null != session.currentUser}"
-                                         th:text="${session.currentUser.getTotalPrice()-500000}"></div>
+                                    <div class="ml-auto h5 product-price" id="lastPrice" th:if="${null != session.currentUser}"
+                                         th:text="${session.currentUser.getTotalPrice()}"></div>
                                 </div>
                                 <hr>
                             </div>
                         </div>
-                        <div class="col-12 d-flex shopping-box"><a id="btnOrder" type="button" class="ml-auto btn hvr-hover">Tiến hành đặt hàng</a>
-                        </div>
+
                     </div>
                 </div>
             </div>
