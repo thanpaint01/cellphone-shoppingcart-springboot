@@ -4,7 +4,7 @@
     <div class="col-3 text-center text-sm-left px-1 ">
         <div class="toolbar-sorter-right">
             <select id="search-brand" class="selectpicker show-tick form-control">
-                <option data-display="Select">Hãng</option>
+                <option value="" data-display="Select">Hãng</option>
                 <option th:each="brand:${allBrands}" th:value="${brand.id}" th:text="${brand.name}"
                 ></option>
             </select>
@@ -13,7 +13,7 @@
     <div class="col-3 text-center text-sm-left px-1 ">
         <div class="toolbar-sorter-right">
             <select id="search-pin" class="selectpicker show-tick form-control">
-                <option data-display="Select">Pin</option>
+                <option value="" data-display="Select">Pin</option>
                 <option th:each="pin:${allPins}" th:value="${pin.id}" th:text="${pin.capacity}"></option>
             </select>
         </div>
@@ -21,7 +21,7 @@
     <div class="col-3 text-center text-sm-left px-1 ">
         <div class="toolbar-sorter-right">
             <select id="search-ram" class="selectpicker show-tick form-control">
-                <option data-display="Select">Ram</option>
+                <option value="" data-display="Select">Ram</option>
                 <option th:each="ram:${allRams}" th:value="${ram.id}" th:text="${ram.capacity}"
                 ></option>
             </select>
@@ -30,7 +30,7 @@
     <div class="col-3 text-center text-sm-left px-1 ">
         <div class="toolbar-sorter-right">
             <select id="search-rom" class="selectpicker show-tick form-control">
-                <option data-display="Select">Rom</option>
+                <option value="" data-display="Select">Rom</option>
                 <option th:each="rom:${allRoms}" th:value="${rom.id}" th:text="${rom.capacity}"></option>
             </select>
         </div>
@@ -40,8 +40,8 @@
     <div class="product-categori">
         <div class="search-product">
             <form action="#">
-                <input class="form-control" placeholder="Search here..." type="text">
-                <button type="submit"><i class="fa fa-search"></i></button>
+                <input id="search-name" class="form-control" placeholder="Tìm kiếm ..." type="text">
+                <button id="search" type="submit"><i class="fa fa-search"></i></button>
             </form>
         </div>
         <div class="filter-sidebar-left">
@@ -51,23 +51,18 @@
             <div class="my-3">
                 <div class="toolbar-sorter-right sort">
                     <select id="sort-type" class="selectpicker show-tick form-control">
-                        <option data-display="Select">SẮP XẾP THEO</option>
-                        <option value="1">Popularity</option>
-                        <option value="2">High Price → High Price</option>
-                        <option value="3">Low Price → High Price</option>
-                        <option value="4">Best Selling</option>
+                        <option value=""  data-display="Select">SẮP XẾP THEO</option>
+                        <option value="1">Theo Giá</option>
                     </select>
                 </div>
             </div>
 
             <div class="toolbar-sorter-right sort">
                 <select id="sort-order" class="selectpicker show-tick form-control">
-                    <option data-display="Select">THỨ TỰ SẮP XẾP
+                    <option value="" data-display="Select">THỨ TỰ SẮP XẾP
                     </option>
-                    <option value="1">Popularity</option>
-                    <option value="2">High Price → High Price</option>
-                    <option value="3">Low Price → High Price</option>
-                    <option value="4">Best Selling</option>
+                    <option value="1">Tăng Dần</option>
+                    <option value="2">Giẩm Dần</option>
                 </select>
             </div>
         </div>

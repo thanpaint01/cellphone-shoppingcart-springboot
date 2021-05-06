@@ -1,10 +1,14 @@
 package nlu.fit.cellphoneapp.config;
 
+import nlu.fit.cellphoneapp.repositories.ExtendedRepositoryImpl;
+import nlu.fit.cellphoneapp.specification.ProductSpecification;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
@@ -12,6 +16,7 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
+@EnableJpaRepositories(basePackages = "nlu.fit.cellphoneapp.repositories", repositoryBaseClass = ExtendedRepositoryImpl.class)
 public class SpringWebConfig implements WebMvcConfigurer {
 
     @Autowired
@@ -57,6 +62,11 @@ public class SpringWebConfig implements WebMvcConfigurer {
         viewResolver.setOrder(1);
         viewResolver.setViewNames(new String[]{".html", ".xhtml"});
         return viewResolver;
+    }
+
+    @Bean
+    public ProductSpecification productSpecification() {
+        return new ProductSpecification();
     }
 
 

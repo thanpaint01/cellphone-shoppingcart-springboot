@@ -10,8 +10,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface IProductRepository extends JpaRepository<Product, Integer>, JpaSpecificationExecutor<Product> {
+public interface IProductRepository extends JpaRepository<Product, Integer>, JpaSpecificationExecutor<Product>, ExtendedRepository<Product, Integer> {
     List<Product> findAllByActive(int active);
+
 
     @Query("select p from Product p " +
             "where p.id=:id and p.active=1 and p.brand.active=1 and p.pin.active=1 and p.rom.active=1 and p.ram.active=1 ")

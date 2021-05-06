@@ -51,7 +51,6 @@ public class OrderController {
     String ajaxSendDataOrder(String address, String nameClient, String phoneNumber, double totalPrice, HttpSession session) {
         System.out.println("totalPriceOrder=" + totalPrice);
         Order order = new Order();
-
         Date createDate = new Date();
         createDate.setTime(System.currentTimeMillis());
         order.setCreatedDate(createDate);

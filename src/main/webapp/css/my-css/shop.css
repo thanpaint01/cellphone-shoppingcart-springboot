@@ -3,6 +3,10 @@
     padding-top: 7px;
 }
 
+.why-text a:hover h4 {
+    color: #b0b435;
+}
+
 .clearfix ul li a {
     margin: 0 5px;
     text-align: center;
@@ -28,7 +32,8 @@
     background-color: #000 !important;
     color: white;
 }
-.toolbar-sorter-right.sort .bootstrap-select.btn-group .dropdown-toggle .filter-option{
+
+.toolbar-sorter-right.sort .bootstrap-select.btn-group .dropdown-toggle .filter-option {
     padding-top: 10px;
     padding-bottom: 10px;
 }
