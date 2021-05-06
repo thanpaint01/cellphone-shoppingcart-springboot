@@ -67,12 +67,12 @@
                                         <div class="filter-group d-flex align-middle col-11">
                                             <label class="col-6 p-0 m-0 d-flex align-middle"><span class="pt-1">Trạng
                                                     thái đơn hàng</span></label>
-                                            <select class="form-control col-7">
-                                                <option>Tất cả</option>
-                                                <option>Giao thành công</option>
-                                                <option>Đang giao hàng</option>
-                                                <option>Đang tiếp nhận</option>
-                                                <option>Đã hủy</option>
+                                            <select class="form-control col-7" id="statusOrderSelect">
+                                                <option value="all">Tất cả</option>
+                                                <option value="Giao thành công">Giao thành công</option>
+                                                <option value="Đang giao hàng">Đang giao hàng</option>
+                                                <option value="Đang tiếp nhận">Đang tiếp nhận</option>
+                                                <option value="Đã hủy">Đã hủy</option>
                                             </select>
                                         </div>
                                     </div>
@@ -80,11 +80,11 @@
                                     <div class="d-flex float-end form-group justify-content-end form-inline col-6 p-0">
                                         <div class="filter-group float-left ml-4 w-75 p-0">
                                             <label></label>
-                                            <input type="text" class="form-control rounded-0 w-100" hint="Tìm kiếm"
+                                            <input type="text" class="form-control rounded-0 w-100" hint="Tìm kiếm" id="searchByIdOrder"
                                                    placeholder="Nhập mã đơn hàng">
                                         </div>
                                         <button type="button"
-                                                class="btn button-search hvr-hover text-light float-right w-25"><i
+                                                class="btn button-search hvr-hover text-light float-right w-25" id="btnSearchByOrderID"><i
                                                 class="fa fa-search"></i></button>
                                     </div>
                                 </div>
@@ -125,7 +125,7 @@
                             </td>
                             <td class="data-fields col2 order-date" th:text="${orderItem.getCreatedDate()}"></td>
                             <td class="data-fields col2"><b class="product-price order-total-price" th:text="${orderItem.getTotalPrice()}"></b></td>
-                            <td class="data-fields col2 status-order"></td>
+                            <td class="data-fields col2"><span class="status-order" th:text="${orderItem.getOrderStatus()}"></span></td>
                             <td class="data-fields col1 text-center">
                                 <a href="#" class="view" title="" data-toggle="tooltip"
                                    data-original-title="Xem chi tiết"><i data-toggle="modal"
@@ -151,6 +151,7 @@
 <th:block layout:fragment="scripts">
     <script src="../../../js/my-js/format-price-of-product.js"></script>
     <script src="../../../js/my-js/toast.js"></script>
+    <script src="../../../js/my-js/load-orders-by-status.js"></script>
 </th:block>
 </body>
 
