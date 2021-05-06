@@ -4,6 +4,7 @@ import nlu.fit.cellphoneapp.converters.MyConverter;
 import nlu.fit.cellphoneapp.dto.CartDTO;
 import nlu.fit.cellphoneapp.entities.CartItem;
 import nlu.fit.cellphoneapp.entities.Product;
+import nlu.fit.cellphoneapp.entities.User;
 import nlu.fit.cellphoneapp.repositories.interfaces.ICartRepository;
 import nlu.fit.cellphoneapp.repositories.interfaces.IProductRepository;
 import nlu.fit.cellphoneapp.repositories.interfaces.IUserRepository;
@@ -86,7 +87,31 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
-    public void deleteOne(int id) {
-        cartRepo.deleteById(id);
+    public boolean deleteOne(int id) {
+        System.out.println("CartID for service delete =" + id);
+        if (id != 0) {
+            cartRepo.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
     }
+
+    @Override
+    public boolean removeAllByUserId(int userID) {
+        User user = userRepo.getOne(userID);
+        System.out.println("Remove All CartItem Of User" + userID);
+           cartRepo.deleteAllByUser_Id(userID);
+        System.out.println("After remove");
+        for (CartItem c : user.getCartItems()) {
+            System.out.println("productInCart=" + c.getProduct().toString());
+        }
+        user.getCartItems().clear();
+        System.out.println("after clear");
+        for (CartItem c : user.getCartItems()) {
+            System.out.println(c.getProduct().toString());
+        }
+        return (userRepo.getOne(userID).getCartItems().size() == 0 ? true : false);
+    }
+
 }

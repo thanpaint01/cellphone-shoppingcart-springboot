@@ -1,6 +1,7 @@
 package nlu.fit.cellphoneapp.controllers.consumer;
 
 import nlu.fit.cellphoneapp.dto.CartDTO;
+import nlu.fit.cellphoneapp.entities.CartItem;
 import nlu.fit.cellphoneapp.entities.User;
 import nlu.fit.cellphoneapp.helper.StringHelper;
 import nlu.fit.cellphoneapp.services.ICartService;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -22,8 +24,6 @@ public class CartController {
     ICartService cartService;
     @Autowired
     IProductService productService;
-    @Autowired
-    HeadController headController;
 
     /*
      Phương thức thêm sản phẩm vào giỏ
@@ -38,29 +38,23 @@ public class CartController {
         int amount = infoCartItem.getAmount();
         User user = (User) session.getAttribute(User.SESSION);
         int userID = 0;
-        if (null != user){
+        if (null != user) {
             System.out.println(user);
             userID = user.getId();
             infoCartItem.setUserID(userID);
 
-
             CartDTO c = null;
-            //còn hàng kiểm tra xem sản phẩm đó đã có ở trong giỏ hàng hay chưa ?
             if (cartService.isInCart(productID, amount, userID) && infoCartItem.getId() == 0) {
                 System.out.println("Lỗi khi thêm sản phẩm đã có trong giỏ");
                 resp.getWriter().print("error");
             } else {
-        /*
-            Không gặp bất kỳ lỗi nào thì thực hiện thêm vào csdl
-            Tuy nhiên, Spring Data JPA làm việc với entity nên ta cần set lại giá trị cho entity, được thực hiện bởi cart service
-         */
                 c = cartService.insertIntoTable(infoCartItem);
-                System.out.println("AddToCart " + c);
+                user.getCartItems().add(cartService.getOneCartItem(c.getId()));
                 resp.getWriter().print(
                         "<li class=\"cart-item\">" +
                                 "<a href=\"#\" class=\"photo\"><img src=\"" + c.getProductImg() + "\" class=\"cart-thumb\"/></a>" +
                                 "<h6><a href=\"#\">" + c.getProductName() + "</a></h6>" +
-                                "<p>1x - <span class=\"\">" + StringHelper.formatNumber((long) c.getProductPrice()) + "đ </span></p>" +
+                                "<p>1x - <span class=\"product-price\">" + StringHelper.formatNumber((long) c.getProductPrice()) + " </span></p>" +
                                 "</li>"
                 );
             }
@@ -76,14 +70,15 @@ public class CartController {
         int userID = 0;
         if (null != user) {
             userID = user.getId();
-            //lấy user từ session
             List<CartDTO> carts = cartService.getAllByUserID(userID);
             for (CartDTO c : carts) {
                 System.out.println(c);
             }
-            headController.getCartOnHeader(session, model);
+            if (carts.size() == 0) {
+                return "/consumer/cart-empty";
+            }
             return "/consumer/cart";
-        }else{
+        } else {
             return "/consumer/cart-empty";
         }
     }
@@ -92,14 +87,23 @@ public class CartController {
     public @ResponseBody
     String ajaxDeleteCartItem(@RequestParam int id, HttpServletRequest req) {
         String rs = "";
+        System.out.println("cartItem id=" + id);
         int userID = 0;
         //tránh trường hợp nhập trên url
         HttpSession session = req.getSession(true);
         User user = (User) session.getAttribute(User.SESSION);
         if (null != user) userID = user.getId();
         if (null != cartService.getOneCartItem(id) && userID != 0) {
-            cartService.deleteOne(id);
-            rs = "Xoá thành công!";
+            //user.getCartItems().remove(cartService.getOneCartItem(id));
+            boolean del = cartService.deleteOne(id);
+            for (CartItem c : user.getCartItems()) {
+                if (c.getId() == id) user.getCartItems().remove(c);
+                System.out.println("CartItem in sessionUserNEW= " + c.getId());
+
+            }
+            if (del == true)
+                rs = "Xoá thành công!";
+
         }
         return rs;
     }

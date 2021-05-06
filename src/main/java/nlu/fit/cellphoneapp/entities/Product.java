@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 import nlu.fit.cellphoneapp.converters.ImageAddress;
 import nlu.fit.cellphoneapp.converters.ImageAddressConventer;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -52,12 +54,26 @@ public class Product {
     @OneToMany(
             mappedBy = "product",
             cascade = CascadeType.ALL,
-            orphanRemoval = true
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
     )
     private List<CartItem> cartItems = new ArrayList<>();
+    @OneToMany(
+            mappedBy = "product",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<OrderDetail> orderDetails = new ArrayList<>();
 
-
-
+    public void deleteCartItem(CartItem c){
+        cartItems.remove(c);
+//        for (CartItem cc: c.getProduct().cartItems) {
+//            System.out.println("ccinProduct="+cc);
+//            c.getProduct().cartItems.remove(cc);
+//        }
+        c.getProduct().cartItems.remove(this);
+    }
 
 
 }

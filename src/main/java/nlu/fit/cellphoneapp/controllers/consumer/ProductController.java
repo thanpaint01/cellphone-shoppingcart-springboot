@@ -10,12 +10,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -23,7 +25,7 @@ import java.util.List;
 public class ProductController {
     @Autowired
     IProductService productService;
-
+    private static final int ITEM_PER_PAGE = 15;
 //    @RequestMapping(value = "", method = RequestMethod.GET)
 //    public ModelAndView listProductPage
 //            (@RequestParam(value = "page", required = false, defaultValue = "1") int page
@@ -69,21 +71,21 @@ public class ProductController {
             }
             switch (sortOrder) {
                 case 1:
-                    pageable = PageRequest.of(page, itemPerPage, sort.ascending());
+                    pageable = PageRequest.of(page-1, itemPerPage, sort.ascending());
                     break;
                 case 2:
-                    pageable = PageRequest.of(page, itemPerPage, sort.descending());
+                    pageable = PageRequest.of(page-1, itemPerPage, sort.descending());
                     break;
                 default:
                     break;
             }
         }
-        if (brandId > 0) spec.and(productService.getProductsByBrand(brandId));
-        if (ramId > 0) spec.and(productService.getProductsByRam(ramId));
-        if (romId > 0) spec.and(productService.getProductsByRom(romId));
-        if (pinId > 0) spec.and(productService.getProductsByPin(pinId));
-        if (!StringHelper.isNoValue(name)) productService.getProductByName(name);
-        if (pageable == null) pageable = PageRequest.of(page, itemPerPage);
+        if (brandId > 0) spec = spec.and(productService.getProductsByBrand(brandId));
+        if (ramId > 0) spec = spec.and(productService.getProductsByRam(ramId));
+        if (romId > 0) spec = spec.and(productService.getProductsByRom(romId));
+        if (pinId > 0) spec = spec.and(productService.getProductsByPin(pinId));
+        if (!StringHelper.isNoValue(name)) spec = productService.getProductByName(name);
+        if (pageable == null) pageable = PageRequest.of(page - 1, ITEM_PER_PAGE);
         Page<Product> productPage = productService.getPage(spec, pageable);
         model.addObject("currentPage", page);
         model.addObject("totalPages", productPage.getTotalPages());

@@ -33,7 +33,7 @@
                             </div>
                         </div>
                         <div class="why-text text-center">
-                            <h4 th:text="${product.name}"></h4>
+                            <a th:href="@{'/product/detail/'+${product.id}}"><h4 th:text="${product.name}"></h4></a>
                             <h5 class="product-price" th:text="${product.price}"></h5>
                         </div>
                     </div>

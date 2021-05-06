@@ -24,8 +24,9 @@ class CellphoneAppApplicationTests {
 
     @Test
     void testFunction() {
-        Specification<Product> specification = Specification.where(productService.getProductsByBrand(1));
-        Page<Product> page = productService.getPage(specification, PageRequest.of(1, 15));
+        Specification<Product> specification = Specification.where(productService.getProductIsActive());
+        specification = specification.and(productService.getProductsByBrand(1));
+        Page<Product> page = productService.getPage(specification, PageRequest.of(0, 15));
         System.out.println(page.getTotalPages());
         System.out.println(page.getTotalElements());
         System.out.println(page.getContent().size());
