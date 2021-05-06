@@ -1,5 +1,8 @@
 package nlu.fit.cellphoneapp.controllers.consumer;
 
+import nlu.fit.cellphoneapp.entities.Order;
+import nlu.fit.cellphoneapp.entities.OrderDetail;
+import nlu.fit.cellphoneapp.entities.Product;
 import nlu.fit.cellphoneapp.entities.User;
 import nlu.fit.cellphoneapp.helper.DateHelper;
 import nlu.fit.cellphoneapp.helper.StringHelper;
@@ -9,13 +12,16 @@ import nlu.fit.cellphoneapp.receiver.RegisterForm;
 import nlu.fit.cellphoneapp.services.EmailSenderService;
 import nlu.fit.cellphoneapp.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Controller
@@ -28,10 +34,11 @@ public class UserController {
 
     @RequestMapping(value = "my-account", method = RequestMethod.GET)
     public ModelAndView myAccountPage() {
-        ModelAndView model=new ModelAndView("/consumer/my-account");
-        model.addObject("CONTENT_TITLE","Tài Khoản Của Tôi");
+        ModelAndView model = new ModelAndView("/consumer/my-account");
+        model.addObject("CONTENT_TITLE", "Tài Khoản Của Tôi");
         return model;
     }
+
     @RequestMapping(value = "/email/verify/{token}")
     public ModelAndView vertificateEmail(@PathVariable("token") String token) {
         User u;
@@ -161,4 +168,20 @@ public class UserController {
             return "success";
         }
     }
+
+
+    //UserMyAccountManage
+    @GetMapping("my-account/my-order")
+    public String goToMyOrderManagementPage(HttpSession session, Model model) {
+        User user = (User) session.getAttribute(User.SESSION);
+        model.addAttribute("CONTENT_TITLE", "Quản lý đơn hàng");
+        if (null == user || (user.getOrders().size() == 0)) {
+
+            return "consumer/my-order-empty";
+        } else {
+            return "consumer/my-order";
+        }
+    }
+
+
 }

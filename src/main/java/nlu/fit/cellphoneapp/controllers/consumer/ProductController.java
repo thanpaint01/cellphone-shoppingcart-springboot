@@ -4,6 +4,7 @@ import nlu.fit.cellphoneapp.entities.Product;
 import nlu.fit.cellphoneapp.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,8 +56,8 @@ public class ProductController {
         return model;
     }
 
-    @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
-    public ModelAndView productDetailPage(@PathVariable(name = "id") int id) {
+    @RequestMapping(value = "/detail{id}", method = RequestMethod.GET)
+    public ModelAndView productDetailPage(@RequestParam int id) {
         Product product;
         if ((product = productService.findOneForConsumer(id)) != null) {
             ModelAndView model = new ModelAndView("consumer/product-detail");

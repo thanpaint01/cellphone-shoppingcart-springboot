@@ -94,10 +94,12 @@
                         <a href="#">
                             <i class="fa fa-shopping-bag"></i>
                             <!--/*@thymesVar id="sumOfCart" type="java"*/-->
-                            <th:block th:if="${null != session.currentUser}">
-                                <span class="badge" id="sumOfCart"
-                                      th:text="${session.currentUser.getCartItems().size()}"></span>
-                            </th:block>
+<!--                            <th:block th:if="${null != session.currentUser}">-->
+<!--                                <span class="badge" id="sumOfCart"-->
+<!--                                      th:text="${session.currentUser.getCartItems().size()}"></span>-->
+<!--                            </th:block>-->
+                            <span class="badge" id="sumOfCart"
+                                  th:text="${null==session.currentUser?'0':session.currentUser.getCartItems().size()}"></span>
                             <p>Giỏ hàng</p>
                         </a>
                     </li>

@@ -24,21 +24,6 @@ public class OrderDetail {
     private int active;
     @ManyToOne(fetch = FetchType.LAZY)
     private Order order;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Product product;
-
-    @Override
-    public String toString() {
-        return "OrderDetail{" +
-                "id=" + id +
-                ", amount=" + amount +
-                ", initialPrice=" + initialPrice +
-                ", saledPrice=" + saledPrice +
-                ", totalPrice=" + totalPrice +
-                ", price=" + price +
-                ", active=" + active +
-                ", order=" + order +
-                ", product=" + product +
-                '}';
-    }
 }
