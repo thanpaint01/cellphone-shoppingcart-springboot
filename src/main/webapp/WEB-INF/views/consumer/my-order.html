@@ -80,11 +80,13 @@
                                     <div class="d-flex float-end form-group justify-content-end form-inline col-6 p-0">
                                         <div class="filter-group float-left ml-4 w-75 p-0">
                                             <label></label>
-                                            <input type="text" class="form-control rounded-0 w-100" hint="Tìm kiếm" id="searchByIdOrder"
+                                            <input type="text" class="form-control rounded-0 w-100" hint="Tìm kiếm"
+                                                   id="searchByIdOrder"
                                                    placeholder="Nhập mã đơn hàng">
                                         </div>
                                         <button type="button"
-                                                class="btn button-search hvr-hover text-light float-right w-25" id="btnSearchByOrderID"><i
+                                                class="btn button-search hvr-hover text-light float-right w-25"
+                                                id="btnSearchByOrderID"><i
                                                 class="fa fa-search"></i></button>
                                     </div>
                                 </div>
@@ -103,46 +105,57 @@
                         </thead>
                         <tbody class="table-body text-center">
                         <!-- start tr1 -->
-                        <tr class="order-item" th:each="orderItem : ${session.currentUser.getOrders()}">
-                            <td class="data-fields col1 align-middle"><b class="order-id" th:text="${orderItem.getId()}"></b></td>
-                            <td class="data-fields col3">
-                                <a class="go-detail-mobile" th:href="@{/product/detail(id=${orderItem.getOrderDetails().get(0).product.getId()})}">
-                                    <div class="d-flex">
-                                        <!-- IMG PRODUCT -->
-                                        <div class="img-product">
-                                            <img th:src="${orderItem.getOrderDetails().get(0).product.getImg().getHost()+orderItem.getOrderDetails().get(0).product.getImg().getRelativePath()}" height="80" width="80">
+                        <th:block th:if="${null != session.currentUser}">
+                            <tr class="order-item" th:each="orderItem : ${session.currentUser.getOrders()}">
+                                <td class="data-fields col1 align-middle"><b class="order-id"
+                                                                             th:text="${orderItem.getId()}"></b></td>
+                                <td class="data-fields col3">
+                                    <a class="go-detail-mobile"
+                                       th:href="@{/product/detail(id=${orderItem.getOrderDetails().get(0).product.getId()})}">
+                                        <div class="d-flex">
+                                            <!-- IMG PRODUCT -->
+                                            <div class="img-product">
+                                                <img th:src="${orderItem.getOrderDetails().get(0).product.getImg().getHost()+orderItem.getOrderDetails().get(0).product.getImg().getRelativePath()}"
+                                                     height="80" width="80">
+                                            </div>
+                                            <!-- END IMG -->
+                                            <!-- START SOMETEXT DETAIL ORDER -->
+                                            <div class="text-left">
+                                                <p>Đơn hàng bao gồm <b class="first-product-name"
+                                                                       th:text="${orderItem.getOrderDetails().get(0).getProduct().getName()}"></b>
+                                                    và <b class="size-1-order-amount"
+                                                          th:text="${orderItem.getOrderDetails().size()-1}"></b> sản
+                                                    phẩm khác
+                                                </p>
+                                            </div>
+                                            <!-- END SOMETEXT DETAIL ORDER -->
                                         </div>
-                                        <!-- END IMG -->
-                                        <!-- START SOMETEXT DETAIL ORDER -->
-                                        <div class="text-left">
-                                            <p>Đơn hàng bao gồm <b class="first-product-name" th:text="${orderItem.getOrderDetails().get(0).getProduct().getName()}"></b> và <b class="size-1-order-amount" th:text="${orderItem.getOrderDetails().size()-1}"></b> sản
-                                                phẩm khác
-                                            </p>
-                                        </div>
-                                        <!-- END SOMETEXT DETAIL ORDER -->
-                                    </div>
-                                </a>
-                            </td>
-                            <td class="data-fields col2 order-date" th:text="${orderItem.getCreatedDate()}"></td>
-                            <td class="data-fields col2"><b class="product-price order-total-price" th:text="${orderItem.getTotalPrice()}"></b></td>
-                            <td class="data-fields col2"><span class="status-order" th:text="${orderItem.getOrderStatus()}"></span></td>
-                            <td class="data-fields col1 text-center">
-                                <a href="#" class="view" title="" data-toggle="tooltip"
-                                   data-original-title="Xem chi tiết"><i data-toggle="modal"
-                                                                         th:data-target="${'#exampleModal'+orderItem.getId()}"
-                                                                         class="fas fa-arrow-circle-right icon"></i></a>
-                            </td>
-                        </tr>
-                        <!-- end tr1 -->
+                                    </a>
+                                </td>
+                                <td class="data-fields col2 order-date" th:text="${orderItem.getCreatedDate()}"></td>
+                                <td class="data-fields col2"><b class="product-price order-total-price"
+                                                                th:text="${orderItem.getTotalPrice()}"></b></td>
+                                <td class="data-fields col2"><span class="status-order"
+                                                                   th:text="${orderItem.getOrderStatus()}"></span></td>
+                                <td class="data-fields col1 text-center">
+                                    <a href="#" class="view" title="" data-toggle="tooltip"
+                                       data-original-title="Xem chi tiết"><i data-toggle="modal"
+                                                                             th:data-target="${'#exampleModal'+orderItem.getId()}"
+                                                                             class="fas fa-arrow-circle-right icon"></i></a>
+                                </td>
+                            </tr>
+                            <!-- end tr1 -->
+                        </th:block>
                         </tbody>
                     </table>
                     <!-- start paging -->
-<!--                    <div th:replace="/consumer/product-list-fragments/pagination :: pagination"></div>-->
+                    <!--                    <div th:replace="/consumer/product-list-fragments/pagination :: pagination"></div>-->
                     <!-- end paging -->
                 </div>
             </div>
         </div>
         <!-- end main order by status -->
+        <div id="toast"></div>
         <!-- End main content -->
     </div>
     <!-- end body content order -->

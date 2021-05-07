@@ -9,14 +9,16 @@ $('#btnOrder').click(function () {
         var nameClient = $('#fullName').val();
         var phoneNumber = $('#phoneNumber').val();
         var totalPrice = convert(reverseFormatNumber($('#lastPrice').text(), "vi-VN"));
-        alert(totalPrice);
         $.ajax({
             type: 'POST',
             url: "order",
             data: {address: address, nameClient: nameClient, phoneNumber: phoneNumber, totalPrice: totalPrice},
-
             success: function (rs) {
-                alert(rs)
+                if(rs === 'error'){
+                    showErrorOrder();
+                }else{
+                    window.location.href = rs;
+                }
             }
 
         })
@@ -28,6 +30,14 @@ function showMessageSelectProvince() {
         title: "Thông báo!",
         type: "warning",
         message: "Vui lòng chọn địa chỉ nhận hàng. Bỏ qua những trường đã nhập dữ liệu!",
+        duration: 5000
+    })
+}
+function showErrorOrder() {
+    toast({
+        title: "Thất bại!",
+        type: "error",
+        message: "Hệ thống đang gặp sự cố. Vui lòng thực hiện sau!",
         duration: 5000
     })
 }
