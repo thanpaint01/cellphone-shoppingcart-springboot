@@ -41,14 +41,13 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User findOneByLogin(String email, String password) {
         User user;
-        if ((user = userRepo.findOneByEmail(email, User.ACTIVE.ACTIVE.value())) == null)
+        if ((user = userRepo.findOneByEmail(email, User.ACTIVE.ACTIVE.value())) == null &&
+                (user = userRepo.findOneByEmail(email, User.ACTIVE.UNVERTIFIED.value())) == null)
             return null;
         else {
             if (BcryptEncoder.matches(password, user.getPassword())) return user;
             else return null;
         }
-
-
     }
 
     @Override

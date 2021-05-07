@@ -4,8 +4,11 @@
 
 <head>
     <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/my-css/my-account.css}">
+        <link rel="stylesheet" th:href="@{/css/my-css/toast.css}">
     </th:block>
 </head>
+
 <body>
 <th:block layout:fragment="body">
     <div class="all-title-box">
@@ -21,6 +24,24 @@
             </div>
         </div>
     </div>
+    <th:block th:if="${NO_ACTIVE}">
+        <div class="container">
+            <div class="row">
+                <div class="warning-active col-sm-8 col-12 col-sm-12 col-xs-12 text-light mt-1 p-5">
+                    <h2 class="text-light font-weight-bold">CẢNH BÁO: XÁC THỰC EMAIL<br/></h2>
+                    <div class="des">
+                            <span>Bạn chưa xác thực tài khoản
+                                <br/> * Lưu ý : Chi có những tài khoản đã xác thực thì mới có thể tiến hành đặt
+                                hàng.</br>
+                            </span>
+                    </div>
+                    <button id="active-email" class="btn hvr-hover text-light my-1">
+                        GỬI MÃ XÁC THỰC
+                    </button>
+                </div>
+            </div>
+        </div>
+    </th:block>
     <div class="my-account-box-main">
         <div class="container pb-5">
             <div class="my-account-page">
@@ -94,8 +115,7 @@
                         <div class="account-box">
                             <div class="service-box">
                                 <div class="service-icon">
-                                    <a th:href="@{/user/logout}"> <i
-                                            class="fas fa-sign-out-alt"></i> </a>
+                                    <a th:href="@{/user/logout}"> <i class="fas fa-sign-out-alt"></i> </a>
                                 </div>
                                 <div class="service-desc">
                                     <h4>Đăng xuất</h4>
@@ -109,6 +129,45 @@
         </div>
     </div>
     <!-- End My Account -->
+    <!--    <div id="toast">-->
+    <!--    </div>-->
+</th:block>
+<th:block layout:fragment="scripts">
+    <script th:src="@{/js/my-js/toast-setup.js}"></script>
+    <script>
+        $('#active-email').on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "/user/request-vertify-email",
+                contentType: "text/plain",
+                beforeSend: function () {
+                    showWarning("Đang xử lý", "Mong bạn hãy chờ đợi giây lát, hệ thống đang xử lý");
+                },
+                success: function (response) {
+                    switch (response) {
+                        case "error":
+                            showError("Hệ thống", "Hệ thống đã xảy ra lỗi bạn hãy thử lại");
+                            break;
+                        case "errsendmail":
+                            showError("Hệ thống", "Đã xảy ra lỗi khi email, bạn hãy thử yêu cầu gửi mã xác thực lần nữa");
+                            break;
+                        case "success":
+                            showSuccess("Thành công", "Hãy kiểm tra email của bạn")
+                            break;
+                        default:
+                            showError("Hệ thống", "Hệ thống đã xảy ra lỗi bạn hãy thử lại");
+                            break;
+                    }
+                }
+                , error: function (request, status, error) {
+                    showError("Hệ thống", "Hệ thống đã xảy ra lỗi bạn hãy thử lại");
+                }
+            });
+        })
+
+    </script>
 </th:block>
 </body>
+
 </html>

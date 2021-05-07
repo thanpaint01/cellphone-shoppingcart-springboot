@@ -1,5 +1,7 @@
-
-//Toast thông báo lỗi khi sản phẩm đã tồn tại trong giỏ hàng
+// Set up Toast
+const toastElement = document.createElement('div');
+toastElement.setAttribute("id","toast");
+$('body,html').append(toastElement);
 var toast = function ({title = "", type = "", message = "", duration = 3000}) {
     const main = document.getElementById('toast');
     //tao ra cac element trong toast
@@ -9,11 +11,9 @@ var toast = function ({title = "", type = "", message = "", duration = 3000}) {
         error: 'fas fa-times-circle',
     }
     const iconToast = icon[type];
-
     if (main) {
         //tao ra mot div chua noi dung toast
         const toast = document.createElement('div');
-
         const autoRemove = setTimeout(function () {
             main.removeChild(toast);
         }, duration);
@@ -41,30 +41,27 @@ var toast = function ({title = "", type = "", message = "", duration = 3000}) {
         main.appendChild(toast);
     }
 }
-
-function showSuccess() {
+function showSuccess(title, message) {
     toast({
         type: "success",
-        title: "Thành công!",
-        message: 'Sản phẩm đã được thêm vào giỏ hàng.',
+        title: title,
+        message: message,
         duration: 5000
     })
 }
-
-function showError() {
+function showError(title, message) {
     toast({
         type: "error",
-        title: "Thông báo!",
-        message: 'Sản phẩm vừa chọn đã có trong giỏ hàng.',
+        title: title,
+        message: message,
         duration: 5000
     })
 }
-
-function showWarning() {
+function showWarning(title, message) {
     toast({
         type: "warning",
-        title: "Thông báo!",
-        message: 'Vui lòng đăng nhập trước khi thêm sản phẩm vào giỏ.',
+        title: title,
+        message: message,
         duration: 5000
     })
 }
