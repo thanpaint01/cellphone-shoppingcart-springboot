@@ -35,14 +35,18 @@ public class UserController {
     EmailSenderService emailSenderService;
 
     @RequestMapping(value = "my-account", method = RequestMethod.GET)
-    public ModelAndView myAccountPage() {
+    public ModelAndView myAccountPage(HttpSession session) {
+        User user = (User) session.getAttribute(User.SESSION);
         ModelAndView model = new ModelAndView("/consumer/my-account");
         model.addObject("CONTENT_TITLE", "Tài Khoản Của Tôi");
+        if (user.getActive() == User.ACTIVE.UNVERTIFIED.value()) {
+            model.addObject("NO_ACTIVE", true);
+        }
         return model;
     }
 
     @RequestMapping(value = "/email/verify/{token}")
-    public ModelAndView vertificateEmail(@PathVariable("token") String token) {
+    public ModelAndView vertificateEmail(@PathVariable("token") String token, HttpSession session) {
         User u;
         if ((u = userService.vertifyToken(token)) == null)
             return new ModelAndView("redirect:/");
@@ -50,6 +54,7 @@ public class UserController {
             u.setKey(null);
             u.setExpiredKey(null);
             u.setActive(User.ACTIVE.ACTIVE.value());
+            if (session.getAttribute(User.SESSION) != null) session.setAttribute(User.SESSION, u);
             userService.save(u);
             return new ModelAndView("/consumer/email-vertification");
         }
@@ -72,7 +77,6 @@ public class UserController {
             return "success";
         } else
             return "failed";
-
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -108,21 +112,32 @@ public class UserController {
             user.setFullName(form.newfullname);
             user.setActive(User.ACTIVE.UNVERTIFIED.value());
             user.setRole(User.ROLE.CONSUMEER.value());
-            String token;
-            while (userService.isTokenUnique((token = StringHelper.getAlphaNumericString(50)))) ;
-            user.setKey(token);
-            user.setExpiredKey(DateHelper.addMinute(15));
             if (!userService.save(user)) {
                 return "error";
             } else {
-                if (!emailSenderService.sendEmailVertification(form.newemail, form.newfullname, Link.createAbsolutePath(request, "/user/email/verify/" + token))) {
-                    return "errsendmail";
-                }
+                HttpSession session = request.getSession();
+                session.setAttribute(User.SESSION, user);
                 return "success";
             }
         }
     }
 
+    @RequestMapping(value = "request-vertify-email", method = RequestMethod.POST)
+    @ResponseBody
+    public String requestVerityEmail(HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute(User.SESSION);
+        String token;
+        while (userService.isTokenUnique((token = StringHelper.getAlphaNumericString(50)))) ;
+        user.setKey(token);
+        user.setExpiredKey(DateHelper.addMinute(15));
+        if (!userService.save(user)) {
+            return "error";
+        } else if (!emailSenderService.sendEmailVertification(user.getEmail(), user.getFullName(), Link.createAbsolutePath(request, "/user/email/verify/" + token))) {
+            return "errsendmail";
+        } else {
+            return "success";
+        }
+    }
 
     @RequestMapping(value = "/forgot-pass", method = RequestMethod.POST)
     public @ResponseBody
@@ -148,7 +163,9 @@ public class UserController {
 
     @RequestMapping(value = "/reset-pass", method = RequestMethod.POST)
     @ResponseBody
-    public String resetPass(@RequestParam(name = "resetcode") String resetcode, @RequestParam(name = "newpass") String newpass, @RequestParam(name = "confirmpass") String confirmpass) {
+    public String resetPass(@RequestParam(name = "resetcode") String
+                                    resetcode, @RequestParam(name = "newpass") String newpass, @RequestParam(name = "confirmpass") String
+                                    confirmpass) {
         User user;
         List<String> toCheck = new ArrayList<>();
         toCheck.add(resetcode);

@@ -4,9 +4,11 @@ import nlu.fit.cellphoneapp.repositories.ExtendedRepositoryImpl;
 import nlu.fit.cellphoneapp.specification.ProductSpecification;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -17,6 +19,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
 @EnableJpaRepositories(basePackages = "nlu.fit.cellphoneapp.repositories", repositoryBaseClass = ExtendedRepositoryImpl.class)
+
 public class SpringWebConfig implements WebMvcConfigurer {
 
     @Autowired

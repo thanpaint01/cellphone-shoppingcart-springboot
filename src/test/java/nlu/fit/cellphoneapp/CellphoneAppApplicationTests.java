@@ -1,8 +1,10 @@
 package nlu.fit.cellphoneapp;
 
 import nlu.fit.cellphoneapp.entities.Product;
+import nlu.fit.cellphoneapp.entities.User;
 import nlu.fit.cellphoneapp.repositories.interfaces.IProductRepository;
 import nlu.fit.cellphoneapp.services.IProductService;
+import nlu.fit.cellphoneapp.services.IUserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,22 +16,21 @@ import org.springframework.data.jpa.domain.Specification;
 @SpringBootTest
 class CellphoneAppApplicationTests {
     @Autowired
-    IProductRepository productRepository;
-    @Autowired
-    IProductService productService;
+    IUserService userService;
 
     @Test
     void contextLoads() {
     }
 
     @Test
+    void testLogin() {
+        User user = userService.findOneByLogin("daochichaoden@gmail.com", "Vuminhhieu123@");
+        System.out.println(user != null);
+    }
+
+    @Test
     void testFunction() {
-        Specification<Product> specification = Specification.where(productService.getProductIsActive());
-        specification = specification.and(productService.getProductsByBrand(1));
-        Page<Product> page = productService.getPage(specification, PageRequest.of(0, 15));
-        System.out.println(page.getTotalPages());
-        System.out.println(page.getTotalElements());
-        System.out.println(page.getContent().size());
+
     }
 }
 
