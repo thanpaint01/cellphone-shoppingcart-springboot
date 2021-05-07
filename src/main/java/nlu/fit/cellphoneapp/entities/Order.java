@@ -32,6 +32,8 @@ public class Order {
     private double totalPrice;
     @Column(name="active")
     private int active;
+    @Column(name = "payment")
+    private String payment;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
     @OneToMany(

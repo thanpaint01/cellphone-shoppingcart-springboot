@@ -9,14 +9,24 @@ $('#btnOrder').click(function () {
         var nameClient = $('#fullName').val();
         var phoneNumber = $('#phoneNumber').val();
         var totalPrice = convert(reverseFormatNumber($('#lastPrice').text(), "vi-VN"));
+        var payment = $('#cash').prop('checked')===true ?'Trực tiếp':'Paypal';
+        var urlAjax = payment==='Trực tiếp'?'order':'pay';
         $.ajax({
             type: 'POST',
-            url: "order",
-            data: {address: address, nameClient: nameClient, phoneNumber: phoneNumber, totalPrice: totalPrice},
+            url: urlAjax,
+            data: {address: address, nameClient: nameClient, phoneNumber: phoneNumber, totalPrice: totalPrice, payment: payment},
             success: function (rs) {
                 if(rs === 'error'){
                     showErrorOrder();
                 }else{
+                    alert(rs);
+                    // $('div.loader').prop('display', 'block');
+                    // $(window).on('load', function(event) {
+                    //     $('body').removeClass('preloading');
+                    //     // $('.load').delay(1000).fadeOut('fast');
+                    //     $('.loader').delay(5000).fadeOut('fast');
+                    // });
+
                     window.location.href = rs;
                 }
             }
@@ -24,6 +34,9 @@ $('#btnOrder').click(function () {
         })
     }
 })
+function deplayLoading(){
+
+}
 
 function showMessageSelectProvince() {
     toast({

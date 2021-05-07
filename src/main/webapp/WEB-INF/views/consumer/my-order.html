@@ -5,11 +5,13 @@
 <head>
     <title th:text="${CONTENT_TITLE}"></title>
     <th:block layout:fragment="css">
-        <link rel="stylesheet" href="../../../css/my-css/custom-my-order-v2.css">
+        <link rel="stylesheet" th:href="@{/css/my-css/custom-my-order-v2.css}">
+
     </th:block>
 
+
 </head>
-<body>
+<body >
 <th:block layout:fragment="body">
     <div class="order-manager-content">
         <!-- Start All Title Box -->
@@ -165,6 +167,7 @@
     <script src="../../../js/my-js/format-price-of-product.js"></script>
     <script src="../../../js/my-js/toast.js"></script>
     <script src="../../../js/my-js/load-orders-by-status.js"></script>
+    <script src="../../../js/my-js/loading-page.js"></script>
 </th:block>
 </body>
 

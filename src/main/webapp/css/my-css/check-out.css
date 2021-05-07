@@ -19,3 +19,6 @@ textarea:focus {
     border-radius: 5px;
     outline: none;
 }
+div.custom-control.custom-radio i{
+    color: #b0b435;
+}

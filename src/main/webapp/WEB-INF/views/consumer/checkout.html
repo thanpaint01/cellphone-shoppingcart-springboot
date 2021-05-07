@@ -8,12 +8,16 @@
     <th:block layout:fragment="css">
         <link rel="stylesheet" href="../../../css/my-css/custom-cart.css">
         <link rel="stylesheet" href="../../../css/my-css/toast.css">
-        <link rel="stylesheet" href="css/my-css/check-out.css">
+        <link rel="stylesheet" th:href="@{css/my-css/check-out.css}">
+        <link rel="stylesheet" th:href="@{css/my-css/loading-page.css}">
     </th:block>
 
 </head>
 <body>
 <div layout:fragment="body">
+    <div class="loader">
+        <span class="fas fa-spinner loading iconloading"></span>
+    </div>
     <!-- Start All Title Box -->
     <div class="all-title-box">
         <div class="container">
@@ -102,20 +106,22 @@
                             <div class="title"><span>Thanh toán</span></div>
                             <div class="d-block my-3">
                                 <div class="custom-control custom-radio">
-                                    <input id="credit" name="paymentMethod" type="radio" class="custom-control-input"
+                                    <i class="fas fa-wallet"></i>
+                                    <input id="cash" name="paymentMethod" type="radio" class="custom-control-input"
                                            checked required>
-                                    <label class="custom-control-label" for="credit">Trực Tiếp</label>
+                                    <label class="custom-control-label" for="cash">Trực Tiếp</label>
                                 </div>
                                 <!-- <div class="custom-control custom-radio">
                                     <input id="debit" name="paymentMethod" type="radio" class="custom-control-input"
                                         required>
                                     <label class="custom-control-label" for="debit">Debit card</label>
-                                </div>
+                                </div>-->
                                 <div class="custom-control custom-radio">
+                                    <i class="fab fa-cc-paypal"></i>
                                     <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input"
                                         required>
                                     <label class="custom-control-label" for="paypal">Paypal</label>
-                                </div> -->
+                                </div>
                             </div>
                             <!-- <div class="row" >
                                 <div class="col-md-6 mb-3">

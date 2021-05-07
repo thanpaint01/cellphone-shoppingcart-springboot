@@ -48,7 +48,7 @@ public class OrderController {
 
     @PostMapping("/order")
     @ResponseBody
-    public String ajaxSendDataOrder(String address, String nameClient, String phoneNumber, double totalPrice, HttpSession session) {
+    public String ajaxSendDataOrder(String address, String nameClient, String phoneNumber, double totalPrice, String payment, HttpSession session) {
         System.out.println("totalPriceOrder=" + totalPrice);
         Order order = new Order();
         Date createDate = new Date();
@@ -62,29 +62,35 @@ public class OrderController {
         User user = (User) (session.getAttribute(User.SESSION));
         order.setUser(user);
         order.setOrderStatus("Đang tiếp nhận");
-        System.out.println("UserSession" + user.getId());
-        if (null != orderService.insertIntoTable(order)) {
-            for (CartItem c: order.getUser().getCartItems()) {
-                OrderDetail orderDetail = new OrderDetail();
-                orderDetail.setOrder(order);
-                orderDetail.setActive(1);
-                orderDetail.setSaledPrice(0.0);
-                System.out.println("CartItem cua User khi luu vao detailOrder="+c.toString());
-                orderDetail.setAmount(c.getAmount());
-                orderDetail.setInitialPrice(c.getProduct().getPrice()*c.getAmount());
-                orderDetail.setProduct(c.getProduct());
-                orderDetail.setPrice(c.getProduct().getPrice());
-                orderDetail.setTotalPrice(c.getTotalPrice());
-                OrderDetail orderDetail1 = orderDetailService.insertIntoTable(orderDetail);
-                System.out.println(orderDetail1.toString());
-                order.getOrderDetails().add(orderDetail1);
+        order.setPayment(payment);
+        if(!payment.equals("Paypal")) {
+            System.out.println("UserSession" + user.getId());
+            if (null != orderService.insertIntoTable(order)) {
+                for (CartItem c : order.getUser().getCartItems()) {
+                    OrderDetail orderDetail = new OrderDetail();
+                    orderDetail.setOrder(order);
+                    orderDetail.setActive(1);
+                    orderDetail.setSaledPrice(0.0);
+                    System.out.println("CartItem cua User khi luu vao detailOrder=" + c.toString());
+                    orderDetail.setAmount(c.getAmount());
+                    orderDetail.setInitialPrice(c.getProduct().getPrice() * c.getAmount());
+                    orderDetail.setProduct(c.getProduct());
+                    orderDetail.setPrice(c.getProduct().getPrice());
+                    orderDetail.setTotalPrice(c.getTotalPrice());
+                    OrderDetail orderDetail1 = orderDetailService.insertIntoTable(orderDetail);
+                    System.out.println(orderDetail1.toString());
+                    order.getOrderDetails().add(orderDetail1);
+                }
+                boolean removed = cartService.removeAllByUserId(user.getId());
+                user.getCartItems().clear();
+                user.getOrders().add(order);
+                return removed ? "/user/my-order" : "error";
             }
-            boolean removed = cartService.removeAllByUserId(user.getId());
-            user.getCartItems().clear();
-            user.getOrders().add(order);
-            return removed ? "/user/my-order" : "error";
+            return "error";
+        }else{
+            return "/pay";
         }
-        return "error";
+
     }
 
 
