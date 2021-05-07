@@ -1,5 +1,8 @@
 package nlu.fit.cellphoneapp.controllers.consumer;
 
+import nlu.fit.cellphoneapp.entities.Order;
+import nlu.fit.cellphoneapp.entities.OrderDetail;
+import nlu.fit.cellphoneapp.entities.Product;
 import nlu.fit.cellphoneapp.entities.User;
 import nlu.fit.cellphoneapp.helper.DateHelper;
 import nlu.fit.cellphoneapp.helper.StringHelper;
@@ -9,13 +12,18 @@ import nlu.fit.cellphoneapp.receiver.RegisterForm;
 import nlu.fit.cellphoneapp.services.EmailSenderService;
 import nlu.fit.cellphoneapp.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Controller
@@ -179,4 +187,91 @@ public class UserController {
             return "success";
         }
     }
+
+
+    //UserMyAccountManage
+    @GetMapping("my-order")
+    public String goToMyOrderManagementPage(HttpSession session, Model model) {
+        User user = (User) session.getAttribute(User.SESSION);
+        model.addAttribute("CONTENT_TITLE", "Quản lý đơn hàng");
+        if (null == user || (user.getOrders().size() == 0)) {
+
+            return "consumer/my-order-empty";
+        } else {
+            return "consumer/my-order";
+        }
+    }
+
+
+    @GetMapping("ajax-load-by-status")
+    @ResponseBody
+    public void ajaxLoadWithStatusOrder(
+            @RequestParam(value = "statusOrder", required = false, defaultValue = "all") String statusOrder,
+            @RequestParam(value = "orderID", required = false, defaultValue = "null") String orderID,
+            HttpSession session, HttpServletResponse resp) throws IOException {
+        User user = (User) session.getAttribute(User.SESSION);
+        //Method response html
+        System.out.println("statusOrder client fill=" + statusOrder);
+        StringBuilder sb = new StringBuilder();
+        resp.setCharacterEncoding("UTF-8");
+        if (statusOrder.equals("all")) {
+            for (Order order : user.getOrders()) {
+                if(orderID.equals("null")) {
+                    sb.append(loadResultForAjaxLoadWithStatusOrder(order));
+                }else {
+                    if(order.getId()==Integer.parseInt(orderID)){
+                        sb.append(loadResultForAjaxLoadWithStatusOrder(order));
+                    }
+                }
+            }
+        } else {
+            for (Order order : user.getOrders()) {
+                if (order.getOrderStatus().equals(statusOrder)) {
+                    if(orderID.equals("null")) {
+                        sb.append(loadResultForAjaxLoadWithStatusOrder(order));
+                    }else {
+                        if(order.getId()==Integer.parseInt(orderID)){
+                            sb.append(loadResultForAjaxLoadWithStatusOrder(order));
+                        }
+                    }
+                }
+            }
+        }
+        resp.getWriter().write(sb.toString());
+    }
+
+
+    public String loadResultForAjaxLoadWithStatusOrder(Order order) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(
+                " <tr class=\"order-item\">\n" +
+                        "<td class=\"data-fields col1 align-middle\"><b class=\"order-id\">" + order.getId() + "</b></td>\n" +
+                        "                            <td class=\"data-fields col3\">\n" +
+                        "                                <a class=\"go-detail-mobile\" href=\"/product/detail?id=" + order.getOrderDetails().get(0).getProduct().getId() + "\">\n" +
+                        "                                    <div class=\"d-flex\">\n" +
+                        "                                        <div class=\"img-product\">\n" +
+                        "                                            <img src=\"" + order.getOrderDetails().get(0).getProduct().getImg().getHost() + order.getOrderDetails().get(0).getProduct().getImg().getRelativePath() + "\" height=\"80\" width=\"80\">\n" +
+                        "                                        </div>\n" +
+                        "                                        <div class=\"text-left\">\n" +
+                        "                                            <p>Đơn hàng bao gồm <b class=\"first-product-name\">" + order.getOrderDetails().get(0).getProduct().getName() + "</b> và <b class=\"size-1-order-amount\" \">" + (order.getOrderDetails().size() - 1) + "</b> sản\n" +
+                        "                                                phẩm khác\n" +
+                        "                                            </p>\n" +
+                        "                                        </div>\n" +
+                        "                                    </div>\n" +
+                        "                                </a>\n" +
+                        "                            </td>\n" +
+                        "                            <td class=\"data-fields col2 order-date\"\">" + order.getCreatedDate() + "</td>\n" +
+                        "                            <td class=\"data-fields col2\"><b class=\"product-price order-total-price\">" + StringHelper.formatNumber((long) order.getTotalPrice()) + " ₫</b></td>\n" +
+                        "                            <td class=\"data-fields col2 status-order\">" + order.getOrderStatus() + "</td>\n" +
+                        "                            <td class=\"data-fields col1 text-center\">\n" +
+                        "                                <a href=\"#\" class=\"view\" title=\"\" data-toggle=\"tooltip\"\n" +
+                        "                                   data-original-title=\"Xem chi tiết\"><i data-toggle=\"modal\"\n" +
+                        "                                                                         data-target=\"#exampleModal" + order.getId() + "\"\n" +
+                        "                                                                         class=\"fas fa-arrow-circle-right icon\"></i></a>\n" +
+                        "                            </td>\n" +
+                        "                        </tr>\n"
+        );
+        return sb.toString();
+    }
+
 }

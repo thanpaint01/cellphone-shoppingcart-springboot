@@ -4,7 +4,6 @@
 <th:block layout:fragment="css">
     <link rel="stylesheet" th:href="@{/css/my-css/shop-detail.css}">
 </th:block>
-
 <body>
     <!-- Start Shop Detail  -->
     <div layout:fragment="body" class="shop-detail-box-main">
@@ -64,12 +63,12 @@
         <script th:src="@{/js/my-js/shop-detail-custom.js}"></script>
         <script th:src="@{/js/my-js/format-price-of-product.js}"></script>
         <script>
-            var commentReply = $('#sample-comment-reply');
-            const sampleCommentReply = commentReply.clone(true);
-            commentReply.remove();
-            $('.comment-reply.reply-popup').addEventListener("click", function (e) {
-               e.preventDefault();
-            });
+            // var commentReply = $('#sample-comment-reply');
+            // const sampleCommentReply = commentReply.clone(true);
+            // commentReply.remove();
+            // $('.comment-reply.reply-popup').addEventListener("click", function (e) {
+            //    e.preventDefault();
+            // });
         </script>
     </th:block>
 </body>

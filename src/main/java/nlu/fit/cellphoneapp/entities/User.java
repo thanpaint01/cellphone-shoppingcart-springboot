@@ -2,19 +2,19 @@ package nlu.fit.cellphoneapp.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Pattern;
 
 @Entity
 @Table(name = "user")
 @Getter
 @Setter
+
 public class User {
     public static final String SESSION = "currentUser";
 
@@ -69,8 +69,6 @@ public class User {
             fetch = FetchType.EAGER
     )
     private List<CartItem> cartItems = new ArrayList<>();
-
-
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,
@@ -119,5 +117,7 @@ public class User {
         }
         return rs;
     }
+
+
 
 }

@@ -47,8 +47,8 @@ public class OrderController {
     }
 
     @PostMapping("/order")
-    public @ResponseBody
-    String ajaxSendDataOrder(String address, String nameClient, String phoneNumber, double totalPrice, HttpSession session) {
+    @ResponseBody
+    public String ajaxSendDataOrder(String address, String nameClient, String phoneNumber, double totalPrice, HttpSession session) {
         System.out.println("totalPriceOrder=" + totalPrice);
         Order order = new Order();
         Date createDate = new Date();
@@ -77,11 +77,15 @@ public class OrderController {
                 orderDetail.setTotalPrice(c.getTotalPrice());
                 OrderDetail orderDetail1 = orderDetailService.insertIntoTable(orderDetail);
                 System.out.println(orderDetail1.toString());
+                order.getOrderDetails().add(orderDetail1);
             }
             boolean removed = cartService.removeAllByUserId(user.getId());
             user.getCartItems().clear();
-            return removed ? "Đơn hàng đang được yêu cầu tiếp nhận!" : "Hệ thống đang gặp sự cố!";
+            user.getOrders().add(order);
+            return removed ? "/user/my-order" : "error";
         }
-        return "Có lỗi xảy ra với hệ thống!";
+        return "error";
     }
+
+
 }

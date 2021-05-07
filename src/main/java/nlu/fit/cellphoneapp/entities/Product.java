@@ -8,10 +8,13 @@ import nlu.fit.cellphoneapp.converters.ImageAddress;
 import nlu.fit.cellphoneapp.converters.ImageAddressConventer;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "product")
@@ -51,6 +54,7 @@ public class Product {
     private Pin pin;
     @ManyToOne(fetch = FetchType.LAZY)
     private Brand brand;
+
     @OneToMany(
             mappedBy = "product",
             cascade = CascadeType.ALL,
@@ -64,9 +68,11 @@ public class Product {
             orphanRemoval = true
     )
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<OrderDetail> orderDetails = new ArrayList<>();
+    private Set<OrderDetail> orderDetails = new HashSet<>();
 
-    public void deleteCartItem(CartItem c){
+
+
+    public void deleteCartItem(CartItem c) {
         cartItems.remove(c);
 //        for (CartItem cc: c.getProduct().cartItems) {
 //            System.out.println("ccinProduct="+cc);
@@ -74,6 +80,4 @@ public class Product {
 //        }
         c.getProduct().cartItems.remove(this);
     }
-
-
 }
