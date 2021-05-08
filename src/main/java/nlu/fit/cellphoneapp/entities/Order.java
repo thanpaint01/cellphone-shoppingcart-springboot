@@ -22,7 +22,7 @@ public class Order {
     private String orderStatus;
     @Column(name = "created_date")
     private Date createdDate;
-    @Column(name ="address")
+    @Column(name = "address")
     private String address;
     @Column(name = "name")
     private String nameOfClient;
@@ -30,7 +30,7 @@ public class Order {
     private String phoneNumberOfClient;
     @Column(name = "total_price")
     private double totalPrice;
-    @Column(name="active")
+    @Column(name = "active")
     private int active;
     @Column(name = "payment")
     private String payment;

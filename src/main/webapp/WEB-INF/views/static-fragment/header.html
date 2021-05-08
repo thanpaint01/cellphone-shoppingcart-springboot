@@ -94,10 +94,10 @@
                         <a href="#">
                             <i class="fa fa-shopping-bag"></i>
                             <!--/*@thymesVar id="sumOfCart" type="java"*/-->
-<!--                            <th:block th:if="${null != session.currentUser}">-->
-<!--                                <span class="badge" id="sumOfCart"-->
-<!--                                      th:text="${session.currentUser.getCartItems().size()}"></span>-->
-<!--                            </th:block>-->
+                            <!--                            <th:block th:if="${null != session.currentUser}">-->
+                            <!--                                <span class="badge" id="sumOfCart"-->
+                            <!--                                      th:text="${session.currentUser.getCartItems().size()}"></span>-->
+                            <!--                            </th:block>-->
                             <span class="badge" id="sumOfCart"
                                   th:text="${null==session.currentUser?'0':session.currentUser.getCartItems().size()}"></span>
                             <p>Giỏ hàng</p>
@@ -121,7 +121,7 @@
                                      class="cart-thumb"/></a>
                             <h6><a href="#" th:text="${c.getProduct().getName()}"></a></h6>
                             <span th:text="${c.getAmount()}+'x - '"></span>
-                            <span class="product-price" th:text="${c.getProduct().getPrice()}"></span>
+                            <span class="product-price li-price" th:text="${c.getProduct().getPrice()}"></span>
                         </li>
                         <!--  end upload cart item  -->
                     </th:block>
@@ -142,7 +142,7 @@
                     <a th:href="@{/cart}" class="btn btn-default hvr-hover btn-cart text-light">CHI TIẾT</a>
                     <span class="float-right"><strong>Tổng</strong>: <!--/*@thymesVar id="totalAll" type="java"*/-->
                         <th:block th:if="${null != session.currentUser}">
-                        <span class="product-price total-cart" th:text="${session.currentUser.getTotalPrice()}"></span>
+                         <span class="product-price total-cart" th:text="${session.currentUser.getTotalPrice()}"></span>
                         </th:block>
                     </span>
                 </div>

@@ -26,4 +26,21 @@ public class OrderServiceImpl implements IOrderService {
         return orderRepo.findAll(pageable);
     }
 
+    @Override
+    public Order updatePayment(int orderID, String payment) {
+        Order order;
+        if(null != (order = orderRepo.getOne(orderID))){
+            order.setPayment(payment);
+            order.setActive(1);
+            return orderRepo.save(order);
+        }else{
+            return null;
+        }
+    }
+
+    @Override
+    public Order getOne(int orderID) {
+        return orderRepo.getOne(orderID);
+    }
+
 }

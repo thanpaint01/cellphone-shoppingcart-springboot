@@ -67,21 +67,32 @@
                                 <div class="text-muted">Giảm giá:</div>
                                 <div class="ml-auto price"> -0 đ</div>
                             </div>
-                            <div class="d-flex justify-content-start align-items-center pl-3 py-3 mb-4 border-bottom">
-                                <div class="text-muted"> Thành tiền:</div>
-                                <div class="ml-auto h5"><b class="product-price"
-                                                              th:text="${orderItem.getTotalPrice()}"></b></div>
+                            <div class="d-block justify-content-start align-items-center pl-3 py-3 mb-4 border-bottom">
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <div class="text-muted"> Thành tiền:</div>
+                                    <div class="ml-auto h5"><b class="product-price"
+                                                               th:text="${orderItem.getTotalPrice()}"></b></div>
+                                </div>
+                                <div class="d-flex justify-content-start align-items-center">
+                                <div class="text-muted">Hình thức thanh toán:</div>
+                                <div class="ml-auto h5"><b
+                                        th:text="${orderItem.getPayment()}"></b></div>
+                                </div>
+
                             </div>
                             <div class="row border rounded p-1 my-3">
                                 <div class="col-md-6 py-3">
                                     <div class="d-flex flex-column align-items start">
                                         <b>Thông tin giao hàng</b>
                                         <p class="text-justify pt-2">
-                                            <b>Khách hàng: </b><span class="client-name" th:text="${orderItem.getNameOfClient()}"></span><br/>
-                                            <b>Địa chỉ: </b><span class="address-delivery" th:text="${orderItem.getAddress()}"></span><br/>
+                                            <b>Khách hàng: </b><span class="client-name"
+                                                                     th:text="${orderItem.getNameOfClient()}"></span><br/>
+                                            <b>Địa chỉ: </b><span class="address-delivery"
+                                                                  th:text="${orderItem.getAddress()}"></span><br/>
                                         </p>
                                         <p class="text-justify">
-                                            <b>Số điện thoại: </b><span class="phone-number-delivery" th:text="${orderItem.getPhoneNumberOfClient()}"></span><br/>
+                                            <b>Số điện thoại: </b><span class="phone-number-delivery"
+                                                                        th:text="${orderItem.getPhoneNumberOfClient()}"></span><br/>
                                         </p>
                                     </div>
                                 </div>

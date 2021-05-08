@@ -73,8 +73,8 @@ public class ProductController {
         return model;
     }
 
-    @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
-    public ModelAndView productDetailPage(@PathVariable(value = "id") int id) {
+    @RequestMapping(value = "/detail{id}", method = RequestMethod.GET)
+    public ModelAndView productDetailPage(@RequestParam int id) {
         Product product;
         if ((product = productService.findOneForConsumer(id)) != null) {
             ModelAndView model = new ModelAndView("consumer/product-detail");

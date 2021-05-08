@@ -42,7 +42,6 @@ $('.tr-update').change(function () {
     $('.last-price').html(formatter.format(lastPrice));
 })
 
-
 var sumAmount = $('#sumOfCart').text();
 //xóa sản phẩm
 $('.remove-action').click(function () {

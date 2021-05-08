@@ -195,7 +195,6 @@ public class UserController {
         User user = (User) session.getAttribute(User.SESSION);
         model.addAttribute("CONTENT_TITLE", "Quản lý đơn hàng");
         if (null == user || (user.getOrders().size() == 0)) {
-
             return "consumer/my-order-empty";
         } else {
             return "consumer/my-order";

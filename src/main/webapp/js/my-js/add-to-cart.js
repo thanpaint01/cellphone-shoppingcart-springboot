@@ -7,27 +7,34 @@
  * Dùng ajax kiểm tra và trả về kết quả là true/false, đồng thời server (có/không) thêm vào csdl
  * Chổ này hiển thị notifications cho người dùng biết là họ nhận được gì sau khi yêu cầu
  */
-$(function () {
-    $('.btnAddToCart').click(function () {
-        var productID = $(this).val();
-        console.log(JSON.stringify({productID: productID, amount: 1}));
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify({productID: productID, amount: 1}),
-            contentType: 'application/json',
-            url: 'add-to-cart',
-            success: function (result) {
-                if (result === 'error') {
-                    showError();
-                } else if (result === 'warning') {
-                    showWarning();
-                } else {
-                    let sum = parseInt($("#sumOfCart").text(), 10) + 1;
-                    $('#sumOfCart').text(sum);
-                    showSuccess();
-                    $('.cart-list').append(result);
+$('.btnAddToCart').click(function () {
+    var productID = $(this).val();
+    console.log(JSON.stringify({productID: productID, amount: 1}));
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify({productID: productID, amount: 1}),
+        contentType: 'application/json',
+        url: 'add-to-cart',
+        success: function (result) {
+            if (result === 'error') {
+                showError();
+            } else if (result === 'warning') {
+                showWarning();
+            } else {
+                let sum = parseInt($("#sumOfCart").text(), 10) + 1;
+                $('#sumOfCart').text(sum);
+                showSuccess();
+                $('.cart-list').append(result);
+                var allLiPrice = document.getElementsByClassName('li-price');
+                var total = 0;
+                if (allLiPrice.length > 0) {
+                    $('.li-price').each(function (index) {
+                        console.log($(this).text());
+                        total += convert(reverseFormatNumber($(this).text(), "vi-VN"));
+                    })
                 }
+                $('.total-cart').html(formatter.format(total));
             }
-        })
+        }
     })
 })

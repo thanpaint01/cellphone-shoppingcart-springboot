@@ -54,7 +54,7 @@ public class CartController {
                         "<li class=\"cart-item\">" +
                                 "<a href=\"#\" class=\"photo\"><img src=\"" + c.getProductImg() + "\" class=\"cart-thumb\"/></a>" +
                                 "<h6><a href=\"#\">" + c.getProductName() + "</a></h6>" +
-                                "<p>1x - <span class=\"product-price\">" + StringHelper.formatNumber((long) c.getProductPrice()) + " </span></p>" +
+                                "<p>1x - <span class=\"product-price li-price\">" + StringHelper.formatNumber((long) c.getProductPrice()) + " </span></p>" +
                                 "</li>"
                 );
             }

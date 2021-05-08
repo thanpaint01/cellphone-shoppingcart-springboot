@@ -2,9 +2,13 @@ package nlu.fit.cellphoneapp.controllers.consumer;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import nlu.fit.cellphoneapp.config.PaypalPaymentIntent;
 import nlu.fit.cellphoneapp.config.PaypalPaymentMethod;
+import nlu.fit.cellphoneapp.entities.CartItem;
+import nlu.fit.cellphoneapp.entities.Order;
+import nlu.fit.cellphoneapp.entities.OrderDetail;
 import nlu.fit.cellphoneapp.others.Link;
 import nlu.fit.cellphoneapp.services.PaypalService;
 import org.slf4j.Logger;
@@ -34,7 +38,7 @@ public class PaymentController {
 
     @PostMapping("/pay")
     @ResponseBody
-    public String pay(HttpServletRequest request, double totalPrice ){
+    public String pay(HttpServletRequest request, double totalPrice){
         System.out.println("totalPrice paypal test="+totalPrice);
         String cancelUrl = Link.createAbsolutePath(request, URL_PAYPAL_CANCEL);
         System.out.println("cancelurl="+cancelUrl);
@@ -43,7 +47,7 @@ public class PaymentController {
         try {
             System.out.println("Vao try pay");
             Payment payment = paypalService.createPayment(
-                    totalPrice,
+                    totalPrice/100,
                     "USD",
                     PaypalPaymentMethod.paypal,
                     PaypalPaymentIntent.sale,
@@ -51,8 +55,8 @@ public class PaymentController {
                     cancelUrl,
                     successUrl);
             for(Links links : payment.getLinks()){
+                System.out.println("linkPayment redirect: =="+links.getHref());
                 if(links.getRel().equals("approval_url")){
-                    System.out.println("linkPayment redirect: =="+links.getHref());
                     return links.getHref();
                 }
             }
@@ -71,6 +75,7 @@ public class PaymentController {
     @GetMapping(URL_PAYPAL_SUCCESS)
     public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId){
         System.out.println("Vao Success paypal");
+
         try {
             Payment payment = paypalService.executePayment(paymentId, payerId);
             if(payment.getState().equals("approved")){
