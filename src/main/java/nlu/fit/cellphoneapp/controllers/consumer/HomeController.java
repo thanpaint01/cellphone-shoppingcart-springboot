@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import javax.servlet.http.HttpSession;
 @Controller
 public class HomeController {
-
-
     @Autowired
     ICartService cartService;
 
