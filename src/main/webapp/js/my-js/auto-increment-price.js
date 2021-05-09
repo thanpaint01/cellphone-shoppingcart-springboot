@@ -21,11 +21,10 @@ $('.tr-update').change(function () {
 
     $.ajax({
         type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({id: cartItemID, amount: amount, totalPrice: total, productID: productID}),
+        data: {id: cartItemID, amount: amount, totalPrice: total, productID: productID},
         url: 'add-to-cart',
         success: function (result) {
-            //không làm gì hết
+
         }
     })
 
@@ -44,34 +43,49 @@ $('.tr-update').change(function () {
 
 var sumAmount = $('#sumOfCart').text();
 //xóa sản phẩm
+var cartID = 0;
 $('.remove-action').click(function () {
-    var cartID = $(this).attr('value');
+    cartID = $(this).attr('value');
     var amountRemove = $(this).attr('name');
     let resetAmount = parseInt(sumAmount - amountRemove);
     let totalPriceBefore = convert(reverseFormatNumber($('.total-price').text(), "vi-VN"));
     let priceRemove = convert($(this).attr('alt'));
     let resetTotalPrice = totalPriceBefore - priceRemove;
-    $('#btnDeleteModalConfirm').click(function () {
-        $.ajax({
-            type: 'DELETE',
-            data: {id: cartID},
-            url: 'cart',
-            success: function (result) {
-                if (result !== "") {
-                    $('#removeCartItemModal').modal('toggle');
-                    $('#' + cartID).remove();
-                    $('#sumOfCart').html(resetAmount);
-                    $('#li' + cartID).remove();
-                    $('.total-price').html(formatter.format(resetTotalPrice));
-                    $('.last-price').html(formatter.format(resetTotalPrice - convert($('.discount-price').text())));
-                    deleteSuccess();
-                } else {
-                    showFailDelete();
-                }
+    $('#btnDeleteModalConfirm').prop('value',cartID)
+    $('#amountRemove').text(amountRemove)
+    $('#resetAmount').text(resetAmount)
+    $('#totalPriceBefore').text(totalPriceBefore)
+    $('#priceRemove').text(priceRemove)
+    $('#resetTotalPrice').text(resetTotalPrice)
+
+})
+$('#btnDeleteModalConfirm').click(function () {
+    cartID = $(this).attr('value')
+    var amountRemove =  $('#amountRemove').text()
+    let resetAmount=  $('#resetAmount').text()
+    let totalPriceBefore = $('#totalPriceBefore').text()
+    let priceRemove = $('#priceRemove').text()
+    let resetTotalPrice = $('#resetTotalPrice').text()
+    $.ajax({
+        type: 'DELETE',
+        data: {id: cartID},
+        url: 'cart',
+        success: function (result) {
+            if (result !== "error") {
+                $('#removeCartItemModal').modal('toggle');
+                $('#' + cartID).remove();
+                $('#sumOfCart').html(resetAmount);
+                $('#li' + cartID).remove();
+                $('.total-price').html(formatter.format(resetTotalPrice));
+                $('.last-price').html(formatter.format(resetTotalPrice - convert($('.discount-price').text())));
+                deleteSuccess();
+            } else {
+                showFailDelete();
             }
-        })
+        }
     })
 })
+
 
 function deleteSuccess() {
     toast({

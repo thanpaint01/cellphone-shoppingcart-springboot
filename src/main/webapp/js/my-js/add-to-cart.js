@@ -8,12 +8,11 @@
  * Chổ này hiển thị notifications cho người dùng biết là họ nhận được gì sau khi yêu cầu
  */
 $('.btnAddToCart').click(function () {
-    var productID = $(this).val();
+    let productID = $(this).val();
     console.log(JSON.stringify({productID: productID, amount: 1}));
     $.ajax({
         type: 'POST',
-        data: JSON.stringify({productID: productID, amount: 1}),
-        contentType: 'application/json',
+        data: {id: 0, productID: productID, amount: 1},
         url: 'add-to-cart',
         success: function (result) {
             if (result === 'error') {

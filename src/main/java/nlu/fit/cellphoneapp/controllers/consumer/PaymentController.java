@@ -47,7 +47,7 @@ public class PaymentController {
         try {
             System.out.println("Vao try pay");
             Payment payment = paypalService.createPayment(
-                    totalPrice/100,
+                    totalPrice/1000,
                     "USD",
                     PaypalPaymentMethod.paypal,
                     PaypalPaymentIntent.sale,

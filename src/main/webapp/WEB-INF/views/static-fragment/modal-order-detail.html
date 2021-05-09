@@ -31,7 +31,7 @@
                             <!-- order item1 -->
                             <div th:each="orderItemDetail : ${orderItem.getOrderDetails()}"
                                  class="d-flex justify-content-start align-items-center list py-1">
-                                <div><b>1px</b></div>
+                                <div><b th:text="${orderItemDetail.getAmount()}+'px'"></b></div>
                                 <div class="mx-3"><img
                                         th:src="${orderItemDetail.getProduct().getImg().getHost()+orderItemDetail.getProduct().getImg().getRelativePath()}"
                                         alt="apple" width="100" height="100">

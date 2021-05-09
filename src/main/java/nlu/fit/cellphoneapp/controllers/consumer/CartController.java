@@ -1,7 +1,7 @@
 package nlu.fit.cellphoneapp.controllers.consumer;
 
-import nlu.fit.cellphoneapp.dto.CartDTO;
 import nlu.fit.cellphoneapp.entities.CartItem;
+import nlu.fit.cellphoneapp.entities.Product;
 import nlu.fit.cellphoneapp.entities.User;
 import nlu.fit.cellphoneapp.helper.StringHelper;
 import nlu.fit.cellphoneapp.services.ICartService;
@@ -12,10 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -31,35 +29,48 @@ public class CartController {
      Phương thức hiện đang dùng để checkAjax
   */
     @PostMapping("/add-to-cart")
-    public void ajaxCheckAddToCart(@RequestBody CartDTO infoCartItem,
-                                   HttpServletResponse resp, HttpServletRequest req) throws IOException {
-        HttpSession session = req.getSession(true);
-        int productID = infoCartItem.getProductID();
-        int amount = infoCartItem.getAmount();
+    @ResponseBody
+    public String ajaxCheckAddToCart(String id, int productID, int amount, HttpSession session) throws IOException {
+        int cartItemIDUpdate = 0;
+        if(null != id) cartItemIDUpdate = Integer.parseInt(id);
+        System.out.println("Add To Cart: "+productID);
+        StringBuilder sb = new StringBuilder();
         User user = (User) session.getAttribute(User.SESSION);
-        int userID = 0;
         if (null != user) {
             System.out.println(user);
-            userID = user.getId();
-            infoCartItem.setUserID(userID);
-
-            CartDTO c = null;
-            if (cartService.isInCart(productID, amount, userID) && infoCartItem.getId() == 0) {
-                System.out.println("Lỗi khi thêm sản phẩm đã có trong giỏ");
-                resp.getWriter().print("error");
+            if (user.checkCartItemExist(productID) && cartItemIDUpdate == 0) {
+                System.out.println("CartItem is existed ! Check by User entity");
+                return "error";
             } else {
-                c = cartService.insertIntoTable(infoCartItem);
-                user.getCartItems().add(cartService.getOneCartItem(c.getId()));
-                resp.getWriter().print(
+                Product product = productService.findOneByID(productID);
+                CartItem cartItem = new CartItem();
+                if(cartItemIDUpdate != 0) cartItem.setId(cartItemIDUpdate);
+                cartItem.setUser(user);
+                cartItem.setProduct(product);
+                cartItem.setAmount(amount);
+                cartItem.setActive(1);
+                cartItem.setTotalPrice(product.getPrice());
+                cartItem = cartService.insertIntoTable(cartItem);
+                if(cartItemIDUpdate == 0) {
+                    user.getCartItems().add(cartItem);
+                }else {
+                    for (CartItem c: user.getCartItems()) {
+                        if(c.getId()==cartItemIDUpdate){
+                            c.setAmount(amount);
+                        }
+                    }
+                }
+                sb.append(
                         "<li class=\"cart-item\">" +
-                                "<a href=\"#\" class=\"photo\"><img src=\"" + c.getProductImg() + "\" class=\"cart-thumb\"/></a>" +
-                                "<h6><a href=\"#\">" + c.getProductName() + "</a></h6>" +
-                                "<p>1x - <span class=\"product-price li-price\">" + StringHelper.formatNumber((long) c.getProductPrice()) + " </span></p>" +
-                                "</li>"
+                                "<a href=\"#\" class=\"photo\"><img src=\"" + cartItem.getProduct().getImg().getHost()+cartItem.getProduct().getImg().getRelativePath()+ "\" class=\"cart-thumb\"/></a>" +
+                                "<h6><a href=\"#\">" + cartItem.getProduct().getName()+ "</a></h6>" +
+                                "<p>1x - <span class=\"product-price li-price\">" + StringHelper.formatNumber((long) cartItem.getTotalPrice()) + " </span></p>" +
+                                "</li>\n"
                 );
             }
+            return sb.toString();
         } else {
-            resp.getWriter().print("warning");
+            return "warning";
         }
     }
 
@@ -70,8 +81,8 @@ public class CartController {
         int userID = 0;
         if (null != user) {
             userID = user.getId();
-            List<CartDTO> carts = cartService.getAllByUserID(userID);
-            for (CartDTO c : carts) {
+            List<CartItem> carts = cartService.getAllByUserID(userID);
+            for (CartItem c : carts) {
                 System.out.println(c);
             }
             if (carts.size() == 0) {
@@ -86,26 +97,24 @@ public class CartController {
     @DeleteMapping("/cart")
     public @ResponseBody
     String ajaxDeleteCartItem(@RequestParam int id, HttpServletRequest req) {
-        String rs = "";
         System.out.println("cartItem id=" + id);
         int userID = 0;
-        //tránh trường hợp nhập trên url
         HttpSession session = req.getSession(true);
         User user = (User) session.getAttribute(User.SESSION);
         if (null != user) userID = user.getId();
         if (null != cartService.getOneCartItem(id) && userID != 0) {
-            //user.getCartItems().remove(cartService.getOneCartItem(id));
-            boolean del = cartService.deleteOne(id);
             for (CartItem c : user.getCartItems()) {
-                if (c.getId() == id) user.getCartItems().remove(c);
-                System.out.println("CartItem in sessionUserNEW= " + c.getId());
-
+                System.out.println("CartItem of user = "+c.getId());
+                if (c.getId() == id) {
+                    System.out.println("CartItem will be removed by user = " + c.getId());
+                    boolean removedCartSession = user.getCartItems().remove(c);
+                    System.out.println("removedCartSession="+removedCartSession);
+                    cartService.deleteOne(id);
+                    return "Xoá thành công!";
+                }
             }
-            if (del == true)
-                rs = "Xoá thành công!";
-
         }
-        return rs;
+        return "error";
     }
 
 

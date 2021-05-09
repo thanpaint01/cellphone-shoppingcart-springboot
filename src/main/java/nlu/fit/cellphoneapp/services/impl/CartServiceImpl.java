@@ -1,9 +1,6 @@
 package nlu.fit.cellphoneapp.services.impl;
 
-import nlu.fit.cellphoneapp.converters.MyConverter;
-import nlu.fit.cellphoneapp.dto.CartDTO;
 import nlu.fit.cellphoneapp.entities.CartItem;
-import nlu.fit.cellphoneapp.entities.Product;
 import nlu.fit.cellphoneapp.entities.User;
 import nlu.fit.cellphoneapp.repositories.interfaces.ICartRepository;
 import nlu.fit.cellphoneapp.repositories.interfaces.IProductRepository;
@@ -12,7 +9,6 @@ import nlu.fit.cellphoneapp.services.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -44,41 +40,33 @@ public class CartServiceImpl implements ICartService {
         Vì vậy phải check id cart trước khi insert, liệu đã tồn tại sản phẩm đó hay chưa, và còn số lượng để thêm hay không
      */
     @Override
-    public CartDTO insertIntoTable(CartDTO cartDTO) {
-        System.out.println("CartRequest: " + cartDTO);
-        CartItem cartItemEntity = new CartItem();
+    public CartItem insertIntoTable(CartItem cartItem) {
+        CartItem cartItemEntity = cartItem;
         /*
             Ở đây cần tính toán lại số tiền tổng cộng cho giỏ hàng
             Tổng tiền = số lượng * đơn giá
             Số lượng ở đây là số lượng trong giỏ
          */
         //sau khi có được Entity thì ta nhờ repo lưu giùm
-        if (cartDTO.getId() == 0) {//thêm mới
+        if (cartItem.getId() == 0) {//thêm mới
             System.out.println("Thêm mới");
-            cartItemEntity = MyConverter.toCartEntity(cartDTO);
+            cartItemEntity = cartRepo.save(cartItemEntity);
         } else {
             System.out.println("Cập nhật số lượng");
-            CartItem oldCartItem = cartRepo.getOne(cartDTO.getId());
-            cartItemEntity = MyConverter.toCartEntity(cartDTO, oldCartItem);
+            CartItem oldCartItem = cartRepo.getOne(cartItem.getId());
+            oldCartItem.setAmount(cartItem.getAmount());
+            double totalPrice = oldCartItem.getProduct().getPrice() * oldCartItem.getAmount();
+            cartItemEntity.setTotalPrice(totalPrice);
+            cartItemEntity = cartRepo.save(cartItemEntity);
+            System.out.println(cartItemEntity);
         }
-        Product productItem = productRepo.getOne(cartDTO.getProductID());
-        cartItemEntity.setProduct(productItem);
-        cartItemEntity.setUser(userRepo.getOne(cartDTO.getUserID()));
-        double totalPrice = productItem.getPrice() * cartDTO.getAmount();
-        cartItemEntity.setTotalPrice(totalPrice);
-        cartItemEntity = cartRepo.save(cartItemEntity);
-        System.out.println(cartItemEntity);
-        return MyConverter.toCartDTO(cartItemEntity);
+        return cartItemEntity;
     }
 
     @Override
-    public List<CartDTO> getAllByUserID(int userID) {
+    public List<CartItem> getAllByUserID(int userID) {
         List<CartItem> cartItemList = cartRepo.getAllByUser(userRepo.getOne(userID));
-        List<CartDTO> listResult = new ArrayList<>();
-        for (CartItem cartItem : cartItemList) {
-            listResult.add(MyConverter.toCartDTO(cartItem));
-        }
-        return listResult;
+        return cartItemList;
     }
 
     @Override

@@ -28,7 +28,8 @@
 <body>
 <header th:replace="static-fragment/header :: header"></header>
 <div>
-
+    <th:block layout:fragment="body">
+    </th:block>
     <th:block th:if="${session.currentUser == null}">
         <div th:replace="static-fragment/lrf-modal :: login-modal"></div>
         <div th:replace="static-fragment/lrf-modal :: register-modal"></div>
