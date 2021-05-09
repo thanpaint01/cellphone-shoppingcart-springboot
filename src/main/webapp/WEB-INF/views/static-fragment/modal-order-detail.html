@@ -114,7 +114,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-danger">Hủy đơn hàng</button>
+                    <button type="button" class="btn btn-danger btnDenyModal" th:classappend="${orderItem.getOrderStatus()=='Đang tiếp nhận'?'':'d-none'}" th:id="${'btnDenyOrder-'+orderItem.getId()}">Hủy đơn hàng</button>
                 </div>
             </div>
         </div>

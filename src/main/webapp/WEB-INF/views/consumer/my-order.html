@@ -140,14 +140,14 @@
                                         th:text="${orderItem.getCreatedDate()}"></td>
                                     <td class="data-fields col2"><b class="product-price order-total-price"
                                                                     th:text="${orderItem.getTotalPrice()}"></b></td>
-                                    <td class="data-fields col2"><span class="status-order"
+                                    <td class="data-fields col2"><span th:class="${'status-order-' +orderItem.getId()}"
                                                                        th:text="${orderItem.getOrderStatus()}"></span>
                                     </td>
                                     <td class="data-fields col1 text-center">
                                         <a href="#" class="view" title="" data-toggle="tooltip"
                                            data-original-title="Xem chi tiết"><i data-toggle="modal"
                                                                                  th:data-target="${'#exampleModal'+orderItem.getId()}"
-                                                                                 class="fas fa-arrow-circle-right icon"></i></a>
+                                                                                 class="fas fa-arrow-circle-right icon modal-del" th:id="${'modal-'+orderItem.getId()}"></i></a>
                                     </td>
                                 </th:block>
                             </tr>

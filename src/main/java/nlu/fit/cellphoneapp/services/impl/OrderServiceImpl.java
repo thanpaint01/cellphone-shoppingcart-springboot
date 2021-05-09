@@ -43,4 +43,10 @@ public class OrderServiceImpl implements IOrderService {
         return orderRepo.getOne(orderID);
     }
 
+    @Override
+    public Order updateOrderStatus(Order order) {
+        order.setOrderStatus("Đã hủy");
+        return orderRepo.save(order);
+    }
+
 }

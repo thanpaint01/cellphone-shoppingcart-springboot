@@ -10,10 +10,7 @@ import nlu.fit.cellphoneapp.services.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -130,5 +127,20 @@ public class OrderController {
         } else {
             return "error";
         }
+    }
+
+    @PostMapping("/ajax-deny-order")
+    public  @ResponseBody String ajaxDenyOrder(int orderID, HttpSession session) {
+        System.out.println("DenyOrder id = "+orderID);
+        User user = (User) session.getAttribute(User.SESSION);
+        for (Order o : user.getOrders()) {
+            if(o.getId() == orderID && o.getOrderStatus().equals("Đang tiếp nhận")){
+                o.setOrderStatus("Đã hủy");
+                orderService.updateOrderStatus(o);
+                System.out.println("Hủy thành công đơn hàng "+orderID);
+                return "Hủy thành công!";
+            }
+        }
+        return "error";
     }
 }

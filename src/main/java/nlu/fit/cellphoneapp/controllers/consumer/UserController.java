@@ -195,6 +195,7 @@ public class UserController {
         User user = (User) session.getAttribute(User.SESSION);
         model.addAttribute("CONTENT_TITLE", "Quản lý đơn hàng");
         if (null == user || (user.getOrders().size() == 0)) {
+
             return "consumer/my-order-empty";
         } else {
             return "consumer/my-order";
@@ -215,10 +216,10 @@ public class UserController {
         resp.setCharacterEncoding("UTF-8");
         if (statusOrder.equals("all")) {
             for (Order order : user.getOrders()) {
-                if(orderID.equals("null")) {
+                if (orderID.equals("null")) {
                     sb.append(loadResultForAjaxLoadWithStatusOrder(order));
-                }else {
-                    if(order.getId()==Integer.parseInt(orderID)){
+                } else {
+                    if (order.getId() == Integer.parseInt(orderID)) {
                         sb.append(loadResultForAjaxLoadWithStatusOrder(order));
                     }
                 }
@@ -226,10 +227,10 @@ public class UserController {
         } else {
             for (Order order : user.getOrders()) {
                 if (order.getOrderStatus().equals(statusOrder)) {
-                    if(orderID.equals("null")) {
+                    if (orderID.equals("null")) {
                         sb.append(loadResultForAjaxLoadWithStatusOrder(order));
-                    }else {
-                        if(order.getId()==Integer.parseInt(orderID)){
+                    } else {
+                        if (order.getId() == Integer.parseInt(orderID)) {
                             sb.append(loadResultForAjaxLoadWithStatusOrder(order));
                         }
                     }
@@ -242,35 +243,37 @@ public class UserController {
 
     public String loadResultForAjaxLoadWithStatusOrder(Order order) {
         StringBuilder sb = new StringBuilder();
-        sb.append(
-                " <tr class=\"order-item\">\n" +
-                        "<td class=\"data-fields col1 align-middle\"><b class=\"order-id\">" + order.getId() + "</b></td>\n" +
-                        "                            <td class=\"data-fields col3\">\n" +
-                        "                                <a class=\"go-detail-mobile\" href=\"/product/detail?id=" + order.getOrderDetails().get(0).getProduct().getId() + "\">\n" +
-                        "                                    <div class=\"d-flex\">\n" +
-                        "                                        <div class=\"img-product\">\n" +
-                        "                                            <img src=\"" + order.getOrderDetails().get(0).getProduct().getImg().getHost() + order.getOrderDetails().get(0).getProduct().getImg().getRelativePath() + "\" height=\"80\" width=\"80\">\n" +
-                        "                                        </div>\n" +
-                        "                                        <div class=\"text-left\">\n" +
-                        "                                            <p>Đơn hàng bao gồm <b class=\"first-product-name\">" + order.getOrderDetails().get(0).getProduct().getName() + "</b> và <b class=\"size-1-order-amount\" \">" + (order.getOrderDetails().size() - 1) + "</b> sản\n" +
-                        "                                                phẩm khác\n" +
-                        "                                            </p>\n" +
-                        "                                        </div>\n" +
-                        "                                    </div>\n" +
-                        "                                </a>\n" +
-                        "                            </td>\n" +
-                        "                            <td class=\"data-fields col2 order-date\"\">" + order.getCreatedDate() + "</td>\n" +
-                        "                            <td class=\"data-fields col2\"><b class=\"product-price order-total-price\">" + StringHelper.formatNumber((long) order.getTotalPrice()) + " ₫</b></td>\n" +
-                        "                            <td class=\"data-fields col2 status-order\">" + order.getOrderStatus() + "</td>\n" +
-                        "                            <td class=\"data-fields col1 text-center\">\n" +
-                        "                                <a href=\"#\" class=\"view\" title=\"\" data-toggle=\"tooltip\"\n" +
-                        "                                   data-original-title=\"Xem chi tiết\"><i data-toggle=\"modal\"\n" +
-                        "                                                                         data-target=\"#exampleModal" + order.getId() + "\"\n" +
-                        "                                                                         class=\"fas fa-arrow-circle-right icon\"></i></a>\n" +
-                        "                            </td>\n" +
-                        "                        </tr>\n"
-        );
+        if (order.getActive() == 1) {
+            sb.append(
+                    " <tr class=\"order-item\">\n" +
+                            "<td class=\"data-fields col1 align-middle\"><b class=\"order-id\">" + order.getId() + "</b></td>\n" +
+                            "                            <td class=\"data-fields col3\">\n" +
+                            "                                <a class=\"go-detail-mobile\" href=\"/product/detail?id=" + order.getOrderDetails().get(0).getProduct().getId() + "\">\n" +
+                            "                                    <div class=\"d-flex\">\n" +
+                            "                                        <div class=\"img-product\">\n" +
+                            "                                            <img src=\"" + order.getOrderDetails().get(0).getProduct().getImg().getHost() + order.getOrderDetails().get(0).getProduct().getImg().getRelativePath() + "\" height=\"80\" width=\"80\">\n" +
+                            "                                        </div>\n" +
+                            "                                        <div class=\"text-left\">\n" +
+                            "                                            <p>Đơn hàng bao gồm <b class=\"first-product-name\">" + order.getOrderDetails().get(0).getProduct().getName() + "</b> và <b class=\"size-1-order-amount\" \">" + (order.getOrderDetails().size() - 1) + "</b> sản\n" +
+                            "                                                phẩm khác\n" +
+                            "                                            </p>\n" +
+                            "                                        </div>\n" +
+                            "                                    </div>\n" +
+                            "                                </a>\n" +
+                            "                            </td>\n" +
+                            "                            <td class=\"data-fields col2 order-date\"\">" + order.getCreatedDate() + "</td>\n" +
+                            "                            <td class=\"data-fields col2\"><b class=\"product-price order-total-price\">" + StringHelper.formatNumber((long) order.getTotalPrice()) + " ₫</b></td>\n" +
+                            "                            <td class=\"data-fields col2 status-order-"+order.getId()+"\">" + order.getOrderStatus() + "</td>\n" +
+                            "                            <td class=\"data-fields col1 text-center\">\n" +
+                            "                                <a href=\"#\" class=\"view\" title=\"\" data-toggle=\"tooltip\"\n" +
+                            "                                   data-original-title=\"Xem chi tiết\"><i data-toggle=\"modal\"\n" +
+                            "                                                                         data-target=\"#exampleModal" + order.getId() + "\"\n" +
+                            "                                                                         class=\"fas fa-arrow-circle-right icon modal-del\" id=\"modal-"+order.getId()+"\"></i></a>\n" +
+                            "                            </td>\n" +
+                            "                        </tr>\n"
+            );
+            return sb.toString();
+        }
         return sb.toString();
     }
-
 }

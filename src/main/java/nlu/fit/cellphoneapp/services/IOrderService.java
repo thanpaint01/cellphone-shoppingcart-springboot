@@ -8,4 +8,5 @@ public interface IOrderService {
     Page<Order> findPaginated(int page, int limit);
     Order updatePayment(int orderID, String payment);
     Order getOne(int orderID);
+    Order updateOrderStatus (Order order);
 }
