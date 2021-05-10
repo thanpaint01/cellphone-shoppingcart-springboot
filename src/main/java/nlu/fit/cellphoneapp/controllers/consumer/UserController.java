@@ -1,15 +1,13 @@
 package nlu.fit.cellphoneapp.controllers.consumer;
 
-import nlu.fit.cellphoneapp.entities.Order;
-import nlu.fit.cellphoneapp.entities.OrderDetail;
-import nlu.fit.cellphoneapp.entities.Product;
-import nlu.fit.cellphoneapp.entities.User;
+import nlu.fit.cellphoneapp.entities.*;
 import nlu.fit.cellphoneapp.helper.DateHelper;
 import nlu.fit.cellphoneapp.helper.StringHelper;
 import nlu.fit.cellphoneapp.others.BcryptEncoder;
 import nlu.fit.cellphoneapp.others.Link;
 import nlu.fit.cellphoneapp.receiver.RegisterForm;
 import nlu.fit.cellphoneapp.services.EmailSenderService;
+import nlu.fit.cellphoneapp.services.ICartService;
 import nlu.fit.cellphoneapp.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,6 +31,8 @@ public class UserController {
     IUserService userService;
     @Autowired
     EmailSenderService emailSenderService;
+    @Autowired
+    ICartService cartService;
 
     @RequestMapping(value = "my-account", method = RequestMethod.GET)
     public ModelAndView myAccountPage(HttpSession session) {
@@ -74,6 +74,17 @@ public class UserController {
             return "emptyfield";
         else if ((user = userService.findOneByLogin(email, password)) != null) {
             session.setAttribute(User.SESSION, user);
+            if(user.getCartItems().size()==0) {
+                List<CartItem> cartItems = (List<CartItem>) session.getAttribute("cartItemsSession");
+                for (CartItem cartItem: cartItems) {
+                    cartItem.setUser(user);
+                    cartService.insertIntoTable(cartItem);
+                }
+                user.setCartItems(cartItems);
+                session.setAttribute("cartItemsSession", null);
+            }else{
+                session.setAttribute("cartItemsSession", null);
+            }
             return "success";
         } else
             return "failed";

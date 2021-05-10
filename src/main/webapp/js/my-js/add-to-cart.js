@@ -15,11 +15,15 @@ $('.btnAddToCart').click(function () {
         data: {id: 0, productID: productID, amount: 1},
         url: 'add-to-cart',
         success: function (result) {
+
             if (result === 'error') {
                 showError();
-            } else if (result === 'warning') {
-                showWarning();
+                // }
+                // else if (result === 'warning') {
+                //showWarning();
             } else {
+                var userSessionForCart = document.getElementsByClassName('userSessionForCart');
+                // if(userSessionForCart !== null)
                 let sum = parseInt($("#sumOfCart").text(), 10) + 1;
                 $('#sumOfCart').text(sum);
                 showSuccess();
@@ -37,3 +41,4 @@ $('.btnAddToCart').click(function () {
         }
     })
 })
+
