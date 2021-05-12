@@ -1,5 +1,7 @@
 package nlu.fit.cellphoneapp.controllers.admin;
 
+import nlu.fit.cellphoneapp.services.IOrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -8,10 +10,13 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = "/admin")
 @Controller
 public class HomeContrller {
+    @Autowired
+    IOrderService orderService;
+
     @RequestMapping(value = "")
     public ModelAndView homePage() {
         ModelAndView model = new ModelAndView("admin/admin-index");
-        model.addObject("CONTENT_TITLE","Trang chủ");
+        model.addObject("CONTENT_TITLE", "Trang chủ");
         return model;
     }
 }
