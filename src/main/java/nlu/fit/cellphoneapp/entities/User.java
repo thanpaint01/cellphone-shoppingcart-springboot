@@ -118,6 +118,16 @@ public class User {
         return rs;
     }
 
+    public boolean checkCartItemExist(int productID){
+        System.out.println("cartItemID for user check: "+productID);
+        for (CartItem c: cartItems) {
+            if(c.getProduct().getId()==productID){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 
 }

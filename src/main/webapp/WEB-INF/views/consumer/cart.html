@@ -162,12 +162,22 @@
                         </button>
                     </div>
                     <div class="modal-body modalConfirmDeleteBody">
-
                         Bạn muốn xóa sản phẩm này khỏi giỏ hàng!
+                        <div id="content-cart-item" class="d-none">
+                            <span id="amountRemove"></span>
+                            <span id="resetAmount"></span>
+                            <span id="totalPriceBefore"></span>
+                            <span id="priceRemove"></span>
+                            <span id="resetTotalPrice"></span>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="rounded-0 btn btn-secondary" data-dismiss="modal">Không</button>
-                        <button type="button" id="btnDeleteModalConfirm" class="btn hvr-hover text-light">Xóa</button>
+                        <button type="button" id="notDelete" class="rounded-0 btn btn-secondary" data-dismiss="modal">
+                            Không
+                        </button>
+                        <button type="button" id="btnDeleteModalConfirm" class="btn hvr-hover text-light" value="0">
+                            Xóa
+                        </button>
                     </div>
                 </div>
             </div>
@@ -188,6 +198,7 @@
     <script src="../../../js/my-js/format-price-of-product.js"></script>
     <script src="../../../js/my-js/auto-increment-price.js"></script>
     <script src="../../../js/my-js/toast.js"></script>
+    <script th:src="@{/js/my-js/box-cart-right.js}"></script>
 </th:block>
 </body>
 

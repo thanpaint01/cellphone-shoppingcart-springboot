@@ -28,7 +28,8 @@
 <body>
 <header th:replace="static-fragment/header :: header"></header>
 <div>
-
+    <th:block layout:fragment="body">
+    </th:block>
     <th:block th:if="${session.currentUser == null}">
         <div th:replace="static-fragment/lrf-modal :: login-modal"></div>
         <div th:replace="static-fragment/lrf-modal :: register-modal"></div>
@@ -130,6 +131,8 @@
     <!-- End copyright  -->
 
 
+
+
     <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
     <script th:src="@{/js/popper.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
@@ -146,6 +149,10 @@
     <script th:src="@{/js/contact-form-script.js}"></script>
     <script th:src="@{/js/custom.js}"></script>
     <script th:src="@{/js/my-js/slider-home-page.js}"></script>
+<!--    some script for cart-->
+    <script th:src="@{js/my-js/format-price-of-product.js}"></script>
+    <script th:src="@{js/my-js/auto-increment-price.js}"></script>
+    <script th:src="@{/js/my-js/box-cart-right.js}"></script>
     <th:block th:if="${session.currentUser == null}">
         <script th:src="@{/js/my-js/lrf-modal.js}"></script>
     </th:block>

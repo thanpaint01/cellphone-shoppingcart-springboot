@@ -83,10 +83,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="address">Địa chỉ *</label>
-                                <textarea id="address" required class="w-100"
-                                          th:value="${session.currentUser.getAddress()}"
-                                          >
-
+                                <textarea id="address" required class="w-100">
                                 </textarea>
                                 <div class="invalid-feedback"> Vui lòng chọn cung cấp địa chỉ cụ thể như số nhà.</div>
                             </div>
@@ -287,6 +284,7 @@
     <script th:src="@{js/Jquery.autoResize.js}"></script>
     <script th:src="@{js/vietnamlocalselector.js}"></script>
     <script th:src="@{js/my-js/checkout.js}"></script>
+    <script th:src="@{/js/my-js/box-cart-right.js}"></script>
     <script>
         $("textarea").autoResize();
         var localpicker = new LocalPicker({

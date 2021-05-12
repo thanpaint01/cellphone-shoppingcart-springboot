@@ -10,16 +10,15 @@ import nlu.fit.cellphoneapp.services.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 @Controller
 public class OrderController {
+
+    public static int oi = 0;
 
     @Autowired
     IOrderService orderService;
@@ -48,8 +47,7 @@ public class OrderController {
 
     @PostMapping("/order")
     @ResponseBody
-    public String ajaxSendDataOrder(String address, String nameClient, String phoneNumber, double totalPrice, String payment, HttpSession session) {
-        System.out.println("totalPriceOrder=" + totalPrice);
+    public String ajaxSendDataOrder(String address, String nameClient, String phoneNumber, double totalPrice, String payment, String paypalResponse, HttpSession session) {
         Order order = new Order();
         Date createDate = new Date();
         createDate.setTime(System.currentTimeMillis());
@@ -63,35 +61,86 @@ public class OrderController {
         order.setUser(user);
         order.setOrderStatus("Đang tiếp nhận");
         order.setPayment(payment);
-        if(!payment.equals("Paypal")) {
-            System.out.println("UserSession" + user.getId());
-            if (null != orderService.insertIntoTable(order)) {
-                for (CartItem c : order.getUser().getCartItems()) {
-                    OrderDetail orderDetail = new OrderDetail();
-                    orderDetail.setOrder(order);
-                    orderDetail.setActive(1);
-                    orderDetail.setSaledPrice(0.0);
-                    System.out.println("CartItem cua User khi luu vao detailOrder=" + c.toString());
-                    orderDetail.setAmount(c.getAmount());
-                    orderDetail.setInitialPrice(c.getProduct().getPrice() * c.getAmount());
-                    orderDetail.setProduct(c.getProduct());
-                    orderDetail.setPrice(c.getProduct().getPrice());
-                    orderDetail.setTotalPrice(c.getTotalPrice());
-                    OrderDetail orderDetail1 = orderDetailService.insertIntoTable(orderDetail);
-                    System.out.println(orderDetail1.toString());
-                    order.getOrderDetails().add(orderDetail1);
+
+        System.out.println("UserSession" + user.getId());
+        Order order1 = null;
+        System.out.println("paypal respone = " + paypalResponse);
+        if (!paypalResponse.equals("success")) {
+            System.out.println("Click button order!");
+            order1 = orderService.insertIntoTable(order);
+            System.out.println("Order saved!");
+            oi = order1.getId();
+            System.out.println("oi saved = " + oi);
+            System.out.println("order id = " + order.getId());
+        } else {
+            //reset data when paypal success
+            System.out.println("paypal response is success");
+            System.out.println("oi = " + oi);
+            user.getOrders().add(orderService.getOne(oi));
+            for (Order o : user.getOrders()) {
+                cartService.removeAllByUserId(user.getId());
+                user.getCartItems().clear();
+                if (o.getId() == oi) {
+                    System.out.println("Payment success oi = " + oi);
+                    o.setPayment("Online");
+                    o.setActive(1);
+                    orderService.updatePayment(o.getId(), "Online");
+                    //cap nhat order detail co order id thanh active
+                    orderDetailService.updateActive(o, 1);
                 }
-                boolean removed = cartService.removeAllByUserId(user.getId());
+                System.out.println("thanh toán bằng paypal order:" + user.getOrders().size());
+            }
+        }
+        if (null != order1) {
+            if (!payment.equals("Paypal")) {
+                order.setActive(1);
+            } else {
+                order.setActive(0);
+            }
+            for (CartItem c : order.getUser().getCartItems()) {
+                OrderDetail orderDetail = new OrderDetail();
+                orderDetail.setOrder(order);
+                orderDetail.setSaledPrice(0.0);
+                orderDetail.setActive(0);
+                System.out.println("CartItem cua User khi luu vao detailOrder=" + c.toString());
+                orderDetail.setAmount(c.getAmount());
+                orderDetail.setInitialPrice(c.getProduct().getPrice() * c.getAmount());
+                orderDetail.setProduct(c.getProduct());
+                orderDetail.setPrice(c.getProduct().getPrice());
+                orderDetail.setTotalPrice(c.getTotalPrice());
+                OrderDetail orderDetail1 = orderDetailService.insertIntoTable(orderDetail);
+                System.out.println(orderDetail1.toString());
+                order.getOrderDetails().add(orderDetail1);
+            }
+            boolean removed = false;
+            //cho cancel paypal
+            if (!payment.equals("Paypal")) {
+                orderDetailService.updateActive(order, 1);
+                removed = cartService.removeAllByUserId(user.getId());
                 user.getCartItems().clear();
                 user.getOrders().add(order);
-                return removed ? "/user/my-order" : "error";
+                System.out.println("Order tra truc tiep bang tien mat: " + user.getOrders().size());
+                return "/user/my-order";
+            } else {
+                return "/pay";
             }
+        } else {
             return "error";
-        }else{
-            return "/pay";
         }
-
     }
 
-
+    @PostMapping("/ajax-deny-order")
+    public  @ResponseBody String ajaxDenyOrder(int orderID, HttpSession session) {
+        System.out.println("DenyOrder id = "+orderID);
+        User user = (User) session.getAttribute(User.SESSION);
+        for (Order o : user.getOrders()) {
+            if(o.getId() == orderID && o.getOrderStatus().equals("Đang tiếp nhận")){
+                o.setOrderStatus("Đã hủy");
+                orderService.updateOrderStatus(o);
+                System.out.println("Hủy thành công đơn hàng "+orderID);
+                return "Hủy thành công!";
+            }
+        }
+        return "error";
+    }
 }

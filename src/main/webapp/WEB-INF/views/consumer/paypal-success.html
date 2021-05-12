@@ -6,15 +6,12 @@
     <!-- Mobile Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Site Metas -->
-    <title>Freshshop - Ecommerce Bootstrap 4 HTML Template</title>
+    <title>PayPal Approved</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <!-- Site Icons -->
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-
+    <link rel="shortcut icon" th:href="@{'/images/mylogo.png'}" type="image/x-icon">
+    <link rel="apple-touch-icon" th:href="@{'/images/mylogo.png'}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" th:href="@{'/css/bootstrap.min.css'}">
     <style>
@@ -46,33 +43,19 @@
     </style>
 
 </head>
-
 <body>
 <header>
 
 </header>
 <div class="text-center">
-    <h4>Thanh toán online thành công.</h4>
-    <p> Cảm ơn bạn đã mua sắm trên website của chúng tôi. Hãy cứ tiếp tục bạn nhé!</p>
+    <h4>Thanh toán online thành công!</h4>
     <p id="show-message"></p>
-    <a th:href="@{/user/my-order}">Bấm vào đây để vào "Quản lý đơn hàng".</a>
+    <a th:href="@{/user/my-order}">Bấm vào đây để vào trang "Quản lý đơn hàng".</a>
 </div>
 <footer>
 </footer>
-<script>
-    function redirect() {
-        var show = document.getElementById("show-message");
-        var seconds = 5;
-        setInterval(function () {
-            show.textContent = "Bạn sẽ được chuyển hướng sang \"Quản lý đơn hàng\" sau " + seconds + " giây";
-            if (seconds == 0) {
-                window.location.href = '/user/my-order';
-            }
-            seconds--;
-        }, 1000);
-    }
-    window.addEventListener('load', redirect(), false);
-</script>
+<script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<script th:src="@{/js/my-js/paypal-success.js}"></script>
 </body>
 
 </html>
