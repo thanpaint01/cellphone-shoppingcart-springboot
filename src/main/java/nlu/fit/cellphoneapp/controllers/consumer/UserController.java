@@ -74,15 +74,17 @@ public class UserController {
             return "emptyfield";
         else if ((user = userService.findOneByLogin(email, password)) != null) {
             session.setAttribute(User.SESSION, user);
-            if(user.getCartItems().size()==0) {
+            if (user.getCartItems().size() == 0) {
                 List<CartItem> cartItems = (List<CartItem>) session.getAttribute("cartItemsSession");
-                for (CartItem cartItem: cartItems) {
-                    cartItem.setUser(user);
-                    cartService.insertIntoTable(cartItem);
+                if (null != cartItems) {
+                    for (CartItem cartItem : cartItems) {
+                        cartItem.setUser(user);
+                        cartService.insertIntoTable(cartItem);
+                    }
+                    user.setCartItems(cartItems);
+                    session.setAttribute("cartItemsSession", null);
                 }
-                user.setCartItems(cartItems);
-                session.setAttribute("cartItemsSession", null);
-            }else{
+            } else {
                 session.setAttribute("cartItemsSession", null);
             }
             return "success";
@@ -274,12 +276,12 @@ public class UserController {
                             "                            </td>\n" +
                             "                            <td class=\"data-fields col2 order-date\"\">" + order.getCreatedDate() + "</td>\n" +
                             "                            <td class=\"data-fields col2\"><b class=\"product-price order-total-price\">" + StringHelper.formatNumber((long) order.getTotalPrice()) + " ₫</b></td>\n" +
-                            "                            <td class=\"data-fields col2 status-order-"+order.getId()+"\">" + order.getOrderStatus() + "</td>\n" +
+                            "                            <td class=\"data-fields col2 status-order-" + order.getId() + "\">" + order.getOrderStatus() + "</td>\n" +
                             "                            <td class=\"data-fields col1 text-center\">\n" +
                             "                                <a href=\"#\" class=\"view\" title=\"\" data-toggle=\"tooltip\"\n" +
                             "                                   data-original-title=\"Xem chi tiết\"><i data-toggle=\"modal\"\n" +
                             "                                                                         data-target=\"#exampleModal" + order.getId() + "\"\n" +
-                            "                                                                         class=\"fas fa-arrow-circle-right icon modal-del\" id=\"modal-"+order.getId()+"\"></i></a>\n" +
+                            "                                                                         class=\"fas fa-arrow-circle-right icon modal-del\" id=\"modal-" + order.getId() + "\"></i></a>\n" +
                             "                            </td>\n" +
                             "                        </tr>\n"
             );
