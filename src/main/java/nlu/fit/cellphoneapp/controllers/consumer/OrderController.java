@@ -29,10 +29,17 @@ public class OrderController {
 
     @GetMapping("/checkout")
     public String goToCheckoutPage(Model model, HttpSession session) {
-        User user;
-        if (null == (user = (User) session.getAttribute(User.SESSION)) || user.getCartItems().size() == 0)
+        User user = user = (User) session.getAttribute(User.SESSION);
+        if (null == user || user.getCartItems().size() == 0) {
+
             return "consumer/cart-empty";
-        return "consumer/checkout";
+        }else {
+            if(user.getActive() == 1) {
+                return "consumer/checkout";
+            }else{
+                return "consumer/active-account";
+            }
+        }
     }
 
     @GetMapping("/order")
