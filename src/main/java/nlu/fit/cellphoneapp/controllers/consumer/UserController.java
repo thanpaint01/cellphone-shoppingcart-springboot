@@ -74,6 +74,8 @@ public class UserController {
             return "emptyfield";
         else if ((user = userService.findOneByLogin(email, password)) != null) {
             session.setAttribute(User.SESSION, user);
+            System.out.println("User session login = "+user.getActive()+", "+user.getId());
+
             if (user.getCartItems().size() == 0) {
                 List<CartItem> cartItems = (List<CartItem>) session.getAttribute("cartItemsSession");
                 if (null != cartItems) {

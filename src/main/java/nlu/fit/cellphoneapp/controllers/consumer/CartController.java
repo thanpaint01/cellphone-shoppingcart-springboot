@@ -42,7 +42,7 @@ public class CartController {
         StringBuilder sb = new StringBuilder();
         User user = (User) session.getAttribute(User.SESSION);
         session.setAttribute("cartItemsSession", cartItemsSession);
-        if (null != user) {
+        if (null != user && user.getActive() == 1) {
             System.out.println(user);
             if (user.checkCartItemExist(productID) && cartItemIDUpdate == 0) {
                 System.out.println("CartItem is existed ! Check by User entity");
