@@ -63,6 +63,7 @@ public class UserController {
     @RequestMapping(value = "logout", method = RequestMethod.GET)
     public ModelAndView logout(HttpSession session) {
         session.setAttribute(User.SESSION, null);
+        session.invalidate();
         return new ModelAndView("redirect:/");
     }
 
@@ -239,7 +240,7 @@ public class UserController {
             }
         } else {
             for (Order order : user.getOrders()) {
-                if (order.getOrderStatus().equals(statusOrder)) {
+                if (order.getOrderStatus()==Integer.parseInt(statusOrder)) {
                     if (orderID.equals("null")) {
                         sb.append(loadResultForAjaxLoadWithStatusOrder(order));
                     } else {

@@ -15,11 +15,24 @@ import java.util.List;
 @Getter
 @Setter
 public class Order {
+    public enum STATUS {
+        PENDING(1), DELIVERING(2), SUCCESS(3), CANCELED(4);
+        private final int value;
+
+        STATUS(int value) {
+            this.value = value;
+        }
+
+        public int value() {
+            return value;
+        }
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "status")
-    private String orderStatus;
+    private int orderStatus;
     @Column(name = "created_date")
     private Date createdDate;
     @Column(name = "address")
@@ -57,5 +70,18 @@ public class Order {
                 ", active=" + active +
                 ", user=" + user +
                 '}';
+    }
+
+    public String toStringStatus() {
+        switch (this.orderStatus) {
+            case Order.STATUS.PENDING.value():
+                return "Đang tiếp nhận";
+            case STATUS.DELIVERING.value():
+                return "Đang vận chuyển";
+            case STATUS.SUCCESS.value():
+                return "Giao hàng thành công";
+            default:
+                return "Hủy đơn hàng";
+        }
     }
 }
