@@ -1,6 +1,7 @@
 package nlu.fit.cellphoneapp.services.impl;
 
 import nlu.fit.cellphoneapp.entities.Brand;
+import nlu.fit.cellphoneapp.receiver.BrandProfit;
 import nlu.fit.cellphoneapp.repositories.interfaces.IBrandRepository;
 import nlu.fit.cellphoneapp.services.IBrandService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +29,10 @@ public class BrandServiceImpl implements IBrandService {
     @Override
     public List<Brand> findAllByActive(int active) {
         return brandRepo.findAllByActive(active);
+    }
+
+    @Override
+    public List<BrandProfit> getTop5Profit() {
+        return brandRepo.getTop5Profit();
     }
 }

@@ -66,7 +66,7 @@ public class OrderController {
         order.setTotalPrice(totalPrice);
         User user = (User) (session.getAttribute(User.SESSION));
         order.setUser(user);
-        order.setOrderStatus(Order.STATUS.PENDING.value());
+        order.setOrderStatus("Đang tiếp nhận");
         order.setPayment(payment);
 
         System.out.println("UserSession" + user.getId());
@@ -141,8 +141,8 @@ public class OrderController {
         System.out.println("DenyOrder id = "+orderID);
         User user = (User) session.getAttribute(User.SESSION);
         for (Order o : user.getOrders()) {
-            if(o.getId() == orderID && o.getOrderStatus()==Order.STATUS.PENDING.value()){
-                o.setOrderStatus(Order.STATUS.CANCELED.value());
+            if(o.getId() == orderID && o.getOrderStatus().equals("Đang tiếp nhận")){
+                o.setOrderStatus("Đã hủy");
                 orderService.updateOrderStatus(o);
                 System.out.println("Hủy thành công đơn hàng "+orderID);
                 return "Hủy thành công!";

@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import javax.servlet.http.HttpSession;
 
-@Controller
+@Controller("ConsumerHomeController")
 public class HomeController {
     @Autowired
     ICartService cartService;

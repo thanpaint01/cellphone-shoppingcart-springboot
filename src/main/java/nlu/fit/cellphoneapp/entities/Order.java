@@ -16,14 +16,27 @@ import java.util.List;
 @Setter
 public class Order {
     public enum STATUS {
-        PENDING(1), DELIVERING(2), SUCCESS(3), CANCELED(4);
-        private final int value;
+        PENDING("Đang Tiếp Nhận"), DELIVERING("Đang Giao Hàng"), SUCCESS("Giao Hàng Thành Công"), CANCELED("Hủy Đơn Hàng");
+        private final String value;
 
-        STATUS(int value) {
+        STATUS(String value) {
             this.value = value;
         }
 
-        public int value() {
+        public String value() {
+            return value;
+        }
+    }
+
+    public enum PAYMENT_TYPE {
+        OFFLINE("Trực tiếp"), ONLINE("Online");
+        private final String value;
+
+        PAYMENT_TYPE(String value) {
+            this.value = value;
+        }
+
+        public String value() {
             return value;
         }
     }
@@ -32,7 +45,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "status")
-    private int orderStatus;
+    private String orderStatus;
     @Column(name = "created_date")
     private Date createdDate;
     @Column(name = "address")
@@ -70,18 +83,5 @@ public class Order {
                 ", active=" + active +
                 ", user=" + user +
                 '}';
-    }
-
-    public String toStringStatus() {
-        switch (this.orderStatus) {
-            case Order.STATUS.PENDING.value():
-                return "Đang tiếp nhận";
-            case STATUS.DELIVERING.value():
-                return "Đang vận chuyển";
-            case STATUS.SUCCESS.value():
-                return "Giao hàng thành công";
-            default:
-                return "Hủy đơn hàng";
-        }
     }
 }

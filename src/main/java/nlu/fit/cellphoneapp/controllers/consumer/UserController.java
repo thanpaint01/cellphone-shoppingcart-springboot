@@ -242,7 +242,7 @@ public class UserController {
             }
         } else {
             for (Order order : user.getOrders()) {
-                if (order.getOrderStatus()==Integer.parseInt(statusOrder)) {
+                if (order.getOrderStatus().equals(statusOrder)) {
                     if (orderID.equals("null")) {
                         sb.append(loadResultForAjaxLoadWithStatusOrder(order));
                     } else {
