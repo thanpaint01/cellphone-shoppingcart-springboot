@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -74,20 +75,16 @@ public class UserController {
             return "emptyfield";
         else if ((user = userService.findOneByLogin(email, password)) != null) {
             session.setAttribute(User.SESSION, user);
-            System.out.println("User session login = "+user.getActive()+", "+user.getId());
+            System.out.println("User session login = " + user.getActive() + ", " + user.getId());
 
-            if (user.getCartItems().size() == 0) {
-                List<CartItem> cartItems = (List<CartItem>) session.getAttribute("cartItemsSession");
-                if (null != cartItems) {
-                    for (CartItem cartItem : cartItems) {
-                        cartItem.setUser(user);
-                        cartService.insertIntoTable(cartItem);
-                    }
-                    user.setCartItems(cartItems);
-                    session.setAttribute("cartItemsSession", null);
+            Set<CartItem> cartItems = (Set<CartItem>) session.getAttribute("cartSession");
+            if (null != cartItems) {
+                for (CartItem cartItem : cartItems) {
+                    cartItem.setUser(user);
+                    cartService.insertIntoTable(cartItem);
                 }
-            } else {
-                session.setAttribute("cartItemsSession", null);
+                user.setCartItems(cartItems);
+                session.setAttribute("cartSession", null);
             }
             return "success";
         } else
@@ -254,7 +251,6 @@ public class UserController {
         }
         resp.getWriter().write(sb.toString());
     }
-
 
     public String loadResultForAjaxLoadWithStatusOrder(Order order) {
         StringBuilder sb = new StringBuilder();

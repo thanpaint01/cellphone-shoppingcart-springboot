@@ -2,11 +2,11 @@ package nlu.fit.cellphoneapp.entities;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import javax.servlet.http.HttpSession;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -68,14 +68,14 @@ public class User {
             orphanRemoval = true,
             fetch = FetchType.EAGER
     )
-    private List<CartItem> cartItems = new ArrayList<>();
+    private Set<CartItem> cartItems = new HashSet<>();
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Order> orders = new ArrayList<>();
+    private Set<Order> orders = new HashSet<>();
 
 
     public static boolean validName(String name) {
@@ -125,6 +125,11 @@ public class User {
                 return true;
             }
         }
+        return false;
+    }
+
+    public static boolean checkUserSession(HttpSession session){
+        if(null != (User) session.getAttribute(SESSION)) return true;
         return false;
     }
 

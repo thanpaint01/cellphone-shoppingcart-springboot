@@ -1,8 +1,8 @@
 package nlu.fit.cellphoneapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -20,6 +20,7 @@ public class CartItem {
     private int amount;
     private int active;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private User user;
     @ManyToOne
     private Product product;
@@ -35,6 +36,10 @@ public class CartItem {
                 ", user=" + user +
                 ", product=" + product +
                 '}';
+    }
+
+    public void updateTotalPrice(){
+        setTotalPrice(this.getAmount()*this.getProduct().getPrice());
     }
 
 

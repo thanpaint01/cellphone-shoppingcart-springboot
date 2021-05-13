@@ -31,8 +31,7 @@
     <!-- Start Cart  -->
     <div class="cart-box-main pt-5 pb-0">
         <div class="container m-auto text-center">
-            <h2 th:if="${null != session.currentUser}">Giỏ hàng hiện đang trống! Đăng nhập để tiến hành mua sắm.</h2>
-            <h2 th:if="${null == session.currentUser}">Vui lòng đăng nhập trước khi thực hiện thao tác bạn nhé!</h2>
+            <h2 class="text-dark font-weight-bold">Giỏ hàng hiện đang trống. Hãy thêm một vài sản phẩm bạn nhé!</h2>
             <div class="img m-auto">
                 <img src="../../../images/cam-ket/empty-cart.png" height="80" width="80"/>
             </div>

@@ -13,7 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 @Controller
 public class OrderController {
@@ -26,21 +28,6 @@ public class OrderController {
     ICartService cartService;
     @Autowired
     IOrderDetailService orderDetailService;
-
-    @GetMapping("/checkout")
-    public String goToCheckoutPage(Model model, HttpSession session) {
-        User user = user = (User) session.getAttribute(User.SESSION);
-        if (null == user || user.getCartItems().size() == 0) {
-
-            return "consumer/cart-empty";
-        }else {
-            if(user.getActive() == 1) {
-                return "consumer/checkout";
-            }else{
-                return "consumer/active-account";
-            }
-        }
-    }
 
     @GetMapping("/order")
     public String goToOrderPage(HttpSession session, Model model) {
@@ -65,7 +52,11 @@ public class OrderController {
         order.setPhoneNumberOfClient(phoneNumber);
         order.setTotalPrice(totalPrice);
         User user = (User) (session.getAttribute(User.SESSION));
-        order.setUser(user);
+        if (null != user) {
+            order.setUser(user);
+        }else{
+            return "/abc";
+        }
         order.setOrderStatus("Đang tiếp nhận");
         order.setPayment(payment);
 
@@ -137,14 +128,15 @@ public class OrderController {
     }
 
     @PostMapping("/ajax-deny-order")
-    public  @ResponseBody String ajaxDenyOrder(int orderID, HttpSession session) {
-        System.out.println("DenyOrder id = "+orderID);
+    public @ResponseBody
+    String ajaxDenyOrder(int orderID, HttpSession session) {
+        System.out.println("DenyOrder id = " + orderID);
         User user = (User) session.getAttribute(User.SESSION);
         for (Order o : user.getOrders()) {
-            if(o.getId() == orderID && o.getOrderStatus().equals("Đang tiếp nhận")){
+            if (o.getId() == orderID && o.getOrderStatus().equals("Đang tiếp nhận")) {
                 o.setOrderStatus("Đã hủy");
                 orderService.updateOrderStatus(o);
-                System.out.println("Hủy thành công đơn hàng "+orderID);
+                System.out.println("Hủy thành công đơn hàng " + orderID);
                 return "Hủy thành công!";
             }
         }

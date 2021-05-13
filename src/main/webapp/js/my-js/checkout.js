@@ -26,37 +26,41 @@ $('#btnOrder').click(function () {
                 if (rs === 'error') {
                     showErrorOrder();
                 } else {
-                    if (rs !== '/pay') {
-                        $('div.loader').prop('display', 'block');
-                        $(window).on('load', function (event) {
-                            // $('body').removeClass('preloading');
-                            // $('.load').delay(1000).fadeOut('fast');
-                            $('.loader').delay(1000).fadeOut('fast');
-                        });
-                        window.location.href = rs;
+                    if (rs === '/abc') {
+                        $('#signInModel').modal('toggle');
                     } else {
-                        //call ajax to sandbox
-                        $.ajax({
-                            type: 'POST',
-                            url: 'pay',
-                            data: {
-                                address: address,
-                                nameClient: nameClient,
-                                phoneNumber: phoneNumber,
-                                totalPrice: totalPrice,
-                                payment: payment,
-                                paypalResponse: "false"
-                            },
-                            success: function (rs) {
-                                $('.loader').prop('display', 'block');
-                                $(window).on('load', function (event) {
-                                    // $('body').removeClass('preloading');
-                                    // $('.load').delay(1000).fadeOut('fast');
-                                    $('.loader').delay(1000).fadeOut('fast');
-                                });
-                                window.location.href = rs;
-                            }
-                        })
+                        if (rs !== '/pay') {
+                            $('div.loader').prop('display', 'block');
+                            $(window).on('load', function (event) {
+                                // $('body').removeClass('preloading');
+                                // $('.load').delay(1000).fadeOut('fast');
+                                $('.loader').delay(1000).fadeOut('fast');
+                            });
+                            window.location.href = rs;
+                        } else {
+                            //call ajax to sandbox
+                            $.ajax({
+                                type: 'POST',
+                                url: 'pay',
+                                data: {
+                                    address: address,
+                                    nameClient: nameClient,
+                                    phoneNumber: phoneNumber,
+                                    totalPrice: totalPrice,
+                                    payment: payment,
+                                    paypalResponse: "false"
+                                },
+                                success: function (rs) {
+                                    $('.loader').prop('display', 'block');
+                                    $(window).on('load', function (event) {
+                                        // $('body').removeClass('preloading');
+                                        // $('.load').delay(1000).fadeOut('fast');
+                                        $('.loader').delay(1000).fadeOut('fast');
+                                    });
+                                    window.location.href = rs;
+                                }
+                            })
+                        }
                     }
                 }
             }

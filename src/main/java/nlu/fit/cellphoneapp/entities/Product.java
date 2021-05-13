@@ -1,6 +1,7 @@
 package nlu.fit.cellphoneapp.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -55,29 +56,20 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     private Brand brand;
 
+    @JsonIgnore
     @OneToMany(
             mappedBy = "product",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
-    private List<CartItem> cartItems = new ArrayList<>();
+    private Set<CartItem> cartItems = new HashSet<>();
     @OneToMany(
             mappedBy = "product",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    @LazyCollection(LazyCollectionOption.FALSE)
+//    @LazyCollection(LazyCollectionOption.FALSE)
     private Set<OrderDetail> orderDetails = new HashSet<>();
 
-
-
-    public void deleteCartItem(CartItem c) {
-        cartItems.remove(c);
-//        for (CartItem cc: c.getProduct().cartItems) {
-//            System.out.println("ccinProduct="+cc);
-//            c.getProduct().cartItems.remove(cc);
-//        }
-        c.getProduct().cartItems.remove(this);
-    }
 }

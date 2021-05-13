@@ -128,7 +128,7 @@
                     <th:block th:if="${session.currentUser == null}">
                         <li>Đăng nhập để đặt hàng bạn nhé!</li>
                         <!--/*@thymesVar id="cartItems" type="java"*/-->
-                        <li class="cart-item" th:each="c : ${session.cartItemsSession}" th:id="'li'+${c.id}">
+                        <li class="cart-item" th:each="c : ${session.cartItemsSession}" th:id="'li'+${c.getProduct().getId()}">
                             <a href="#" class="photo">
                                 <img th:src="${c.getProduct().getImg().getHost()+c.getProduct().getImg().getRelativePath()}"
                                      class="cart-thumb"/></a>

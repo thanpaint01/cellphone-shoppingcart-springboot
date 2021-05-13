@@ -43,22 +43,33 @@
                         <div class="title-left">
                             <h3>Thông Tin Nhận Hàng</h3>
                         </div>
-                        <form class="needs-validation" th:action="@{order}" method="post" id="userDelivery" th:if="${session.currentUser != null}"
-                              >
+                        <form class="needs-validation" th:action="@{order}" method="post" id="userDelivery">
                             <div class="mb-3">
                                 <label for="fullName">Họ và tên *</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="fullName" placeholder=""
-                                           th:value="${session.currentUser.getFullName()}"
-                                           required>
+                                    <th:block th:if="${null != session.currentUser}">
+                                        <input type="text" class="form-control" id="fullName" placeholder=""
+                                               th:value="${session.currentUser.getFullName()}"
+                                               required>
+                                    </th:block>
+                                    <th:block th:if="${null == session.currentUser}">
+                                        <input type="text" class="form-control" id="fullName" placeholder=""
+                                               required>
+                                    </th:block>
                                     <div class="invalid-feedback" style="width: 100%;"> Không được để trống trường này!
                                     </div>
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label for="address">Số điện thoại *</label>
-                                <input type="text" class="form-control" id="phoneNumber" placeholder=""
-                                       th:value="${session.currentUser.getPhone()}" required>
+                                <th:block th:if="${null != session.currentUser}">
+                                    <input type="text" class="form-control" id="phoneNumber" placeholder=""
+                                           th:value="${session.currentUser.getPhone()}" required>
+                                </th:block>
+                                <th:block th:if="${null == session.currentUser}">
+                                    <input type="text" class="form-control" id="phoneNumber" placeholder=""
+                                           required>
+                                </th:block>
                                 <div class="invalid-feedback"> Vui lòng nhập số điện thoại người nhận.</div>
                             </div>
                             <div class="row no-gutters">
@@ -87,19 +98,7 @@
                                 </textarea>
                                 <div class="invalid-feedback"> Vui lòng chọn cung cấp địa chỉ cụ thể như số nhà.</div>
                             </div>
-
                             <hr class="mb-4">
-                            <!-- <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="same-address">
-                                <label class="custom-control-label" for="same-address">Shipping address is the same as
-                                    my billing address</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="save-info">
-                                <label class="custom-control-label" for="save-info">Save this information for next
-                                    time</label>
-                            </div>
-                            <hr class="mb-4"> -->
                             <div class="title"><span>Thanh toán</span></div>
                             <div class="d-block my-3">
                                 <div class="custom-control custom-radio">
@@ -108,57 +107,18 @@
                                            checked required>
                                     <label class="custom-control-label" for="cash">Trực Tiếp</label>
                                 </div>
-                                <!-- <div class="custom-control custom-radio">
-                                    <input id="debit" name="paymentMethod" type="radio" class="custom-control-input"
-                                        required>
-                                    <label class="custom-control-label" for="debit">Debit card</label>
-                                </div>-->
                                 <div class="custom-control custom-radio">
                                     <i class="fab fa-cc-paypal"></i>
                                     <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input"
-                                        required>
+                                           required>
                                     <label class="custom-control-label" for="paypal">Paypal</label>
                                 </div>
                             </div>
-                            <!-- <div class="row" >
-                                <div class="col-md-6 mb-3">
-                                    <label for="cc-name">Name on card</label>
-                                    <input type="text" class="form-control" id="cc-name" placeholder="" required> <small
-                                        class="text-muted">Full name as displayed on card</small>
-                                    <div class="invalid-feedback"> Name on card is required </div>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="cc-number">Credit card number</label>
-                                    <input type="text" class="form-control" id="cc-number" placeholder="" required>
-                                    <div class="invalid-feedback"> Credit card number is required </div>
-                                </div>
-                            </div>
-                            <div class="row" style="visibility: hidden;">
-                                <div class="col-md-3 mb-3">
-                                    <label for="cc-expiration">Expiration</label>
-                                    <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-                                    <div class="invalid-feedback"> Expiration date required </div>
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label for="cc-expiration">CVV</label>
-                                    <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-                                    <div class="invalid-feedback"> Security code required </div>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <div class="payment-icon">
-                                        <ul>
-                                            <li><img class="img-fluid" src="images/payment-icon/1.png" alt=""></li>
-                                            <li><img class="img-fluid" src="images/payment-icon/2.png" alt=""></li>
-                                            <li><img class="img-fluid" src="images/payment-icon/3.png" alt=""></li>
-                                            <li><img class="img-fluid" src="images/payment-icon/5.png" alt=""></li>
-                                            <li><img class="img-fluid" src="images/payment-icon/7.png" alt=""></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div> -->
                             <hr class="mb-1">
-                            <div class="col-12 d-flex shopping-box mt-5 justify-content-center"><a id="btnOrder" type="button"
-                                                                       class="btn hvr-hover justify-content-center mt-5 text-light">Tiến hành đặt
+                            <div class="col-12 d-flex shopping-box mt-5 justify-content-center"><a id="btnOrder"
+                                                                                                   type="button"
+                                                                                                   class="btn hvr-hover justify-content-center mt-5 text-light">Tiến
+                                hành đặt
                                 hàng</a>
                             </div>
                         </form>
@@ -179,19 +139,6 @@
                                             Chuẩn</label> <span class="float-right font-weight-bold">Miễn phí</span>
                                     </div>
                                     <div class="ml-4 mb-2 small">(3-7 ngày làm việc)</div>
-                                    <!-- <div class="custom-control custom-radio">
-                                        <input id="shippingOption2" name="shipping-option" class="custom-control-input"
-                                            type="radio">
-                                        <label class="custom-control-label" for="shippingOption2">Express
-                                            Delivery</label> <span class="float-right font-weight-bold">$10.00</span>
-                                    </div>
-                                    <div class="ml-4 mb-2 small">(2-4 ngày làm việc)</div>
-                                    <div class="custom-control custom-radio">
-                                        <input id="shippingOption3" name="shipping-option" class="custom-control-input"
-                                            type="radio">
-                                        <label class="custom-control-label" for="shippingOption3">Next Business
-                                            day</label> <span class="float-right font-weight-bold">$20.00</span>
-                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -201,12 +148,14 @@
                                     <h3>Thông tin kiện hàng</h3>
                                 </div>
                                 <div class="rounded p-2 bg-light">
-                                    <div class="media mb-2 border-bottom" th:if="${null != session.currentUser}"
-                                         th:each="c:${session.currentUser.getCartItems()}">
+                                    <th:block th:if="${null != session.currentUser}" th:each="c:${session.cartSession}">
+                                        <div class="media mb-2 border-bottom">
+                                        </div>
                                         <div class="media-body">
                                             <div class="row">
                                                 <div class="col-3">
                                                     <a href="">
+                                                        <!--/*@thymesVar id="getProduct" type=""*/-->
                                                         <img th:src="${c.getProduct().getImg().getHost()+c.getProduct().getImg().getRelativePath()}"
                                                              class="img-fluid" alt="">
                                                     </a>
@@ -224,54 +173,96 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </th:block>
+                                    <th:block th:if="${null == session.currentUser}" th:each="c:${session.cartSession}">
+                                        <div class="media mb-2 border-bottom">
+                                        </div>
+                                        <div class="media-body">
+                                            <div class="row">
+                                                <div class="col-3">
+                                                    <a href="">
+                                                        <!--/*@thymesVar id="getProduct" type=""*/-->
+                                                        <img th:src="${c.getProduct().getImg().getHost()+c.getProduct().getImg().getRelativePath()}"
+                                                             class="img-fluid" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="col-9 text-left">
+                                                    <a href="" th:text="${c.getProduct().getName()}"></a>
+                                                    <div class="small text-muted">Giá: <span class="product-price"
+                                                                                             th:text="${c.getTotalPrice()}"></span>
+                                                        <span
+                                                                class="mx-2">|</span> Số lượng: <span
+                                                                th:text="${c.getAmount()}"></span>
+                                                        <span class="mx-2">|</span> Đơn Giá: <span class="product-price"
+                                                                                                   th:text="${c.getProduct().getPrice()}"></span>/cái
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </th:block>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12 col-lg-12">
-                            <div class="order-box">
-                                <div class="title-left">
-                                    <h3>Đơn hàng của bạn</h3>
-                                </div>
-                                <div class="d-flex">
-                                    <h4>Tạm tính</h4>
-                                    <div class="ml-auto font-weight-bold product-price"
-                                         th:if="${null != session.currentUser}"
-                                         th:text="${session.currentUser.getTotalPrice()}"></div>
-                                </div>
-                                <div class="d-flex">
-                                    <h4>Giảm giá</h4>
-                                    <div class="ml-auto font-weight-bold product-price" th:text="'0'"></div>
-                                </div>
-                                <hr class="my-1">
-                                <div class="d-flex">
-                                    <h4>Phí vận chuyển</h4>
-                                    <div class="ml-auto font-weight-bold product-price"></div>
-                                </div>
-                                <div class="d-flex">
-                                    <h4>Thành tiền</h4>
-                                    <div class="ml-auto font-weight-bold product-price"
-                                         th:if="${null != session.currentUser}"
-                                         th:text="${session.currentUser.getTotalPrice()}"></div>
-                                </div>
-                                <hr>
-                                <div class="d-flex gr-total">
-                                    <h5>Tổng tiền</h5>
-                                    <div class="ml-auto h5 product-price" id="lastPrice" th:if="${null != session.currentUser}"
-                                         th:text="${session.currentUser.getTotalPrice()}"></div>
-                                </div>
-                                <hr>
-                            </div>
-                        </div>
-
                     </div>
+                    <div class="col-md-12 col-lg-12">
+                        <div class="order-box">
+                            <div class="title-left">
+                                <h3>Đơn hàng của bạn</h3>
+                            </div>
+                            <div class="d-flex">
+                                <h4>Tạm tính</h4>
+                                <th:block th:if="${null != session.currentUser}">
+                                    <div class="ml-auto font-weight-bold product-price"
+                                         th:text="${session.currentUser.getTotalPrice()}"></div>
+                                </th:block>
+                                <th:block th:if="${null == session.currentUser}">
+                                    <div class="ml-auto font-weight-bold product-price total-cart"></div>
+                                </th:block>
+                            </div>
+                            <div class="d-flex">
+                                <h4>Giảm giá</h4>
+                                <div class="ml-auto font-weight-bold product-price" th:text="'0'"></div>
+                            </div>
+                            <hr class="my-1">
+                            <div class="d-flex">
+                                <h4>Phí vận chuyển</h4>
+                                <div class="ml-auto font-weight-bold product-price"></div>
+                            </div>
+                            <div class="d-flex">
+                                <h4>Thành tiền</h4>
+                                <th:block th:if="${null != session.currentUser}">
+                                    <div class="ml-auto font-weight-bold product-price"
+
+                                         th:text="${session.currentUser.getTotalPrice()}"></div>
+                                </th:block>
+                                <th:block th:if="${null == session.currentUser}">
+                                    <div class="ml-auto font-weight-bold product-price last-price"></div>
+                                </th:block>
+                            </div>
+                            <hr>
+                            <div class="d-flex gr-total">
+                                <h5>Tổng tiền</h5>
+                                <th:block th:if="${null != session.currentUser}">
+                                    <div class="ml-auto h5 product-price" id="lastPrice"
+
+                                         th:text="${session.currentUser.getTotalPrice()}"></div>
+                                </th:block>
+                                <th:block th:if="${null == session.currentUser}">
+                                    <div class="ml-auto h5 product-price last-price" id="lastPrice"></div>
+                                </th:block>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-
         </div>
+
     </div>
-    <!-- End Cart -->
-    <div id="toast"></div>
+</div>
+<!-- End Cart -->
+<div id="toast"></div>
 
 
 </div>

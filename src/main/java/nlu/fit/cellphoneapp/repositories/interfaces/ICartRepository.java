@@ -14,5 +14,6 @@ public interface ICartRepository extends JpaRepository<CartItem, Integer> {
     void deleteById(int id);
     @Transactional
     void deleteAllByUser_Id(int userID);
+    CartItem getOneByUserIdAndProductId(int userID, int productID);
 
 }

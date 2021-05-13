@@ -42,23 +42,18 @@ public class CartServiceImpl implements ICartService {
     @Override
     public CartItem insertIntoTable(CartItem cartItem) {
         CartItem cartItemEntity = cartItem;
-        /*
-            Ở đây cần tính toán lại số tiền tổng cộng cho giỏ hàng
-            Tổng tiền = số lượng * đơn giá
-            Số lượng ở đây là số lượng trong giỏ
-         */
-        //sau khi có được Entity thì ta nhờ repo lưu giùm
         if (cartItem.getId() == 0) {//thêm mới
             System.out.println("Thêm mới");
             cartItemEntity = cartRepo.save(cartItemEntity);
         } else {
-            System.out.println("Cập nhật số lượng");
-            CartItem oldCartItem = cartRepo.getOne(cartItem.getId());
-            oldCartItem.setAmount(cartItem.getAmount());
-            double totalPrice = oldCartItem.getProduct().getPrice() * oldCartItem.getAmount();
-            cartItemEntity.setTotalPrice(totalPrice);
-            cartItemEntity = cartRepo.save(cartItemEntity);
-            System.out.println(cartItemEntity);
+            if(cartItem.getProduct().getId() != 0) {
+                System.out.println("Cập nhật số lượng");
+                CartItem oldCartItem = cartRepo.getOne(cartItem.getId());
+                oldCartItem.setAmount(cartItem.getAmount());
+                oldCartItem.setTotalPrice(cartItem.getTotalPrice());
+                cartItemEntity = cartRepo.save(cartItemEntity);
+                System.out.println("after save into db = "+cartItemEntity);
+            }
         }
         return cartItemEntity;
     }
@@ -100,6 +95,11 @@ public class CartServiceImpl implements ICartService {
             System.out.println(c.getProduct().toString());
         }
         return (userRepo.getOne(userID).getCartItems().size() == 0 ? true : false);
+    }
+
+    @Override
+    public CartItem getOneByUserAndProduct(int userID, int productID) {
+        return cartRepo.getOneByUserIdAndProductId(userID, productID);
     }
 
 }
