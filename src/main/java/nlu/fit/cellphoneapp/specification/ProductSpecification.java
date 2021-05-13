@@ -32,10 +32,7 @@ public final class ProductSpecification {
     }
 
     public Specification<Product> getProductsByRom(int id) {
-        return (root, query, cb) -> {
-
-            return cb.equal(root.get(Product_.ROM).get(Rom_.ID), id);
-        };
+        return (root, query, cb) -> cb.equal(root.get(Product_.ROM).get(Rom_.ID), id);
     }
 
     public Specification<Product> getProductByName(String name) {

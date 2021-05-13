@@ -3,7 +3,7 @@ package nlu.fit.cellphoneapp.others;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class BcryptEncoder {
-    private static BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     private BcryptEncoder() {
     }
     public static String encode(String input) {

@@ -64,6 +64,7 @@ public class UserController {
     @RequestMapping(value = "logout", method = RequestMethod.GET)
     public ModelAndView logout(HttpSession session) {
         session.setAttribute(User.SESSION, null);
+        session.invalidate();
         return new ModelAndView("redirect:/");
     }
 

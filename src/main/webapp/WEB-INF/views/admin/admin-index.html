@@ -49,30 +49,46 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-xl-6">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-chart-area mr-1"></i>
-                        Area Chart Example
-                    </div>
-                    <div class="card-body">
-                        <canvas id="myAreaChart" width="100%" height="40"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-6">
+            <div class="col-xl-12">
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class="fas fa-chart-bar mr-1"></i>
-                        Bar Chart Example
+                        Doanh Thu 6 Tháng Vừa Qua
                     </div>
                     <div class="card-body">
-                        <canvas id="myBarChart" width="100%" height="40"></canvas>
+                        <canvas id="myBarChart" width="100" height="30"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-chart-area mr-1"></i>
+                        5 Hãng Lợi Nhuận Nhiều Nhất
+                    </div>
+                    <div class="card-body">
+                        <canvas id="myPieChart" width="70%" height="30"></canvas>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </main>
+<th:block layout:fragment="scripts">
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        var barChartProfits = /*[[${barChartProfits}]]*/;
+        var pieChartProfits = /*[[${pieChartProfits}]]*/;
+
+        /*]]>*/
+    </script>
+    <script th:src="@{/admin-static/dist/js/Chart.js}" crossorigin="anonymous"></script>
+    <script th:src="@{/admin-static/dist/assets/demo/index-chart.js}"></script>
+
+
+</th:block>
+
 </body>
 </html>

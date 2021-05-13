@@ -7,12 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
 import java.util.HashSet;
 
-@Controller
+@Controller("ConsumerHomeController")
 public class HomeController {
     @Autowired
     ICartService cartService;
@@ -23,10 +22,6 @@ public class HomeController {
         model.addAttribute("CONTENT_TITLE","Trang chủ");
         return "consumer/index";
     }
-
-
-
-
 
 
 }

@@ -13,6 +13,32 @@ import java.util.*;
 @Getter
 @Setter
 public class Order {
+    public enum STATUS {
+        PENDING("Đang Tiếp Nhận"), DELIVERING("Đang Giao Hàng"), SUCCESS("Giao Hàng Thành Công"), CANCELED("Hủy Đơn Hàng");
+        private final String value;
+
+        STATUS(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return value;
+        }
+    }
+
+    public enum PAYMENT_TYPE {
+        OFFLINE("Trực tiếp"), ONLINE("Online");
+        private final String value;
+
+        PAYMENT_TYPE(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return value;
+        }
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
