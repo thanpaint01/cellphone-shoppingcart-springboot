@@ -29,6 +29,26 @@ brandProfits.push(
   (sum - BigInt(pieChartProfits[pieChartProfits.length - 1])).toString()
 );
 
+$("#line-bar-chart-form").submit(function (e) {
+  e.preventDefault();
+  var chartType = $(this).find("[name='chart-type']")[0].value;
+  var type = $(this).find("[name='type']")[0].value;
+  var fromDate = $(this).find("[name='from-date']")[0].value;
+  var toDate = $(this).find("[name='to-date']")[0].value;
+  console.log(chartType);
+  console.log(type);
+  console.log(fromDate);
+  console.log(toDate);
+  $.ajax({
+    type: "POST",
+    url: "/admin/line-bar-chart",
+    data: { type: type, fromdate: fromDate, todate: toDate },
+    success: function (response) {
+      alert(response);
+    },
+  });
+});
+
 // Bar Chart Example
 var ctx = document.getElementById("myBarChart");
 var myLineChart = new Chart(ctx, {
@@ -132,9 +152,7 @@ var myPieChart = new Chart(ctx, {
         label: function (tooltipItem, chart) {
           var datasetLabel =
             chart.datasets[tooltipItem.datasetIndex].label || "";
-          return (
-            datasetLabel + ": " + number_format(tooltipItem, 0) + "đ"
-          );
+          return datasetLabel + ": " + number_format(tooltipItem, 0) + "đ";
         },
       },
     },

@@ -9,9 +9,11 @@ import nlu.fit.cellphoneapp.services.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -55,5 +57,19 @@ public class HomeController {
         model.addObject("barChartProfits", barChartProfits);
         model.addObject("pieChartProfits", pieChartProfits);
         return model;
+    }
+
+    @RequestMapping(value = "/line-bar-chart", method = RequestMethod.POST)
+    @ResponseBody
+    public String dataLineBarChart(@RequestParam("type") int type, @RequestParam("fromdate") String from, @RequestParam("todate") String to) {
+
+        return "hello";
+    }
+
+    @RequestMapping(value = "/pie-chart", method = RequestMethod.POST)
+    @ResponseBody
+    public String datePieChartF(@RequestParam("category") int category, @RequestParam("type") int type, @RequestParam("from-date") String from, @RequestParam("to-date") String to) {
+
+        return "";
     }
 }
