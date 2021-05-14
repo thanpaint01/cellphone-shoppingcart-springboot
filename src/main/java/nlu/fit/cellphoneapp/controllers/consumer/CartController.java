@@ -27,11 +27,11 @@ public class CartController {
     Set<CartItemRequest> cartSession = new HashSet<>();
 
 
-    @GetMapping("/user/cart/all")
-    public @ResponseBody
-    Collection<CartItem> getAllByUser(int userID) {
-        return cartService.getAllByUserID(userID);
-    }
+//    @GetMapping("/user/cart/all")
+//    public @ResponseBody
+//    Collection<CartItem> getAllByUser(int userID) {
+//        return cartService.getAllByUserID(userID);
+//    }
 
     @PostMapping(value = "/add-to-cart", produces = "application/json;charset=UTF-8")
     @ResponseBody
@@ -177,9 +177,9 @@ public class CartController {
     @ResponseBody
     public Collection<CartItemRequest> loadCart(HttpSession session, HttpServletResponse resp) {
         resp.setContentType("application/json;charset=UTF-8");
-        if (checkUserSession(session)) {
+        System.out.println("into load cart");
+        if (checkUserSession(session) == true) {
             User user = (User) session.getAttribute(User.SESSION);
-            cartSession.clear();
             return revertToCartItemResponse(user.getCartItems());
         } else {
             return cartSession;

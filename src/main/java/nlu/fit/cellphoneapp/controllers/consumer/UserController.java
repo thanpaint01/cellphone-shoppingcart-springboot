@@ -79,18 +79,44 @@ public class UserController {
             System.out.println("User session login = " + user.getActive() + ", " + user.getId());
 
             Set<CartItem> cartItems = (Set<CartItem>) session.getAttribute("cartSession");
+            Set<CartItem> cartItemsUser = user.getCartItems();
             if (null != cartItems) {
-                for (CartItem cartItem : cartItems) {
-                    cartItem.setUser(user);
-                    cartService.insertIntoTable(cartItem);
+                //append cart session into user
+                CartItem[] cs = cartItems.toArray(new CartItem[cartItems.size()]);
+                //truoc khi append can lay cart User ra
+                if (cartItemsUser.size() > 0) {
+                    //duyet cart user
+                    for (int i = 0; i < cs.length; i++) {
+                        cs[i].setUser(user);
+                        for (CartItem c : cartItemsUser) {
+                            if (cs[i].getProduct().getId() == c.getProduct().getId()) {
+                                //không lưu vào user
+                                System.out.println("tang amount cho cart user co id = "+c.getId());
+                                cs[i] = c;//gan cs[i] lai de luu csdl
+                            }
+                        }
+                        System.out.println("luu vao csdl cs[i] vua roi ="+cs[i].getId());
+                        cartItemsUser.add(cs[i]);
+                        cartService.insertIntoTable(cs[i]);//luu lai vao csdl
+                    }
+                } else {
+                    System.out.println("gio nguoi dung dang trong");
+                    for (CartItem c : cartItems) {
+                        System.out.println("luu trong = "+c.getProduct().getId());
+                        c.setUser(user);
+                        cartItemsUser.add(c);
+                        cartService.insertIntoTable(c);
+                    }
                 }
-                user.setCartItems(cartItems);
+
+
                 session.setAttribute("cartSession", null);
             }
             return "success";
         } else
             return "failed";
     }
+
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public @ResponseBody
