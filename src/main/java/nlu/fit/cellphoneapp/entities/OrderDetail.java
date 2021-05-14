@@ -26,4 +26,14 @@ public class OrderDetail {
     private Order order;
     @ManyToOne
     private Product product;
+
+
+
+    public void updateSalePrice(double sale){
+        double afterSale = (price*amount)-sale;
+        setSaledPrice(afterSale);
+    }
+    public void updateTotalPrice(){
+        setTotalPrice(initialPrice-saledPrice);
+    }
 }

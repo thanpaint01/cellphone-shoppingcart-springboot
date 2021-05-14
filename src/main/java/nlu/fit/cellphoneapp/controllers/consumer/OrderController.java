@@ -98,14 +98,14 @@ public class OrderController {
             for (CartItem c : order.getUser().getCartItems()) {
                 OrderDetail orderDetail = new OrderDetail();
                 orderDetail.setOrder(order);
-                orderDetail.setSaledPrice(0.0);
+                orderDetail.updateSalePrice(0.0);
                 orderDetail.setActive(0);
                 System.out.println("CartItem cua User khi luu vao detailOrder=" + c.toString());
                 orderDetail.setAmount(c.getAmount());
                 orderDetail.setInitialPrice(c.getProduct().getPrice() * c.getAmount());
                 orderDetail.setProduct(c.getProduct());
                 orderDetail.setPrice(c.getProduct().getPrice());
-                orderDetail.setTotalPrice(c.getTotalPrice());
+                orderDetail.updateTotalPrice();
                 OrderDetail orderDetail1 = orderDetailService.insertIntoTable(orderDetail);
                 System.out.println(orderDetail1.toString());
                 order.getOrderDetails().add(orderDetail1);

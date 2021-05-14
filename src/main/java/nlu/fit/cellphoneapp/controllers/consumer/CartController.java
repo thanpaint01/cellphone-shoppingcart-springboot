@@ -38,6 +38,7 @@ public class CartController {
     public Collection<CartItemRequest> addToCart(@RequestBody CartItemRequest cartItem, @RequestHeader(value = "action") String action, HttpSession session, HttpServletResponse resp) {
         resp.setContentType("application/json;charset=UTF-8");
 
+        System.out.println("cartRequest ID ="+cartItem.getId());
         //create a new cartItem entity from cartItemRequest
         CartItem c = new CartItem();
         c.setId(cartItem.getId());
