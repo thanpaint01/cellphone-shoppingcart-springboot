@@ -22,23 +22,14 @@ public class CartController {
     ICartService cartService;
     @Autowired
     IProductService productService;
-    List<CartItem> cartItemsSession = new ArrayList<>();
     Set<CartItem> cartItemsSessionV2 = new HashSet<>();
     Set<CartItemRequest> cartSession = new HashSet<>();
-
-
-//    @GetMapping("/user/cart/all")
-//    public @ResponseBody
-//    Collection<CartItem> getAllByUser(int userID) {
-//        return cartService.getAllByUserID(userID);
-//    }
 
     @PostMapping(value = "/add-to-cart", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Collection<CartItemRequest> addToCart(@RequestBody CartItemRequest cartItem, @RequestHeader(value = "action") String action, HttpSession session, HttpServletResponse resp) {
         resp.setContentType("application/json;charset=UTF-8");
 
-        System.out.println("cartRequest ID ="+cartItem.getId());
         //create a new cartItem entity from cartItemRequest
         CartItem c = new CartItem();
         c.setId(cartItem.getId());
@@ -71,7 +62,6 @@ public class CartController {
         if (action.equals("add")) {
             //click add at product list page again, amount++
             for (CartItem c : cartItems) {
-                System.out.println("double clicked out side list product page!");
                 if (c.getProduct().getId() == cartItem.getProduct().getId()) {
                     c.setAmount(c.getAmount() + 1);
                     c.updateTotalPrice();
@@ -116,11 +106,9 @@ public class CartController {
     public Collection<CartItemRequest> deleteCart(int productID, HttpSession session) {
         if (User.checkUserSession(session) == true) {
             //remove on cart user
-            System.out.println("delete on cart user " + productID);
             User user = (User) session.getAttribute(User.SESSION);
             for (CartItem c : user.getCartItems()) {
                 if (c.getProduct().getId() == productID) {
-                    System.out.println("Da xoa thanh cong " + c.getId());
                     user.getCartItems().remove(c);
                     cartService.deleteOne(c.getId());
                     deleteOneCartSessionV2(productID);
@@ -132,18 +120,12 @@ public class CartController {
             //remove on cart session
             for (CartItemRequest c : cartSession) {
                 if (c.getProductID() == productID) {
-                    System.out.println("remove on session is success=" + productID);
                     cartSession.remove(c);
                     deleteOneCartSessionV2(productID);
                     break;
                 }
             }
-            System.out.println("after remove");
             print();
-            System.out.println("cartItem v2");
-            for (CartItem c : cartItemsSessionV2) {
-                System.out.println("con lai = " + c.getProduct().getId());
-            }
             return revertToCartItemResponse(cartItemsSessionV2);
         }
     }
@@ -177,9 +159,11 @@ public class CartController {
     @ResponseBody
     public Collection<CartItemRequest> loadCart(HttpSession session, HttpServletResponse resp) {
         resp.setContentType("application/json;charset=UTF-8");
-        System.out.println("into load cart");
         if (checkUserSession(session) == true) {
             User user = (User) session.getAttribute(User.SESSION);
+            cartSession.clear();
+            cartSession = new HashSet<>();
+            cartItemsSessionV2.clear();
             return revertToCartItemResponse(user.getCartItems());
         } else {
             return cartSession;
@@ -223,18 +207,38 @@ public class CartController {
         ModelAndView mv = new ModelAndView();
         User user = user = (User) session.getAttribute(User.SESSION);
         Collection<CartItem> cs = (Set<CartItem>) session.getAttribute("cartSession");
-        if (null == user && (null != cs && cs.size() > 0)) {
-            mv.addObject("cartSession", cartSession);
-            mv.setViewName("consumer/checkout");
-        } else if (null != user) {
-            if (user.getActive() == 1) {
-                mv.setViewName("consumer/checkout");
-            } else {
+
+        if(null != user){
+            if(user.getActive() != 1){
                 mv.setViewName("consumer/active-account");
+                mv.addObject("cartSession", cartSession);
+                return mv;
             }
+           if(user.getCartItems().size() == 0) {
+               mv.setViewName("consumer/cart-empty");
+               mv.addObject("cartSession", cartSession);
+               return mv;
+           }else{
+               mv.setViewName("consumer/checkout");
+               mv.addObject("cartSession", cartSession);
+               return mv;
+           }
         } else {
-            mv.setViewName("consumer/cart-empty");
+           return redirectWithCartSession(cs);
         }
-        return mv;
     }
+
+    public ModelAndView redirectWithCartSession(Collection<CartItem> cs){
+        ModelAndView mv = new ModelAndView();
+        if(null != cs && cs.size() > 0){
+            mv.setViewName("consumer/checkout");
+            mv.addObject("cartSession", cartSession);
+            return mv;
+        }else{
+            mv.setViewName("consumer/cart-empty");
+            mv.addObject("cartSession", cartSession);
+            return mv;
+        }
+    }
+
 }

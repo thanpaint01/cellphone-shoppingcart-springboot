@@ -21,10 +21,8 @@ public class OrderDetailServiceImpl implements IOrderDetailService {
 
     @Override
     public void updateActive(Order o, int active) {
-        System.out.println("Inside update active order detail");
         List<OrderDetail> listOrderDetail = orderDetailRepo.getAllByOrder(o);
         for (OrderDetail od: listOrderDetail) {
-            System.out.println("o_detail updated: "+od.getId());
             od.setActive(1);
             orderDetailRepo.save(od);
         }

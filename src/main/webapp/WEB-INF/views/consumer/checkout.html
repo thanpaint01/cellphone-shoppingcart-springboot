@@ -23,10 +23,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2>Checkout</h2>
+                    <h2>Đặt Hàng</h2>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
-                        <li class="breadcrumb-item active">Checkout</li>
+                        <li class="breadcrumb-item"><a th:href="@{/home}">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Đặt hàng</li>
                     </ul>
                 </div>
             </div>
@@ -148,32 +148,36 @@
                                     <h3>Thông tin kiện hàng</h3>
                                 </div>
                                 <div class="rounded p-2 bg-light">
-                                    <th:block th:if="${null != session.currentUser}" th:each="c:${session.cartSession}">
-                                        <div class="media mb-2 border-bottom">
-                                        </div>
-                                        <div class="media-body">
-                                            <div class="row">
-                                                <div class="col-3">
-                                                    <a href="">
-                                                        <!--/*@thymesVar id="getProduct" type=""*/-->
-                                                        <img th:src="${c.getProduct().getImg().getHost()+c.getProduct().getImg().getRelativePath()}"
-                                                             class="img-fluid" alt="">
-                                                    </a>
-                                                </div>
-                                                <div class="col-9 text-left">
-                                                    <a href="" th:text="${c.getProduct().getName()}"></a>
-                                                    <div class="small text-muted">Giá: <span class="product-price"
-                                                                                             th:text="${c.getTotalPrice()}"></span>
-                                                        <span
-                                                                class="mx-2">|</span> Số lượng: <span
-                                                                th:text="${c.getAmount()}"></span>
-                                                        <span class="mx-2">|</span> Đơn Giá: <span class="product-price"
-                                                                                                   th:text="${c.getProduct().getPrice()}"></span>/cái
+                                    <th:block th:if="${null != session.currentUser}">
+                                        <th:block th:each="c:${session.currentUser.getCartItems()}">
+                                            <div class="media mb-2 border-bottom">
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        <a href="">
+                                                            <!--/*@thymesVar id="getProduct" type=""*/-->
+                                                            <img th:src="${c.getProduct().getImg().getHost()+c.getProduct().getImg().getRelativePath()}"
+                                                                 class="img-fluid" alt="">
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-9 text-left">
+                                                        <a href="" th:text="${c.getProduct().getName()}"></a>
+                                                        <div class="small text-muted">Giá: <span class="product-price"
+                                                                                                 th:text="${c.getTotalPrice()}"></span>
+                                                            <span
+                                                                    class="mx-2">|</span> Số lượng: <span
+                                                                    th:text="${c.getAmount()}"></span>
+                                                            <span class="mx-2">|</span> Đơn Giá: <span
+                                                                    class="product-price"
+                                                                    th:text="${c.getProduct().getPrice()}"></span>/cái
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </th:block>
                                     </th:block>
+
                                     <th:block th:if="${null == session.currentUser}" th:each="c:${session.cartSession}">
                                         <div class="media mb-2 border-bottom">
                                         </div>
@@ -276,6 +280,7 @@
     <script th:src="@{js/vietnamlocalselector.js}"></script>
     <script th:src="@{js/my-js/checkout.js}"></script>
     <script th:src="@{/js/my-js/box-cart-right.js}"></script>
+    <script th:src="@{/js/my-js/loading-page.js}"></script>
     <script>
         $("textarea").autoResize();
         var localpicker = new LocalPicker({

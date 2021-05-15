@@ -76,8 +76,6 @@ public class UserController {
             return "emptyfield";
         else if ((user = userService.findOneByLogin(email, password)) != null) {
             session.setAttribute(User.SESSION, user);
-            System.out.println("User session login = " + user.getActive() + ", " + user.getId());
-
             Set<CartItem> cartItems = (Set<CartItem>) session.getAttribute("cartSession");
             Set<CartItem> cartItemsUser = user.getCartItems();
             if (null != cartItems) {
@@ -91,18 +89,14 @@ public class UserController {
                         for (CartItem c : cartItemsUser) {
                             if (cs[i].getProduct().getId() == c.getProduct().getId()) {
                                 //không lưu vào user
-                                System.out.println("tang amount cho cart user co id = "+c.getId());
                                 cs[i] = c;//gan cs[i] lai de luu csdl
                             }
                         }
-                        System.out.println("luu vao csdl cs[i] vua roi ="+cs[i].getId());
                         cartItemsUser.add(cs[i]);
                         cartService.insertIntoTable(cs[i]);//luu lai vao csdl
                     }
                 } else {
-                    System.out.println("gio nguoi dung dang trong");
                     for (CartItem c : cartItems) {
-                        System.out.println("luu trong = "+c.getProduct().getId());
                         c.setUser(user);
                         cartItemsUser.add(c);
                         cartService.insertIntoTable(c);
@@ -250,7 +244,6 @@ public class UserController {
             HttpSession session, HttpServletResponse resp) throws IOException {
         User user = (User) session.getAttribute(User.SESSION);
         //Method response html
-        System.out.println("statusOrder client fill=" + statusOrder);
         StringBuilder sb = new StringBuilder();
         resp.setCharacterEncoding("UTF-8");
         if (statusOrder.equals("all")) {

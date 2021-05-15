@@ -2,12 +2,15 @@ package nlu.fit.cellphoneapp.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import nlu.fit.cellphoneapp.DTOs.CartItemRequest;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 @Entity
@@ -118,21 +121,34 @@ public class User {
         return rs;
     }
 
-    public boolean checkCartItemExist(int productID){
-        System.out.println("cartItemID for user check: "+productID);
-        for (CartItem c: cartItems) {
-            if(c.getProduct().getId()==productID){
+    public boolean checkCartItemExist(int productID) {
+        for (CartItem c : cartItems) {
+            if (c.getProduct().getId() == productID) {
                 return true;
             }
         }
         return false;
     }
 
-    public static boolean checkUserSession(HttpSession session){
-        if(null != (User) session.getAttribute(SESSION)) return true;
+    public static boolean checkUserSession(HttpSession session) {
+        if (null != (User) session.getAttribute(SESSION)) return true;
         return false;
     }
 
+    public boolean updateCart(CartItemRequest cartUpdate) {
+        for (CartItem c : cartItems) {
+            if (c.getProduct().getId() == cartUpdate.getProductID()) {
+                c.setAmount(c.getAmount() + cartUpdate.getAmount());
+                c.setTotalPrice(getTotalPrice());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean addInCartList(CartItem c){
+        return this.cartItems.add(c);
+    }
 
 
 }

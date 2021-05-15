@@ -39,13 +39,9 @@ public class PaymentController {
     @PostMapping("/pay")
     @ResponseBody
     public String pay(HttpServletRequest request, double totalPrice){
-        System.out.println("totalPrice paypal test="+totalPrice);
         String cancelUrl = Link.createAbsolutePath(request, URL_PAYPAL_CANCEL);
-        System.out.println("cancelurl="+cancelUrl);
         String successUrl = Link.createAbsolutePath(request, URL_PAYPAL_SUCCESS);
-        System.out.println("successurl="+successUrl);
         try {
-            System.out.println("Vao try pay");
             Payment payment = paypalService.createPayment(
                     totalPrice/1000,
                     "USD",
@@ -55,7 +51,6 @@ public class PaymentController {
                     cancelUrl,
                     successUrl);
             for(Links links : payment.getLinks()){
-                System.out.println("linkPayment redirect: =="+links.getHref());
                 if(links.getRel().equals("approval_url")){
                     return links.getHref();
                 }
@@ -68,14 +63,11 @@ public class PaymentController {
 
     @GetMapping(URL_PAYPAL_CANCEL)
     public String cancelPay(){
-        System.out.println("Vao Cancel paypal");
         return "consumer/paypal-cancel";
     }
 
     @GetMapping(URL_PAYPAL_SUCCESS)
     public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId){
-        System.out.println("Vao Success paypal");
-
         try {
             Payment payment = paypalService.executePayment(paymentId, payerId);
             if(payment.getState().equals("approved")){

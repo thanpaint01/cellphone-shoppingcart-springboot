@@ -21,10 +21,6 @@ public class CartServiceImpl implements ICartService {
     @Autowired
     IUserRepository userRepo;
 
-
-    /*
-        Phương thức kiểm tra sản phẩm đã tồn tại trong giỏ hàng hay chưa ? (true/false)
-     */
     @Override
     public boolean isInCart(int productID, int amount, int userID) {
         List<CartItem> items = cartRepo.getAllByUser(userRepo.getOne(userID));
@@ -33,26 +29,17 @@ public class CartServiceImpl implements ICartService {
         }
         return false;
     }
-
-    /*
-        Phương thức insert vào bảng này có thể sử dụng cho việc cập nhật thông tin bảng
-        Ví dụ: cập nhật số lượng sản phẩm trong giỏ hàng
-        Vì vậy phải check id cart trước khi insert, liệu đã tồn tại sản phẩm đó hay chưa, và còn số lượng để thêm hay không
-     */
     @Override
     public CartItem insertIntoTable(CartItem cartItem) {
         CartItem cartItemEntity = cartItem;
-        if (cartItem.getId() == 0) {//thêm mới
-            System.out.println("Thêm mới");
+        if (cartItem.getId() == 0) {
             cartItemEntity = cartRepo.save(cartItemEntity);
         } else {
-            if(cartItem.getProduct().getId() != 0) {
-                System.out.println("Cập nhật số lượng");
+            if (cartItem.getProduct().getId() != 0) {
                 CartItem oldCartItem = cartRepo.getOne(cartItem.getId());
                 oldCartItem.setAmount(cartItem.getAmount());
                 oldCartItem.setTotalPrice(cartItem.getTotalPrice());
                 cartItemEntity = cartRepo.save(cartItemEntity);
-                System.out.println("after save into db = "+cartItemEntity);
             }
         }
         return cartItemEntity;
@@ -71,7 +58,6 @@ public class CartServiceImpl implements ICartService {
 
     @Override
     public boolean deleteOne(int id) {
-        System.out.println("CartID for service delete =" + id);
         if (id != 0) {
             cartRepo.deleteById(id);
             return true;
@@ -83,17 +69,8 @@ public class CartServiceImpl implements ICartService {
     @Override
     public boolean removeAllByUserId(int userID) {
         User user = userRepo.getOne(userID);
-        System.out.println("Remove All CartItem Of User" + userID);
-           cartRepo.deleteAllByUser_Id(userID);
-        System.out.println("After remove");
-        for (CartItem c : user.getCartItems()) {
-            System.out.println("productInCart=" + c.getProduct().toString());
-        }
+        cartRepo.deleteAllByUser_Id(userID);
         user.getCartItems().clear();
-        System.out.println("after clear");
-        for (CartItem c : user.getCartItems()) {
-            System.out.println(c.getProduct().toString());
-        }
         return (userRepo.getOne(userID).getCartItems().size() == 0 ? true : false);
     }
 
