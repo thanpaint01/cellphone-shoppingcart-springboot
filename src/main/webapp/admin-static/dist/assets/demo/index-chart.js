@@ -2,6 +2,81 @@
 Chart.defaults.global.defaultFontFamily =
   '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = "#292b2c";
+var ctxLineBarChart = document.getElementById("myLineBarChart");
+var ctxPieChart = document.getElementById("myPieChart");
+var myLineBarChart;
+var myPieChart;
+function resetChart(ctx, chart, type, data, options) {
+  if (chart) {
+    var ctxId = $(ctx).attr("id");
+    var parentCtx = $(ctx).parent();
+    parentCtx.html(parentCtx.html());
+    chart.destroy();
+    ctx = document.getElementById(ctxId);
+    chart = new Chart(ctx, { type: type, data: data, options: options });
+  } else {
+    chart = new Chart(ctx, { type: type, data: data, options: options });
+  }
+}
+var optionsLineBarChart = {
+  layout: {
+    padding: {
+      left: 0,
+      right: 50,
+      top: 0,
+      bottom: 0,
+    },
+  },
+  scales: {
+    xAxes: [
+      {
+        maxBarThickness: 100,
+        // time: {
+        //     unit: 'month'
+        // },
+        gridLines: {
+          offsetGridLines: true,
+          display: false,
+        },
+        offset: true,
+        ticks: {
+          beginAtZero: true,
+          // maxTicksLimit: 6
+        },
+      },
+    ],
+    yAxes: [
+      {
+        ticks: {
+          beginAtZero: true,
+          callback: function (value) {
+            return nf.format(value);
+          },
+          // min: 0,
+          // max: 15000,
+          // maxTicksLimit: 5
+        },
+        gridLines: {
+          offsetGridLines: true,
+          display: true,
+        },
+      },
+    ],
+  },
+  legend: {
+    display: true,
+    position: "top",
+  },
+  tooltips: {
+    callbacks: {
+      label: function (tooltipItem, chart) {
+        var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || "";
+        return datasetLabel + ": " + number_format(tooltipItem.yLabel, 0) + "đ";
+      },
+    },
+  },
+};
+
 var nf = Intl.NumberFormat();
 var monthYearArr = new Array();
 var offProfits = new Array();
@@ -28,7 +103,23 @@ nameBrands.push("Các hãng khác");
 brandProfits.push(
   (sum - BigInt(pieChartProfits[pieChartProfits.length - 1])).toString()
 );
-
+var dateLineBarChart = {
+  labels: monthYearArr,
+  datasets: [
+    {
+      label: "Thanh toán trực tiếp",
+      backgroundColor: "#25c2a0",
+      borderColor: "#25c2a0",
+      data: offProfits,
+    },
+    {
+      label: "Thanh toán trực tuyến",
+      backgroundColor: "#ff1a68",
+      borderColor: "#ff1a68",
+      data: onlProfits,
+    },
+  ],
+};
 $("#line-bar-chart-form").submit(function (e) {
   e.preventDefault();
   var chartType = $(this).find("[name='chart-type']")[0].value;
@@ -44,120 +135,124 @@ $("#line-bar-chart-form").submit(function (e) {
     url: "/admin/line-bar-chart",
     data: { type: type, fromdate: fromDate, todate: toDate },
     success: function (response) {
-      alert(response);
+      if (chartType == "1") {
+        resetChart(
+          ctxLineBarChart,
+          myLineBarChart,
+          "line",
+          dateLineBarChart,
+          optionsLineBarChart
+        );
+      } else {
+        resetChart(
+          ctxLineBarChart,
+          myLineBarChart,
+          "bar",
+          dateLineBarChart,
+          optionsLineBarChart
+        );
+      }
     },
   });
 });
 
 // Bar Chart Example
-var ctx = document.getElementById("myBarChart");
-var myLineChart = new Chart(ctx, {
-  type: "bar",
-  data: {
-    labels: monthYearArr,
-    datasets: [
-      {
-        label: "Thanh toán trực tiếp",
-        backgroundColor: "#25c2a0",
-        borderColor: "#25c2a0",
-        data: offProfits,
-      },
-      {
-        label: "Thanh toán trực tuyến",
-        backgroundColor: "#ff1a68",
-        borderColor: "#ff1a68",
-        data: onlProfits,
-      },
-    ],
-  },
+// myLineBarChart = new Chart(ctxLineBarChart, {
+//   type: "bar",
+//   data: {
+//     labels: monthYearArr,
+//     datasets: [
+//       {
+//         label: "Thanh toán trực tiếp",
+//         backgroundColor: "#25c2a0",
+//         borderColor: "#25c2a0",
+//         data: offProfits,
+//       },
+//       {
+//         label: "Thanh toán trực tuyến",
+//         backgroundColor: "#ff1a68",
+//         borderColor: "#ff1a68",
+//         data: onlProfits,
+//       },
+//     ],
+//   },
 
-  options: {
-    layout: {
-      padding: {
-        left: 0,
-        right: 50,
-        top: 0,
-        bottom: 0,
-      },
-    },
-    scales: {
-      xAxes: [
-        {
-          maxBarThickness: 100,
-          // time: {
-          //     unit: 'month'
-          // },
-          gridLines: {
-            offsetGridLines: true,
-            display: false,
-          },
-          offset: true,
-          ticks: {
-            beginAtZero: true,
-            // maxTicksLimit: 6
-          },
-        },
-      ],
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-            callback: function (value) {
-              return nf.format(value);
-            },
-            // min: 0,
-            // max: 15000,
-            // maxTicksLimit: 5
-          },
-          gridLines: {
-            offsetGridLines: true,
-            display: true,
-          },
-        },
-      ],
-    },
-    legend: {
-      display: true,
-      position: "top",
-    },
-    tooltips: {
-      callbacks: {
-        label: function (tooltipItem, chart) {
-          var datasetLabel =
-            chart.datasets[tooltipItem.datasetIndex].label || "";
-          return (
-            datasetLabel + ": " + number_format(tooltipItem.yLabel, 0) + "đ"
-          );
-        },
-      },
-    },
-  },
-});
-var ctx = document.getElementById("myPieChart");
-var myPieChart = new Chart(ctx, {
-  type: "pie",
-  data: {
-    labels: nameBrands,
-    datasets: [
-      {
-        data: brandProfits,
-        // backgroundColor: ["#007bff", "#dc3545", "#ffc107", "#28a745"],
-        backgroundColor: ["#007bff", "#dc3545"],
-      },
-    ],
-  },
-  options: {
-    tooltips: {
-      callbacks: {
-        label: function (tooltipItem, chart) {
-          var datasetLabel =
-            chart.datasets[tooltipItem.datasetIndex].label || "";
-          return datasetLabel + ": " + number_format(tooltipItem, 0) + "đ";
-        },
-      },
-    },
-  },
-});
+//   options: {
+//     layout: {
+//       padding: {
+//         left: 0,
+//         right: 50,
+//         top: 0,
+//         bottom: 0,
+//       },
+//     },
+//     scales: {
+//       xAxes: [
+//         {
+//           maxBarThickness: 100,
+//           // time: {
+//           //     unit: 'month'
+//           // },
+//           gridLines: {
+//             offsetGridLines: true,
+//             display: false,
+//           },
+//           offset: true,
+//           ticks: {
+//             beginAtZero: true,
+//             // maxTicksLimit: 6
+//           },
+//         },
+//       ],
+//       yAxes: [
+//         {
+//           ticks: {
+//             beginAtZero: true,
+//             callback: function (value) {
+//               return nf.format(value);
+//             },
+//             // min: 0,
+//             // max: 15000,
+//             // maxTicksLimit: 5
+//           },
+//           gridLines: {
+//             offsetGridLines: true,
+//             display: true,
+//           },
+//         },
+//       ],
+//     },
+//     legend: {
+//       display: true,
+//       position: "top",
+//     },
+//     tooltips: {
+//       callbacks: {
+//         label: function (tooltipItem, chart) {
+//           var datasetLabel =
+//             chart.datasets[tooltipItem.datasetIndex].label || "";
+//           return (
+//             datasetLabel + ": " + number_format(tooltipItem.yLabel, 0) + "đ"
+//           );
+//         },
+//       },
+//     },
+//   },
+// });
+// var myPieChart = new Chart(ctxPieChart, {
+//   type: "pie",
+//   data: {
+//     labels: nameBrands,
+//     datasets: [
+//       {
+//         data: brandProfits,
+//         // backgroundColor: ["#007bff", "#dc3545", "#ffc107", "#28a745"],
+//         backgroundColor: ["#007bff", "#dc3545"],
+//       },
+//     ],
+//   },
+//   options: {},
+// });
 function number_format(number, decimals, dec_point, thousands_sep) {
   // *     example: number_format(1234.56, 2, ',', ' ');
   // *     return: '1 234,56'

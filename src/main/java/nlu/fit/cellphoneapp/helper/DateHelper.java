@@ -1,51 +1,73 @@
 package nlu.fit.cellphoneapp.helper;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
-
 public class DateHelper {
-    public static int monthsBetween(Date a, Date b) {
-        Calendar cal = Calendar.getInstance();
-        if (a.before(b)) {
-            cal.setTime(a);
-        } else {
-            cal.setTime(b);
-            b = a;
+    public static Date convertToDate(String input, String pattern) {
+        try {
+            return new SimpleDateFormat(pattern).parse(input);
+        } catch (ParseException e) {
+            return null;
         }
-        int c = 0;
-        while (cal.getTime().before(b)) {
-            cal.add(Calendar.MONTH, 1);
-            c++;
-        }
-        return c - 1;
     }
 
-    public static List<String> getMonthsBetween(Date from, Date to) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-yyyy");
+    public static int monthsBetween(Date a, Date b) {
+        long monthsBetween = ChronoUnit.MONTHS.between(
+                YearMonth.from(convertToLocalDate(a)),
+                YearMonth.from(convertToLocalDate(b))
+        );
+        return (int) monthsBetween;
+    }
 
-        LocalDate start = convertToLocalDate(from);
-        LocalDate end = convertToLocalDate(to);
-        List<String> months = new ArrayList<>();
-        LocalDate date = start;
-        if (date.getDayOfMonth() == 1) {
-            date = date.minusDays(1);
+    public static List<String> getMonthsBetween(String from, String to) {
+        // List to be populated and returned
+        List<String> dateList = new ArrayList<>();
+
+        // Formatter for the input
+        DateFormat inputFormatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        // Formatter for the output
+        DateFormat outputFormatter = new SimpleDateFormat("MM-yyyy");
+
+        // Parse strings to LocalDate instances
+        Date startDate = null;
+        Date endDate = null;
+        try {
+            startDate = inputFormatter.parse(from);
+            endDate = inputFormatter.parse(to);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        while (date.isBefore(end)) {
-            if (date.plusMonths(1).with(lastDayOfMonth()).isAfter(end)) {
-                break;
-            }
-            date = date.plusMonths(1).withDayOfMonth(1);
-            months.add(date.format(formatter));
+        // Calendar to start with
+        Calendar startWith = Calendar.getInstance();
+        startWith.setTime(startDate);
+        startWith.set(Calendar.DAY_OF_MONTH, 1);
+
+        for (Calendar calendar = startWith; calendar.getTime().getTime() <= endDate.getTime(); calendar
+                .add(Calendar.MONTH, 1)) {
+            dateList.add(outputFormatter.format(calendar.getTime()));
         }
-        return months;
+
+        return dateList;
+    }
+
+    public static String getMonthOfMMYYYY(String input) {
+        return input.split("-")[0];
+    }
+
+    public static String getYearhOfMMYYYY(String input) {
+        return input.split("-")[1];
     }
 
 

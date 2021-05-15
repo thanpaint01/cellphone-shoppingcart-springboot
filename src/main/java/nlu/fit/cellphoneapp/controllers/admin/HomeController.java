@@ -62,14 +62,37 @@ public class HomeController {
     @RequestMapping(value = "/line-bar-chart", method = RequestMethod.POST)
     @ResponseBody
     public String dataLineBarChart(@RequestParam("type") int type, @RequestParam("fromdate") String from, @RequestParam("todate") String to) {
-
-        return "hello";
+        Date fromDate = DateHelper.convertToDate(from, "yyyy-MM-dd");
+        Date todate = DateHelper.convertToDate(to, "yyyy-MM-dd");
+        if (fromDate == null || todate == null) {
+            return "formatdate";
+        } else if (!fromDate.before(new Date()) && !todate.before(new Date())) {
+            return "not-today";
+        } else if (!fromDate.before(todate)) {
+            return "greater-than-enddate";
+        } else if (DateHelper.monthsBetween(fromDate, todate) <= 0) {
+            return "lower-than-onemonth";
+        } else {
+            return "hello";
+        }
     }
 
     @RequestMapping(value = "/pie-chart", method = RequestMethod.POST)
     @ResponseBody
     public String datePieChartF(@RequestParam("category") int category, @RequestParam("type") int type, @RequestParam("from-date") String from, @RequestParam("to-date") String to) {
+        Date fromDate = DateHelper.convertToDate(from, "yyyy-MM-dd");
+        Date todate = DateHelper.convertToDate(to, "yyyy-MM-dd");
+        if (fromDate == null || todate == null) {
+            return "formatdate";
+        } else if (!fromDate.before(new Date()) && !todate.before(new Date())) {
+            return "not-today";
+        } else if (!fromDate.before(todate)) {
+            return "greater-than-enddate";
+        } else if (DateHelper.monthsBetween(fromDate, todate) <= 0) {
+            return "lower-than-onemonth";
+        } else {
 
+        }
         return "";
     }
 }
