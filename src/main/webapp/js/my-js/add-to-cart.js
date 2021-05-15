@@ -63,7 +63,7 @@ $('.btnAddToCart').click(function () {
             for (i = 0; i < json.length; i++) {
                 x += "<li class=\"cart-item\"><a href=\"#\" class=\"photo\"><img src=\"" + json[i].productImg + "\" class=\"cart-thumb\"></a><h6><a href=\"#\">" + json[i].productName + "</a></h6><p>" + json[i].amount + "x - <span class=\"product-price li-price\">" + formatter.format(json[i].totalPrice) + "</span></p></li>"
                 lastPrice += json[i].totalPrice;
-                sum ++;
+                sum++;
             }
             $('.cart-list').html(x);
             $('.total-cart').html(formatter.format(lastPrice));
@@ -71,3 +71,4 @@ $('.btnAddToCart').click(function () {
         }
     })
 })
+

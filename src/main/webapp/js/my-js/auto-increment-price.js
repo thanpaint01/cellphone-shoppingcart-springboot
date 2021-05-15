@@ -63,9 +63,9 @@ $('#btnDeleteModalConfirm').click(function () {
     cartID = $(this).attr('value')
     var sumOfCart = $('#sumOfCart').text()
     let resetAmount = $('#resetAmount').text()
-    let totalPriceBefore = $('#totalPriceBefore').text()
-    let priceRemove = $('#priceRemove').text()
-    let resetTotalPrice = $('#resetTotalPrice').text()
+    let totalPriceBefore = reverseFormatNumber($('.total-all-price').text(), "vi-VN")
+    let priceRemove = reverseFormatNumber($('#totalProductPriceAfterUpdate'+cartID).text(), "vi-VN")
+    let resetTotalPrice = convert(totalPriceBefore)-convert(priceRemove);
     $.ajax({
         type: 'DELETE',
         data: {productID: cartID},
@@ -76,8 +76,9 @@ $('#btnDeleteModalConfirm').click(function () {
                 $('.tr' + cartID).remove();
                 $('#sumOfCart').text(sumOfCart-1);
                 $('#li' + cartID).remove();
-                $('.total-price').html(formatter.format(resetTotalPrice));
-                $('.last-price').html(formatter.format(resetTotalPrice - convert($('.discount-price').text())));
+                $('.total-all-price').html(formatter.format(resetTotalPrice));
+                $('.total-cart').html(formatter.format(resetTotalPrice));
+                $('.last-price').html(formatter.format(resetTotalPrice - convert(reverseFormatNumber($('.discount-price').text(), "vi-VN"))));
                 deleteSuccess();
             } else if(result === "error"){
                 showFailDelete();
@@ -127,7 +128,7 @@ $('.tr-update').change(function () {
             for (let i = 0; i < json.length; i++) {
                 var rowUpdate = json[i].productID;
                 totalAllCart += json[i].totalPrice;
-                x += "<li class=\"cart-item\"><a href=\"#\" class=\"photo\"><img src=\"" + json[i].productImg + "\" class=\"cart-thumb\"></a><h6><a href=\"#\">" + json[i].productName + "</a></h6><p>" + json[i].amount + "x - <span class=\"product-price li-price\">" + formatter.format(json[i].totalPrice) + "</span></p></li>"
+                x += "<li class=\"cart-item\" id=\"li"+json[i].productID+"\"><a href=\"#\" class=\"photo\"><img src=\"" + json[i].productImg + "\" class=\"cart-thumb\"></a><h6><a href=\"#\">" + json[i].productName + "</a></h6><p>" + json[i].amount + "x - <span class=\"product-price li-price\">" + formatter.format(json[i].totalPrice) + "</span></p></li>"
                 lastPrice += json[i].totalPrice;
             }
             $('.cart-list').html(x);

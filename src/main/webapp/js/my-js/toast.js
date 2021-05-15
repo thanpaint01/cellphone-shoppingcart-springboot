@@ -54,8 +54,8 @@ function showSuccess() {
 function showError() {
     toast({
         type: "error",
-        title: "Thông báo!",
-        message: 'Sản phẩm vừa chọn đã có trong giỏ hàng.',
+        title: "Thất bại!",
+        message: 'Hệ thống đang gặp sự cố. Vui lòng thực hiện sau.',
         duration: 5000
     })
 }

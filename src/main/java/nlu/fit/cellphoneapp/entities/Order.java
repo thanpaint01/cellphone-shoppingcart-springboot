@@ -14,7 +14,7 @@ import java.util.*;
 @Setter
 public class Order {
     public enum STATUS {
-        PENDING("Đang Tiếp Nhận"), DELIVERING("Đang Giao Hàng"), SUCCESS("Giao Hàng Thành Công"), CANCELED("Hủy Đơn Hàng");
+        PENDING("Đang tiếp nhận"), DELIVERING("Đang giao hàng"), SUCCESS("Giao thành công"), CANCELED("Đã hủy");
         private final String value;
 
         STATUS(String value) {
