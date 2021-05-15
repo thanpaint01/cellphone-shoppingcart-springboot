@@ -51,7 +51,7 @@ $('.btnAddToCart').click(function () {
         contentType: 'application/json;charset=UTF-8',
         data: JSON.stringify({"productID": productID, "amount": 1, "active": 1}),
         accept: 'application/json',
-        url: 'add-to-cart',
+        url: '/add-to-cart',
         headers: {action: 'add'},
         success: function (rs) {
             showSuccess();

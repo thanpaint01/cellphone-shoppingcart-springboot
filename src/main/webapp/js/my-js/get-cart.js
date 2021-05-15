@@ -1,10 +1,11 @@
 $(function () {
+    const formatter = new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'});
     $(window).on('load', function () {
         $.ajax({
             type: 'GET',
             contentType: 'application/json;charset=UTF-8',
             accept: 'application/json',
-            url: 'cart/all',
+            url: '/cart/all',
             success: function (rs) {
                 var rsJS = JSON.stringify(rs);
                 var json = JSON.parse(rsJS);

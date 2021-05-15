@@ -1,75 +1,79 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{/layout/consumer-layout.html}" th:with="isProductPage=true">
+      layout:decorate="~{/layout/consumer-layout.html}" th:with="isProductPage=true">
 <th:block layout:fragment="css">
     <link rel="stylesheet" th:href="@{/css/my-css/shop-detail.css}">
 </th:block>
 <body>
-    <!-- Start Shop Detail  -->
-    <div layout:fragment="body" class="shop-detail-box-main">
-        <!-- Start All Title Box -->
-        <div th:fragment="breadcumb" class="all-title-box">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h2>Shop Detail</h2>
-                        <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Shop</a></li>
-                            <li class="breadcrumb-item active">Shop Detail</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End All Title Box -->
+<!-- Start Shop Detail  -->
+<div layout:fragment="body" class="shop-detail-box-main">
+    <!-- Start All Title Box -->
+    <div th:fragment="breadcumb" class="all-title-box">
         <div class="container">
             <div class="row">
-                <th:block th:replace="/consumer/product-detail-fragments/summary :: summary"></th:block>
-                <th:block th:replace="/consumer/product-detail-fragments/specification :: specification"></th:block>
-                <th:block th:replace="/consumer/product-detail-fragments/description :: description"></th:block>
-                <th:block th:replace="/consumer/product-detail-fragments/reviews :: reviews"></th:block>
-            </div>
-            <div th:replace="/consumer/product-detail-fragments/related-products :: related-products"></div>
-        </div>
-        <hr />
-        <div id="sample-comment-reply" class="comment-box add-comment reply-box mt-3">
-            <div class="row">
-                <div class="col-md-1 text-center">
-                    <img src="images/admin-icon.png" alt=" " class="img-fluid rounded-circle iconUser" />
+                <div class="col-lg-12">
+                    <h2>Shop Detail</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                        <li class="breadcrumb-item active">Shop Detail</li>
+                    </ul>
                 </div>
-                <div class="col-md-11">
-                    <p class="w-100 h-auto">
-                    </p>
-                    <div class="clearfix">
-                        <textarea name="content" rows="1"></textarea>
-                        <div class="form-group" id="rating">
-                            <p class="mt-1 ">
-                                <button type="submit" class="float-right btn hvr-hover text-light ml-2"><i
-                                        class="fa fa-reply"></i> Nhận xét
-                                </button>
-                                <button class="float-right btn hvr-hover text-light ml-2">Hủy bỏ
-                                </button>
-                            </p>
-                        </div>
+            </div>
+        </div>
+    </div>
+    <!-- End All Title Box -->
+    <div class="container">
+        <div class="row">
+            <th:block th:replace="/consumer/product-detail-fragments/summary :: summary"></th:block>
+            <th:block th:replace="/consumer/product-detail-fragments/specification :: specification"></th:block>
+            <th:block th:replace="/consumer/product-detail-fragments/description :: description"></th:block>
+            <th:block th:replace="/consumer/product-detail-fragments/reviews :: reviews"></th:block>
+        </div>
+        <div th:replace="/consumer/product-detail-fragments/related-products :: related-products"></div>
+    </div>
+    <hr/>
+    <div id="sample-comment-reply" class="comment-box add-comment reply-box mt-3">
+        <div class="row">
+            <div class="col-md-1 text-center">
+                <img src="images/admin-icon.png" alt=" " class="img-fluid rounded-circle iconUser"/>
+            </div>
+            <div class="col-md-11">
+                <p class="w-100 h-auto">
+                </p>
+                <div class="clearfix">
+                    <textarea name="content" rows="1"></textarea>
+                    <div class="form-group" id="rating">
+                        <p class="mt-1 ">
+                            <button type="submit" class="float-right btn hvr-hover text-light ml-2"><i
+                                    class="fa fa-reply"></i> Nhận xét
+                            </button>
+                            <button class="float-right btn hvr-hover text-light ml-2">Hủy bỏ
+                            </button>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div id="toast">
 
-    <th:block layout:fragment="scripts">
-        <script th:src="@{/js/jquery.simpleLoadMore.js}"></script>
-        <script th:src="@{/js/Jquery.autoResize.js}"></script>
-        <script th:src="@{/js/my-js/shop-detail-custom.js}"></script>
-        <script th:src="@{/js/my-js/format-price-of-product.js}"></script>
-        <script>
-            // var commentReply = $('#sample-comment-reply');
-            // const sampleCommentReply = commentReply.clone(true);
-            // commentReply.remove();
-            // $('.comment-reply.reply-popup').addEventListener("click", function (e) {
-            //    e.preventDefault();
-            // });
-        </script>
-    </th:block>
+    </div>
+</div>
+
+<th:block layout:fragment="scripts">
+    <script th:src="@{/js/jquery.simpleLoadMore.js}"></script>
+    <script th:src="@{/js/Jquery.autoResize.js}"></script>
+    <script th:src="@{/js/my-js/shop-detail-custom.js}"></script>
+    <script th:src="@{/js/my-js/format-price-of-product.js}"></script>
+    <script th:src="@{/js/my-js/add-to-cart.js}"></script>
+    <script>
+        // var commentReply = $('#sample-comment-reply');
+        // const sampleCommentReply = commentReply.clone(true);
+        // commentReply.remove();
+        // $('.comment-reply.reply-popup').addEventListener("click", function (e) {
+        //    e.preventDefault();
+        // });
+    </script>
+</th:block>
 </body>
 </html>
