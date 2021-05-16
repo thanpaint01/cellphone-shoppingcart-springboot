@@ -52,3 +52,100 @@
 //         }
 //     }
 // });
+// Bar Chart Example
+// myLineBarChart = new Chart(ctxLineBarChart, {
+//   type: "bar",
+//   data: {
+//     labels: monthYearArr,
+//     datasets: [
+//       {
+//         label: "Thanh toán trực tiếp",
+//         backgroundColor: "#25c2a0",
+//         borderColor: "#25c2a0",
+//         data: offProfits,
+//       },
+//       {
+//         label: "Thanh toán trực tuyến",
+//         backgroundColor: "#ff1a68",
+//         borderColor: "#ff1a68",
+//         data: onlProfits,
+//       },
+//     ],
+//   },
+
+//   options: {
+//     layout: {
+//       padding: {
+//         left: 0,
+//         right: 50,
+//         top: 0,
+//         bottom: 0,
+//       },
+//     },
+//     scales: {
+//       xAxes: [
+//         {
+//           maxBarThickness: 100,
+//           // time: {
+//           //     unit: 'month'
+//           // },
+//           gridLines: {
+//             offsetGridLines: true,
+//             display: false,
+//           },
+//           offset: true,
+//           ticks: {
+//             beginAtZero: true,
+//             // maxTicksLimit: 6
+//           },
+//         },
+//       ],
+//       yAxes: [
+//         {
+//           ticks: {
+//             beginAtZero: true,
+//             callback: function (value) {
+//               return nf.format(value);
+//             },
+//             // min: 0,
+//             // max: 15000,
+//             // maxTicksLimit: 5
+//           },
+//           gridLines: {
+//             offsetGridLines: true,
+//             display: true,
+//           },
+//         },
+//       ],
+//     },
+//     legend: {
+//       display: true,
+//       position: "top",
+//     },
+//     tooltips: {
+//       callbacks: {
+//         label: function (tooltipItem, chart) {
+//           var datasetLabel =
+//             chart.datasets[tooltipItem.datasetIndex].label || "";
+//           return (
+//             datasetLabel + ": " + number_format(tooltipItem.yLabel, 0) + "đ"
+//           );
+//         },
+//       },
+//     },
+//   },
+// });
+// var myPieChart = new Chart(ctxPieChart, {
+//   type: "pie",
+//   data: {
+//     labels: nameBrands,
+//     datasets: [
+//       {
+//         data: brandProfits,
+//         // backgroundColor: ["#007bff", "#dc3545", "#ffc107", "#28a745"],
+//         backgroundColor: ["#007bff", "#dc3545"],
+//       },
+//     ],
+//   },
+//   options: {},
+// });

@@ -1,5 +1,6 @@
 package nlu.fit.cellphoneapp;
 
+import nlu.fit.cellphoneapp.entities.Order;
 import nlu.fit.cellphoneapp.entities.User;
 import nlu.fit.cellphoneapp.helper.DateHelper;
 import nlu.fit.cellphoneapp.repositories.custom.ReportRepository;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -34,20 +36,18 @@ class CellphoneAppApplicationTests {
 
     @Test
     void testMonth() {
-        String from = "2020-05-30";
-        String to = "2020-06-01";
-        System.out.println(DateHelper.monthsBetween(DateHelper.convertToDate(from, "yyyy-MM-dd"), DateHelper.convertToDate(to, "yyyy-MM-dd")));
-        List<String> months = DateHelper.getMonthsBetween(from, to);
-        for (int i = 0; i < months.size(); i++) {
-            System.out.println(DateHelper.getMonthOfMMYYYY(months.get(i)));
-        }
+        String from = "2021-05-12";
+        String to = "2021-06-17";
+        Date fromDate = DateHelper.convertToDate(from, "yyyy-MM-dd");
+        Date todate = DateHelper.convertToDate(to, "yyyy-MM-dd");
+        System.out.println(!fromDate.before(new Date()) || !todate.before(new Date()));
     }
 
     @Test
-    void testProfit() {
-//        System.out.println(NumberHelper.format(orderService.profitByMonth(DateHelper.getMonthAgo(1))));
-        System.out.println(reportRepository.test());
+    void testReport() {
+
     }
+
 
     @Test
     void testLogin() {

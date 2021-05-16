@@ -14,13 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 public class DateHelper {
-    public static Date convertToDate(String input, String pattern) {
-        try {
-            return new SimpleDateFormat(pattern).parse(input);
-        } catch (ParseException e) {
-            return null;
-        }
-    }
+
 
     public static int monthsBetween(Date a, Date b) {
         long monthsBetween = ChronoUnit.MONTHS.between(
@@ -62,12 +56,16 @@ public class DateHelper {
         return dateList;
     }
 
-    public static String getMonthOfMMYYYY(String input) {
-        return input.split("-")[0];
+    public static int getMonthOfMMYYYY(String input) {
+        if (input.charAt(0) == '0') {
+            return input.split("-")[0].charAt(1) - '0';
+        } else {
+            return Integer.parseInt(input.split("-")[0]);
+        }
     }
 
-    public static String getYearhOfMMYYYY(String input) {
-        return input.split("-")[1];
+    public static int getYearhOfMMYYYY(String input) {
+        return Integer.parseInt(input.split("-")[1]);
     }
 
 
@@ -97,6 +95,33 @@ public class DateHelper {
 
     public static int getYear(Date date) {
         return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear();
+    }
+
+
+    public static Date getFristDayMonth(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH));
+        return cal.getTime();
+    }
+
+    public static Date getLastDayMonth(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+        return cal.getTime();
+    }
+
+    public static String convertToString(Date date) {
+        return new SimpleDateFormat("yyyy-MM-dd").format(date);
+    }
+
+    public static Date convertToDate(String input, String pattern) {
+        try {
+            return new SimpleDateFormat(pattern).parse(input);
+        } catch (ParseException e) {
+            return null;
+        }
     }
 
     public static LocalDate convertToLocalDate(Date dateToConvert) {
