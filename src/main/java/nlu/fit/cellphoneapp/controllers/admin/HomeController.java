@@ -55,22 +55,28 @@ public class HomeController {
         else {
             StringBuilder sb = new StringBuilder();
             List<String> listMonths = DateHelper.getMonthsBetween(from, to);
-            for (int i = 0; i < listMonths.size(); i++) {
-                sb.append(listMonths.get(i) + "\t");
-                if (i == 0) {
-                    sb.append(reportRepository.getDataByDate(type, from, DateHelper.convertToString(DateHelper.getLastDayMonth(fromDate)), Order.PAYMENT_TYPE.OFFLINE.value()));
-                    sb.append("\t");
-                    sb.append(reportRepository.getDataByDate(type, from, DateHelper.convertToString(DateHelper.getLastDayMonth(fromDate)), Order.PAYMENT_TYPE.ONLINE.value()));
-                    sb.append(System.lineSeparator());
-                } else if (i == listMonths.size() - 1) {
-                    sb.append(reportRepository.getDataByDate(type, DateHelper.convertToString(DateHelper.getFristDayMonth(todate)), to, Order.PAYMENT_TYPE.OFFLINE.value()));
-                    sb.append("\t");
-                    sb.append(reportRepository.getDataByDate(type, DateHelper.convertToString(DateHelper.getFristDayMonth(todate)), to, Order.PAYMENT_TYPE.ONLINE.value()));
-                } else {
-                    sb.append(reportRepository.getDataByMonthYear(type, DateHelper.getMonthOfMMYYYY(listMonths.get(i)), DateHelper.getYearhOfMMYYYY(listMonths.get(i)), Order.PAYMENT_TYPE.OFFLINE.value()));
-                    sb.append("\t");
-                    sb.append(reportRepository.getDataByMonthYear(type, DateHelper.getMonthOfMMYYYY(listMonths.get(i)), DateHelper.getYearhOfMMYYYY(listMonths.get(i)), Order.PAYMENT_TYPE.OFFLINE.value()));
-                    sb.append(System.lineSeparator());
+            if (listMonths.size() == 1) {
+                sb.append(listMonths.get(0) + "\t");
+                sb.append(reportRepository.getDataByDate(type, from, to, Order.PAYMENT_TYPE.OFFLINE.value()));
+                sb.append(reportRepository.getDataByDate(type, from, to, Order.PAYMENT_TYPE.ONLINE.value()));
+            } else {
+                for (int i = 0; i < listMonths.size(); i++) {
+                    sb.append(listMonths.get(i) + "\t");
+                    if (i == 0) {
+                        sb.append(reportRepository.getDataByDate(type, from, DateHelper.convertToString(DateHelper.getLastDayMonth(fromDate)), Order.PAYMENT_TYPE.OFFLINE.value()));
+                        sb.append("\t");
+                        sb.append(reportRepository.getDataByDate(type, from, DateHelper.convertToString(DateHelper.getLastDayMonth(fromDate)), Order.PAYMENT_TYPE.ONLINE.value()));
+                        sb.append(System.lineSeparator());
+                    } else if (i == listMonths.size() - 1) {
+                        sb.append(reportRepository.getDataByDate(type, DateHelper.convertToString(DateHelper.getFristDayMonth(todate)), to, Order.PAYMENT_TYPE.OFFLINE.value()));
+                        sb.append("\t");
+                        sb.append(reportRepository.getDataByDate(type, DateHelper.convertToString(DateHelper.getFristDayMonth(todate)), to, Order.PAYMENT_TYPE.ONLINE.value()));
+                    } else {
+                        sb.append(reportRepository.getDataByMonthYear(type, DateHelper.getMonthOfMMYYYY(listMonths.get(i)), DateHelper.getYearhOfMMYYYY(listMonths.get(i)), Order.PAYMENT_TYPE.OFFLINE.value()));
+                        sb.append("\t");
+                        sb.append(reportRepository.getDataByMonthYear(type, DateHelper.getMonthOfMMYYYY(listMonths.get(i)), DateHelper.getYearhOfMMYYYY(listMonths.get(i)), Order.PAYMENT_TYPE.OFFLINE.value()));
+                        sb.append(System.lineSeparator());
+                    }
                 }
             }
             return sb.toString();
