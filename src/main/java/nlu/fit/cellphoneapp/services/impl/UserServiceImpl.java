@@ -18,12 +18,12 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public boolean isEmailUnique(String email) {
-        return findOneByEmail(email, User.ACTIVE.INACTIVE.value()) != null || findOneByEmail(email, User.ACTIVE.ACTIVE.value()) != null;
+        return userRepo.findOneByEmail(email) == null;
     }
 
     @Override
-    public User findOneByEmail(String email, int active) {
-        return userRepo.findOneByEmail(email, active);
+    public User findOneByEmail(String email) {
+        return userRepo.findOneByEmail(email);
     }
 
     @Override
@@ -35,14 +35,14 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public boolean isTokenUnique(String token) {
-        return userRepo.numberOfToken(token) >= 1;
+        return userRepo.countTokens(token) >= 1;
     }
 
     @Override
     public User findOneByLogin(String email, String password) {
         User user;
-        if ((user = userRepo.findOneByEmail(email, User.ACTIVE.ACTIVE.value())) == null &&
-                (user = userRepo.findOneByEmail(email, User.ACTIVE.UNVERTIFIED.value())) == null)
+        if ((user = userRepo.findOneByEmailActive(email, User.ACTIVE.ACTIVE.value())) == null &&
+                (user = userRepo.findOneByEmailActive(email, User.ACTIVE.UNVERTIFIED.value())) == null)
             return null;
         else {
             if (BcryptEncoder.matches(password, user.getPassword())) return user;
@@ -50,9 +50,13 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
+    public User findOneByEmailActive(String email, int active) {
+        return userRepo.findOneByEmailActive(email, active);
+    }
+
     @Override
-    public User vertifyToken(String token) {
-        return userRepo.vertifyToken(token);
+    public User findOneByToken(String token) {
+        return userRepo.findOneByToken(token);
     }
 
 

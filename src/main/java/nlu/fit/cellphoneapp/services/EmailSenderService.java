@@ -26,7 +26,7 @@ public class EmailSenderService {
     }
 
     public boolean sendEmailResetPassword(String recipient, String name, String token) {
-        return (sendEmail(recipient, createBodyResetPassword(name, token), "Reset Mật Khẩu"));
+        return sendEmail(recipient, createBodyResetPassword(name, token), "Reset Mật Khẩu");
     }
 
     public boolean sendEmailVertification(String recipient, String name, String url) {

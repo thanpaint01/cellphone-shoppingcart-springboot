@@ -11,10 +11,7 @@ import nlu.fit.cellphoneapp.services.IUserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 
 @SpringBootTest
@@ -41,11 +38,12 @@ class CellphoneAppApplicationTests {
         Date fromDate = DateHelper.convertToDate(from, "yyyy-MM-dd");
         Date todate = DateHelper.convertToDate(to, "yyyy-MM-dd");
         System.out.println(!fromDate.before(new Date()) || !todate.before(new Date()));
+
     }
 
     @Test
     void testReport() {
-
+        System.out.println(userService.isEmailUnique("daochichaoden1@gmail.com"));
     }
 
 

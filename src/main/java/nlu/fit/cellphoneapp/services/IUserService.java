@@ -6,7 +6,7 @@ import nlu.fit.cellphoneapp.entities.User;
 public interface IUserService {
     boolean isEmailUnique(String email);
 
-    User findOneByEmail(String email, int active);
+    User findOneByEmail(String email);
 
     boolean save(User user);
 
@@ -14,9 +14,9 @@ public interface IUserService {
 
     User findOneByLogin(String email, String password);
 
-    User vertifyToken(String token);
+    User findOneByToken(String token);
 
-
+    User findOneByEmailActive(String email, int active);
 
 
 }

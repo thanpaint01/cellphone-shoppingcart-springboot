@@ -10,7 +10,6 @@ import nlu.fit.cellphoneapp.services.EmailSenderService;
 import nlu.fit.cellphoneapp.services.ICartService;
 import nlu.fit.cellphoneapp.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -49,7 +47,7 @@ public class UserController {
     @RequestMapping(value = "/email/verify/{token}")
     public ModelAndView vertificateEmail(@PathVariable("token") String token, HttpSession session) {
         User u;
-        if ((u = userService.vertifyToken(token)) == null)
+        if ((u = userService.findOneByToken(token)) == null)
             return new ModelAndView("redirect:/");
         else {
             u.setKey(null);
@@ -133,12 +131,10 @@ public class UserController {
             return "confirmpass";
         } else if (!User.validEmail(form.newemail)) {
             return "errmail";
-        } else if (userService.isEmailUnique(form.newemail)) {
+        } else if (!userService.isEmailUnique(form.newemail)) {
             return "errmailexist";
         } else {
-            User user = userService.findOneByEmail(form.newemail, User.ACTIVE.UNVERTIFIED.value());
-            if (user == null)
-                user = new User();
+            User user = new User();
             user.setEmail(form.newemail);
             user.setGender(User.toStringGender(Integer.valueOf(form.newgender)));
             user.setPassword(BcryptEncoder.encode(form.newpassword));
@@ -177,21 +173,23 @@ public class UserController {
     String forgotPass(@RequestParam(name = "email") String email) {
         User user;
         if (StringHelper.isNoValue(email)) return "emptyfield";
-        else if (!userService.isEmailUnique(email))
-            return "notexistemail";
-        else if ((user = userService.findOneByEmail(email, User.ACTIVE.ACTIVE.value())) == null) {
+        else if ((user = userService.findOneByEmailActive(email, User.ACTIVE.ACTIVE.value())) == null &&
+                (user = userService.findOneByEmailActive(email, User.ACTIVE.UNVERTIFIED.value())) == null) {
             return "unactive";
         } else {
             String token;
             while (userService.isTokenUnique((token = StringHelper.getAlphaNumericString(10)))) ;
             user.setKey(token);
             user.setExpiredKey(DateHelper.addMinute(15));
-            userService.save(user);
-            if (emailSenderService.sendEmailResetPassword(email, user.getFullName(), token))
+            if (userService.save(user)) {
+                return "error";
+            }
+            if (emailSenderService.sendEmailResetPassword(email, user.getFullName(), token)) {
                 return "success";
-            else
+            } else
                 return "failed";
         }
+
     }
 
     @RequestMapping(value = "/reset-pass", method = RequestMethod.POST)
@@ -210,13 +208,15 @@ public class UserController {
             return "validpass";
         else if (!newpass.equals(confirmpass))
             return "notequate";
-        else if ((user = userService.vertifyToken(resetcode)) == null) {
+        else if ((user = userService.findOneByToken(resetcode)) == null) {
             return "failcode";
         } else {
             user.setPassword(BcryptEncoder.encode(newpass));
             user.setKey(null);
             user.setExpiredKey(null);
-            userService.save(user);
+            if (userService.save(user)) {
+                return "error";
+            }
             return "success";
         }
     }
@@ -228,7 +228,6 @@ public class UserController {
         User user = (User) session.getAttribute(User.SESSION);
         model.addAttribute("CONTENT_TITLE", "Quản lý đơn hàng");
         if (null == user || (user.getOrders().size() == 0)) {
-
             return "consumer/my-order-empty";
         } else {
             return "consumer/my-order";
