@@ -53,7 +53,7 @@ public class CartController {
 
     public Collection<CartItem> updateCart(CartItem cartItem, String action, HttpSession session) {
         Collection<CartItem> cartItems = new HashSet<>();
-        if (checkUserSession(session)) {
+        if (true == User.checkUserSession(session)) {
             User user = (User) session.getAttribute(User.SESSION);
             cartItems = user.getCartItems();
         } else {
@@ -110,9 +110,12 @@ public class CartController {
             for (CartItem c : user.getCartItems()) {
                 if (c.getProduct().getId() == productID) {
                     user.getCartItems().remove(c);
-                    cartService.deleteOne(c.getId());
-                    deleteOneCartSessionV2(productID);
-                    break;
+                    if(true == cartService.deleteOne(c.getId())) {
+                        deleteOneCartSessionV2(productID);
+                        break;
+                    }else{
+                        return null;
+                    }
                 }
             }
             return revertToCartItemResponse(user.getCartItems());
