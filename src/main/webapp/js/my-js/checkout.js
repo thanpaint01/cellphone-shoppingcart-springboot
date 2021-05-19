@@ -26,7 +26,7 @@ $('#btnOrder').click(function () {
                 if (rs === 'error') {
                     showErrorOrder();
                 } else {
-                    if (rs === '/abc') {
+                    if (rs === '/login') {
                         $('#signInModel').modal('toggle');
                     } else {
                         if (rs !== '/pay') {

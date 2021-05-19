@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface ICartRepository extends JpaRepository<CartItem, Integer> {
     List<CartItem> getAllByUser(User user);
-    void deleteById(int id);
+    boolean deleteById(int id);
     @Transactional
     void deleteAllByUser_Id(int userID);
     CartItem getOneByUserIdAndProductId(int userID, int productID);

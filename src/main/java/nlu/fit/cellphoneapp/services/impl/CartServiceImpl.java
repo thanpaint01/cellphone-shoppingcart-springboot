@@ -59,8 +59,7 @@ public class CartServiceImpl implements ICartService {
     @Override
     public boolean deleteOne(int id) {
         if (id != 0) {
-            cartRepo.deleteById(id);
-            return true;
+            return cartRepo.deleteById(id);
         } else {
             return false;
         }

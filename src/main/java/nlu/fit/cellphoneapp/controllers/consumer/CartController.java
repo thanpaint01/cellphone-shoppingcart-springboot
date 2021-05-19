@@ -208,10 +208,10 @@ public class CartController {
     @GetMapping("/checkout")
     public ModelAndView goToCheckoutPage(HttpSession session) {
         ModelAndView mv = new ModelAndView();
-        User user = user = (User) session.getAttribute(User.SESSION);
+        User user = (User) session.getAttribute(User.SESSION);
         Collection<CartItem> cs = (Set<CartItem>) session.getAttribute("cartSession");
 
-        if(null != user){
+        if(User.checkUserSession(session) == true){
             if(user.getActive() != 1){
                 mv.setViewName("consumer/active-account");
                 mv.addObject("cartSession", cartSession);

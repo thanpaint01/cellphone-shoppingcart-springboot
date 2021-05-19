@@ -32,7 +32,7 @@ public class OrderController {
     @GetMapping("/order")
     public String goToOrderPage(HttpSession session, Model model) {
         User userDelivery;
-        if (null != (userDelivery = (User) model.getAttribute("userDelivery")) || userDelivery.getCartItems().size() == 0) {
+        if ((null != (userDelivery = (User) model.getAttribute("userDelivery")) && userDelivery.getCartItems().size() == 0) || null == userDelivery) {
             return "redirect:/cart";
         }
         if (null == session.getAttribute(User.SESSION)) return "redirect:/home";
@@ -55,7 +55,7 @@ public class OrderController {
         if (null != user) {
             order.setUser(user);
         }else{
-            return "/abc";
+            return "/login";
         }
         order.setOrderStatus("Đang tiếp nhận");
         order.setPayment(payment);
