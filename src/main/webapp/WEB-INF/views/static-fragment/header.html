@@ -18,48 +18,49 @@
                 <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                     <li class="nav-item" th:classappend="${isHomePage} ? active: ''"><a class="nav-link" th:href="@{/}">Trang
                         chủ</a></li>
-                    <li class="dropdown" th:classappend="${isProductPage} ? active: ''">
-                        <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">Sản Phẩm</a>
-                        <ul class="dropdown-menu">
-                            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle"
-                                                            href="#">Hãng<i
-                                    class="fas fa-caret-down float-right mt-2"></i></a>
-                                <ul class="dropdown-menu">
-                                    <a class="dropdown-item" th:each="brand : ${allBrands}"
-                                       th:href="@{/product(brand=${brand.id})}" th:text="${brand.name}"></a>
-                                </ul>
-                            </li>
+                    <li class="nav-item" th:classappend="${isProductPage} ? active: ''"><a class="nav-link"  th:href="@{/product}">Sản phẩm</a></li>
+<!--                    <li class="dropdown" th:classappend="${isProductPage} ? active: ''">-->
+<!--                        <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"-->
+<!--                           aria-haspopup="true" aria-expanded="false">Sản Phẩm</a>-->
+<!--                        <ul class="dropdown-menu">-->
+<!--                            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle"-->
+<!--                                                            href="#">Hãng<i-->
+<!--                                    class="fas fa-caret-down float-right mt-2"></i></a>-->
+<!--                                <ul class="dropdown-menu">-->
+<!--                                    <a class="dropdown-item" th:each="brand : ${allBrands}"-->
+<!--                                       th:href="@{/product(brand=${brand.id})}" th:text="${brand.name}"></a>-->
+<!--                                </ul>-->
+<!--                            </li>-->
 
-                            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle"
-                                                            href="#">Ram<i
-                                    class="fas fa-caret-down float-right mt-2"></i></a>
-                                <ul class="dropdown-menu">
-                                    <a class="dropdown-item" th:each="ram : ${allRams}"
-                                       th:href="@{/product(ram=${ram.id})}" th:text="${ram.capacity}"></a>
-                                </ul>
-                            </li>
-                            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle"
-                                                            href="#">Rom<i
-                                    class="fas fa-caret-down float-right mt-2"></i></a>
-                                <ul class="dropdown-menu">
-                                    <a class="dropdown-item" th:each="rom : ${allRoms}"
-                                       th:href="@{/product(rom=${rom.id})}" th:text="${rom.capacity}"></a>
-                                </ul>
-                            </li>
+<!--                            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle"-->
+<!--                                                            href="#">Ram<i-->
+<!--                                    class="fas fa-caret-down float-right mt-2"></i></a>-->
+<!--                                <ul class="dropdown-menu">-->
+<!--                                    <a class="dropdown-item" th:each="ram : ${allRams}"-->
+<!--                                       th:href="@{/product(ram=${ram.id})}" th:text="${ram.capacity}"></a>-->
+<!--                                </ul>-->
+<!--                            </li>-->
+<!--                            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle"-->
+<!--                                                            href="#">Rom<i-->
+<!--                                    class="fas fa-caret-down float-right mt-2"></i></a>-->
+<!--                                <ul class="dropdown-menu">-->
+<!--                                    <a class="dropdown-item" th:each="rom : ${allRoms}"-->
+<!--                                       th:href="@{/product(rom=${rom.id})}" th:text="${rom.capacity}"></a>-->
+<!--                                </ul>-->
+<!--                            </li>-->
 
-                            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle"
-                                                            href="#">Pin<i
-                                    class="fas fa-caret-down float-right mt-2"></i></a>
-                                <ul class="dropdown-menu">
-                                    <a class="dropdown-item" th:each="pin : ${allPins}"
-                                       th:href="@{/product(pin=${pin.id})}" th:text="${pin.capacity}"></a>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="about.html">Thông tin</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact-us.html">Liên hệ</a></li>
+<!--                            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle"-->
+<!--                                                            href="#">Pin<i-->
+<!--                                    class="fas fa-caret-down float-right mt-2"></i></a>-->
+<!--                                <ul class="dropdown-menu">-->
+<!--                                    <a class="dropdown-item" th:each="pin : ${allPins}"-->
+<!--                                       th:href="@{/product(pin=${pin.id})}" th:text="${pin.capacity}"></a>-->
+<!--                                </ul>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item"><a class="nav-link" href="about.html">Thông tin</a></li>-->
+<!--                    <li class="nav-item"><a class="nav-link" href="contact-us.html">Liên hệ</a></li>-->
                     <th:block th:if="${session.currentUser == null}">
                         <li class="dropdown">
                             <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"
