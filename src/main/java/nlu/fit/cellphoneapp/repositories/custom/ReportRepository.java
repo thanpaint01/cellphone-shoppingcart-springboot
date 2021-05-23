@@ -5,9 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -16,7 +14,7 @@ public class ReportRepository {
     @PersistenceContext(type = PersistenceContextType.EXTENDED)
     private EntityManager entityManager;
 
-    public long getDataByMonthYear(int type, int month, int year, String payment) {
+    public long getPaymentDataByMonthYear(int type, int month, int year, String payment) {
         Long result = null;
         StringBuilder sb = new StringBuilder();
         if (type == 1) {
@@ -35,7 +33,7 @@ public class ReportRepository {
         return result == null ? 0 : result;
     }
 
-    public long getDataByDate(int type, String start, String end, String payment) {
+    public long getPaymentDataByDate(int type, String start, String end, String payment) {
         Long result = null;
         StringBuilder sb = new StringBuilder();
         if (type == 1) {
@@ -57,10 +55,10 @@ public class ReportRepository {
         return result == null ? 0 : result;
     }
 
-    public List<String> getDataCategory(int category, int type, String start, String end) {
+    public List<String> getCategoryData(int category, int type, String start, String end) {
         List<String> result = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
-        String sumCol = null;
+        String sumCol;
         if (type == 1) {
             sumCol = "od.total_price";
         } else {

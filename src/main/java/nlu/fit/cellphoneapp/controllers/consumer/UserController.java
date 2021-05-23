@@ -54,7 +54,9 @@ public class UserController {
             u.setExpiredKey(null);
             u.setActive(User.ACTIVE.ACTIVE.value());
             if (session.getAttribute(User.SESSION) != null) session.setAttribute(User.SESSION, u);
-            userService.save(u);
+            if (!userService.save(u)) {
+                return new ModelAndView("redirect:/");
+            }
             return new ModelAndView("/consumer/email-vertification");
         }
     }
@@ -181,7 +183,7 @@ public class UserController {
             while (userService.isTokenUnique((token = StringHelper.getAlphaNumericString(10)))) ;
             user.setKey(token);
             user.setExpiredKey(DateHelper.addMinute(15));
-            if (userService.save(user)) {
+            if (!userService.save(user)) {
                 return "error";
             }
             if (emailSenderService.sendEmailResetPassword(email, user.getFullName(), token)) {
@@ -214,7 +216,7 @@ public class UserController {
             user.setPassword(BcryptEncoder.encode(newpass));
             user.setKey(null);
             user.setExpiredKey(null);
-            if (userService.save(user)) {
+            if (!userService.save(user)) {
                 return "error";
             }
             return "success";
