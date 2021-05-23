@@ -3,14 +3,14 @@ package nlu.fit.cellphoneapp.entities;
 import lombok.Getter;
 import lombok.Setter;
 import nlu.fit.cellphoneapp.DTOs.CartItemRequest;
+import nlu.fit.cellphoneapp.helper.StringHelper;
+import nlu.fit.cellphoneapp.receiver.RegisterForm;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Pattern;
 
 @Entity
@@ -101,6 +101,28 @@ public class User {
         return pat.matcher(email).matches();
     }
 
+    public static String validInfo(RegisterForm registerForm) {
+        List<String> toCheck = new ArrayList<>();
+        toCheck.add(registerForm.newemail);
+        toCheck.add(registerForm.newfullname);
+        toCheck.add(registerForm.newpassword);
+        toCheck.add(registerForm.confirmpassword);
+        if (StringHelper.isNoValue(toCheck)) {
+            return "emptyfield";
+        } else if (User.validGender(registerForm.newgender)) {
+            return "emptyfield";
+        } else if (!User.validName(registerForm.newfullname)) {
+            return "errname";
+        } else if (!User.validPassword(registerForm.newpassword)) {
+            return "errpass";
+        } else if (!registerForm.newpassword.equals(registerForm.confirmpassword)) {
+            return "confirmpass";
+        } else if (!User.validEmail(registerForm.newemail)) {
+            return "errmail";
+        }
+        return null;
+    }
+
     public static String toStringGender(int gender) {
         return gender == 1 ? "Nam" : "Nữ";
     }
@@ -146,7 +168,7 @@ public class User {
         return false;
     }
 
-    public boolean addInCartList(CartItem c){
+    public boolean addInCartList(CartItem c) {
         return this.cartItems.add(c);
     }
 

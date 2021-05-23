@@ -116,23 +116,9 @@ public class UserController {
     public @ResponseBody
     String register(@RequestBody RegisterForm form, HttpServletRequest request
     ) {
-        List<String> toCheck = new ArrayList<>();
-        toCheck.add(form.newemail);
-        toCheck.add(form.newfullname);
-        toCheck.add(form.newpassword);
-        toCheck.add(form.confirmpassword);
-        if (StringHelper.isNoValue(toCheck)) {
-            return "emptyfield";
-        } else if (User.validGender(form.newgender)) {
-            return "emptyfield";
-        } else if (!User.validName(form.newfullname)) {
-            return "errname";
-        } else if (!User.validPassword(form.newpassword)) {
-            return "errpass";
-        } else if (!form.newpassword.equals(form.confirmpassword)) {
-            return "confirmpass";
-        } else if (!User.validEmail(form.newemail)) {
-            return "errmail";
+        String error = User.validInfo(form);
+        if (error != null) {
+            return error;
         } else if (!userService.isEmailUnique(form.newemail)) {
             return "errmailexist";
         } else {
