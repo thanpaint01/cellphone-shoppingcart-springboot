@@ -1,6 +1,7 @@
 package nlu.fit.cellphoneapp.controllers.admin;
 
 import nlu.fit.cellphoneapp.entities.Order;
+import nlu.fit.cellphoneapp.entities.User;
 import nlu.fit.cellphoneapp.helper.DateHelper;
 import nlu.fit.cellphoneapp.repositories.custom.ReportRepository;
 import nlu.fit.cellphoneapp.services.IReportService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +28,10 @@ public class HomeController {
 
 
     @RequestMapping(value = "")
-    public ModelAndView homePage() {
+    public ModelAndView homePage(HttpSession session) {
+        User user = (User) session.getAttribute(User.SESSION);
+        if (user == null || user.getRole() != User.ROLE.ADMIN.value())
+            return new ModelAndView("redirect:/");
         ModelAndView model = new ModelAndView("admin/admin-index");
         model.addObject("CONTENT_TITLE", "Trang chủ");
         return model;
