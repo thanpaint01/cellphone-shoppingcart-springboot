@@ -162,7 +162,7 @@ public class CartController {
     @ResponseBody
     public Collection<CartItemRequest> loadCart(HttpSession session, HttpServletResponse resp) {
         resp.setContentType("application/json;charset=UTF-8");
-        if (checkUserSession(session) == true) {
+        if (User.checkUserSession(session) == true) {
             User user = (User) session.getAttribute(User.SESSION);
             cartSession.clear();
             cartSession = new HashSet<>();
