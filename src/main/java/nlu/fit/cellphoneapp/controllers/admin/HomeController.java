@@ -1,6 +1,5 @@
 package nlu.fit.cellphoneapp.controllers.admin;
 
-import nlu.fit.cellphoneapp.entities.Order;
 import nlu.fit.cellphoneapp.entities.User;
 import nlu.fit.cellphoneapp.helper.DateHelper;
 import nlu.fit.cellphoneapp.repositories.custom.ReportRepository;
@@ -12,10 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpSession;
 import java.util.Date;
-import java.util.List;
 
 
 @RequestMapping(value = "/admin")

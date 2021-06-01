@@ -29,8 +29,12 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public boolean save(User user) {
-        userRepo.save(user);
-        return true;
+        try {
+            userRepo.save(user);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override

@@ -14,8 +14,8 @@
                 <div class="col-lg-12">
                     <h2>Shop Detail</h2>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
-                        <li class="breadcrumb-item active">Shop Detail</li>
+                        <li class="breadcrumb-item"><a  th:href="@{/product}">Sản phẩm</a></li>
+                        <li class="breadcrumb-item active" th:text="${product.name}"></li>
                     </ul>
                 </div>
             </div>
@@ -66,6 +66,7 @@
     <script th:src="@{/js/my-js/shop-detail-custom.js}"></script>
     <script th:src="@{/js/my-js/format-price-of-product.js}"></script>
     <script th:src="@{/js/my-js/add-to-cart.js}"></script>
+    <script th:src="@{/js/my-js/favorite.js}"></script>
     <script>
         // var commentReply = $('#sample-comment-reply');
         // const sampleCommentReply = commentReply.clone(true);

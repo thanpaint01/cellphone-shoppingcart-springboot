@@ -33,7 +33,7 @@ public class UserController {
     @Autowired
     ICartService cartService;
 
-    @RequestMapping(value = "my-account", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView myAccountPage(HttpSession session) {
         User user = (User) session.getAttribute(User.SESSION);
         ModelAndView model = new ModelAndView("/consumer/my-account");

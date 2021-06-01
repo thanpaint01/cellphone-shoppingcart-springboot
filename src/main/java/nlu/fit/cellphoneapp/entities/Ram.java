@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="ram")
+@Table(name = "ram")
 @Setter
 @Getter
 public class Ram {
@@ -21,7 +21,6 @@ public class Ram {
     //OneToMany Relation product table
     @OneToMany(mappedBy = "ram", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products = new ArrayList<>();
-
 
 
 }

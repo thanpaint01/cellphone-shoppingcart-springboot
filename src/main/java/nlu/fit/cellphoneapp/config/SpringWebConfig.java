@@ -67,10 +67,7 @@ public class SpringWebConfig implements WebMvcConfigurer {
         return viewResolver;
     }
 
-    @Bean
-    public ProductSpecification productSpecification() {
-        return new ProductSpecification();
-    }
+
 
 
 }

@@ -1,4 +1,3 @@
-
 //Toast thông báo lỗi khi sản phẩm đã tồn tại trong giỏ hàng
 var toast = function ({title = "", type = "", message = "", duration = 3000}) {
     const main = document.getElementById('toast');
@@ -65,6 +64,33 @@ function showWarning() {
         type: "warning",
         title: "Thông báo!",
         message: 'Vui lòng đăng nhập trước khi thêm sản phẩm vào giỏ.',
+        duration: 5000
+    })
+}
+
+function showSuccessMessage(title, message) {
+    toast({
+        type: "success",
+        title: title,
+        message: message,
+        duration: 5000
+    })
+}
+
+function showErrorMessage(title, message) {
+    toast({
+        type: "error",
+        title: title,
+        message: message,
+        duration: 5000
+    })
+}
+
+function showWarningMessage(title, message) {
+    toast({
+        type: "warning",
+        title: title,
+        message: message,
         duration: 5000
     })
 }

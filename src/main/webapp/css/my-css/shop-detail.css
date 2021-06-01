@@ -2,7 +2,7 @@
     background-color: white;
 }
 
-.favorite-active {
+.product-favorite.active {
     color: #B45235 !important;
 }
 

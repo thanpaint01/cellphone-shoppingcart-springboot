@@ -72,4 +72,6 @@ public class Product {
 //    @LazyCollection(LazyCollectionOption.FALSE)
     private Set<OrderDetail> orderDetails = new HashSet<>();
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+    private Set<Favorite> favorites;
 }

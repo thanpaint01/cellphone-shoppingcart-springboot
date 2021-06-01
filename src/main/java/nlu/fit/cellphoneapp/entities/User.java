@@ -17,7 +17,6 @@ import java.util.regex.Pattern;
 @Table(name = "user")
 @Getter
 @Setter
-
 public class User {
     public static final String SESSION = "currentUser";
 
@@ -65,6 +64,9 @@ public class User {
     private Date expiredKey;
     private int active;
     private int role;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
+    private Set<Favorite> favorites;
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,
@@ -170,6 +172,28 @@ public class User {
 
     public boolean addInCartList(CartItem c) {
         return this.cartItems.add(c);
+    }
+
+    public boolean hasFavoriteProduct(int productId) {
+        for (Favorite favorite : favorites) {
+            if (favorite.getProduct().getId() == productId)
+                return true;
+        }
+        return false;
+    }
+
+    public void addFavorite(Favorite favorite) {
+        this.favorites.add(favorite);
+    }
+
+    public Favorite removeFavorite(int productId) {
+        for (Favorite favorite : favorites) {
+            if (favorite.getProduct().getId() == productId) {
+                this.favorites.remove(favorite);
+                return favorite;
+            }
+        }
+        return null;
     }
 
 

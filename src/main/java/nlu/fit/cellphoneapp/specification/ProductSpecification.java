@@ -2,12 +2,12 @@ package nlu.fit.cellphoneapp.specification;
 
 import nlu.fit.cellphoneapp.entities.*;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.criteria.Predicate;
 
-
+@Component
 public final class ProductSpecification {
-    //            Join<Product, Brand> joinBrand = root.join(Product_.BRAND);
     public Specification<Product> getProductIsActive() {
         return (root, query, cb) -> {
             Predicate activeBrand = cb.equal(root.get(Product_.BRAND).get(Brand_.ACTIVE), 1);

@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface IOrderDetailRepository extends JpaRepository<OrderDetail, Integer> {
     List<OrderDetail> getAllByOrder(Order o);
+
 }
