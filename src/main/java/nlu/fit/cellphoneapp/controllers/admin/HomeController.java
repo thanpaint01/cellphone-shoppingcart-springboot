@@ -1,17 +1,17 @@
 package nlu.fit.cellphoneapp.controllers.admin;
 
+import nlu.fit.cellphoneapp.entities.Product;
 import nlu.fit.cellphoneapp.entities.User;
 import nlu.fit.cellphoneapp.helper.DateHelper;
 import nlu.fit.cellphoneapp.repositories.custom.ReportRepository;
 import nlu.fit.cellphoneapp.services.IReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.HttpSession;
+import java.util.Collection;
 import java.util.Date;
 
 
@@ -65,4 +65,5 @@ public class HomeController {
             return reportService.getCategoryData(category, type, from, to);
         }
     }
+
 }

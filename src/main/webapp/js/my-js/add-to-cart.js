@@ -46,10 +46,15 @@
 //add cart v2
 $('.btnAddToCart').click(function () {
     let productID = $(this).val();
+    var atDetail = document.querySelector("#quantity-product-detail");
+    var amount = 1;
+    if(atDetail) {
+        amount =  $('#quantity-product-detail').val();
+    }
     $.ajax({
         type: 'POST',
         contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify({"productID": productID, "amount": 1, "active": 1}),
+        data: JSON.stringify({"productID": productID, "amount": amount, "active": 1}),
         accept: 'application/json',
         url: '/add-to-cart',
         headers: {action: 'add'},

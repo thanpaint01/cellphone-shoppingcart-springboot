@@ -111,6 +111,58 @@
             <artifactId>rest-api-sdk</artifactId>
             <version>1.4.2</version>
         </dependency>
+<!--        ckfinder-->
+        <dependency>
+            <groupId>com.cksource</groupId>
+            <artifactId>ckfinder3</artifactId>
+            <version>3.5.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.finder</groupId>
+            <artifactId>fileeditor</artifactId>
+            <version>2.6.2.1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/lib/CKFinderPlugin-FileEditor-2.6.2.1.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.finder</groupId>
+            <artifactId>imgresize</artifactId>
+            <version>2.6.2.1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/lib/CKFinderPlugin-ImageResize-2.6.2.1.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.finder</groupId>
+            <artifactId>watermark</artifactId>
+            <version>2.6.2.1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/lib/CKFinderPlugin-Watermark-2.6.2.1.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.finder</groupId>
+            <artifactId>ckfinder</artifactId>
+            <version>2.6.2.1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/lib/CKFinder-2.6.2.1.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.8</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/lib/thumbnailator-0.4.8.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3.3</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+        </dependency>
+        <!--CKFinder end -->
     </dependencies>
     <build>
         <plugins>
@@ -190,5 +242,11 @@
             </plugin>
         </plugins>
     </build>
-
+    <repositories>
+        <repository>
+            <id>cksource-mvn-repo</id>
+            <name>CKSource Maven Repository</name>
+            <url>https://maven.cksource.com/</url>
+        </repository>
+    </repositories>
 </project>

@@ -115,7 +115,7 @@
                                     </td>
                                     <td class="data-fields col3">
                                         <a class="go-detail-mobile"
-                                           th:href="@{/product/detail(id=${orderItem.getOrderDetails().get(0).product.getId()})}">
+                                           th:href="'/product/detail/'+${orderItem.getOrderDetails().get(0).product.getId()}">
                                             <div class="d-flex">
                                                 <!-- IMG PRODUCT -->
                                                 <div class="img-product">

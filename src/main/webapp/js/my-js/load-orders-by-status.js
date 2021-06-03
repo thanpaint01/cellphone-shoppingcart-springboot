@@ -8,6 +8,7 @@ $('#statusOrderSelect').change(function () {
             if (rs === "") {
                 $('.table-body').html('<td colspan="6">Không có đơn hàng ở trạng thái ' + statusOrder + '!</td>');
             } else {
+
                 $('.table-body').html(rs);
 
             }
@@ -24,21 +25,18 @@ $('#btnSearchByOrderID').click(function () {
         url: 'ajax-load-by-status',
         success: function (rs) {
             if (rs === "") {
-                $('.table-body').html('<td colspan="6">Không tồn tại đơn hàng có mã ' + searchParams + '!</td>');
+                $('.table-body').html('<td colspan="6">Không tồn tại đơn hàng có mã ' + searchParams + ' !</td>');
             } else {
                 $('.table-body').html(rs);
-
             }
         }
     })
 
 })
 
-$('.modal-del').click(function () {
+$('.fas.fa-arrow-circle-right.icon.modal-del').click(function () {
     var idDeny = $(this).prop('id').split('-')[1]
-    // alert(idDeny)
     $('#btnDenyOrder-' + idDeny).click(function () {
-        // alert('click confirm deny')
         $.ajax({
             type: 'POST',
             data: {orderID: idDeny},
