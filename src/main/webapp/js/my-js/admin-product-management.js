@@ -22,8 +22,8 @@ if (textValueFindBy !== "") {
 }
 
 //upload product img
-window.addEventListener('load', function() {
-    document.querySelector('input[type="file"]').addEventListener('change', function() {
+window.addEventListener('load', function () {
+    document.querySelector('input[type="file"]').addEventListener('change', function () {
         if (this.files && this.files[0]) {
             var img = document.querySelector('#fileImgNewProduct');
             img.onload = () => {
@@ -37,45 +37,24 @@ window.addEventListener('load', function() {
     });
 });
 
+
 $(document).ready(function () {
-    CKEDITOR.replace('inputProductImgDes1', {
-        filebrowserBrowseUrl : 'classpath:/ckfinder/ckfinder.html',
-        filebrowserImageBrowseUrl : 'classpath:/ckfinder/ckfinder.html?type=Images',
-        filebrowserFlashBrowseUrl : '/ckfinder/ckfinder.html?type=Flash',
-        filebrowserUploadUrl : '/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Files',
-        filebrowserImageUploadUrl : '/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Images',
-        filebrowserFlashUploadUrl : '/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash'
-    });
+    CKEDITOR
+        .replace(
+            'inputProductImgDes1',
+            {
+                height: 400,
+                filebrowserUploadUrl: '/admin/upload_ckeditor',
+                filebrowserBrowseUrl: 'filebrowser',
+                filebrowserWindowWidth: 800,
+                filebrowserWindowHeight: 500
+                // filebrowserBrowseUrl : '/ckfinder/ckfinder.html',
+                // filebrowserImageBrowseUrl : '/ckfinder/ckfinder.html?type=Images',
+                // filebrowserFlashBrowseUrl : '/ckfinder.html?type=Flash',
+                // filebrowserUploadUrl : '/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Files',
+                // filebrowserImageUploadUrl : '/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Images',
+                // filebrowserFlashUploadUrl : '/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash'
+            });
+
 })
-BrowseServer( 'Images:/', 'xImagePath' );
 
-function BrowseServer(startupPath, functionData) {
-    // You can use the "CKFinder" class to render CKFinder in a page:
-    var finder = new CKFinder();
-
-    // The path for the installation of CKFinder (default = "/ckfinder/").
-    finder.basePath = '../';
-
-    //Startup path in a form: "Type:/path/to/directory/"
-    finder.startupPath = startupPath;
-
-    // Name of a function which is called when a file is selected in CKFinder.
-    finder.selectActionFunction = SetFileField;
-
-    // Additional data to be passed to the selectActionFunction in a second argument.
-    // We'll use this feature to pass the Id of a field that will be updated.
-    finder.selectActionData = functionData;
-
-    // Name of a function which is called when a thumbnail is selected in CKFinder. Preview img
-    // finder.selectThumbnailActionFunction = ShowThumbnails;
-
-    // Launch CKFinder
-    finder.popup();
-}
-
-// This is a sample function which is called when a file is selected in CKFinder.
-function SetFileField(fileUrl, data) {
-    document.getElementById(data["selectActionData"]).innerHTML = this
-        .getSelectedFile().name;
-    document.getElementById("imgpreview").src = fileUrl;
-}
