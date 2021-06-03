@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
@@ -68,6 +69,12 @@ public class SpringWebConfig implements WebMvcConfigurer {
     }
 
 
-
-
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        //   file:D:\\data\\file\\image\\
+        registry.addResourceHandler("/images/**").addResourceLocations("classpath:/static/uploadmedia/");
+        registry.addResourceHandler("/images/").addResourceLocations("classpath:resource/upload/");
+        registry.addResourceHandler("/ckfinder/**").addResourceLocations("src/main/webapp/ckfinder/");
+        WebMvcConfigurer.super.addResourceHandlers(registry);
+    }
 }

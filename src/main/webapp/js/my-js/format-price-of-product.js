@@ -17,7 +17,7 @@ function reverseFormatNumber(val,locale){
 $.fn.formatCurrency = function () {
     this.each(function () {
         $(this).text(formatter.format($(this).text()));
-        // $(this).text(formatCurrency($(this).text()));
+        $(this).val(reverseFormatNumber($(this).val(), "vi-VN"));
     });
     return this;
 };
