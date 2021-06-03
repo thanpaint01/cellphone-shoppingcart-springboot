@@ -1,6 +1,8 @@
 package nlu.fit.cellphoneapp.controllers.consumer;
 
-import nlu.fit.cellphoneapp.entities.*;
+import nlu.fit.cellphoneapp.entities.CartItem;
+import nlu.fit.cellphoneapp.entities.Order;
+import nlu.fit.cellphoneapp.entities.User;
 import nlu.fit.cellphoneapp.helper.DateHelper;
 import nlu.fit.cellphoneapp.helper.StringHelper;
 import nlu.fit.cellphoneapp.others.BcryptEncoder;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -234,6 +237,7 @@ public class UserController {
         StringBuilder sb = new StringBuilder();
         resp.setCharacterEncoding("UTF-8");
         if (statusOrder.equals("all")) {
+
             for (Order order : user.getOrders()) {
                 if (orderID.equals("null")) {
                     sb.append(loadResultForAjaxLoadWithStatusOrder(order));
@@ -294,4 +298,6 @@ public class UserController {
         }
         return sb.toString();
     }
+
+
 }
