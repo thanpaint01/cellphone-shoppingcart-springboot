@@ -1,4 +1,5 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="products" class="product-categorie-box">
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade show active" id="grid-view">
@@ -18,16 +19,15 @@
                                     <!-- <li><a href="#" data-toggle="tooltip" data-placement="right"
                                            title="So sánh"><i class="fas fa-sync-alt"></i></a>
                                     </li> -->
-                                    <th:block th:if="${session.currentUser == null}">
+                                    <th:block sec:authorize="!isFullyAuthenticated()">
                                         <li><a th:attr=" data-product=${product.id}" class="product-favorite" href="#"
                                                data-toggle="tooltip"
                                                data-placement="right" title="Thêm yêu thích"><i
                                                 class="fas fa-heart"></i></a></li>
                                     </th:block>
-                                    <th:block
-                                            th:if="${session.currentUser != null}">
+                                    <th:block sec:authorize="isFullyAuthenticated()">
                                         <li><a th:attr=" data-product=${product.id}" class="product-favorite"
-                                               th:classappend="${session.currentUser.hasFavoriteProduct(product.id)} ? active :''"
+                                               th:classappend="${#authentication.getPrincipal().getUser().hasFavoriteProduct(product.id)} ? active :''"
                                                href="#"
                                                data-toggle="tooltip"
                                                data-placement="right" title="Thêm yêu thích"><i

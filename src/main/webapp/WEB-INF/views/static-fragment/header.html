@@ -1,4 +1,5 @@
-<header th:fragments="header" class="main-header" xmlns:th="http://www.thymeleaf.org">
+<header th:fragments="header" class="main-header" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        xmlns:th="http://www.thymeleaf.org">
     <!-- Start Main Top -->
     <!-- Start Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
@@ -18,7 +19,7 @@
                 <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                     <li class="nav-item" th:classappend="${isHomePage} ? active: ''"><a class="nav-link" th:href="@{/}">Trang
                         chủ</a></li>
-                    <th:block th:if="${session.currentUser != null and session.currentUser.getRole()==2}">
+                    <th:block th:if="${#authorization.expression('isAuthenticated()') and #strings.contains(#authentication.principal.authorities,'ADMIN')}">
                         <li class="nav-item"><a class="nav-link"
                                                 th:href="@{/admin}">DashBoard</a></li>
                     </th:block>
@@ -68,7 +69,7 @@
                     <!--                    </li>-->
                     <!--                    <li class="nav-item"><a class="nav-link" href="about.html">Thông tin</a></li>-->
                     <!--                    <li class="nav-item"><a class="nav-link" href="contact-us.html">Liên hệ</a></li>-->
-                    <th:block th:if="${session.currentUser == null}">
+                    <th:block sec:authorize="!isFullyAuthenticated()">
                         <li class="dropdown">
                             <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false"><i class="far fa-user mr-1"></i> Chào,
@@ -83,7 +84,7 @@
                             </ul>
                         </li>
                     </th:block>
-                    <th:block th:if="${session.currentUser != null}">
+                    <th:block sec:authorize="isFullyAuthenticated()">
                         <li class="nav-item" th:classappend="${isUserPage}? active:''"><a th:href="@{/user}"
                                                                                           class="nav-link userSessionForCart"><i
                                 class="far fa-user mr-1"></i>TÀI KHOẢN CỦA

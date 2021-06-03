@@ -7,6 +7,7 @@ import nlu.fit.cellphoneapp.helper.StringHelper;
 import nlu.fit.cellphoneapp.receiver.RegisterForm;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import javax.servlet.http.HttpSession;
@@ -19,6 +20,9 @@ import java.util.regex.Pattern;
 @Setter
 public class User {
     public static final String SESSION = "currentUser";
+
+
+
 
     public enum ROLE {
         CONSUMEER(1), ADMIN(2);
@@ -46,6 +50,8 @@ public class User {
         }
     }
 
+    public static final int USER_ROLE = 1;
+    public static final int ADMIN_ROLE = 2;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -82,6 +88,15 @@ public class User {
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Order> orders = new HashSet<>();
 
+    public String toStringRole() {
+        switch (this.role) {
+            case USER_ROLE:
+                return "USER";
+            case ADMIN_ROLE:
+                return "ADMIN";
+        }
+        return null;
+    }
 
     public static boolean validName(String name) {
         String expression = "^\\p{L}+[\\p{L}\\p{Z}\\p{P}]{0,}";

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" th:with="product=${product}" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" th:with="product=${product}"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="summary">
     <div class="col-xl-5 col-lg-5 col-md-6">
         <div id="carousel-example-1" class="single-product-slider carousel slide" data-ride="carousel">
@@ -83,16 +83,16 @@
                     <button class="btn h-100 hvr-hover btnAddToCart text-light" data-fancybox-close=""
                             th:action="@{/add-to-cart}" th:value="${product.id}">Thêm vào giỏ hàng
                     </button>
-                    <th:block th:if="${session.currentUser == null}">
+                    <th:block sec:authorize="!isFullyAuthenticated()">
                         <button th:attr=" data-product=${product.id}" class="btn hvr-hover product-favorite text-light"
                                 href="#"><i class="fas fa-heart"></i>
                             Yêu
                             Thích
                         </button>
                     </th:block>
-                    <th:block th:if="${session.currentUser != null}">
+                    <th:block sec:authorize="isFullyAuthenticated()">
                         <button th:attr=" data-product=${product.id}" class="btn hvr-hover product-favorite text-light"
-                                th:classappend="${session.currentUser.hasFavoriteProduct(product.id)} ? active :''"
+                                th:classappend="${#authentication.getPrincipal().getUser().hasFavoriteProduct(product.id)} ? active :''"
                                 href="#"><i class="fas fa-heart"></i>
                             Yêu
                             Thích
