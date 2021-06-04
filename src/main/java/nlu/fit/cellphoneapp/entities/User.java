@@ -7,6 +7,7 @@ import nlu.fit.cellphoneapp.helper.StringHelper;
 import nlu.fit.cellphoneapp.receiver.RegisterForm;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import javax.servlet.http.HttpSession;
@@ -19,6 +20,8 @@ import java.util.regex.Pattern;
 @Setter
 public class User {
     public static final String SESSION = "currentUser";
+
+
 
     public enum ROLE {
         CONSUMEER(1), ADMIN(2);
@@ -46,6 +49,8 @@ public class User {
         }
     }
 
+    public static final int USER_ROLE = 1;
+    public static final int ADMIN_ROLE = 2;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -82,6 +87,15 @@ public class User {
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Order> orders = new HashSet<>();
 
+    public String toStringRole() {
+        switch (this.role) {
+            case USER_ROLE:
+                return "USER";
+            case ADMIN_ROLE:
+                return "ADMIN";
+        }
+        return null;
+    }
 
     public static boolean validName(String name) {
         String expression = "^\\p{L}+[\\p{L}\\p{Z}\\p{P}]{0,}";
@@ -161,9 +175,9 @@ public class User {
 
     public boolean updateCart(CartItemRequest cartUpdate) {
         for (CartItem c : cartItems) {
-            if (c.getProduct().getId() == cartUpdate.getProductID()) {
-                c.setAmount(c.getAmount() + cartUpdate.getAmount());
-                c.setTotalPrice(getTotalPrice());
+            if (c.getId() == cartUpdate.getId()) {
+                c.setAmount(cartUpdate.getAmount());
+                c.updateTotalPrice();
                 return true;
             }
         }
@@ -196,5 +210,61 @@ public class User {
         return null;
     }
 
+    public Collection<CartItemRequest> appendCartSession(Collection<CartItemRequest> cartSession) {
+        Collection<CartItemRequest> collectionNewCartItem = new HashSet<CartItemRequest>();
+        int i = 0;
+        while (i < cartSession.size()) {
+            boolean isEquals = false;
+            CartItemRequest cs = (CartItemRequest) cartSession.toArray()[i];
+            int requestAmount = cs.getAmount();
+            for (CartItem c : cartItems) {
+                if (c.getProduct().getId() == cs.getProductID()) {
+                    c.setAmount(requestAmount);
+                    c.updateTotalPrice();
+                    isEquals = true;
+                }
+            }
+            i++;
+            if (isEquals == false) {
+                collectionNewCartItem.add(cs);
+            }
+        }
+        return collectionNewCartItem;
+    }
+
+    public boolean removeCartItem(int id) {
+        for (CartItem c : cartItems) {
+            if (c.getId() == id) {
+                cartItems.remove(c);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public CartItem updateCartItem(CartItem c, CartItem cDB)
+    {
+        c.setAmount(cDB.getAmount());
+        c.setProduct(cDB.getProduct());
+        c.setActive(cDB.getActive());
+        c.setUser(cDB.getUser());
+        c.setTotalPrice(cDB.getTotalPrice());
+        c.setId(cDB.getId());
+        return c;
+    }
+
+    public void updateOrderInfo(Order o, Order orderDB) {
+        o.setOrderStatus(orderDB.getOrderStatus());
+        o.setActive(orderDB.getActive());
+        o.setPayment(orderDB.getPayment());
+        o.setUser(orderDB.getUser());
+        o.setPhoneNumberOfClient(orderDB.getPhoneNumberOfClient());
+        o.setNameOfClient(orderDB.getNameOfClient());
+        o.setId(orderDB.getId());
+        o.setCreatedDate(orderDB.getCreatedDate());
+        o.setAddress(orderDB.getAddress());
+        o.setTotalPrice(orderDB.getTotalPrice());
+        o.setOrderDetails(orderDB.getOrderDetails());
+    }
 
 }

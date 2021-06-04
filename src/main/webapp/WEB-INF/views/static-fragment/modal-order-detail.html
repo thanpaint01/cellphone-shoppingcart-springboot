@@ -7,7 +7,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Chi tiết đơn hàng</h5>
+                    <h3 class="modal-title" id="exampleModalLabel">Chi tiết đơn hàng</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -37,10 +37,11 @@
                                         alt="apple" width="100" height="100">
                                 </div>
                                 <div class="order-item item-detail col-md-10 d-inline-flex">
-                                    <div class="col-md-6"><span th:text="${orderItemDetail.getProduct().getName()}">
+                                    <div class="col-md-6"><span th:text="${orderItemDetail.getProduct().getName()}"></span>
                                     </div>
-                                    <div class="col-md-3"><span
-                                            th:text="${orderItemDetail.getProduct().getBrand().getName()}"></span></div>
+                                    <div class="col-md-3">
+<!--                                        <span th:text="${orderItemDetail.getProduct().getBrand().getName()}"></span>-->
+                                    </div>
                                     <div class="col-md-3"><span class="product-price"
                                                                 th:text="${orderItemDetail.getProduct().getPrice()}"></span>/cái
                                     </div>

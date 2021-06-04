@@ -1,5 +1,4 @@
 package nlu.fit.cellphoneapp.receiver;
 
-public class SearchForm {
-
+public class UpdateInfoForm {
 }

@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : demo
+ Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 100418
+ Source Server Version : 100416
  Source Host           : localhost:3306
  Source Schema         : cellphone_springboot_db
 
  Target Server Type    : MySQL
- Target Server Version : 100418
+ Target Server Version : 100416
  File Encoding         : 65001
 
- Date: 12/05/2021 20:19:48
+ Date: 03/06/2021 22:40:34
 */
 
 SET NAMES utf8mb4;
@@ -22,12 +22,12 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `brand`;
 CREATE TABLE `brand`  (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `logo` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `active` int(11) NULL DEFAULT 1,
+  `active` int NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of brand
@@ -45,119 +45,167 @@ INSERT INTO `brand` VALUES (7, 'Vivo', 'img/brand/vivo.jpg', 1);
 -- ----------------------------
 DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `review_id` int(11) NULL DEFAULT NULL,
-  `user_id` int(11) NULL DEFAULT NULL,
-  `user_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `review_id` int NULL DEFAULT NULL,
+  `user_id` int NULL DEFAULT NULL,
   `content` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `is_admin` tinyint(4) NULL DEFAULT NULL,
-  `active` int(11) NULL DEFAULT 1,
+  `active` int NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_id`(`review_id`) USING BTREE,
   INDEX `product_id`(`user_id`) USING BTREE,
   CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`review_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `comment_idbk_2` FOREIGN KEY (`review_id`) REFERENCES `review` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of comment
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for favorite
 -- ----------------------------
 DROP TABLE IF EXISTS `favorite`;
 CREATE TABLE `favorite`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NULL DEFAULT NULL,
-  `product_id` int(11) NULL DEFAULT NULL,
-  `active` int(11) NULL DEFAULT 1,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NULL DEFAULT NULL,
+  `product_id` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `yeuthich1`(`user_id`) USING BTREE,
   INDEX `yeuthich2`(`product_id`) USING BTREE,
   CONSTRAINT `yeuthich1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `yeuthich2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of favorite
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for item_cart
 -- ----------------------------
 DROP TABLE IF EXISTS `item_cart`;
 CREATE TABLE `item_cart`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `product_id` int NOT NULL,
   `product_name` varchar(225) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `amount` int(11) NULL DEFAULT NULL,
+  `amount` int NULL DEFAULT NULL,
   `img` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `total_price` int(11) NULL DEFAULT NULL,
-  `active` int(11) NOT NULL,
+  `total_price` int NULL DEFAULT NULL,
+  `active` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `iduser`(`user_id`) USING BTREE,
   INDEX `cart_ibfk_1`(`product_id`) USING BTREE,
   CONSTRAINT `item_cart_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `item_cart_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of item_cart
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for order
 -- ----------------------------
 DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
   `status` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `created_date` date NULL DEFAULT NULL,
   `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `total_price` decimal(10, 2) NULL DEFAULT NULL,
-  `active` int(11) NULL DEFAULT 1,
+  `active` int NULL DEFAULT 1,
   `payment` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `iduser`(`user_id`) USING BTREE,
   INDEX `donhang2`(`status`) USING BTREE,
   CONSTRAINT `order_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 42 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 50 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of order
 -- ----------------------------
-INSERT INTO `order` VALUES (41, 26, 'Đang tiếp nhận', '2021-05-12', '123a, Háng Lìa, Điện Biên Đông, Điện Biên', 'Ong Minh Dinh', '0358058540', 13170000.00, 1, 'Trực tiếp');
+INSERT INTO `order` VALUES (42, 28, 'Giao thành công', '2021-05-13', '35/1/2 Đặng Thị Rành P. Linh Tây Q.Thủ Đức TPHCM, Đắk Mil, Đắk Mil, Đắk Nông', 'Vũ Minh Hiếu', '0964494830', 21250000.00, 1, 'Online');
+INSERT INTO `order` VALUES (43, 28, 'Giao thành công', '2021-04-13', '35/1/2 Đặng Thị Rành P. Linh Tây Q.Thủ Đức TPHCM, Hưng Bình, Đắk R\'lấp, Đắk Nông', 'Vũ Minh Hiếu', '0964494830', 59820000.00, 1, 'Trực tiếp');
+INSERT INTO `order` VALUES (44, 28, 'Giao thành công', '2021-05-10', '35/1/2 Đặng Thị Rành P. Linh Tây Q.Thủ Đức TPHCM, Bình Lộc, Long Khánh, Đồng Nai', 'Vũ Minh Hiếu', '0964494830', 90470000.00, 1, 'Online');
+INSERT INTO `order` VALUES (45, 28, 'Giao thành công', '2021-03-15', '35/1/2 Đặng Thị Rành P. Linh Tây Q.Thủ Đức TPHCM, Hưng Chiến, Bình Long, Bình Phước', 'Vũ Minh Hiếu', '0964494830', 43510000.00, 1, 'Trực tiếp');
+INSERT INTO `order` VALUES (46, 28, 'Giao thành công', '2021-02-10', '35/1/2 Đặng Thị Rành P. Linh Tây Q.Thủ Đức TPHCM, Hoà Mục, Chợ Mới, Bắc Kạn', 'Vũ Minh Hiếu', '0964494830', 40240000.00, 1, 'Online');
+INSERT INTO `order` VALUES (47, 28, 'Giao thành công', '2021-02-11', '35/1/2 Đặng Thị Rành P. Linh Tây Q.Thủ Đức TPHCM, Đắk Sắk, Đắk Mil, Đắk Nông', 'Vũ Minh Hiếu', '0964494830', 29318000.00, 1, 'Trực tiếp');
+INSERT INTO `order` VALUES (48, 28, 'Giao thành công', '2021-05-15', '35/1/2 Đặng Thị Rành P. Linh Tây Q.Thủ Đức TPHCM, Hoà Liên, Hoà Vang, Đà Nẵng', 'Vũ Minh Hiếu', '0964494830', 33625000.00, 1, 'Online');
+INSERT INTO `order` VALUES (49, 28, 'Giao thành công', '2021-04-14', '35/1/2 Đặng Thị Rành P. Linh Tây Q.Thủ Đức TPHCM, 3, Cao Lãnh, Đồng Tháp', 'Vũ Minh Hiếu', '0964494830', 24850000.00, 1, 'Trực tiếp');
 
 -- ----------------------------
 -- Table structure for order_detail
 -- ----------------------------
 DROP TABLE IF EXISTS `order_detail`;
 CREATE TABLE `order_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) NULL DEFAULT NULL,
-  `product_id` int(11) NULL DEFAULT NULL,
-  `amount` int(11) NULL DEFAULT NULL,
-  `initail_price` bigint(20) NULL DEFAULT NULL,
-  `saled_price` bigint(20) NULL DEFAULT NULL,
-  `total_price` bigint(20) NULL DEFAULT NULL,
-  `price` int(11) NULL DEFAULT NULL,
-  `active` int(11) NULL DEFAULT 1,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `order_id` int NULL DEFAULT NULL,
+  `product_id` int NULL DEFAULT NULL,
+  `amount` int NULL DEFAULT NULL,
+  `initail_price` bigint NULL DEFAULT NULL,
+  `saled_price` bigint NULL DEFAULT NULL,
+  `total_price` bigint NULL DEFAULT NULL,
+  `price` int NULL DEFAULT NULL,
+  `active` int NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `chitietdonhang2`(`product_id`) USING BTREE,
   INDEX `chitietdonhang1`(`order_id`) USING BTREE,
   CONSTRAINT `order_detail_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `order_detail_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 57 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 91 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of order_detail
 -- ----------------------------
-INSERT INTO `order_detail` VALUES (55, 41, 111, 2, 8780000, 0, 4390000, 4390000, 1);
-INSERT INTO `order_detail` VALUES (56, 41, 101, 1, 4390000, 0, 4390000, 4390000, 1);
+INSERT INTO `order_detail` VALUES (57, 42, 6, 1, 3690000, 0, 3690000, 3690000, 1);
+INSERT INTO `order_detail` VALUES (58, 42, 101, 1, 4390000, 0, 4390000, 4390000, 1);
+INSERT INTO `order_detail` VALUES (59, 42, 111, 3, 13170000, 0, 13170000, 4390000, 1);
+INSERT INTO `order_detail` VALUES (60, 43, 95, 1, 3490000, 0, 3490000, 3490000, 1);
+INSERT INTO `order_detail` VALUES (61, 43, 10, 1, 8490000, 0, 8490000, 8490000, 1);
+INSERT INTO `order_detail` VALUES (62, 43, 94, 1, 3490000, 0, 3490000, 3490000, 1);
+INSERT INTO `order_detail` VALUES (63, 43, 59, 1, 4390000, 0, 4390000, 4390000, 1);
+INSERT INTO `order_detail` VALUES (64, 43, 9, 4, 39960000, 0, 39960000, 9990000, 1);
+INSERT INTO `order_detail` VALUES (65, 44, 3, 3, 62070000, 0, 62070000, 20690000, 1);
+INSERT INTO `order_detail` VALUES (66, 44, 2, 1, 6020000, 0, 6020000, 6020000, 1);
+INSERT INTO `order_detail` VALUES (67, 44, 1, 1, 5390000, 0, 5390000, 5390000, 1);
+INSERT INTO `order_detail` VALUES (68, 44, 33, 1, 16990000, 0, 16990000, 16990000, 1);
+INSERT INTO `order_detail` VALUES (69, 45, 14, 1, 2990000, 0, 2990000, 2990000, 1);
+INSERT INTO `order_detail` VALUES (70, 45, 104, 2, 5980000, 0, 5980000, 2990000, 1);
+INSERT INTO `order_detail` VALUES (71, 45, 16, 2, 6580000, 0, 6580000, 3290000, 1);
+INSERT INTO `order_detail` VALUES (72, 45, 15, 4, 27960000, 0, 27960000, 6990000, 1);
+INSERT INTO `order_detail` VALUES (73, 46, 36, 1, 8490000, 0, 8490000, 8490000, 1);
+INSERT INTO `order_detail` VALUES (74, 46, 26, 2, 10980000, 0, 10980000, 5490000, 1);
+INSERT INTO `order_detail` VALUES (75, 46, 18, 1, 4290000, 0, 4290000, 4290000, 1);
+INSERT INTO `order_detail` VALUES (76, 46, 87, 1, 8490000, 0, 8490000, 8490000, 1);
+INSERT INTO `order_detail` VALUES (77, 46, 77, 1, 7990000, 0, 7990000, 7990000, 1);
+INSERT INTO `order_detail` VALUES (78, 47, 58, 4, 13160000, 0, 13160000, 3290000, 1);
+INSERT INTO `order_detail` VALUES (79, 47, 45, 1, 2980000, 0, 2980000, 2980000, 1);
+INSERT INTO `order_detail` VALUES (80, 47, 53, 1, 3299000, 0, 3299000, 3299000, 1);
+INSERT INTO `order_detail` VALUES (81, 47, 44, 2, 6580000, 0, 6580000, 3290000, 1);
+INSERT INTO `order_detail` VALUES (82, 47, 42, 1, 3299000, 0, 3299000, 3299000, 1);
+INSERT INTO `order_detail` VALUES (83, 48, 49, 1, 5695000, 0, 5695000, 5695000, 1);
+INSERT INTO `order_detail` VALUES (84, 48, 112, 1, 3790000, 0, 3790000, 3790000, 1);
+INSERT INTO `order_detail` VALUES (85, 48, 48, 3, 15870000, 0, 15870000, 5290000, 1);
+INSERT INTO `order_detail` VALUES (86, 48, 50, 1, 2980000, 0, 2980000, 2980000, 1);
+INSERT INTO `order_detail` VALUES (87, 48, 89, 1, 5290000, 0, 5290000, 5290000, 1);
+INSERT INTO `order_detail` VALUES (88, 49, 22, 1, 3490000, 0, 3490000, 3490000, 1);
+INSERT INTO `order_detail` VALUES (89, 49, 83, 2, 8780000, 0, 8780000, 4390000, 1);
+INSERT INTO `order_detail` VALUES (90, 49, 21, 2, 12580000, 0, 12580000, 6290000, 1);
 
 -- ----------------------------
 -- Table structure for pin
 -- ----------------------------
 DROP TABLE IF EXISTS `pin`;
 CREATE TABLE `pin`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `capacity` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '',
-  `active` int(11) NULL DEFAULT 1,
+  `active` int NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pin
@@ -173,16 +221,16 @@ INSERT INTO `pin` VALUES (5, '5000 mAh\r\n', 1);
 -- ----------------------------
 DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `img` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `brand_id` int(11) NULL DEFAULT NULL,
+  `brand_id` int NULL DEFAULT NULL,
   `price` decimal(20, 0) NULL DEFAULT NULL,
-  `amount` int(11) NULL DEFAULT NULL,
-  `ram_id` int(11) NULL DEFAULT NULL,
-  `rom_id` int(11) NULL DEFAULT NULL,
-  `pin_id` int(11) NULL DEFAULT NULL,
-  `warranty` int(11) NULL DEFAULT NULL,
+  `amount` int NULL DEFAULT NULL,
+  `ram_id` int NULL DEFAULT NULL,
+  `rom_id` int NULL DEFAULT NULL,
+  `pin_id` int NULL DEFAULT NULL,
+  `warranty` int NULL DEFAULT NULL,
   `img01` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `img02` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `img03` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
@@ -199,7 +247,7 @@ CREATE TABLE `product`  (
   `des_img01` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `des_img02` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `des_img03` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `active` int(11) NULL DEFAULT 1,
+  `active` int NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `sanpham_hang`(`brand_id`) USING BTREE,
   INDEX `sanpham_ram`(`ram_id`) USING BTREE,
@@ -209,7 +257,7 @@ CREATE TABLE `product`  (
   CONSTRAINT `product_ibfk_2` FOREIGN KEY (`ram_id`) REFERENCES `ram` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `product_ibfk_3` FOREIGN KEY (`rom_id`) REFERENCES `rom` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `product_ibfk_4` FOREIGN KEY (`pin_id`) REFERENCES `pin` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 17130022 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 17130022 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of product
@@ -345,7 +393,7 @@ INSERT INTO `product` VALUES (125, 'img/sanpham/vivo/y15/d1.jpg', 'Vivo Y15 ', 7
 -- ----------------------------
 DROP TABLE IF EXISTS `product_detail`;
 CREATE TABLE `product_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `title1` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `title2` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `title3` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
@@ -358,7 +406,7 @@ CREATE TABLE `product_detail`  (
   `active` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '1',
   PRIMARY KEY (`id`) USING BTREE,
   CONSTRAINT `product_detail_ibfk_1` FOREIGN KEY (`id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 126 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 126 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of product_detail
@@ -494,11 +542,11 @@ INSERT INTO `product_detail` VALUES (125, 'Thiết kế sang trọng, hiện đ�
 -- ----------------------------
 DROP TABLE IF EXISTS `ram`;
 CREATE TABLE `ram`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `capacity` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `active` int(11) NULL DEFAULT 1,
+  `active` int NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ram
@@ -515,26 +563,30 @@ INSERT INTO `ram` VALUES (6, '12 GB', 1);
 -- ----------------------------
 DROP TABLE IF EXISTS `review`;
 CREATE TABLE `review`  (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NULL DEFAULT NULL,
-  `user_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `product_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL,
+  `user_id` int NULL DEFAULT NULL,
+  `product_id` int NULL DEFAULT NULL,
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `stars` int(11) NULL DEFAULT NULL,
-  `active` int(11) NULL DEFAULT NULL,
+  `stars` int NULL DEFAULT NULL,
+  `isReview` int NULL DEFAULT NULL,
+  `active` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `review_ibfk_1`(`user_id`) USING BTREE,
   INDEX `review_ibfk_2`(`product_id`) USING BTREE,
   CONSTRAINT `review_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `review_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of review
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for role
 -- ----------------------------
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role`  (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `type` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
@@ -542,18 +594,22 @@ CREATE TABLE `role`  (
   `updated_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `created_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of role
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for rom
 -- ----------------------------
 DROP TABLE IF EXISTS `rom`;
 CREATE TABLE `rom`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `capacity` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `active` int(11) NULL DEFAULT 1,
+  `active` int NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of rom
@@ -569,11 +625,11 @@ INSERT INTO `rom` VALUES (5, '256 GB', 1);
 -- ----------------------------
 DROP TABLE IF EXISTS `scope_price`;
 CREATE TABLE `scope_price`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `scope_price` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `active` int(11) NULL DEFAULT 1,
+  `active` int NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of scope_price
@@ -588,11 +644,11 @@ INSERT INTO `scope_price` VALUES (4, 'trên 13 triệu', 1);
 -- ----------------------------
 DROP TABLE IF EXISTS `slide`;
 CREATE TABLE `slide`  (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `img` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `active` tinyint(4) NULL DEFAULT 1,
+  `active` tinyint NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of slide
@@ -606,7 +662,7 @@ INSERT INTO `slide` VALUES (3, 'img/slide/3.png', 1);
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `full_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '',
@@ -617,17 +673,18 @@ CREATE TABLE `user`  (
   `birth` date NULL DEFAULT NULL,
   `key` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `expired_key` datetime(0) NULL DEFAULT NULL,
-  `role` int(11) NULL DEFAULT 1 COMMENT '1: user, 2: admin, 0:other',
-  `active` tinyint(4) NULL DEFAULT 0,
+  `role` int NULL DEFAULT 1 COMMENT '1: user, 2: admin, 0:other',
+  `active` tinyint NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `email`(`email`) USING BTREE,
   INDEX `role_id`(`role`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (21, 'daochichaoden@gmail.com', '$2a$10$OgLRQuaKIyJN/mLoJ1m5Ou41lpnkHb138Vm.tsnMenKAWfYqKeLs2', 'Vũ Minh Hiếu', NULL, NULL, NULL, 'Nam', NULL, NULL, NULL, 1, 1);
 INSERT INTO `user` VALUES (26, 'ongdinh1099@gmail.com', '$2a$10$b88RO7sAkeuawyC92RUfY.hRH.l/E6IQxzs1v9i3oVutmjfwOcciC', 'Ong Minh Dinh', NULL, NULL, NULL, 'Nam', NULL, NULL, NULL, 1, 1);
+INSERT INTO `user` VALUES (28, 'daochichaoden@gmail.com', '$2a$10$r.FyJ90yOgAG5vx99XP2DOzguMwsKmOJ.CeqEhc6eO9Wo7twnRVSG', 'Vũ Minh Hiếu', NULL, NULL, NULL, 'Nam', NULL, NULL, NULL, 1, 1);
+INSERT INTO `user` VALUES (29, 'daochichaoden2@gmail.com', '$2a$10$3ggEjEovxs4RUJZsiFWT/.E3M6RulDZxyJiRz/ndoiaxW.zk9AyrK', 'Vũ Minh Hiếu', NULL, NULL, NULL, 'Nam', NULL, NULL, NULL, 1, -1);
 
 SET FOREIGN_KEY_CHECKS = 1;

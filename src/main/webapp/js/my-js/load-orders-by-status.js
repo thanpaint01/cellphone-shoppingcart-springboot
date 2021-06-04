@@ -33,8 +33,7 @@ $('#btnSearchByOrderID').click(function () {
     })
 
 })
-
-$('.fas.fa-arrow-circle-right.icon.modal-del').click(function () {
+$(".table-body").on("click",".fas.fa-arrow-circle-right.icon.modal-del", function(){
     var idDeny = $(this).prop('id').split('-')[1]
     $('#btnDenyOrder-' + idDeny).click(function () {
         $.ajax({

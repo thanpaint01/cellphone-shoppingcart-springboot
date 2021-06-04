@@ -53,7 +53,7 @@ $("#register-form").submit(function (e) {
         data: JSON.stringify($(this).serializeObject()),
         contentType: "application/json",
         accept: "text/plain",
-        url: "/user/register",
+        url: "/register",
         beforeSend: function () {
             showMessage(true, "Đang xử lý", carrier);
             btn.prop("disabled", true);
@@ -113,16 +113,17 @@ $("#login-form").submit(function (e) {
     var carrier = $("#show-login-message");
     var password = $("#password");
     $.ajax({
+        context:this,
         type: "POST",
         data: $(this).serialize(),
-        contentType: "application/x-www-form-urlencoded",
         accept: "text/plain",
-        url: "/user/login",
+        url: "/login",
         beforeSend: function () {
             showMessage(true, "Đang xử lý", carrier);
             btn.prop("disabled", true);
         },
         success: function (result) {
+            console.log(result);
             switch (result) {
                 case "emptyfield":
                     showMessage(false, "Hãy điền đủ các trường", carrier);
@@ -146,6 +147,9 @@ $("#login-form").submit(function (e) {
             }
         },
         error: function (request, status, error) {
+            console.log(request.responseText);
+            console.log(request.status);
+            console.log(status);
             showMessage(false, "Đã có lỗi xảy ra với hệ thống", carrier);
         },
         complete: function () {
@@ -162,7 +166,7 @@ $("#forgotpass-form").submit(function (e) {
         data: $(this).serialize(),
         contentType: "application/x-www-form-urlencoded",
         accept: "text/plain",
-        url: "/user/forgot-pass",
+        url: "/forgot-pass",
         beforeSend: function () {
             showMessage(true, "Đang xử lý", carrier);
             btn.prop("disabled", true);
@@ -216,7 +220,7 @@ $("#resetpass-form").submit(function (e) {
         data: $(this).serialize(),
         contentType: "application/x-www-form-urlencoded",
         accept: "text/plain",
-        url: "/user/reset-pass",
+        url: "/reset-pass",
         beforeSend: function () {
             showMessage(true, "Đang xử lý", carrier);
             btn.prop("disabled", true);

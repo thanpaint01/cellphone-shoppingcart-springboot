@@ -9,7 +9,7 @@ public interface ICartService {
     CartItem insertIntoTable(CartItem cartItem);
     List<CartItem> getAllByUserID(int userID);
     CartItem getOneCartItem(int id);
-    boolean deleteOne(int id);
+    void deleteOne(int id);
     boolean removeAllByUserId(int userID);
     CartItem getOneByUserAndProduct(int userID, int productID);
 }

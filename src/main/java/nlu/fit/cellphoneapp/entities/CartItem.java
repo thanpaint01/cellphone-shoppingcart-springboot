@@ -42,8 +42,12 @@ public class CartItem {
         setTotalPrice(this.getAmount()*this.getProduct().getPrice());
     }
 
-
-
-
-
+    public boolean equals(CartItem obj) {
+       if(obj.getAmount() != amount) return false;
+       if(obj.getProduct().getId() != product.getId()) return false;
+       if(obj.getUser().getId() != user.getId()) return false;
+       if(obj.getTotalPrice() != totalPrice) return false;
+       if(obj.getActive() != active) return false;
+       return true;
+    }
 }

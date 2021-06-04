@@ -5,11 +5,11 @@ import nlu.fit.cellphoneapp.entities.Order;
 import nlu.fit.cellphoneapp.entities.User;
 import nlu.fit.cellphoneapp.helper.DateHelper;
 import nlu.fit.cellphoneapp.helper.StringHelper;
-import nlu.fit.cellphoneapp.others.BcryptEncoder;
 import nlu.fit.cellphoneapp.others.Link;
-import nlu.fit.cellphoneapp.receiver.RegisterForm;
+import nlu.fit.cellphoneapp.security.MyUserDetail;
 import nlu.fit.cellphoneapp.services.EmailSenderService;
 import nlu.fit.cellphoneapp.services.ICartService;
+import nlu.fit.cellphoneapp.services.IOrderService;
 import nlu.fit.cellphoneapp.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,10 +21,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.HashSet;
+
+import static nlu.fit.cellphoneapp.security.MyUserDetail.getUserIns;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -35,10 +35,12 @@ public class UserController {
     EmailSenderService emailSenderService;
     @Autowired
     ICartService cartService;
+    @Autowired
+    IOrderService orderService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ModelAndView myAccountPage(HttpSession session) {
-        User user = (User) session.getAttribute(User.SESSION);
+    public ModelAndView myAccountPage() {
+        User user = getUserIns();
         ModelAndView model = new ModelAndView("/consumer/my-account");
         model.addObject("CONTENT_TITLE", "Tài Khoản Của Tôi");
         if (user.getActive() == User.ACTIVE.UNVERTIFIED.value()) {
@@ -48,7 +50,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/email/verify/{token}")
-    public ModelAndView vertificateEmail(@PathVariable("token") String token, HttpSession session) {
+    public ModelAndView vertificateEmail(@PathVariable("token") String token) {
         User u;
         if ((u = userService.findOneByToken(token)) == null)
             return new ModelAndView("redirect:/");
@@ -56,7 +58,10 @@ public class UserController {
             u.setKey(null);
             u.setExpiredKey(null);
             u.setActive(User.ACTIVE.ACTIVE.value());
-            if (session.getAttribute(User.SESSION) != null) session.setAttribute(User.SESSION, u);
+            User user = getUserIns();
+            user.setKey(null);
+            user.setExpiredKey(null);
+            user.setActive(User.ACTIVE.ACTIVE.value());
             if (!userService.save(u)) {
                 return new ModelAndView("redirect:/");
             }
@@ -64,83 +69,6 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "logout", method = RequestMethod.GET)
-    public ModelAndView logout(HttpSession session) {
-        session.setAttribute(User.SESSION, null);
-        session.invalidate();
-        return new ModelAndView("redirect:/");
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@RequestParam(name = "email") String email, @RequestParam(name = "password") String password, HttpSession session) {
-        User user;
-        if (StringHelper.isNoValue(email) || StringHelper.isNoValue(password))
-            return "emptyfield";
-        else if ((user = userService.findOneByLogin(email, password)) != null) {
-            session.setAttribute(User.SESSION, user);
-            Set<CartItem> cartItems = (Set<CartItem>) session.getAttribute("cartSession");
-            Set<CartItem> cartItemsUser = user.getCartItems();
-            if (null != cartItems) {
-                //append cart session into user
-                CartItem[] cs = cartItems.toArray(new CartItem[cartItems.size()]);
-                //truoc khi append can lay cart User ra
-                if (cartItemsUser.size() > 0) {
-                    //duyet cart user
-                    for (int i = 0; i < cs.length; i++) {
-                        cs[i].setUser(user);
-                        for (CartItem c : cartItemsUser) {
-                            if (cs[i].getProduct().getId() == c.getProduct().getId()) {
-                                //không lưu vào user
-                                cs[i] = c;//gan cs[i] lai de luu csdl
-                            }
-                        }
-                        cartItemsUser.add(cs[i]);
-                        cartService.insertIntoTable(cs[i]);//luu lai vao csdl
-                    }
-                } else {
-                    for (CartItem c : cartItems) {
-                        c.setUser(user);
-                        cartItemsUser.add(c);
-                        cartService.insertIntoTable(c);
-                    }
-                }
-
-
-                session.setAttribute("cartSession", null);
-            }
-            return "success";
-        } else
-            return "failed";
-    }
-
-
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public @ResponseBody
-    String register(@RequestBody RegisterForm form, HttpServletRequest request
-    ) {
-        String error = User.validInfo(form);
-        if (error != null) {
-            return error;
-        } else if (!userService.isEmailUnique(form.newemail)) {
-            return "errmailexist";
-        } else {
-            User user = new User();
-            user.setEmail(form.newemail);
-            user.setGender(User.toStringGender(Integer.valueOf(form.newgender)));
-            user.setPassword(BcryptEncoder.encode(form.newpassword));
-            user.setFullName(form.newfullname);
-            user.setActive(User.ACTIVE.UNVERTIFIED.value());
-            user.setRole(User.ROLE.CONSUMEER.value());
-            if (!userService.save(user)) {
-                return "error";
-            } else {
-                HttpSession session = request.getSession();
-                session.setAttribute(User.SESSION, user);
-                return "success";
-            }
-        }
-    }
 
     @RequestMapping(value = "request-vertify-email", method = RequestMethod.POST)
     @ResponseBody
@@ -159,71 +87,63 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/forgot-pass", method = RequestMethod.POST)
-    public @ResponseBody
-    String forgotPass(@RequestParam(name = "email") String email) {
-        User user;
-        if (StringHelper.isNoValue(email)) return "emptyfield";
-        else if ((user = userService.findOneByEmailActive(email, User.ACTIVE.ACTIVE.value())) == null &&
-                (user = userService.findOneByEmailActive(email, User.ACTIVE.UNVERTIFIED.value())) == null) {
-            return "unactive";
-        } else {
-            String token;
-            while (userService.isTokenUnique((token = StringHelper.getAlphaNumericString(10)))) ;
-            user.setKey(token);
-            user.setExpiredKey(DateHelper.addMinute(15));
-            if (!userService.save(user)) {
-                return "error";
-            }
-            if (emailSenderService.sendEmailResetPassword(email, user.getFullName(), token)) {
-                return "success";
-            } else
-                return "failed";
-        }
-
-    }
-
-    @RequestMapping(value = "/reset-pass", method = RequestMethod.POST)
-    @ResponseBody
-    public String resetPass(@RequestParam(name = "resetcode") String
-                                    resetcode, @RequestParam(name = "newpass") String newpass, @RequestParam(name = "confirmpass") String
-                                    confirmpass) {
-        User user;
-        List<String> toCheck = new ArrayList<>();
-        toCheck.add(resetcode);
-        toCheck.add(newpass);
-        toCheck.add(confirmpass);
-        if (StringHelper.isNoValue(toCheck)) {
-            return "emptyfield";
-        } else if (!User.validPassword(newpass))
-            return "validpass";
-        else if (!newpass.equals(confirmpass))
-            return "notequate";
-        else if ((user = userService.findOneByToken(resetcode)) == null) {
-            return "failcode";
-        } else {
-            user.setPassword(BcryptEncoder.encode(newpass));
-            user.setKey(null);
-            user.setExpiredKey(null);
-            if (!userService.save(user)) {
-                return "error";
-            }
-            return "success";
-        }
-    }
-
 
     //UserMyAccountManage
     @GetMapping("my-order")
-    public String goToMyOrderManagementPage(HttpSession session, Model model) {
-        User user = (User) session.getAttribute(User.SESSION);
+    public String goToMyOrderManagementPage(Model model, HttpSession session) {
+        User user = MyUserDetail.getUserIns();
         model.addAttribute("CONTENT_TITLE", "Quản lý đơn hàng");
         if (null == user || (user.getOrders().size() == 0)) {
             return "consumer/my-order-empty";
         } else {
+            checkAndSetOrderUserDB(user);
+            session.setAttribute(User.SESSION, user);
             return "consumer/my-order";
         }
     }
+
+    //
+
+    public Collection<Order> checkAndSetOrderUserDB(User user) {
+        Collection<Order> collectionOrderUserDB = orderService.getListOrderOfUser(user.getId());
+        Collection<Order> listOrderDeletedDB = new HashSet<>();
+        if (collectionOrderUserDB.size() < user.getOrders().size()) {
+            int i = 0;
+            while (i < user.getOrders().size()) {
+                boolean isEquals = false;
+                Order cq = (Order) user.getOrders().toArray()[i];
+                for (Order c : collectionOrderUserDB) {
+                    if (cq.getId() == c.getId()) {
+                        isEquals = true;
+                    }
+                }
+                i++;
+                if (isEquals == false) {
+                    listOrderDeletedDB.add(cq);
+                }
+            }
+            for (Order order : listOrderDeletedDB) {
+                System.out.println("USER DELETE ORDER ID = " + order.getId());
+                user.removeCartItem(order.getId());
+            }
+        }
+        int i = 0;
+        while (i < collectionOrderUserDB.size()) {
+            Order order = (Order) collectionOrderUserDB.toArray()[i];
+            for (Order c : user.getOrders()) {
+                if (c.getId() == order.getId()) {
+                    if (!c.equals(order)) {
+                        user.updateOrderInfo(c, order);
+                    }
+                }
+            }
+            i++;
+        }
+        return user.getOrders();
+    }
+
+
+    //
 
 
     @GetMapping("ajax-load-by-status")

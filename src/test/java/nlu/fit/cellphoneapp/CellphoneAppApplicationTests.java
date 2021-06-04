@@ -1,16 +1,16 @@
 package nlu.fit.cellphoneapp;
 
-import nlu.fit.cellphoneapp.entities.Order;
-import nlu.fit.cellphoneapp.entities.User;
 import nlu.fit.cellphoneapp.helper.DateHelper;
 import nlu.fit.cellphoneapp.repositories.custom.ReportRepository;
 import nlu.fit.cellphoneapp.repositories.interfaces.IBrandRepository;
 import nlu.fit.cellphoneapp.repositories.interfaces.IOrderRepository;
+import nlu.fit.cellphoneapp.repositories.interfaces.IUserRepository;
 import nlu.fit.cellphoneapp.services.IOrderService;
 import nlu.fit.cellphoneapp.services.IUserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
 import java.util.Date;
 
 
@@ -26,6 +26,8 @@ class CellphoneAppApplicationTests {
     IBrandRepository brandRepository;
     @Autowired
     ReportRepository reportRepository;
+    @Autowired
+    IUserRepository userRepository;
 
     @Test
     void contextLoads() {
@@ -42,15 +44,17 @@ class CellphoneAppApplicationTests {
     }
 
     @Test
-    void testReport() {
-        System.out.println(userService.isEmailUnique("daochichaoden1@gmail.com"));
+    void login() {
+        if (userRepository==null){
+            System.out.println("NULL");
+        }else{
+            System.out.println("NOT");
+        }
     }
 
-
     @Test
-    void testLogin() {
-        User user = userService.findOneByLogin("daochichaoden@gmail.com", "Vuminhhieu123@");
-        System.out.println(user != null);
+    void testReport() {
+        System.out.println(userService.isEmailUnique("daochichaoden1@gmail.com"));
     }
 
 

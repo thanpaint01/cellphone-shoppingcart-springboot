@@ -29,6 +29,7 @@ public class CartServiceImpl implements ICartService {
         }
         return false;
     }
+
     @Override
     public CartItem insertIntoTable(CartItem cartItem) {
         CartItem cartItemEntity = cartItem;
@@ -57,12 +58,8 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
-    public boolean deleteOne(int id) {
-        if (id != 0) {
-            return cartRepo.deleteById(id);
-        } else {
-            return false;
-        }
+    public void deleteOne(int id) {
+        cartRepo.deleteById(id);
     }
 
     @Override

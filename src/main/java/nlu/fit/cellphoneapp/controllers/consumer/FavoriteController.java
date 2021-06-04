@@ -3,6 +3,7 @@ package nlu.fit.cellphoneapp.controllers.consumer;
 import nlu.fit.cellphoneapp.entities.Favorite;
 import nlu.fit.cellphoneapp.entities.Product;
 import nlu.fit.cellphoneapp.entities.User;
+import nlu.fit.cellphoneapp.security.MyUserDetail;
 import nlu.fit.cellphoneapp.services.IFavoriteService;
 import nlu.fit.cellphoneapp.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,8 @@ public class FavoriteController {
     private static final int ITEM_PER_PAGE = 10;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ModelAndView favoritePage(HttpSession session, @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
-        User user = (User) session.getAttribute(User.SESSION);
+    public ModelAndView favoritePage(@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+        User user = MyUserDetail.getUserIns();
         ModelAndView model = new ModelAndView("/consumer/favorite");
         model.addObject("CONTENT_TITLE", "Danh Sách Yêu Thích");
         Specification<Favorite> spec = Specification.where(favoriteService.getFavoriteByUserId(user.getId()));
@@ -43,7 +44,7 @@ public class FavoriteController {
     @ResponseBody
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addFavorite(@RequestParam("productId") int productId, HttpSession session) {
-        User user = (User) session.getAttribute(User.SESSION);
+        User user = MyUserDetail.getUserIns();
         Product product;
         if (user.hasFavoriteProduct(productId)) {
             return "hasFavoriteProduct";
@@ -65,7 +66,7 @@ public class FavoriteController {
     @ResponseBody
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String removeFavorite(@RequestParam("productId") int productId, HttpSession session) {
-        User user = (User) session.getAttribute(User.SESSION);
+        User user = MyUserDetail.getUserIns();
         if (!user.hasFavoriteProduct(productId)) {
             return "hasNotFavoriteProduct";
         } else {

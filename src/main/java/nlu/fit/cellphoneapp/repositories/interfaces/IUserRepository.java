@@ -18,7 +18,8 @@ public interface IUserRepository extends JpaRepository<User, Integer> {
     @Query("select u from User u where u.email=:email and u.active=:active")
     User findOneByEmailActive(@Param("email") String email, @Param("active") int active);
 
-
+    @Query("select u from  User u where  u.email=:email and (u.active=1 or u.active=-1)")
+    User findOneLogin(@Param("email") String email);
     @Query("SELECT COUNT(u) FROM User u WHERE u.key=?1")
     long countTokens(String token);
 

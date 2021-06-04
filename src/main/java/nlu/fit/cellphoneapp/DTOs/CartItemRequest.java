@@ -1,5 +1,7 @@
 package nlu.fit.cellphoneapp.DTOs;
 
+import nlu.fit.cellphoneapp.entities.CartItem;
+
 public class CartItemRequest {
     private int id;
     private int userID;
@@ -8,6 +10,7 @@ public class CartItemRequest {
     private String productName;
     private String productImg;
     private double totalPrice;
+    private double priceProduct;
     private int active;
 
     public CartItemRequest() {
@@ -88,6 +91,14 @@ public class CartItemRequest {
         this.active = active;
     }
 
+    public double getPriceProduct() {
+        return priceProduct;
+    }
+
+    public void setPriceProduct(double priceProduct) {
+        this.priceProduct = priceProduct;
+    }
+
     @Override
     public String toString() {
         return "CartItemRequest{" +
@@ -106,4 +117,15 @@ public class CartItemRequest {
     public void updateTotalPrice(double currentPrice){
         setTotalPrice(this.amount*currentPrice);
     }
+
+    public void updateTotalPrice(){
+        setTotalPrice(this.amount*priceProduct);
+    }
+
+    public CartItem toCartItem(){
+        CartItem cartItem = new CartItem();
+        cartItem.setActive(1);
+        return cartItem;
+    }
+
 }

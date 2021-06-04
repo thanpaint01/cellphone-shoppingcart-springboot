@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title th:text="${CONTENT_TITLE}"></title>
     <meta name="keywords" content="">
@@ -155,9 +155,10 @@
 <!--    some script for cart-->
     <script th:src="@{js/my-js/format-price-of-product.js}"></script>
     <!--    get cart-->
-    <script th:src="@{js/my-js/auto-increment-price.js}"></script>
-    <script th:src="@{/js/my-js/get-cart.js}"></script>
-    <script th:src="@{/js/my-js/box-cart-right.js}"></script>
+<!--    <script th:src="@{js/my-js/auto-increment-price.js}"></script>-->
+<!--    <script th:src="@{/js/my-js/get-cart.js}"></script>-->
+<!--    <script th:src="@{/js/my-js/box-cart-right.js}"></script>-->
+    <script th:src="@{/js/my-js/cart-action-version2.js}"></script>
 
     <th:block th:if="${session.currentUser == null}">
         <script th:src="@{/js/my-js/lrf-modal.js}"></script>

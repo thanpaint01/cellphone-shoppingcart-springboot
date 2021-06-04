@@ -47,6 +47,7 @@
                                 <th>Xóa</th>
                             </tr>
                             </thead>
+                            <tbody id="tbody-cart">
                             <th:block th:if="${null != session.currentUser}">
                                 <tr
                                         th:each="cartItem : ${session.currentUser.getCartItems()}"
@@ -242,10 +243,7 @@
 
 <!-- block file script for shop page -->
 <th:block layout:fragment="scripts">
-    <script src="../../../js/my-js/format-price-of-product.js"></script>
-    <script src="../../../js/my-js/auto-increment-price.js"></script>
-    <script src="../../../js/my-js/toast.js"></script>
-    <script th:src="@{/js/my-js/box-cart-right.js}"></script>
+
 </th:block>
 </body>
 
