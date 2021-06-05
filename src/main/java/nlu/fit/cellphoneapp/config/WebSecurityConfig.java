@@ -1,10 +1,7 @@
 package nlu.fit.cellphoneapp.config;
 
 import nlu.fit.cellphoneapp.others.BcryptEncoder;
-import nlu.fit.cellphoneapp.security.MyAccessDeniedHandler;
-import nlu.fit.cellphoneapp.security.MyAuthenticationFailureHandler;
-import nlu.fit.cellphoneapp.security.MyAuthenticationSuccessHandler;
-import nlu.fit.cellphoneapp.security.UserDetailService;
+import nlu.fit.cellphoneapp.security.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -25,6 +22,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailService userDetailService;
     @Autowired
     private MyAccessDeniedHandler myAccessDeniedHandler;
+    @Autowired
+    private MyForbiddenEntryPoint myForbiddenEntryPoint;
 
     private static final String[] PUBLIC_MATCHERS = {
             "/fontawesome/**",
@@ -44,7 +43,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/contact/**",
             "/error/**/*",
             "/console/**",
-            "/signup"
+            "/register",
+            "/home",
+            "/forgot-pass",
+            "/reset-pass"
     };
 
     @Override
@@ -71,6 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .exceptionHandling().accessDeniedHandler(myAccessDeniedHandler)
+                .and().exceptionHandling().authenticationEntryPoint(myForbiddenEntryPoint)
                 .and()
                 .rememberMe().key("uniqueAndSecret").and().csrf().disable().cors();
         ;

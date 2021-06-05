@@ -41,9 +41,9 @@ public class HomeController {
         return "consumer/index";
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(value = "register", method = RequestMethod.POST)
     public @ResponseBody
-    String register(@RequestBody RegisterForm form, HttpServletRequest request
+    String register(@RequestBody RegisterForm form
     ) {
         String error = User.validInfo(form);
         if (error != null) {
@@ -53,7 +53,7 @@ public class HomeController {
         } else {
             User user = new User();
             user.setEmail(form.newemail);
-            user.setGender(User.toStringGender(Integer.valueOf(form.newgender)));
+            user.setGender(User.toStringGender(Integer.parseInt(form.newgender)));
             user.setPassword(BcryptEncoder.encode(form.newpassword));
             user.setFullName(form.newfullname);
             user.setActive(User.ACTIVE.UNVERTIFIED.value());
@@ -61,8 +61,6 @@ public class HomeController {
             if (!userService.save(user)) {
                 return "error";
             } else {
-                HttpSession session = request.getSession();
-                session.setAttribute(User.SESSION, user);
                 return "success";
             }
         }

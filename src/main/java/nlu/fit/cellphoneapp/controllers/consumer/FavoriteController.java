@@ -65,7 +65,7 @@ public class FavoriteController {
 
     @ResponseBody
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public String removeFavorite(@RequestParam("productId") int productId, HttpSession session) {
+    public String removeFavorite(@RequestParam("productId") int productId) {
         User user = MyUserDetail.getUserIns();
         if (!user.hasFavoriteProduct(productId)) {
             return "hasNotFavoriteProduct";

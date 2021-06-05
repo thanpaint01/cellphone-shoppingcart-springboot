@@ -3,17 +3,23 @@ package nlu.fit.cellphoneapp.controllers.consumer;
 import nlu.fit.cellphoneapp.entities.*;
 import nlu.fit.cellphoneapp.helper.DateHelper;
 import nlu.fit.cellphoneapp.helper.StringHelper;
+import nlu.fit.cellphoneapp.others.BcryptEncoder;
 import nlu.fit.cellphoneapp.others.Link;
 import nlu.fit.cellphoneapp.receiver.UpdateInfoForm;
+import nlu.fit.cellphoneapp.receiver.UpdatePasswordForm;
 import nlu.fit.cellphoneapp.services.EmailSenderService;
 import nlu.fit.cellphoneapp.services.ICartService;
 import nlu.fit.cellphoneapp.services.IUserService;
+import nlu.fit.cellphoneapp.validator.UpdateInfoValidator;
+import nlu.fit.cellphoneapp.validator.UpdatePasswordValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -35,6 +41,10 @@ public class UserController {
     EmailSenderService emailSenderService;
     @Autowired
     ICartService cartService;
+    @Autowired
+    UpdateInfoValidator updateInfoValidator;
+    @Autowired
+    UpdatePasswordValidator updatePasswordValidator;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView myAccountPage() {
@@ -87,25 +97,41 @@ public class UserController {
 
     @RequestMapping(value = "update-password", method = RequestMethod.GET)
     public ModelAndView updatePasswordPage() {
-        ModelAndView model = new ModelAndView("change-password");
+        ModelAndView model = new ModelAndView("/consumer/update-password");
+        model.addObject("CONTENT_TITLE", "Đổi Mật Khẩu");
         return model;
     }
 
     @RequestMapping(value = "update-password", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity updatePassword() {
-        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    public ResponseEntity updatePassword(@RequestBody UpdatePasswordForm form, Errors errors) {
+        updatePasswordValidator.validate(form, errors);
+        if (errors.hasErrors()) {
+            Map<String, String> errMessages = new HashMap<>();
+            for (ObjectError objectError : errors.getAllErrors()) {
+                String fieldErrors = ((FieldError) objectError).getField();
+                errMessages.put(fieldErrors, objectError.getCode());
+            }
+            return ResponseEntity.ok().body(errMessages);
+        } else {
+            User user = getUserIns();
+            user.setPassword(BcryptEncoder.encode(form.newPassword));
+            if (userService.save(user)) {
+                return ResponseEntity.ok(HttpStatus.ACCEPTED);
+            } else {
+                return ResponseEntity.ok().body("failed");
+            }
+        }
     }
 
     @RequestMapping(value = "update-infor", method = RequestMethod.GET)
     public ModelAndView updateInforPage() {
-        ModelAndView model = new ModelAndView("update-infor");
+        ModelAndView model = new ModelAndView("/consumer/update-infor");
         return model;
     }
 
     @RequestMapping(value = "update-infor", method = RequestMethod.POST)
     public ResponseEntity updateInfor(@RequestBody UpdateInfoForm form, Errors errors) {
-        Map<String, String> errosMessages = new HashMap<String, String>();
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
 

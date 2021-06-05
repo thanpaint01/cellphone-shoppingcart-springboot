@@ -23,6 +23,7 @@ import java.io.IOException;
 public class Filter extends GenericFilterBean {
     @Autowired
     IUserRepository userRepository;
+
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
@@ -31,7 +32,7 @@ public class Filter extends GenericFilterBean {
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             if (userRepository.findOneLogin(MyUserDetail.getUserIns().getEmail()) == null) {
                 new SecurityContextLogoutHandler().logout(httpRequest, httpResponse, authentication);
-                httpResponse.sendRedirect(  Link.createAbsolutePath(httpRequest,"/"));
+                httpResponse.sendRedirect(Link.createAbsolutePath(httpRequest, "/"));
             } else {
                 filterChain.doFilter(servletRequest, servletResponse);
             }

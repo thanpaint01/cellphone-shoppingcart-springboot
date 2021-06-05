@@ -18,5 +18,8 @@ public interface IUserService {
 
     User findOneByEmailActive(String email, int active);
 
+    boolean isCurPassword(String curPassword);
+
+
 
 }
