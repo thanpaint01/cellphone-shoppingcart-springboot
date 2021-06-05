@@ -4,18 +4,26 @@ import nlu.fit.cellphoneapp.entities.*;
 import nlu.fit.cellphoneapp.helper.DateHelper;
 import nlu.fit.cellphoneapp.helper.StringHelper;
 import nlu.fit.cellphoneapp.others.Link;
+import nlu.fit.cellphoneapp.receiver.UpdateInfoForm;
 import nlu.fit.cellphoneapp.services.EmailSenderService;
 import nlu.fit.cellphoneapp.services.ICartService;
 import nlu.fit.cellphoneapp.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import static nlu.fit.cellphoneapp.security.MyUserDetail.getUserIns;
 
 @Controller
@@ -63,7 +71,7 @@ public class UserController {
     @RequestMapping(value = "request-vertify-email", method = RequestMethod.POST)
     @ResponseBody
     public String requestVerityEmail(HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute(User.SESSION);
+        User user = getUserIns();
         String token;
         while (userService.isTokenUnique((token = StringHelper.getAlphaNumericString(50)))) ;
         user.setKey(token);
@@ -77,6 +85,29 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value = "update-password", method = RequestMethod.GET)
+    public ModelAndView updatePasswordPage() {
+        ModelAndView model = new ModelAndView("change-password");
+        return model;
+    }
+
+    @RequestMapping(value = "update-password", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity updatePassword() {
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    }
+
+    @RequestMapping(value = "update-infor", method = RequestMethod.GET)
+    public ModelAndView updateInforPage() {
+        ModelAndView model = new ModelAndView("update-infor");
+        return model;
+    }
+
+    @RequestMapping(value = "update-infor", method = RequestMethod.POST)
+    public ResponseEntity updateInfor(@RequestBody UpdateInfoForm form, Errors errors) {
+        Map<String, String> errosMessages = new HashMap<String, String>();
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    }
 
     //UserMyAccountManage
     @GetMapping("my-order")
