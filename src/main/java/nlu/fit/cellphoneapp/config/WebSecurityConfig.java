@@ -46,7 +46,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/register",
             "/home",
             "/forgot-pass",
-            "/reset-pass"
+            "/reset-pass",
+            "/signup",
+            "/add-to-cart",
+            "/checkout",
+            "/cart/delete",
+            "/order",
+            "/api/**"
+
     };
 
     @Override

@@ -29,6 +29,7 @@ public class MyUserDetail extends org.springframework.security.core.userdetails.
     }
 
     public static User getUserIns() {
+        if(getPrincipal() == null) return null;
         return getPrincipal().getUser();
     }
 

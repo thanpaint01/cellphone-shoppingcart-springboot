@@ -110,12 +110,11 @@ public class CartController {
             for (CartItem c : user.getCartItems()) {
                 if (c.getProduct().getId() == productID) {
                     user.getCartItems().remove(c);
-                    if(true == cartService.deleteOne(c.getId())) {
-                        deleteOneCartSessionV2(productID);
-                        break;
-                    }else{
-                        return null;
-                    }
+                    cartService.deleteOne(c.getId());
+                    deleteOneCartSessionV2(productID);
+                    break;
+                } else {
+                    return null;
                 }
             }
             return revertToCartItemResponse(user.getCartItems());
@@ -131,6 +130,7 @@ public class CartController {
             print();
             return revertToCartItemResponse(cartItemsSessionV2);
         }
+
     }
 
     //delete on session
@@ -182,7 +182,7 @@ public class CartController {
             ci.setProductID(i.getProduct().getId());
             ci.setProductImg(i.getProduct().getImg().getHost() + i.getProduct().getImg().getRelativePath());
             ci.setProductName(i.getProduct().getName());
-            ci.updateTotalPrice(i.getProduct().getPrice());
+            ci.updateTotalPrice();
             cartItemResponse.add(ci);
         }
         return cartItemResponse;
@@ -192,52 +192,52 @@ public class CartController {
     public ModelAndView getViewCart(HttpSession session) {
         ModelAndView mv = new ModelAndView("consumer/cart");
         User user = (User) session.getAttribute(User.SESSION);
-        if (User.checkUserSession(session) == true && user.getCartItems().size() == 0) {
-            //th co user nhung cart dang empty
-            mv.setViewName("/consumer/cart-empty");
-        } else if (User.checkUserSession(session) == false && cartSession.size() == 0) {
-            //th chua co user va cart session dang empty
-            mv.setViewName("/consumer/cart-empty");
-        } else {
-            //da hoac chua co va cartSession size > 0
-            mv.addObject("cartSession", cartSession);
-        }
+//        if (User.checkUserSession(session) == true && user.getCartItems().size() == 0) {
+//            //th co user nhung cart dang empty
+//            mv.setViewName("/consumer/cart-empty");
+//        } else if (User.checkUserSession(session) == false && cartSession.size() == 0) {
+//            //th chua co user va cart session dang empty
+//            mv.setViewName("/consumer/cart-empty");
+//        } else {
+//            //da hoac chua co va cartSession size > 0
+//            mv.addObject("cartSession", cartSession);
+//        }
         return mv;
     }
 
-    @GetMapping("/checkout")
+    @GetMapping("/checkout1")
     public ModelAndView goToCheckoutPage(HttpSession session) {
         ModelAndView mv = new ModelAndView();
         User user = (User) session.getAttribute(User.SESSION);
         Collection<CartItem> cs = (Set<CartItem>) session.getAttribute("cartSession");
 
-        if(User.checkUserSession(session) == true){
-            if(user.getActive() != 1){
+        if (User.checkUserSession(session) == true) {
+            if (user.getActive() != 1) {
                 mv.setViewName("consumer/active-account");
                 mv.addObject("cartSession", cartSession);
                 return mv;
             }
-           if(user.getCartItems().size() == 0) {
-               mv.setViewName("consumer/cart-empty");
-               mv.addObject("cartSession", cartSession);
-               return mv;
-           }else{
-               mv.setViewName("consumer/checkout");
-               mv.addObject("cartSession", cartSession);
-               return mv;
-           }
+            if (user.getCartItems().size() == 0) {
+                mv.setViewName("consumer/cart-empty");
+                mv.addObject("cartSession", cartSession);
+                return mv;
+            } else {
+                mv.setViewName("consumer/checkout");
+                mv.addObject("cartSession", cartSession);
+                return mv;
+            }
         } else {
-           return redirectWithCartSession(cs);
+            return redirectWithCartSession(cs);
         }
     }
 
-    public ModelAndView redirectWithCartSession(Collection<CartItem> cs){
+    public ModelAndView redirectWithCartSession(Collection<CartItem> cs) {
         ModelAndView mv = new ModelAndView();
-        if(null != cs && cs.size() > 0){
+        if (null != cs && cs.size() > 0) {
             mv.setViewName("consumer/checkout");
             mv.addObject("cartSession", cartSession);
             return mv;
-        }else{
+        } else {
             mv.setViewName("consumer/cart-empty");
             mv.addObject("cartSession", cartSession);
             return mv;

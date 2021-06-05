@@ -1,6 +1,8 @@
 package nlu.fit.cellphoneapp.controllers.admin;
 
 import nlu.fit.cellphoneapp.entities.Product;
+import nlu.fit.cellphoneapp.helper.UploadFileHelper;
+import nlu.fit.cellphoneapp.receiver.JSONFileUpload;
 import nlu.fit.cellphoneapp.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,16 +13,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.ServletContext;
+import java.io.File;
 
 @Controller("adminProductController")
 @RequestMapping("/admin")
-public class ProductController {
+public class ProductController implements ServletContextAware {
+    private ServletContext context;
     @Autowired
     private IProductService productService;
 
@@ -52,5 +56,30 @@ public class ProductController {
         //update
         return "";
     }
+
+    @Override
+    public void setServletContext(ServletContext servletContext) {
+        this.context = servletContext;
+    }
+
+
+    @RequestMapping(value = "upload_ckeditor", method = RequestMethod.POST, produces = {MimeTypeUtils.APPLICATION_JSON_VALUE})
+    public ResponseEntity<JSONFileUpload> uploadByCKEditor(@RequestParam("upload") MultipartFile upload){
+        try{
+            String fileName = UploadFileHelper.upload(upload, context);
+            System.out.println("file name upload = "+fileName);
+            return new ResponseEntity<>(new JSONFileUpload("/images/"+fileName),HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    @RequestMapping(value = "/filebrowser", method = RequestMethod.GET)
+    public String fileBrowser(ModelMap modelMap){
+        File folder = new File(context.getRealPath("/images/"));
+        modelMap.put("files", folder.listFiles());
+        return "admin/images-upload";
+    }
+
+
 }
 

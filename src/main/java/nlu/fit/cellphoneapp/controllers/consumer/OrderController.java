@@ -4,6 +4,7 @@ import nlu.fit.cellphoneapp.entities.CartItem;
 import nlu.fit.cellphoneapp.entities.Order;
 import nlu.fit.cellphoneapp.entities.OrderDetail;
 import nlu.fit.cellphoneapp.entities.User;
+import nlu.fit.cellphoneapp.security.MyUserDetail;
 import nlu.fit.cellphoneapp.services.ICartService;
 import nlu.fit.cellphoneapp.services.IOrderDetailService;
 import nlu.fit.cellphoneapp.services.IOrderService;
@@ -51,7 +52,7 @@ public class OrderController {
         order.setNameOfClient(nameClient);
         order.setPhoneNumberOfClient(phoneNumber);
         order.setTotalPrice(totalPrice);
-        User user = (User) (session.getAttribute(User.SESSION));
+        User user = MyUserDetail.getUserIns();
         if (null != user) {
             order.setUser(user);
         }else{

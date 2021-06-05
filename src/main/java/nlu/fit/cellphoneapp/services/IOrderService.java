@@ -3,6 +3,7 @@ package nlu.fit.cellphoneapp.services;
 import nlu.fit.cellphoneapp.entities.Order;
 import org.springframework.data.domain.Page;
 
+import java.util.Collection;
 import java.util.Date;
 
 public interface IOrderService {
@@ -13,4 +14,5 @@ public interface IOrderService {
     Order updateOrderStatus (Order order);
     double profitByMonth(Date date,String payment);
     double getProfitHalfYearAgo();
+    Collection<Order> getListOrderOfUser(int userID);
 }

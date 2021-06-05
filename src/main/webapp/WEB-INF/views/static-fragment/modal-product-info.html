@@ -83,8 +83,11 @@
                         </div>
                         <div class="form-group">
                             <label th:for="'inputProductImgDes1'+${product.id}">Hình ảnh mô tả 1</label>
-                            <input type="text" class="form-control" th:id="'inputProductImgDes1'+${product.id}"
+                            <textarea type="text" class="form-control ckeditor" th:id="'inputProductImgDes1'+${product.id}"
                                    placeholder="Đường dẫn liên kết">
+                                <h1 th:text="${product.name}"></h1>
+                                <img style="height: 100px; width: 100px;" th:src="${product.img.host+product.img.relativePath}"/>
+                            </textarea>
                         </div>
                         <div class="form-group">
                             <label th:for="'inputProductImgDes2'+${product.id}">Hình ảnh mô tả 2</label>

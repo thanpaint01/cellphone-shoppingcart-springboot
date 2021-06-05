@@ -113,10 +113,15 @@
         </dependency>
 <!--        ckfinder-->
         <dependency>
-            <groupId>com.cksource</groupId>
-            <artifactId>ckfinder3</artifactId>
-            <version>3.5.1.1</version>
+            <groupId>com.ckeditor</groupId>
+            <artifactId>ckeditor-java-core</artifactId>
+            <version>3.5.3</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.cksource</groupId>-->
+<!--            <artifactId></artifactId>-->
+<!--            <version>2.</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.finder</groupId>
             <artifactId>fileeditor</artifactId>

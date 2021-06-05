@@ -23,7 +23,6 @@ public class User {
 
 
 
-
     public enum ROLE {
         CONSUMEER(1), ADMIN(2);
         private final int value;
@@ -176,9 +175,9 @@ public class User {
 
     public boolean updateCart(CartItemRequest cartUpdate) {
         for (CartItem c : cartItems) {
-            if (c.getProduct().getId() == cartUpdate.getProductID()) {
-                c.setAmount(c.getAmount() + cartUpdate.getAmount());
-                c.setTotalPrice(getTotalPrice());
+            if (c.getId() == cartUpdate.getId()) {
+                c.setAmount(cartUpdate.getAmount());
+                c.updateTotalPrice();
                 return true;
             }
         }
@@ -211,5 +210,61 @@ public class User {
         return null;
     }
 
+    public Collection<CartItemRequest> appendCartSession(Collection<CartItemRequest> cartSession) {
+        Collection<CartItemRequest> collectionNewCartItem = new HashSet<CartItemRequest>();
+        int i = 0;
+        while (i < cartSession.size()) {
+            boolean isEquals = false;
+            CartItemRequest cs = (CartItemRequest) cartSession.toArray()[i];
+            int requestAmount = cs.getAmount();
+            for (CartItem c : cartItems) {
+                if (c.getProduct().getId() == cs.getProductID()) {
+                    c.setAmount(requestAmount);
+                    c.updateTotalPrice();
+                    isEquals = true;
+                }
+            }
+            i++;
+            if (isEquals == false) {
+                collectionNewCartItem.add(cs);
+            }
+        }
+        return collectionNewCartItem;
+    }
+
+    public boolean removeCartItem(int id) {
+        for (CartItem c : cartItems) {
+            if (c.getId() == id) {
+                cartItems.remove(c);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public CartItem updateCartItem(CartItem c, CartItem cDB)
+    {
+        c.setAmount(cDB.getAmount());
+        c.setProduct(cDB.getProduct());
+        c.setActive(cDB.getActive());
+        c.setUser(cDB.getUser());
+        c.setTotalPrice(cDB.getTotalPrice());
+        c.setId(cDB.getId());
+        return c;
+    }
+
+    public void updateOrderInfo(Order o, Order orderDB) {
+        o.setOrderStatus(orderDB.getOrderStatus());
+        o.setActive(orderDB.getActive());
+        o.setPayment(orderDB.getPayment());
+        o.setUser(orderDB.getUser());
+        o.setPhoneNumberOfClient(orderDB.getPhoneNumberOfClient());
+        o.setNameOfClient(orderDB.getNameOfClient());
+        o.setId(orderDB.getId());
+        o.setCreatedDate(orderDB.getCreatedDate());
+        o.setAddress(orderDB.getAddress());
+        o.setTotalPrice(orderDB.getTotalPrice());
+        o.setOrderDetails(orderDB.getOrderDetails());
+    }
 
 }

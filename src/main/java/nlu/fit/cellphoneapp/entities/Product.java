@@ -69,7 +69,7 @@ public class Product {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-//    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Set<OrderDetail> orderDetails = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")

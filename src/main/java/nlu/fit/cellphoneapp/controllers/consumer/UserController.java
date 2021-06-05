@@ -1,14 +1,18 @@
 package nlu.fit.cellphoneapp.controllers.consumer;
 
-import nlu.fit.cellphoneapp.entities.*;
+import nlu.fit.cellphoneapp.entities.CartItem;
+import nlu.fit.cellphoneapp.entities.Order;
+import nlu.fit.cellphoneapp.entities.User;
 import nlu.fit.cellphoneapp.helper.DateHelper;
 import nlu.fit.cellphoneapp.helper.StringHelper;
 import nlu.fit.cellphoneapp.others.BcryptEncoder;
 import nlu.fit.cellphoneapp.others.Link;
+import nlu.fit.cellphoneapp.security.MyUserDetail;
 import nlu.fit.cellphoneapp.receiver.UpdateInfoForm;
 import nlu.fit.cellphoneapp.receiver.UpdatePasswordForm;
 import nlu.fit.cellphoneapp.services.EmailSenderService;
 import nlu.fit.cellphoneapp.services.ICartService;
+import nlu.fit.cellphoneapp.services.IOrderService;
 import nlu.fit.cellphoneapp.services.IUserService;
 import nlu.fit.cellphoneapp.validator.UpdateInfoValidator;
 import nlu.fit.cellphoneapp.validator.UpdatePasswordValidator;
@@ -27,6 +31,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,6 +51,7 @@ public class UserController {
     UpdateInfoValidator updateInfoValidator;
     @Autowired
     UpdatePasswordValidator updatePasswordValidator;
+    IOrderService orderService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView myAccountPage() {
@@ -137,15 +144,60 @@ public class UserController {
 
     //UserMyAccountManage
     @GetMapping("my-order")
-    public String goToMyOrderManagementPage(HttpSession session, Model model) {
-        User user = (User) session.getAttribute(User.SESSION);
+    public String goToMyOrderManagementPage(Model model, HttpSession session) {
+        User user = MyUserDetail.getUserIns();
         model.addAttribute("CONTENT_TITLE", "Quản lý đơn hàng");
         if (null == user || (user.getOrders().size() == 0)) {
             return "consumer/my-order-empty";
         } else {
+            checkAndSetOrderUserDB(user);
+            session.setAttribute(User.SESSION, user);
             return "consumer/my-order";
         }
     }
+
+    //
+
+    public Collection<Order> checkAndSetOrderUserDB(User user) {
+        Collection<Order> collectionOrderUserDB = orderService.getListOrderOfUser(user.getId());
+        Collection<Order> listOrderDeletedDB = new HashSet<>();
+        if (collectionOrderUserDB.size() < user.getOrders().size()) {
+            int i = 0;
+            while (i < user.getOrders().size()) {
+                boolean isEquals = false;
+                Order cq = (Order) user.getOrders().toArray()[i];
+                for (Order c : collectionOrderUserDB) {
+                    if (cq.getId() == c.getId()) {
+                        isEquals = true;
+                    }
+                }
+                i++;
+                if (isEquals == false) {
+                    listOrderDeletedDB.add(cq);
+                }
+            }
+            for (Order order : listOrderDeletedDB) {
+                System.out.println("USER DELETE ORDER ID = " + order.getId());
+                user.removeCartItem(order.getId());
+            }
+        }
+        int i = 0;
+        while (i < collectionOrderUserDB.size()) {
+            Order order = (Order) collectionOrderUserDB.toArray()[i];
+            for (Order c : user.getOrders()) {
+                if (c.getId() == order.getId()) {
+                    if (!c.equals(order)) {
+                        user.updateOrderInfo(c, order);
+                    }
+                }
+            }
+            i++;
+        }
+        return user.getOrders();
+    }
+
+
+    //
 
 
     @GetMapping("ajax-load-by-status")
@@ -159,6 +211,7 @@ public class UserController {
         StringBuilder sb = new StringBuilder();
         resp.setCharacterEncoding("UTF-8");
         if (statusOrder.equals("all")) {
+
             for (Order order : user.getOrders()) {
                 if (orderID.equals("null")) {
                     sb.append(loadResultForAjaxLoadWithStatusOrder(order));
@@ -219,4 +272,6 @@ public class UserController {
         }
         return sb.toString();
     }
+
+
 }

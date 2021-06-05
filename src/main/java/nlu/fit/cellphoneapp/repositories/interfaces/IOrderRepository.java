@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
+
 @Repository
 public interface IOrderRepository extends JpaRepository<Order, Integer> {
     @Query(value = " select SUM(o.total_price) " +
@@ -19,5 +21,7 @@ public interface IOrderRepository extends JpaRepository<Order, Integer> {
             "where o.created_date > DATE_SUB(CURRENT_DATE, INTERVAL DAYOFMONTH(CURRENT_DATE)-1 DAY) - interval (dayofmonth(curdate()) - 1) day - interval 6 month ", nativeQuery = true)
     Double getProfitHalfYearAgo();
 
+
+    Collection<Order> getAllByUserId(int userID);
 
 }

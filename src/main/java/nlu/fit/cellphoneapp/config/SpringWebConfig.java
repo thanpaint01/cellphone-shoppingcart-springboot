@@ -69,14 +69,14 @@ public class SpringWebConfig implements WebMvcConfigurer {
         viewResolver.setViewNames(new String[]{".html", ".xhtml"});
         return viewResolver;
     }
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        //   file:D:\\data\\file\\image\\
+//        registry.addResourceHandler("/public/image/**").addResourceLocations("classpath:/static/uploadmedia/");
+//        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+//        registry.addResourceHandler("/ckfinder/**").addResourceLocations("classpath:/static/ckfinder/");
+//        WebMvcConfigurer.super.addResourceHandlers(registry);
+//    }
 
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        //   file:D:\\data\\file\\image\\
-        registry.addResourceHandler("/images/**").addResourceLocations("classpath:/static/uploadmedia/");
-        registry.addResourceHandler("/images/").addResourceLocations("classpath:resource/upload/");
-        registry.addResourceHandler("/ckfinder/**").addResourceLocations("src/main/webapp/ckfinder/");
-        WebMvcConfigurer.super.addResourceHandlers(registry);
-    }
 }

@@ -1,6 +1,7 @@
 package nlu.fit.cellphoneapp.controllers.consumer;
 
 import nlu.fit.cellphoneapp.DTOs.CartItemRequest;
+import nlu.fit.cellphoneapp.DTOs.CustomResponseCart;
 import nlu.fit.cellphoneapp.entities.CartItem;
 import nlu.fit.cellphoneapp.entities.User;
 import nlu.fit.cellphoneapp.helper.DateHelper;
@@ -19,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -38,6 +40,7 @@ public class HomeController {
     public String getIndex(Model model, HttpSession session) {
         if (User.checkUserSession(session)) session.setAttribute("cartSession", new HashSet<CartItemRequest>());
         model.addAttribute("CONTENT_TITLE", "Trang chủ");
+        session.setAttribute("cartOnSessionForCartControllerV2", new HashSet<CartItemRequest>());
         return "consumer/index";
     }
 
@@ -160,5 +163,18 @@ public class HomeController {
         }
     }
 
+    @GetMapping("/checkout")
+    public ModelAndView goToCheckoutPage() {
+        User user;
+        ModelAndView mv = new ModelAndView("consumer/checkout");
+        if (null != (user = MyUserDetail.getUserIns())) {
+            if (user.getActive() == -1) {
+                mv.setViewName("consumer/active-account");
+            } else {
+                if(CustomResponseCart.isEmpty) mv.setViewName("consumer/cart");
+            }
+        }
+        return mv;
+    }
 
 }

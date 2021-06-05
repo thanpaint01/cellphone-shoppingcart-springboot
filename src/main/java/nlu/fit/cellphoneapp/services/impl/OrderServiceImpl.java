@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Date;
 
 @Service
@@ -63,6 +64,12 @@ public class OrderServiceImpl implements IOrderService {
     public double getProfitHalfYearAgo() {
         Double result = orderRepo.getProfitHalfYearAgo();
         return result == null ? 0 : result;
+    }
+
+    @Override
+    public Collection<Order> getListOrderOfUser(int userID) {
+        Collection<Order> ls =orderRepo.getAllByUserId(userID);
+        return null == ls ? null : ls;
     }
 
 }

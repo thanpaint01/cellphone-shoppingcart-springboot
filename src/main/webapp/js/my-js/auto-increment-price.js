@@ -110,6 +110,7 @@ function showFailDelete() {
 
 //update cart v2
 $('.tr-update').change(function () {
+    alert("auto-inc")
     var productID = $(this).find('p.product-price.current-price-product').prop('id');
     var amount = $(this).find('input.c-input-text.qty.text').val();
     $.ajax({
