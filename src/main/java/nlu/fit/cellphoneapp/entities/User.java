@@ -3,8 +3,10 @@ package nlu.fit.cellphoneapp.entities;
 import lombok.Getter;
 import lombok.Setter;
 import nlu.fit.cellphoneapp.DTOs.CartItemRequest;
+import nlu.fit.cellphoneapp.helper.DateHelper;
 import nlu.fit.cellphoneapp.helper.StringHelper;
 import nlu.fit.cellphoneapp.receiver.RegisterForm;
+import nlu.fit.cellphoneapp.receiver.UpdateInfoForm;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,7 +22,6 @@ import java.util.regex.Pattern;
 @Setter
 public class User {
     public static final String SESSION = "currentUser";
-
 
 
     public enum ROLE {
@@ -97,6 +98,7 @@ public class User {
         return null;
     }
 
+    //  https://regex101.com/codegen?language=java
     public static boolean validName(String name) {
         String expression = "^\\p{L}+[\\p{L}\\p{Z}\\p{P}]{0,}";
         return name.matches(expression);
@@ -105,6 +107,11 @@ public class User {
     public static boolean validPassword(String password) {
         String expression = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$";
         return password.matches(expression);
+    }
+
+    public static boolean validPhone(String phone) {
+        final String regex = "(84|0[3|5|7|8|9])+([0-9]{8})\\b";
+        return phone.matches(regex);
     }
 
     public static boolean validEmail(String email) {
@@ -139,6 +146,7 @@ public class User {
         return null;
     }
 
+
     public static String toStringGender(int gender) {
         return gender == 1 ? "Nam" : "Nữ";
     }
@@ -149,6 +157,20 @@ public class User {
 
     public static boolean validGender(String gender) {
         return gender.equals("Nam") || gender.equals("Nữ");
+    }
+
+    public void updateInfo(UpdateInfoForm form) {
+        this.fullName = form.fullName;
+        System.out.println(form.birth);
+        this.birth = DateHelper.convertToDate(form.birth, "yyyy-MM-dd");
+        System.out.println(this.birth);
+        this.address = form.address;
+        this.phone = form.phone;
+        this.gender = form.gender;
+    }
+
+    public String toStringBirth() {
+        return DateHelper.convertToString(this.birth, "yyyy-MM-dd");
     }
 
     public double getTotalPrice() {
@@ -242,8 +264,7 @@ public class User {
         return false;
     }
 
-    public CartItem updateCartItem(CartItem c, CartItem cDB)
-    {
+    public CartItem updateCartItem(CartItem c, CartItem cDB) {
         c.setAmount(cDB.getAmount());
         c.setProduct(cDB.getProduct());
         c.setActive(cDB.getActive());

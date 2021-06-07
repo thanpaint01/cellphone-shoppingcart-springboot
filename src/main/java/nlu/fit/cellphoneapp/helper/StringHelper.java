@@ -1,10 +1,16 @@
 package nlu.fit.cellphoneapp.helper;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
 public class StringHelper {
+    public static boolean EmptyOrWhitespace(String input) {
+        return StringUtils.isEmpty(input) || StringUtils.isBlank(input);
+    }
+
     public static boolean isNoValue(String input) {
         return input == null || input.isEmpty() || input.equals("") || input.trim().equals("")
                 || input.trim().isEmpty();
@@ -19,6 +25,7 @@ public class StringHelper {
         }
         return sb.toString();
     }
+
     public static boolean isNoValue(List<String> inputs) {
         for (String input : inputs)
             if (isNoValue(input)) return true;

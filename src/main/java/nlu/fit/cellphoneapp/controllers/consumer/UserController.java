@@ -1,6 +1,5 @@
 package nlu.fit.cellphoneapp.controllers.consumer;
 
-import nlu.fit.cellphoneapp.entities.CartItem;
 import nlu.fit.cellphoneapp.entities.Order;
 import nlu.fit.cellphoneapp.entities.User;
 import nlu.fit.cellphoneapp.helper.DateHelper;
@@ -14,7 +13,7 @@ import nlu.fit.cellphoneapp.services.EmailSenderService;
 import nlu.fit.cellphoneapp.services.ICartService;
 import nlu.fit.cellphoneapp.services.IOrderService;
 import nlu.fit.cellphoneapp.services.IUserService;
-import nlu.fit.cellphoneapp.validator.UpdateInfoValidator;
+import nlu.fit.cellphoneapp.validator.ValidUpdateInfo;
 import nlu.fit.cellphoneapp.validator.UpdatePasswordValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
@@ -47,8 +47,8 @@ public class UserController {
     EmailSenderService emailSenderService;
     @Autowired
     ICartService cartService;
-    @Autowired
-    UpdateInfoValidator updateInfoValidator;
+    //    @Autowired
+//    ValidUpdateInfo updateInfoValidator;
     @Autowired
     UpdatePasswordValidator updatePasswordValidator;
     IOrderService orderService;
@@ -134,12 +134,19 @@ public class UserController {
     @RequestMapping(value = "update-infor", method = RequestMethod.GET)
     public ModelAndView updateInforPage() {
         ModelAndView model = new ModelAndView("/consumer/update-infor");
+        model.addObject("CONTENT_TITLE", "Cập Nhật Thông Tin Cá Nhân");
         return model;
     }
 
     @RequestMapping(value = "update-infor", method = RequestMethod.POST)
-    public ResponseEntity updateInfor(@RequestBody UpdateInfoForm form, Errors errors) {
-        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    public ResponseEntity updateInfor(@Valid @RequestBody UpdateInfoForm form) {
+        User user = getUserIns();
+        user.updateInfo(form);
+        if (userService.save(user)) {
+            return ResponseEntity.ok(HttpStatus.ACCEPTED);
+        } else {
+            return ResponseEntity.ok().body("failed");
+        }
     }
 
     //UserMyAccountManage

@@ -13,6 +13,7 @@ import java.io.IOException;
 public class MyAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) throws IOException, ServletException {
+        System.out.println("denied");
         if (request.getMethod().equals(RequestMethod.GET.name())) {
             response.sendRedirect(request.getContextPath() + "/");
         } else {

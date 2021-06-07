@@ -27,8 +27,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] PUBLIC_MATCHERS = {
             "/fontawesome/**",
-            "admin-component/**",
-            "admin-static/**",
+            "/admin-component/**",
+            "/admin-static/**",
             "/cart/**",
             "/login",
             "/product/**",
