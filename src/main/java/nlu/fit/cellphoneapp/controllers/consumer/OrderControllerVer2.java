@@ -11,10 +11,9 @@ import nlu.fit.cellphoneapp.security.MyUserDetail;
 import nlu.fit.cellphoneapp.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
-import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -22,8 +21,6 @@ import java.util.*;
 @Controller
 @RequestMapping("/api/order")
 public class OrderControllerVer2 {
-
-    //Order clone for paypal
     public static Order orderPayPal;
     @Autowired
     IOrderService orderService;
@@ -87,7 +84,6 @@ public class OrderControllerVer2 {
         return orderResponse;
     }
 
-    //chi goi 1 lan duy khi chon paypal de thanh toan
     @PostMapping("post-order-paypal")
     @ResponseBody
     public String postOrderPayPal(@RequestBody Order orderInfo) {
@@ -110,7 +106,8 @@ public class OrderControllerVer2 {
             return null;
         } else {
             user = MyUserDetail.getUserIns();
-            checkAndSetOrderUserDB(user);
+            Collection<Order> collectionOrderUserDB = orderService.getListOrderOfUser(user.getId());
+            user.checkAndSetOrderUserDB(collectionOrderUserDB);
             orderCollection = user.getOrders();
         }
         Collection<CustomResponseOrder> listOrderResponse = new HashSet<>();
@@ -118,45 +115,8 @@ public class OrderControllerVer2 {
             CustomResponseOrder orderResponse = CustomResponseOrder.toResponseOrder(order);
             listOrderResponse.add(orderResponse);
         }
-        return toList(loadByFilter(listOrderResponse, status, Integer.parseInt(id)));
-    }
-
-    public Collection<Order> checkAndSetOrderUserDB(User user) {
-        Collection<Order> collectionOrderUserDB = orderService.getListOrderOfUser(user.getId());
-        Collection<Order> listOrderDeletedDB = new HashSet<>();
-        if (collectionOrderUserDB.size() < user.getOrders().size()) {
-            int i = 0;
-            while (i < user.getOrders().size()) {
-                boolean isEquals = false;
-                Order cq = (Order) user.getOrders().toArray()[i];
-                for (Order c : collectionOrderUserDB) {
-                    if (cq.getId() == c.getId()) {
-                        isEquals = true;
-                    }
-                }
-                i++;
-                if (isEquals == false) {
-                    listOrderDeletedDB.add(cq);
-                }
-            }
-            for (Order order : listOrderDeletedDB) {
-                System.out.println("USER DELETE ORDER ID = " + order.getId());
-                user.removeCartItem(order.getId());
-            }
-        }
-        int i = 0;
-        while (i < collectionOrderUserDB.size()) {
-            Order order = (Order) collectionOrderUserDB.toArray()[i];
-            for (Order c : user.getOrders()) {
-                if (c.getId() == order.getId()) {
-                    if (!c.equals(order)) {
-                        user.updateOrderInfo(c, order);
-                    }
-                }
-            }
-            i++;
-        }
-        return user.getOrders();
+        List resp = toList(loadByFilter(listOrderResponse, status, Integer.parseInt(id)));
+        return resp;
     }
 
     public Order orderByCash(Order orderInfo) {
@@ -200,8 +160,14 @@ public class OrderControllerVer2 {
     public Collection<CustomResponseOrder> loadByFilter(Collection<CustomResponseOrder> list, String status, int id) {
         Collection<CustomResponseOrder> listResult = new ArrayList<>();
         if (status.equals("all") && id == 0) {
-            System.out.println("DEFAULT LIST");
             return list;
+        } else if (status.equals("all") && id != 0) {
+            for (CustomResponseOrder orderResponse : list) {
+                if (orderResponse.getId() == id) {
+                    listResult.add(orderResponse);
+                    return listResult;
+                }
+            }
         } else if (!status.equals("all") && id == 0) {
             for (CustomResponseOrder orderResponse : list) {
                 if (orderResponse.getStatus().equals(status)) {
@@ -211,12 +177,6 @@ public class OrderControllerVer2 {
         } else if (!status.equals("all") && id != 0) {
             for (CustomResponseOrder orderResponse : list) {
                 if (orderResponse.getStatus().equals(status) && orderResponse.getId() == id) {
-                    listResult.add(orderResponse);
-                }
-            }
-        } else if (status.equals("all") && id != 0) {
-            for (CustomResponseOrder orderResponse : list) {
-                if (orderResponse.getId() == id) {
                     listResult.add(orderResponse);
                 }
             }
@@ -233,6 +193,7 @@ public class OrderControllerVer2 {
     @PostMapping("deny")
     @ResponseBody
     public String denyOrder(int orderID) {
+        System.out.println("DENY ORDER HAS ID ="+orderID);
         User user;
         if (null == MyUserDetail.getUserIns()) {
             return null;

@@ -171,7 +171,8 @@ public class HomeController {
         User user;
         ModelAndView mv = new ModelAndView("consumer/checkout");
         if (null != (user = MyUserDetail.getUserIns())) {
-            CheckoutForm form = new CheckoutForm(user.getFullName(), user.getPhone(), user.getAddress());
+            CheckoutForm form = new CheckoutForm();
+            form.setFullName(user.getFullName());
             mv.addObject("user", form);
             if (user.getActive() == -1) {
                 mv.setViewName("consumer/active-account");

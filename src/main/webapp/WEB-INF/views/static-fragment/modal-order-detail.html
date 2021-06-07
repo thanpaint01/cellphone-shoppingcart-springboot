@@ -1,6 +1,6 @@
 <div xmlns:th="http://www.thymeleaf.org">
     <!-- modal order-detail -->
-    <div th:fragment="modal-order-detail" th:each="orderItem:${session.currentUser.getOrders()}" class="modal fade"
+    <div th:fragment="modal-order-detail" th:each="orderItem:${orders}" class="modal fade"
          th:id="${'exampleModal'+orderItem.getId()}" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalLabel"
          aria-hidden="true">

@@ -51,6 +51,7 @@ public class UserController {
 //    ValidUpdateInfo updateInfoValidator;
     @Autowired
     UpdatePasswordValidator updatePasswordValidator;
+    @Autowired
     IOrderService orderService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -151,134 +152,18 @@ public class UserController {
 
     //UserMyAccountManage
     @GetMapping("my-order")
-    public String goToMyOrderManagementPage(Model model, HttpSession session) {
-        User user = MyUserDetail.getUserIns();
+    public String goToMyOrderManagementPage(Model model) {
         model.addAttribute("CONTENT_TITLE", "Quản lý đơn hàng");
-        if (null == user || (user.getOrders().size() == 0)) {
+        if (null == MyUserDetail.getUserIns()) {
             return "consumer/my-order-empty";
         } else {
-            checkAndSetOrderUserDB(user);
-            session.setAttribute(User.SESSION, user);
+            User user = MyUserDetail.getUserIns();
+            Collection<Order> collectionOrderUserDB = orderService.getListOrderOfUser(user.getId());
+            user.checkAndSetOrderUserDB(collectionOrderUserDB);
+            if(user.getOrders().size() == 0) return "consumer/my-order-empty";
+            model.addAttribute("orders", user.getOrders());
             return "consumer/my-order";
         }
     }
-
-    //
-
-    public Collection<Order> checkAndSetOrderUserDB(User user) {
-        Collection<Order> collectionOrderUserDB = orderService.getListOrderOfUser(user.getId());
-        Collection<Order> listOrderDeletedDB = new HashSet<>();
-        if (collectionOrderUserDB.size() < user.getOrders().size()) {
-            int i = 0;
-            while (i < user.getOrders().size()) {
-                boolean isEquals = false;
-                Order cq = (Order) user.getOrders().toArray()[i];
-                for (Order c : collectionOrderUserDB) {
-                    if (cq.getId() == c.getId()) {
-                        isEquals = true;
-                    }
-                }
-                i++;
-                if (isEquals == false) {
-                    listOrderDeletedDB.add(cq);
-                }
-            }
-            for (Order order : listOrderDeletedDB) {
-                System.out.println("USER DELETE ORDER ID = " + order.getId());
-                user.removeCartItem(order.getId());
-            }
-        }
-        int i = 0;
-        while (i < collectionOrderUserDB.size()) {
-            Order order = (Order) collectionOrderUserDB.toArray()[i];
-            for (Order c : user.getOrders()) {
-                if (c.getId() == order.getId()) {
-                    if (!c.equals(order)) {
-                        user.updateOrderInfo(c, order);
-                    }
-                }
-            }
-            i++;
-        }
-        return user.getOrders();
-    }
-
-
-    //
-
-
-    @GetMapping("ajax-load-by-status")
-    @ResponseBody
-    public void ajaxLoadWithStatusOrder(
-            @RequestParam(value = "statusOrder", required = false, defaultValue = "all") String statusOrder,
-            @RequestParam(value = "orderID", required = false, defaultValue = "null") String orderID,
-            HttpSession session, HttpServletResponse resp) throws IOException {
-        User user = (User) session.getAttribute(User.SESSION);
-        //        //Method response html
-        StringBuilder sb = new StringBuilder();
-        resp.setCharacterEncoding("UTF-8");
-        if (statusOrder.equals("all")) {
-
-            for (Order order : user.getOrders()) {
-                if (orderID.equals("null")) {
-//                    sb.append(loadResultForAjaxLoadWithStatusOrder(order));
-                } else {
-                    if (order.getId() == Integer.parseInt(orderID)) {
-//                        sb.append(loadResultForAjaxLoadWithStatusOrder(order));
-                    }
-                }
-            }
-        } else {
-            for (Order order : user.getOrders()) {
-                if (order.getOrderStatus().equals(statusOrder)) {
-                    if (orderID.equals("null")) {
-//                        sb.append(loadResultForAjaxLoadWithStatusOrder(order));
-                    } else {
-                        if (order.getId() == Integer.parseInt(orderID)) {
-//                            sb.append(loadResultForAjaxLoadWithStatusOrder(order));
-                        }
-                    }
-                }
-            }
-        }
-        resp.getWriter().write(sb.toString());
-    }
-
-//    public String loadResultForAjaxLoadWithStatusOrder(Order order) {
-//        StringBuilder sb = new StringBuilder();
-//        if (order.getActive() == 1) {
-//            sb.append(
-//                    " <tr class=\"order-item\">\n" +
-//                            "<td class=\"data-fields col1 align-middle\"><b class=\"order-id\">" + order.getId() + "</b></td>\n" +
-//                            "                            <td class=\"data-fields col3\">\n" +
-//                            "                                <a class=\"go-detail-mobile\" href=\"/product/detail?id=" + order.getOrderDetails().toArray()[0].getProduct().getId() + "\">\n" +
-//                            "                                    <div class=\"d-flex\">\n" +
-//                            "                                        <div class=\"img-product\">\n" +
-//                            "                                            <img src=\"" + order.getOrderDetails().get(0).getProduct().getImg().getHost() + order.getOrderDetails().get(0).getProduct().getImg().getRelativePath() + "\" height=\"80\" width=\"80\">\n" +
-//                            "                                        </div>\n" +
-//                            "                                        <div class=\"text-left\">\n" +
-//                            "                                            <p>Đơn hàng bao gồm <b class=\"first-product-name\">" + order.getOrderDetails().get(0).getProduct().getName() + "</b> và <b class=\"size-1-order-amount\" \">" + (order.getOrderDetails().size() - 1) + "</b> sản\n" +
-//                            "                                                phẩm khác\n" +
-//                            "                                            </p>\n" +
-//                            "                                        </div>\n" +
-//                            "                                    </div>\n" +
-//                            "                                </a>\n" +
-//                            "                            </td>\n" +
-//                            "                            <td class=\"data-fields col2 order-date\"\">" + order.getCreatedDate() + "</td>\n" +
-//                            "                            <td class=\"data-fields col2\"><b class=\"product-price order-total-price\">" + StringHelper.formatNumber((long) order.getTotalPrice()) + " ₫</b></td>\n" +
-//                            "                            <td class=\"data-fields col2 status-order-" + order.getId() + "\">" + order.getOrderStatus() + "</td>\n" +
-//                            "                            <td class=\"data-fields col1 text-center\">\n" +
-//                            "                                <a href=\"#\" class=\"view\" title=\"\" data-toggle=\"tooltip\"\n" +
-//                            "                                   data-original-title=\"Xem chi tiết\"><i data-toggle=\"modal\"\n" +
-//                            "                                                                         data-target=\"#exampleModal" + order.getId() + "\"\n" +
-//                            "                                                                         class=\"fas fa-arrow-circle-right icon modal-del\" id=\"modal-" + order.getId() + "\"></i></a>\n" +
-//                            "                            </td>\n" +
-//                            "                        </tr>\n"
-//            );
-//            return sb.toString();
-//        }
-//        return sb.toString();
-//    }
-//
 
 }

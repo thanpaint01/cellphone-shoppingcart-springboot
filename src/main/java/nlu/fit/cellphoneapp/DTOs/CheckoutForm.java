@@ -75,11 +75,14 @@ public class CheckoutForm {
         setInfoAddress();
     }
 
-    public void setInfoAddress(){
+    public CheckoutForm() {
+    }
+
+    public void setInfoAddress() {
         String[] all = address.split(", ");
-        this.province = all[all.length-1];
-        this.district = all[all.length-2];
-        this.award = all[all.length-3];
+        this.province = all[all.length - 1];
+        this.district = all[all.length - 2];
+        this.award = all[all.length - 3];
 
         for (int i = 0; i < all.length - 3; i++) {
             this.detail += all[i];
