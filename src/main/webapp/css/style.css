@@ -2841,7 +2841,14 @@ ul.cart-list > li.total > .btn:hover {
 .help-block.with-errors {
     position: absolute;
     right: 0;
-    background: red;
+    background: #c1002a;
+    color: #fff;
+    padding: 0px 15px;
+}
+.help-block.with-success {
+    position: absolute;
+    right: 0;
+    background: #05c148;
     color: #fff;
     padding: 0px 15px;
 }

@@ -59,6 +59,7 @@ $("#register-form").submit(function (e) {
             btn.prop("disabled", true);
         },
         success: function (result) {
+            console.log(result);
             switch (result) {
                 case "emptyfield":
                     showMessage(false, "Hãy điền đủ các trường", carrier);
@@ -89,7 +90,10 @@ $("#register-form").submit(function (e) {
                         "Đăng ký thành công.",
                         carrier
                     );
-                    window.location.href = "/";
+                    setTimeout(function () {
+                        $("#createAccountModel").modal("hide");
+                        $("#signInModel").modal("show");
+                    }, 1500);
                     break;
                 case "errsendmail":
                     showMessage(false, "Đã có lỗi xảy ra khi gửi mail", carrier);

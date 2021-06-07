@@ -1,6 +1,7 @@
 package nlu.fit.cellphoneapp;
 
 import nlu.fit.cellphoneapp.helper.DateHelper;
+import nlu.fit.cellphoneapp.others.BcryptEncoder;
 import nlu.fit.cellphoneapp.repositories.custom.ReportRepository;
 import nlu.fit.cellphoneapp.repositories.interfaces.IBrandRepository;
 import nlu.fit.cellphoneapp.repositories.interfaces.IOrderRepository;
@@ -45,6 +46,7 @@ class CellphoneAppApplicationTests {
 
     @Test
     void login() {
+        System.out.println(BcryptEncoder.encode("Vuminhhieu123@2"));
         if (userRepository==null){
             System.out.println("NULL");
         }else{

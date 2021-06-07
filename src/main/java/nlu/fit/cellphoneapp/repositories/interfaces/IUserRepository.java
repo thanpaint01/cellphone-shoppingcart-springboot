@@ -24,4 +24,6 @@ public interface IUserRepository extends JpaRepository<User, Integer> {
 
     @Query(value = "select * from user u  where u.key=:token and u.expired_key >= (select now())", nativeQuery = true)
     User findOneByToken(@Param("token") String token);
+
+
 }

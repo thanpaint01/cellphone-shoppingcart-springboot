@@ -11,7 +11,7 @@
  Target Server Version : 100416
  File Encoding         : 65001
 
- Date: 03/06/2021 22:40:34
+ Date: 07/06/2021 10:10:16
 */
 
 SET NAMES utf8mb4;
@@ -74,7 +74,7 @@ CREATE TABLE `favorite`  (
   INDEX `yeuthich2`(`product_id`) USING BTREE,
   CONSTRAINT `yeuthich1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `yeuthich2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of favorite
@@ -98,11 +98,12 @@ CREATE TABLE `item_cart`  (
   INDEX `cart_ibfk_1`(`product_id`) USING BTREE,
   CONSTRAINT `item_cart_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `item_cart_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of item_cart
 -- ----------------------------
+INSERT INTO `item_cart` VALUES (39, 28, 24, NULL, 1, NULL, 3690000, 1);
 
 -- ----------------------------
 -- Table structure for order
@@ -151,6 +152,7 @@ CREATE TABLE `order_detail`  (
   `total_price` bigint NULL DEFAULT NULL,
   `price` int NULL DEFAULT NULL,
   `active` int NULL DEFAULT 1,
+  `is_review` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `chitietdonhang2`(`product_id`) USING BTREE,
   INDEX `chitietdonhang1`(`order_id`) USING BTREE,
@@ -161,40 +163,40 @@ CREATE TABLE `order_detail`  (
 -- ----------------------------
 -- Records of order_detail
 -- ----------------------------
-INSERT INTO `order_detail` VALUES (57, 42, 6, 1, 3690000, 0, 3690000, 3690000, 1);
-INSERT INTO `order_detail` VALUES (58, 42, 101, 1, 4390000, 0, 4390000, 4390000, 1);
-INSERT INTO `order_detail` VALUES (59, 42, 111, 3, 13170000, 0, 13170000, 4390000, 1);
-INSERT INTO `order_detail` VALUES (60, 43, 95, 1, 3490000, 0, 3490000, 3490000, 1);
-INSERT INTO `order_detail` VALUES (61, 43, 10, 1, 8490000, 0, 8490000, 8490000, 1);
-INSERT INTO `order_detail` VALUES (62, 43, 94, 1, 3490000, 0, 3490000, 3490000, 1);
-INSERT INTO `order_detail` VALUES (63, 43, 59, 1, 4390000, 0, 4390000, 4390000, 1);
-INSERT INTO `order_detail` VALUES (64, 43, 9, 4, 39960000, 0, 39960000, 9990000, 1);
-INSERT INTO `order_detail` VALUES (65, 44, 3, 3, 62070000, 0, 62070000, 20690000, 1);
-INSERT INTO `order_detail` VALUES (66, 44, 2, 1, 6020000, 0, 6020000, 6020000, 1);
-INSERT INTO `order_detail` VALUES (67, 44, 1, 1, 5390000, 0, 5390000, 5390000, 1);
-INSERT INTO `order_detail` VALUES (68, 44, 33, 1, 16990000, 0, 16990000, 16990000, 1);
-INSERT INTO `order_detail` VALUES (69, 45, 14, 1, 2990000, 0, 2990000, 2990000, 1);
-INSERT INTO `order_detail` VALUES (70, 45, 104, 2, 5980000, 0, 5980000, 2990000, 1);
-INSERT INTO `order_detail` VALUES (71, 45, 16, 2, 6580000, 0, 6580000, 3290000, 1);
-INSERT INTO `order_detail` VALUES (72, 45, 15, 4, 27960000, 0, 27960000, 6990000, 1);
-INSERT INTO `order_detail` VALUES (73, 46, 36, 1, 8490000, 0, 8490000, 8490000, 1);
-INSERT INTO `order_detail` VALUES (74, 46, 26, 2, 10980000, 0, 10980000, 5490000, 1);
-INSERT INTO `order_detail` VALUES (75, 46, 18, 1, 4290000, 0, 4290000, 4290000, 1);
-INSERT INTO `order_detail` VALUES (76, 46, 87, 1, 8490000, 0, 8490000, 8490000, 1);
-INSERT INTO `order_detail` VALUES (77, 46, 77, 1, 7990000, 0, 7990000, 7990000, 1);
-INSERT INTO `order_detail` VALUES (78, 47, 58, 4, 13160000, 0, 13160000, 3290000, 1);
-INSERT INTO `order_detail` VALUES (79, 47, 45, 1, 2980000, 0, 2980000, 2980000, 1);
-INSERT INTO `order_detail` VALUES (80, 47, 53, 1, 3299000, 0, 3299000, 3299000, 1);
-INSERT INTO `order_detail` VALUES (81, 47, 44, 2, 6580000, 0, 6580000, 3290000, 1);
-INSERT INTO `order_detail` VALUES (82, 47, 42, 1, 3299000, 0, 3299000, 3299000, 1);
-INSERT INTO `order_detail` VALUES (83, 48, 49, 1, 5695000, 0, 5695000, 5695000, 1);
-INSERT INTO `order_detail` VALUES (84, 48, 112, 1, 3790000, 0, 3790000, 3790000, 1);
-INSERT INTO `order_detail` VALUES (85, 48, 48, 3, 15870000, 0, 15870000, 5290000, 1);
-INSERT INTO `order_detail` VALUES (86, 48, 50, 1, 2980000, 0, 2980000, 2980000, 1);
-INSERT INTO `order_detail` VALUES (87, 48, 89, 1, 5290000, 0, 5290000, 5290000, 1);
-INSERT INTO `order_detail` VALUES (88, 49, 22, 1, 3490000, 0, 3490000, 3490000, 1);
-INSERT INTO `order_detail` VALUES (89, 49, 83, 2, 8780000, 0, 8780000, 4390000, 1);
-INSERT INTO `order_detail` VALUES (90, 49, 21, 2, 12580000, 0, 12580000, 6290000, 1);
+INSERT INTO `order_detail` VALUES (57, 42, 6, 1, 3690000, 0, 3690000, 3690000, 1, 0);
+INSERT INTO `order_detail` VALUES (58, 42, 101, 1, 4390000, 0, 4390000, 4390000, 1, 0);
+INSERT INTO `order_detail` VALUES (59, 42, 111, 3, 13170000, 0, 13170000, 4390000, 1, 0);
+INSERT INTO `order_detail` VALUES (60, 43, 95, 1, 3490000, 0, 3490000, 3490000, 1, 0);
+INSERT INTO `order_detail` VALUES (61, 43, 10, 1, 8490000, 0, 8490000, 8490000, 1, 0);
+INSERT INTO `order_detail` VALUES (62, 43, 94, 1, 3490000, 0, 3490000, 3490000, 1, 0);
+INSERT INTO `order_detail` VALUES (63, 43, 59, 1, 4390000, 0, 4390000, 4390000, 1, 0);
+INSERT INTO `order_detail` VALUES (64, 43, 9, 4, 39960000, 0, 39960000, 9990000, 1, 0);
+INSERT INTO `order_detail` VALUES (65, 44, 3, 3, 62070000, 0, 62070000, 20690000, 1, 0);
+INSERT INTO `order_detail` VALUES (66, 44, 2, 1, 6020000, 0, 6020000, 6020000, 1, 0);
+INSERT INTO `order_detail` VALUES (67, 44, 1, 1, 5390000, 0, 5390000, 5390000, 1, 0);
+INSERT INTO `order_detail` VALUES (68, 44, 33, 1, 16990000, 0, 16990000, 16990000, 1, 0);
+INSERT INTO `order_detail` VALUES (69, 45, 14, 1, 2990000, 0, 2990000, 2990000, 1, 0);
+INSERT INTO `order_detail` VALUES (70, 45, 104, 2, 5980000, 0, 5980000, 2990000, 1, 0);
+INSERT INTO `order_detail` VALUES (71, 45, 16, 2, 6580000, 0, 6580000, 3290000, 1, 0);
+INSERT INTO `order_detail` VALUES (72, 45, 15, 4, 27960000, 0, 27960000, 6990000, 1, 0);
+INSERT INTO `order_detail` VALUES (73, 46, 36, 1, 8490000, 0, 8490000, 8490000, 1, 0);
+INSERT INTO `order_detail` VALUES (74, 46, 26, 2, 10980000, 0, 10980000, 5490000, 1, 0);
+INSERT INTO `order_detail` VALUES (75, 46, 18, 1, 4290000, 0, 4290000, 4290000, 1, 0);
+INSERT INTO `order_detail` VALUES (76, 46, 87, 1, 8490000, 0, 8490000, 8490000, 1, 0);
+INSERT INTO `order_detail` VALUES (77, 46, 77, 1, 7990000, 0, 7990000, 7990000, 1, 0);
+INSERT INTO `order_detail` VALUES (78, 47, 58, 4, 13160000, 0, 13160000, 3290000, 1, 0);
+INSERT INTO `order_detail` VALUES (79, 47, 45, 1, 2980000, 0, 2980000, 2980000, 1, 0);
+INSERT INTO `order_detail` VALUES (80, 47, 53, 1, 3299000, 0, 3299000, 3299000, 1, 0);
+INSERT INTO `order_detail` VALUES (81, 47, 44, 2, 6580000, 0, 6580000, 3290000, 1, 0);
+INSERT INTO `order_detail` VALUES (82, 47, 42, 1, 3299000, 0, 3299000, 3299000, 1, 0);
+INSERT INTO `order_detail` VALUES (83, 48, 49, 1, 5695000, 0, 5695000, 5695000, 1, 0);
+INSERT INTO `order_detail` VALUES (84, 48, 112, 1, 3790000, 0, 3790000, 3790000, 1, 0);
+INSERT INTO `order_detail` VALUES (85, 48, 48, 3, 15870000, 0, 15870000, 5290000, 1, 0);
+INSERT INTO `order_detail` VALUES (86, 48, 50, 1, 2980000, 0, 2980000, 2980000, 1, 0);
+INSERT INTO `order_detail` VALUES (87, 48, 89, 1, 5290000, 0, 5290000, 5290000, 1, 0);
+INSERT INTO `order_detail` VALUES (88, 49, 22, 1, 3490000, 0, 3490000, 3490000, 1, 0);
+INSERT INTO `order_detail` VALUES (89, 49, 83, 2, 8780000, 0, 8780000, 4390000, 1, 0);
+INSERT INTO `order_detail` VALUES (90, 49, 21, 2, 12580000, 0, 12580000, 6290000, 1, 0);
 
 -- ----------------------------
 -- Table structure for pin
@@ -568,7 +570,6 @@ CREATE TABLE `review`  (
   `product_id` int NULL DEFAULT NULL,
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `stars` int NULL DEFAULT NULL,
-  `isReview` int NULL DEFAULT NULL,
   `active` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `review_ibfk_1`(`user_id`) USING BTREE,
@@ -678,13 +679,13 @@ CREATE TABLE `user`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `email`(`email`) USING BTREE,
   INDEX `role_id`(`role`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES (26, 'ongdinh1099@gmail.com', '$2a$10$b88RO7sAkeuawyC92RUfY.hRH.l/E6IQxzs1v9i3oVutmjfwOcciC', 'Ong Minh Dinh', NULL, NULL, NULL, 'Nam', NULL, NULL, NULL, 1, 1);
-INSERT INTO `user` VALUES (28, 'daochichaoden@gmail.com', '$2a$10$r.FyJ90yOgAG5vx99XP2DOzguMwsKmOJ.CeqEhc6eO9Wo7twnRVSG', 'Vũ Minh Hiếu', NULL, NULL, NULL, 'Nam', NULL, NULL, NULL, 1, 1);
-INSERT INTO `user` VALUES (29, 'daochichaoden2@gmail.com', '$2a$10$3ggEjEovxs4RUJZsiFWT/.E3M6RulDZxyJiRz/ndoiaxW.zk9AyrK', 'Vũ Minh Hiếu', NULL, NULL, NULL, 'Nam', NULL, NULL, NULL, 1, -1);
+INSERT INTO `user` VALUES (28, 'daochichaoden@gmail.com', '$2a$10$qWe5eHzfJnPVRkM3F6.c..5j2VC.hjMzB/b60beIB41j0AYyZEoc.', 'Vũ Minh Hiếu', NULL, '', 'asdsadsadsadsadsadsadsadsadsadas', 'Nam', '2021-06-01', NULL, NULL, 1, 1);
+INSERT INTO `user` VALUES (29, 'daochichaoden2@gmail.com', '$2a$10$3ggEjEovxs4RUJZsiFWT/.E3M6RulDZxyJiRz/ndoiaxW.zk9AyrK', 'Vũ Minh Hiếu', NULL, NULL, NULL, 'Nam', NULL, NULL, NULL, 1, 2);
 
 SET FOREIGN_KEY_CHECKS = 1;

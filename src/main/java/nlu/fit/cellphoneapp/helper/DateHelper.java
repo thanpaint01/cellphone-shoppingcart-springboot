@@ -116,6 +116,10 @@ public class DateHelper {
         return new SimpleDateFormat("yyyy-MM-dd").format(date);
     }
 
+    public static String convertToString(Date date, String pattern) {
+        return new SimpleDateFormat(pattern).format(date);
+    }
+
     public static Date convertToDate(String input, String pattern) {
         try {
             return new SimpleDateFormat(pattern).parse(input);
