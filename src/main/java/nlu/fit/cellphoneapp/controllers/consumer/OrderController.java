@@ -1,5 +1,6 @@
 package nlu.fit.cellphoneapp.controllers.consumer;
 
+import nlu.fit.cellphoneapp.DTOs.CustomResponseCart;
 import nlu.fit.cellphoneapp.entities.CartItem;
 import nlu.fit.cellphoneapp.entities.Order;
 import nlu.fit.cellphoneapp.entities.OrderDetail;
@@ -54,7 +55,13 @@ public class OrderController {
         order.setTotalPrice(totalPrice);
         User user = MyUserDetail.getUserIns();
         if (null != user) {
+            System.out.println("");
             order.setUser(user);
+            user.setFullName(nameClient);
+            user.setAddress(address);
+            user.setPhone(phoneNumber);
+            session.setAttribute(User.SESSION, user);
+            session.setAttribute("cartSession", null);
         }else{
             return "/login";
         }
@@ -76,6 +83,8 @@ public class OrderController {
                     orderService.updatePayment(o.getId(), "Online");
                     //cap nhat order detail co order id thanh active
                     orderDetailService.updateActive(o, 1);
+                    CustomResponseCart.clearCart();
+                    session.setAttribute("cartSession", null);
                 }
             }
         }
@@ -105,6 +114,7 @@ public class OrderController {
                 removed = cartService.removeAllByUserId(user.getId());
                 user.getCartItems().clear();
                 user.getOrders().add(order);
+                CustomResponseCart.clearCart();
                 return "/user/my-order";
             } else {
                 return "/pay";
@@ -129,4 +139,5 @@ public class OrderController {
         }
         return "error";
     }
+
 }

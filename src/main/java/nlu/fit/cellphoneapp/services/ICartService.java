@@ -1,6 +1,8 @@
 package nlu.fit.cellphoneapp.services;
 
 import nlu.fit.cellphoneapp.entities.CartItem;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 

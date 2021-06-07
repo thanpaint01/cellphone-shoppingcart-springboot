@@ -11,6 +11,7 @@ $('#btnOrder').click(function () {
         var totalPrice = convert(reverseFormatNumber($('#lastPrice').text(), "vi-VN"));
         var payment = $('#cash').prop('checked') === true ? 'Trực tiếp' : 'Paypal';
         // var urlAjax = payment==='Trực tiếp'?'order':'pay';
+        console.log(address+", "+nameClient+", "+phoneNumber+", "+payment)
         $.ajax({
             type: 'POST',
             url: 'order',

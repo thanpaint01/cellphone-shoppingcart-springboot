@@ -65,8 +65,7 @@ public class Order {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<OrderDetail> orderDetails = new ArrayList<>();
+    private Collection<OrderDetail> orderDetails = new HashSet<>();
 
     @Override
     public String toString() {

@@ -30,7 +30,7 @@ var toast = function ({title = "", type = "", message = "", duration = 3000}) {
                     </div>
                     <div class="toast__content">
                         <b>${title}</b><br/>
-                        <span><small>${message}</small></span>
+                        <span><small style="white-space: pre-wrap">${message}</small></span>
                     </div>
                     <div class="toast__icon">
                         <i class="fas fa-times"></i>

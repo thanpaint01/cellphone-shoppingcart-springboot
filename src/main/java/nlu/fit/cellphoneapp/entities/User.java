@@ -78,7 +78,7 @@ public class User {
             orphanRemoval = true,
             fetch = FetchType.EAGER
     )
-    private Set<CartItem> cartItems = new HashSet<>();
+    private Set<CartItem> cartItems;
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,
@@ -240,6 +240,13 @@ public class User {
             }
         }
         return false;
+    }
+
+    public boolean removeAllCartItem(){
+        for (CartItem c : cartItems) {
+            if(cartItems.remove(c) == false) return false;
+        }
+        return true;
     }
 
     public CartItem updateCartItem(CartItem c, CartItem cDB)

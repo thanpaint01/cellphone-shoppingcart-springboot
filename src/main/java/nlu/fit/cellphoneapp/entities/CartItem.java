@@ -19,8 +19,7 @@ public class CartItem {
     private double totalPrice;
     private int amount;
     private int active;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne
     private User user;
     @ManyToOne
     private Product product;

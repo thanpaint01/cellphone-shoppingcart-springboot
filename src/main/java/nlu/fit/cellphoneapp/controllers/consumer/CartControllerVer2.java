@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -38,6 +39,7 @@ public class CartControllerVer2 {
         //some action for cart request
         Product infoProduct = productService.findOneByID(cartItemRequest.getProductID());
         cartItemRequest.setPriceProduct(infoProduct.getPrice());
+        cartItemRequest.setBrandName(infoProduct.getBrand().getName());
         cartItemRequest.setProductName(infoProduct.getName());
         cartItemRequest.setProductImg(infoProduct.getImg().getHost() + infoProduct.getImg().getRelativePath());
         cartItemRequest.updateTotalPrice();
@@ -106,7 +108,7 @@ public class CartControllerVer2 {
 
     @GetMapping
     @ResponseBody
-    public CustomResponseCart getAllCart() {
+    public CustomResponseCart getAllCart(HttpSession session) {
         User user;
         Collection<CartItemRequest> cartResponse = collection;
         if (null != MyUserDetail.getUserIns()) {
@@ -120,9 +122,11 @@ public class CartControllerVer2 {
                 checkAndSetCartUserDB(user);
                 collection = updateCollectionResponse(user.getCartItems());
             }
+            session.setAttribute(User.SESSION, user);//TEST SESSION
             return new CustomResponseCart(collection);
         } else {
             if (collection.size() > 0) CustomResponseCart.isEmpty = false;
+            session.setAttribute("cartSession", new CustomResponseCart(collection));//moi them thu session
             return new CustomResponseCart(collection);
         }
     }
@@ -202,12 +206,10 @@ public class CartControllerVer2 {
         return new CustomResponseCart(collection);
     }
 
-
     public Collection<CartItem> checkAndSetCartUserDB(User user) {
         Collection<CartItem> collectionCartUserDB = cartService.getAllByUserID(user.getId());
         Collection<CartItem> listCartDeletedDB = new HashSet<>();
         if (collectionCartUserDB.size() < user.getCartItems().size()) {
-            System.out.println("CART DB NHO HON CART USER");
             int i = 0;
             while (i < user.getCartItems().size()) {
                 boolean isEquals = false;
@@ -223,14 +225,12 @@ public class CartControllerVer2 {
                 }
             }
             for (CartItem cartItem : listCartDeletedDB) {
-                System.out.println("USER DELETE CART ID = " + cartItem.getId());
                 user.removeCartItem(cartItem.getId());
             }
         }
         int i = 0;
         while (i < collectionCartUserDB.size()) {
             CartItem cart = (CartItem) collectionCartUserDB.toArray()[i];
-            System.out.println("CART ON DB = " + cart.getId() + ", amount = " + cart.getAmount());
             for (CartItem c : user.getCartItems()) {
                 if (c.getId() == cart.getId()) {
                     if (!c.equals(cart)) {

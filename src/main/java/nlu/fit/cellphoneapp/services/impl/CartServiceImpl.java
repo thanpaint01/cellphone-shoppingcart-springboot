@@ -64,10 +64,8 @@ public class CartServiceImpl implements ICartService {
 
     @Override
     public boolean removeAllByUserId(int userID) {
-        User user = userRepo.getOne(userID);
         cartRepo.deleteAllByUser_Id(userID);
-        user.getCartItems().clear();
-        return (userRepo.getOne(userID).getCartItems().size() == 0 ? true : false);
+        return (getAllByUserID(userID).size() == 0 ? true : false);
     }
 
     @Override

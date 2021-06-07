@@ -48,86 +48,86 @@
                             </tr>
                             </thead>
                             <tbody id="tbody-cart">
-                            <th:block th:if="${null != session.currentUser}">
-                                <tr
-                                        th:each="cartItem : ${session.currentUser.getCartItems()}"
-                                        th:class="'text-center tr-update tr'+${cartItem.getProduct().getId()}"
-                                        >
-                                    <td class="thumbnail-img">
-                                        <a href="#">
-                                            <img class="img-fluid"
-                                                 th:src="${cartItem.getProduct().getImg().getHost()+cartItem.getProduct().getImg().getRelativePath()}"
-                                                 alt=""/>
-                                        </a>
-                                    </td>
-                                    <td class="text-left font-weight-bold text-dark">
-                                        <a class="product-name" th:text="${cartItem.getProduct().getName()}">
-                                        </a>
-                                    </td>
-                                    <td class="price-pr">
-                                        <p class="product-price current-price-product"
-                                           th:text="${cartItem.getProduct().getPrice()}"
-                                           th:value="${cartItem.getProduct().getPrice()}"
-                                           th:id="${cartItem.getProduct().getId()}"></p>
-                                    </td>
-                                    <td class="quantity-box">
-                                        <input type="number" size="4" th:value="${cartItem.getAmount()}" min="1"
-                                               step="1"
-                                               class="c-input-text qty text"></td>
-                                    <td class="total-pr">
-                                        <p class="product-price total-by-product"
-                                           th:text="${cartItem.getTotalPrice()}"
-                                           th:id="${'totalProductPriceAfterUpdate'+cartItem.getProduct().getId()}"></p>
-                                    </td>
-                                    <td class="remove-pr">
-                                        <a href="#" data-toggle="modal" class="remove-action"
-                                           th:alt="${cartItem.getTotalPrice()}"
-                                           data-target="#removeCartItemModal" th:value="${cartItem.getProduct().getId()}"
-                                           th:name="${cartItem.getAmount()}">
-                                            <i class="fas fa-times" th:value="${cartItem.getProduct().getId()}"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </th:block>
-                            <th:block th:if="${null == session.currentUser}">
-                                <tr th:object="${cartSession}"
-                                    th:each="cartItem : ${cartSession}"
-                                    th:class="'text-center tr-update tr'+${cartItem.productID}">
-                                    <td class="thumbnail-img">
-                                        <a href="#">
-                                            <img class="img-fluid"
-                                                 th:src="${cartItem.productImg}"
-                                                 alt=""/>
-                                        </a>
-                                    </td>
-                                    <td class="text-left font-weight-bold text-dark">
-                                        <a class="product-name" th:text="${cartItem.productName}">
+<!--                            <th:block th:if="${null != session.currentUser}">-->
+<!--                                <tr-->
+<!--                                        th:each="cartItem : ${session.currentUser.getCartItems()}"-->
+<!--                                        th:class="'text-center tr-update tr'+${cartItem.getProduct().getId()}"-->
+<!--                                        >-->
+<!--                                    <td class="thumbnail-img">-->
+<!--                                        <a href="#">-->
+<!--                                            <img class="img-fluid"-->
+<!--                                                 th:src="${cartItem.getProduct().getImg().getHost()+cartItem.getProduct().getImg().getRelativePath()}"-->
+<!--                                                 alt=""/>-->
+<!--                                        </a>-->
+<!--                                    </td>-->
+<!--                                    <td class="text-left font-weight-bold text-dark">-->
+<!--                                        <a class="product-name" th:text="${cartItem.getProduct().getName()}">-->
+<!--                                        </a>-->
+<!--                                    </td>-->
+<!--                                    <td class="price-pr">-->
+<!--                                        <p class="product-price current-price-product"-->
+<!--                                           th:text="${cartItem.getProduct().getPrice()}"-->
+<!--                                           th:value="${cartItem.getProduct().getPrice()}"-->
+<!--                                           th:id="${cartItem.getProduct().getId()}"></p>-->
+<!--                                    </td>-->
+<!--                                    <td class="quantity-box">-->
+<!--                                        <input type="number" size="4" th:value="${cartItem.getAmount()}" min="1"-->
+<!--                                               step="1"-->
+<!--                                               class="c-input-text qty text"></td>-->
+<!--                                    <td class="total-pr">-->
+<!--                                        <p class="product-price total-by-product"-->
+<!--                                           th:text="${cartItem.getTotalPrice()}"-->
+<!--                                           th:id="${'totalProductPriceAfterUpdate'+cartItem.getProduct().getId()}"></p>-->
+<!--                                    </td>-->
+<!--                                    <td class="remove-pr">-->
+<!--                                        <a href="#" data-toggle="modal" class="remove-action"-->
+<!--                                           th:alt="${cartItem.getTotalPrice()}"-->
+<!--                                           data-target="#removeCartItemModal" th:value="${cartItem.getProduct().getId()}"-->
+<!--                                           th:name="${cartItem.getAmount()}">-->
+<!--                                            <i class="fas fa-times" th:value="${cartItem.getProduct().getId()}"></i>-->
+<!--                                        </a>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                            </th:block>-->
+<!--                            <th:block th:if="${null == session.currentUser}">-->
+<!--                                <tr th:object="${cartSession}"-->
+<!--                                    th:each="cartItem : ${cartSession}"-->
+<!--                                    th:class="'text-center tr-update tr'+${cartItem.productID}">-->
+<!--                                    <td class="thumbnail-img">-->
+<!--                                        <a href="#">-->
+<!--                                            <img class="img-fluid"-->
+<!--                                                 th:src="${cartItem.productImg}"-->
+<!--                                                 alt=""/>-->
+<!--                                        </a>-->
+<!--                                    </td>-->
+<!--                                    <td class="text-left font-weight-bold text-dark">-->
+<!--                                        <a class="product-name" th:text="${cartItem.productName}">-->
 
-                                        </a>
-                                    </td>
-                                    <td class="price-pr">
-                                        <p class="product-price current-price-product"
-                                           th:id="${cartItem.productID}"></p>
-                                    </td>
-                                    <td class="quantity-box">
-                                        <input type="number" size="4" th:value="${cartItem.amount}" min="1"
-                                               step="1"
-                                               class="c-input-text qty text"></td>
-                                    <td class="total-pr">
-                                        <p class="product-price total-by-product"
-                                           th:text="${cartItem.totalPrice}"
-                                           th:id="${'totalProductPriceAfterUpdate'+cartItem.productID}"></p>
-                                    </td>
-                                    <td class="remove-pr">
-                                        <a href="#" data-toggle="modal" class="remove-action"
-                                           th:alt="${cartItem.totalPrice}"
-                                           data-target="#removeCartItemModal" th:value="${cartItem.productID}"
-                                           th:name="${cartItem.amount}">
-                                            <i class="fas fa-times" th:value="${cartItem.productID}"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </th:block>
+<!--                                        </a>-->
+<!--                                    </td>-->
+<!--                                    <td class="price-pr">-->
+<!--                                        <p class="product-price current-price-product"-->
+<!--                                           th:id="${cartItem.productID}"></p>-->
+<!--                                    </td>-->
+<!--                                    <td class="quantity-box">-->
+<!--                                        <input type="number" size="4" th:value="${cartItem.amount}" min="1"-->
+<!--                                               step="1"-->
+<!--                                               class="c-input-text qty text"></td>-->
+<!--                                    <td class="total-pr">-->
+<!--                                        <p class="product-price total-by-product"-->
+<!--                                           th:text="${cartItem.totalPrice}"-->
+<!--                                           th:id="${'totalProductPriceAfterUpdate'+cartItem.productID}"></p>-->
+<!--                                    </td>-->
+<!--                                    <td class="remove-pr">-->
+<!--                                        <a href="#" data-toggle="modal" class="remove-action"-->
+<!--                                           th:alt="${cartItem.totalPrice}"-->
+<!--                                           data-target="#removeCartItemModal" th:value="${cartItem.productID}"-->
+<!--                                           th:name="${cartItem.amount}">-->
+<!--                                            <i class="fas fa-times" th:value="${cartItem.productID}"></i>-->
+<!--                                        </a>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                            </th:block>-->
                             </tbody>
                         </table>
                     </div>
