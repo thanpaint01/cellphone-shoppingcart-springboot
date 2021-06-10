@@ -11,7 +11,7 @@
  Target Server Version : 100416
  File Encoding         : 65001
 
- Date: 11/06/2021 06:43:38
+ Date: 11/06/2021 06:46:06
 */
 
 SET NAMES utf8mb4;
@@ -152,7 +152,7 @@ CREATE TABLE `order_detail`  (
   `total_price` bigint NULL DEFAULT NULL,
   `price` int NULL DEFAULT NULL,
   `active` int NULL DEFAULT 1,
-  `is_review` int NULL DEFAULT NULL,
+  `is_review` int NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `chitietdonhang2`(`product_id`) USING BTREE,
   INDEX `chitietdonhang1`(`order_id`) USING BTREE,
