@@ -2,6 +2,7 @@ package nlu.fit.cellphoneapp.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import nlu.fit.cellphoneapp.helper.DateHelper;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -67,6 +68,10 @@ public class Order {
     )
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<OrderDetail> orderDetails = new ArrayList<>();
+
+    public String toStringCreatedDate() {
+        return DateHelper.convertToString(this.createdDate, "dd/MM/yyyy");
+    }
 
     @Override
     public String toString() {

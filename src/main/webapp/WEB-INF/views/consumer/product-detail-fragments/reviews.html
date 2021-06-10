@@ -10,50 +10,48 @@
         <div class="row">
             <div class="col-12">
                 <div class="comments">
-                    <div data-comment-id="" class="comment-box">
+                    <div th:each="review:${reviews}" data-comment-id="" class="comment-box">
                                 <span class="commenter-pic">
-                                    <img src="images/user.png" class="img-fluid">
+                                    <img src="/images/user-icon.png" class="img-fluid">
                                 </span>
                         <span class="commenter-name">
-                                    <a href="#">Happy markuptag</a> <span class="comment-time">Nhận xét vào ngày
-                                        17/5/21</span>
-                                </span>
-                        <p class="comment-txt more">Suspendisse massa enim, condimentum sit amet maximus quis,
-                            pulvinar sit amet ante. Fusce eleifend dui mi, blandit vehicula orci iaculis acl
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit
-                            exercitationem debitis optio tempora ratione, saepe, nostrum ipsam inventore
-                            suscipit maxime itaque? Asperiores reiciendis voluptates modi recusandae maiores
-                            facere sunt minus!</p>
+                                                            <a th:text="${review.user.fullName}">Happy markuptag</a>
+                            <span class="comment-time"><i class="fas fa-star"
+                                                          th:each="item : ${#numbers.sequence(1,review.stars)}"></i>
+                            </span>
+                                                        </span>
+                        <p th:text="${review.content}" class="comment-txt more"></p>
                         <div class="comment-meta">
-                            <button data-comment-id="1" class="comment-reply reply-popup btn hvr-hover text-light mt-1"><i
-                                    class="fa fa-reply" aria-hidden="true"></i>Trả lời
+                            <button data-comment-id="1" class="comment-reply reply-popup btn hvr-hover text-light mt-1">
+                                <i class="fa fa-reply" aria-hidden="true"></i>Trả lời
                             </button>
                         </div>
-<!--                        <div class="comment-box add-comment reply-box mt-3">-->
-<!--                            <div class="row">-->
-<!--                                <div class="col-md-1 text-center">-->
-<!--                                    <img src="  http://placehold.it/60x60 " alt=" "-->
-<!--                                         class=" rounded-circle iconUser"/>-->
-<!--                                </div>-->
-<!--                                <div class="col-md-11">-->
-<!--                                    <p class="w-100 h-auto">-->
-<!--                                    </p>-->
-<!--                                    <div class="clearfix">-->
-<!--                                        <textarea name="content" rows="1"></textarea>-->
-<!--                                        <p class="mt-1 ">-->
-<!--                                            <button type="submit"-->
-<!--                                                    class="float-right btn hvr-hover text-light ml-2"><i-->
-<!--                                                    class="fa fa-reply"></i> Nhận xét-->
-<!--                                            </button>-->
-<!--                                            <button-->
-<!--                                                    class="float-right btn hvr-hover text-light ml-2">Hủy bỏ-->
-<!--                                            </button>-->
-<!--                                        </p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
                     </div>
+                    <!--                        <div class="comment-box add-comment reply-box mt-3">-->
+                    <!--                            <div class="row">-->
+                    <!--                                <div class="col-md-1 text-center">-->
+                    <!--                                    <img src="  http://placehold.it/60x60 " alt=" "-->
+                    <!--                                         class=" rounded-circle iconUser"/>-->
+                    <!--                                </div>-->
+                    <!--                                <div class="col-md-11">-->
+                    <!--                                    <p class="w-100 h-auto">-->
+                    <!--                                    </p>-->
+                    <!--                                    <div class="clearfix">-->
+                    <!--                                        <textarea name="content" rows="1"></textarea>-->
+                    <!--                                        <p class="mt-1 ">-->
+                    <!--                                            <button type="submit"-->
+                    <!--                                                    class="float-right btn hvr-hover text-light ml-2"><i-->
+                    <!--                                                    class="fa fa-reply"></i> Nhận xét-->
+                    <!--                                            </button>-->
+                    <!--                                            <button-->
+                    <!--                                                    class="float-right btn hvr-hover text-light ml-2">Hủy bỏ-->
+                    <!--                                            </button>-->
+                    <!--                                        </p>-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+
                     <div class="comment-box">
                                 <span class="commenter-pic">
                                     <img src="http://placehold.it/60x60" class="img-fluid">
@@ -107,12 +105,10 @@
                                 iaculis ac.</p>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
         <hr/>
     </div>
-
 </th:block>
 </html>

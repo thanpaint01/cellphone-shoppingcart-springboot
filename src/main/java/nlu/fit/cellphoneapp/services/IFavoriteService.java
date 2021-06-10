@@ -10,7 +10,7 @@ public interface IFavoriteService {
 
     boolean delete(Favorite favorite);
 
-    Page<Favorite> favoritesByUser(Specification spec, Pageable pageable);
+    Page<Favorite> findBySpec(Specification spec, Pageable pageable);
 
     Specification<Favorite> getFavoriteByUserId(int userId);
 

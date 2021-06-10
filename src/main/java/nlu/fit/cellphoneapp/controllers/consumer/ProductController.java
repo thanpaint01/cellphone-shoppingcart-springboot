@@ -1,8 +1,10 @@
 package nlu.fit.cellphoneapp.controllers.consumer;
 
 import nlu.fit.cellphoneapp.entities.Product;
+import nlu.fit.cellphoneapp.entities.Review;
 import nlu.fit.cellphoneapp.helper.StringHelper;
 import nlu.fit.cellphoneapp.services.IProductService;
+import nlu.fit.cellphoneapp.services.IReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -18,12 +20,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
 @RequestMapping(value = "/product")
 public class ProductController {
     @Autowired
     IProductService productService;
+    @Autowired
+    IReviewService reviewService;
     private static final int ITEM_PER_PAGE = 15;
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView listProductPageSearch(
             @RequestParam(value = "page", required = false, defaultValue = "1") int page
@@ -49,10 +56,10 @@ public class ProductController {
             }
             switch (sortOrder) {
                 case 1:
-                    pageable = PageRequest.of(page-1, ITEM_PER_PAGE, sort.ascending());
+                    pageable = PageRequest.of(page - 1, ITEM_PER_PAGE, sort.ascending());
                     break;
                 case 2:
-                    pageable = PageRequest.of(page-1, ITEM_PER_PAGE, sort.descending());
+                    pageable = PageRequest.of(page - 1, ITEM_PER_PAGE, sort.descending());
                     break;
                 default:
                     break;
@@ -78,7 +85,9 @@ public class ProductController {
         Product product;
         if ((product = productService.findOneForConsumer(id)) != null) {
             ModelAndView model = new ModelAndView("consumer/product-detail");
+            List<Review> reviews = reviewService.findAllBySpec(reviewService.getByActiveProduct(product.getId()));
             model.addObject("product", product);
+            model.addObject("reviews", reviews);
             model.addObject("CONTENT_TITLE", product.getName());
             return model;
         } else {

@@ -6,19 +6,18 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "favorite")
+@Table(name = "comment")
 @Getter
 @Setter
-public class Favorite {
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private int id;
     @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id")
-    private User user;
-    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "product_id")
-//    @JsonIgnore
-    private Product product;
+    Review review;
+    @ManyToOne(fetch = FetchType.LAZY)
+    User user;
+    String content;
+    Integer active;
 }

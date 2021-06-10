@@ -2,6 +2,7 @@ package nlu.fit.cellphoneapp.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import nlu.fit.cellphoneapp.helper.DateHelper;
 
 import javax.persistence.*;
 
@@ -22,18 +23,21 @@ public class OrderDetail {
     private double totalPrice;
     private double price;
     private int active;
+    @Column(name = "is_review")
+    private int isReviewd;
     @ManyToOne(fetch = FetchType.LAZY)
     private Order order;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Product product;
 
 
-
-    public void updateSalePrice(double sale){
-        double afterSale = (price*amount)-sale;
+    public void updateSalePrice(double sale) {
+        double afterSale = (price * amount) - sale;
         setSaledPrice(afterSale);
     }
-    public void updateTotalPrice(){
-        setTotalPrice(initialPrice-saledPrice);
+
+
+    public void updateTotalPrice() {
+        setTotalPrice(initialPrice - saledPrice);
     }
 }

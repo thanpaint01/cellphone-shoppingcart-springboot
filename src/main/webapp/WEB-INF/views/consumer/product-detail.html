@@ -37,7 +37,7 @@
     <div id="sample-comment-reply" class="comment-box add-comment reply-box mt-3">
         <div class="row">
             <div class="col-md-1 text-center">
-                <img src="images/admin-icon.png" alt=" " class="img-fluid rounded-circle iconUser"/>
+                <img src="/images/user-icon.png" alt="" class="img-fluid rounded-circle iconUser"/>
             </div>
             <div class="col-md-11">
                 <p class="w-100 h-auto">
@@ -46,10 +46,10 @@
                     <textarea name="content" rows="1"></textarea>
                     <div class="form-group" id="rating">
                         <p class="mt-1 ">
-                            <button type="submit" class="float-right btn hvr-hover text-light ml-2"><i
-                                    class="fa fa-reply"></i> Nhận xét
+                            <button type="submit" class="btn-comment-submit float-right btn hvr-hover text-light ml-2"><i
+                                    class="fa fa-reply"></i> Bình luận
                             </button>
-                            <button class="float-right btn hvr-hover text-light ml-2">Hủy bỏ
+                            <button class="float-right btn hvr-hover text-light ml-2 btn-comment-cancel">Hủy bỏ
                             </button>
                         </p>
                     </div>
@@ -65,18 +65,10 @@
 <th:block layout:fragment="scripts">
     <script th:src="@{/js/jquery.simpleLoadMore.js}"></script>
     <script th:src="@{/js/Jquery.autoResize.js}"></script>
-    <script th:src="@{/js/my-js/shop-detail-custom.js}"></script>
     <script th:src="@{/js/my-js/format-price-of-product.js}"></script>
     <script th:src="@{/js/my-js/add-to-cart.js}"></script>
     <script th:src="@{/js/my-js/favorite.js}"></script>
-    <script>
-        // var commentReply = $('#sample-comment-reply');
-        // const sampleCommentReply = commentReply.clone(true);
-        // commentReply.remove();
-        // $('.comment-reply.reply-popup').addEventListener("click", function (e) {
-        //    e.preventDefault();
-        // });
-    </script>
+    <script th:src="@{/js/my-js/shop-detail-custom.js}"></script>
 </th:block>
 </body>
 </html>

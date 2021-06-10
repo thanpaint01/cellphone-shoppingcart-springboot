@@ -10,7 +10,9 @@
     background-color: #eee;
     font-weight: bold;
 }
-
+.fa-star {
+    color: #ced164;
+}
 .brand-name a {
     font-weight: normal;
 }
