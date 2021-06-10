@@ -11,7 +11,7 @@
  Target Server Version : 100416
  File Encoding         : 65001
 
- Date: 07/06/2021 10:10:16
+ Date: 11/06/2021 06:43:38
 */
 
 SET NAMES utf8mb4;
@@ -53,7 +53,7 @@ CREATE TABLE `comment`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_id`(`review_id`) USING BTREE,
   INDEX `product_id`(`user_id`) USING BTREE,
-  CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`review_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `comment_idbk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `comment_idbk_2` FOREIGN KEY (`review_id`) REFERENCES `review` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
@@ -163,10 +163,10 @@ CREATE TABLE `order_detail`  (
 -- ----------------------------
 -- Records of order_detail
 -- ----------------------------
-INSERT INTO `order_detail` VALUES (57, 42, 6, 1, 3690000, 0, 3690000, 3690000, 1, 0);
-INSERT INTO `order_detail` VALUES (58, 42, 101, 1, 4390000, 0, 4390000, 4390000, 1, 0);
-INSERT INTO `order_detail` VALUES (59, 42, 111, 3, 13170000, 0, 13170000, 4390000, 1, 0);
-INSERT INTO `order_detail` VALUES (60, 43, 95, 1, 3490000, 0, 3490000, 3490000, 1, 0);
+INSERT INTO `order_detail` VALUES (57, 42, 6, 1, 3690000, 0, 3690000, 3690000, 1, 1);
+INSERT INTO `order_detail` VALUES (58, 42, 101, 1, 4390000, 0, 4390000, 4390000, 1, 1);
+INSERT INTO `order_detail` VALUES (59, 42, 111, 3, 13170000, 0, 13170000, 4390000, 1, 1);
+INSERT INTO `order_detail` VALUES (60, 43, 95, 1, 3490000, 0, 3490000, 3490000, 1, 1);
 INSERT INTO `order_detail` VALUES (61, 43, 10, 1, 8490000, 0, 8490000, 8490000, 1, 0);
 INSERT INTO `order_detail` VALUES (62, 43, 94, 1, 3490000, 0, 3490000, 3490000, 1, 0);
 INSERT INTO `order_detail` VALUES (63, 43, 59, 1, 4390000, 0, 4390000, 4390000, 1, 0);
@@ -565,7 +565,7 @@ INSERT INTO `ram` VALUES (6, '12 GB', 1);
 -- ----------------------------
 DROP TABLE IF EXISTS `review`;
 CREATE TABLE `review`  (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NULL DEFAULT NULL,
   `product_id` int NULL DEFAULT NULL,
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -576,11 +576,15 @@ CREATE TABLE `review`  (
   INDEX `review_ibfk_2`(`product_id`) USING BTREE,
   CONSTRAINT `review_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `review_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of review
 -- ----------------------------
+INSERT INTO `review` VALUES (5, 28, 6, 'a', 3, 1);
+INSERT INTO `review` VALUES (6, 28, 101, 'a', 2, 1);
+INSERT INTO `review` VALUES (7, 28, 111, 'Mab', 2, 1);
+INSERT INTO `review` VALUES (8, 28, 95, 'Hieu', 2, 1);
 
 -- ----------------------------
 -- Table structure for role
