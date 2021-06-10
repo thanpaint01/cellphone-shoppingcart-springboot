@@ -49,6 +49,7 @@ $(function () {
         success: function (rs) {
             renderDATA(rs);
             renderCartPage(rs);
+            renderDATACheckoutPage(rs);
         }
     })
 })
@@ -112,7 +113,7 @@ function renderCartPage(data) {
 }
 
 //update amount cart item
-$("tbody").on("change",".tr-update", function(){
+$("tbody").on("change", ".tr-update", function () {
     var productID = $(this).find('p.product-price.current-price-product').prop('id');
     var amount = $(this).find('input.c-input-text.qty.text').val();
     $.ajax({
@@ -120,7 +121,7 @@ $("tbody").on("change",".tr-update", function(){
         contentType: 'application/json;charset=UTF-8',
         data: amount,
         accept: 'application/json',
-        url: '/api/cart/'+productID,
+        url: '/api/cart/' + productID,
         success: function (rs) {
             renderCartPage(rs);
             renderDATA(rs);
@@ -130,7 +131,7 @@ $("tbody").on("change",".tr-update", function(){
 
 //delete cart item
 var cartID = 0;
-$("tbody").on("click",".remove-action", function() {
+$("tbody").on("click", ".remove-action", function () {
     cartID = $(this).attr('value');
     $('#btnDeleteModalConfirm').prop('value', cartID)
 })
@@ -139,10 +140,10 @@ $('#btnDeleteModalConfirm').click(function () {
     cartID = $(this).attr('value')
     $.ajax({
         type: 'DELETE',
-        url: '/api/cart/'+cartID,
+        url: '/api/cart/' + cartID,
         success: function (rs) {
             $('#removeCartItemModal').modal('toggle');
-            if(rs === null) showFailDelete();
+            if (rs === null) showFailDelete();
             renderCartPage(rs);
             renderDATA(rs);
             deleteSuccess();
@@ -167,4 +168,36 @@ function showFailDelete() {
         message: "Hệ thống đang xảy ra lỗi. Không thể xóa.",
         duration: 3000
     })
+}
+
+//checkout page
+function renderDATACheckoutPage(data) {
+    var cart = JSON.stringify(data);
+    var listJSON = JSON.parse(cart);
+    var items = listJSON.listItems.map(function (i) {
+        let priceByProduct = formatter.format(i.totalPrice)
+        return `<div class="media-body">
+                     <div class="row">
+                         <div class="col-3">
+                             <a href="">
+                               <img src="${i.productImg}" class="img-fluid" alt="">
+                             </a>
+                          </div>
+                         <div class="col-9 text-left">
+                            <a href="">${i.productName}</a>
+                               <div class="small text-muted">Giá: <span class="product-price">${formatter.format(i.priceProduct)}</span>
+                                  <span class="mx-2">|</span> Số lượng: <span>1</span>
+                               <span class="mx-2">|</span> Đơn Giá: <span class="product-price">${priceByProduct}</span>/cái
+                               </div>
+                               </div>
+                     </div>
+                  </div>`
+        });
+    $('#order-content').html(items);
+    $('#totalAll').text(formatter.format(listJSON.totalAll));
+    $('#discountPrice').text(formatter.format(listJSON.saledPrice));
+    $('#shipCodPrice').text(formatter.format(0));
+    $('#lastPrice1').text(formatter.format(listJSON.lastPrice));
+    $('#lastPrice2').text(formatter.format(listJSON.lastPrice));
+
 }

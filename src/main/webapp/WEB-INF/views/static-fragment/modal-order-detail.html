@@ -1,6 +1,6 @@
 <div xmlns:th="http://www.thymeleaf.org">
     <!-- modal order-detail -->
-    <div th:fragment="modal-order-detail" th:each="orderItem:${session.currentUser.getOrders()}" class="modal fade"
+    <div th:fragment="modal-order-detail" th:each="orderItem:${orders}" class="modal fade"
          th:id="${'exampleModal'+orderItem.getId()}" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalLabel"
          aria-hidden="true">
@@ -40,7 +40,7 @@
                                     <div class="col-md-6"><span th:text="${orderItemDetail.getProduct().getName()}"></span>
                                     </div>
                                     <div class="col-md-3">
-<!--                                        <span th:text="${orderItemDetail.getProduct().getBrand().getName()}"></span>-->
+                                        <span th:text="${orderItemDetail.getProduct().getBrand().getName()}"></span>
                                     </div>
                                     <div class="col-md-3"><span class="product-price"
                                                                 th:text="${orderItemDetail.getProduct().getPrice()}"></span>/cái

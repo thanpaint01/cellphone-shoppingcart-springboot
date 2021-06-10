@@ -12,9 +12,10 @@ public class CartItemRequest {
     private double totalPrice;
     private double priceProduct;
     private int active;
-
+    private String brandName;
     public CartItemRequest() {
     }
+
 
     public CartItemRequest(int id, int userID, int productID, int amount, String productName, String productImg, double totalPrice, int active) {
         this.id = id;
@@ -25,6 +26,14 @@ public class CartItemRequest {
         this.productImg = productImg;
         this.totalPrice = totalPrice;
         this.active = active;
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
     }
 
     public int getId() {

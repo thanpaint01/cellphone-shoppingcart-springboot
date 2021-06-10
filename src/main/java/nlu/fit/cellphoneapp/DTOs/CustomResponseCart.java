@@ -1,13 +1,14 @@
 package nlu.fit.cellphoneapp.DTOs;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 public class CustomResponseCart {
     private int amount;
     private double totalAll;
     private double saledPrice;
     private double lastPrice;
-    private Collection<CartItemRequest> listItems;
+    public static Collection<CartItemRequest> listItems;
 
     public static boolean isEmpty = true;
 
@@ -71,5 +72,19 @@ public class CustomResponseCart {
         updateAmount();
         updateTotalAll();
         updateLastPrice();
+    }
+
+
+    public static void clearCart(){
+        listItems.clear();
+    }
+
+
+    public static Collection<CartItemRequest> cloneCart(){
+        Collection<CartItemRequest> clone = new HashSet<>();
+        for (CartItemRequest cq: listItems) {
+            clone.add(cq);
+        }
+        return clone;
     }
 }

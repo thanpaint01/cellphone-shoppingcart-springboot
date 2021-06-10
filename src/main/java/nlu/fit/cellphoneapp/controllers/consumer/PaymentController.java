@@ -15,20 +15,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class PaymentController {
 
     public static final String URL_PAYPAL_SUCCESS = "/success";
     public static final String URL_PAYPAL_CANCEL = "/cancel";
+    public static boolean successed = false;
 
     private Logger log = LoggerFactory.getLogger(getClass());
 
@@ -38,12 +36,12 @@ public class PaymentController {
 
     @PostMapping("/pay")
     @ResponseBody
-    public String pay(HttpServletRequest request, double totalPrice){
+    public String pay(@RequestBody Order order, HttpServletRequest request){
         String cancelUrl = Link.createAbsolutePath(request, URL_PAYPAL_CANCEL);
         String successUrl = Link.createAbsolutePath(request, URL_PAYPAL_SUCCESS);
         try {
             Payment payment = paypalService.createPayment(
-                    totalPrice/1000,
+                    order.getTotalPrice()/23000,
                     "USD",
                     PaypalPaymentMethod.paypal,
                     PaypalPaymentIntent.sale,
@@ -52,6 +50,7 @@ public class PaymentController {
                     successUrl);
             for(Links links : payment.getLinks()){
                 if(links.getRel().equals("approval_url")){
+                    successed = true;
                     return links.getHref();
                 }
             }

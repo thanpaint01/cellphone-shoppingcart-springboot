@@ -12,17 +12,22 @@ function redirect() {
 
 
 }
+var data = {
+    "totalPrice": 0,
+    "payment": "paypal"
+}
 window.onload = function () {
-    //console.log('loading....')
     $.ajax({
         type: 'POST',
-        data: {paypalResponse: 'success', totalPrice: 0.0},
-        url: 'order',
-        success: function () {
-            //alert("abc xyz")
-            //do nothing
+        contentType: 'application/json',
+        accept: 'application/json',
+        data: JSON.stringify(data),
+        headers: {'paypalSuccess':'success'},
+        url: '/api/order',
+        success: function (rs) {
+            if(rs.id != 0)
+                showSuccessMessage("Đặt hàng thành công!", "Chúng tôi đã nhận được đơn hàng của bạn.\n Cảm ơn bạn đã mua hàng.")
         }
     })
-    redirect()
+    redirect();
 }
-// window.addEventListener('load', redirect(), false);

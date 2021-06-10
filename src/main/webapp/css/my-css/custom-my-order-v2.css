@@ -29,6 +29,12 @@
 .filter-search {
     width: 60%;
 }
+.focus-modal:hover{
+    cursor: pointer;
+}
+.focus-modal:hover>i{
+    color: yellowgreen;
+}
 
 /* queries media */
 /* tablet & mobile */

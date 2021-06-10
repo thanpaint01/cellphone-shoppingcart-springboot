@@ -9,7 +9,6 @@ import nlu.fit.cellphoneapp.receiver.RegisterForm;
 import nlu.fit.cellphoneapp.receiver.UpdateInfoForm;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import javax.servlet.http.HttpSession;
@@ -82,14 +81,14 @@ public class User {
             orphanRemoval = true,
             fetch = FetchType.EAGER
     )
-    private Set<CartItem> cartItems = new HashSet<>();
+    private Set<CartItem> cartItems;
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<Order> orders = new HashSet<>();
+    private Collection<Order> orders = new HashSet<>();
 
     public String toStringRole() {
         switch (this.role) {
@@ -184,15 +183,6 @@ public class User {
         return rs;
     }
 
-    public boolean checkCartItemExist(int productID) {
-        for (CartItem c : cartItems) {
-            if (c.getProduct().getId() == productID) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public static boolean checkUserSession(HttpSession session) {
         if (null != (User) session.getAttribute(SESSION)) return true;
         return false;
@@ -207,10 +197,6 @@ public class User {
             }
         }
         return false;
-    }
-
-    public boolean addInCartList(CartItem c) {
-        return this.cartItems.add(c);
     }
 
     public boolean hasFavoriteProduct(int productId) {
@@ -289,6 +275,11 @@ public class User {
         o.setAddress(orderDB.getAddress());
         o.setTotalPrice(orderDB.getTotalPrice());
         o.setOrderDetails(orderDB.getOrderDetails());
+    }
+
+    public Collection<Order> checkAndSetOrderUserDB(Collection<Order> collectionOrderUserDB) {
+        orders = collectionOrderUserDB;
+        return orders;
     }
 
 }

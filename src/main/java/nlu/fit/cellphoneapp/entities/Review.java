@@ -6,10 +6,10 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
-@Table(name = "review")
-@Getter
-@Setter
+//@Entity
+//@Table(name = "review")
+//@Getter
+//@Setter
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
