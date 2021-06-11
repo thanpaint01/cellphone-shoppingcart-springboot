@@ -1,4 +1,5 @@
 package nlu.fit.cellphoneapp.entities;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,10 +15,7 @@ public class Favorite {
     @Column(name = "id")
     private Integer id;
     @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id")
     private User user;
     @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "product_id")
-//    @JsonIgnore
     private Product product;
 }

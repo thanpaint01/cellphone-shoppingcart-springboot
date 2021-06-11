@@ -43,7 +43,7 @@ public class FavoriteServiceImpl implements IFavoriteService {
     }
 
     @Override
-    public Page<Favorite> favoritesByUser(Specification spec, Pageable pageable) {
+    public Page<Favorite> findBySpec(Specification spec, Pageable pageable) {
         return favoriteRepo.findAll(spec, pageable);
     }
 

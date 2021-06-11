@@ -11,7 +11,7 @@
  Target Server Version : 100416
  File Encoding         : 65001
 
- Date: 07/06/2021 10:10:16
+ Date: 11/06/2021 09:50:18
 */
 
 SET NAMES utf8mb4;
@@ -47,19 +47,23 @@ DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment`  (
   `id` int NOT NULL AUTO_INCREMENT,
   `review_id` int NULL DEFAULT NULL,
+  `created_date` date NULL DEFAULT NULL,
   `user_id` int NULL DEFAULT NULL,
   `content` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
   `active` int NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_id`(`review_id`) USING BTREE,
   INDEX `product_id`(`user_id`) USING BTREE,
-  CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`review_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `comment_idbk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `comment_idbk_2` FOREIGN KEY (`review_id`) REFERENCES `review` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of comment
 -- ----------------------------
+INSERT INTO `comment` VALUES (3, 9, '2021-06-11', 28, 'Đt chụp đẹp ko', 1);
+INSERT INTO `comment` VALUES (4, 9, '2021-06-11', 28, 'Alo', 1);
+INSERT INTO `comment` VALUES (5, 9, '2021-06-11', 28, 'Alo2', 1);
 
 -- ----------------------------
 -- Table structure for favorite
@@ -98,12 +102,11 @@ CREATE TABLE `item_cart`  (
   INDEX `cart_ibfk_1`(`product_id`) USING BTREE,
   CONSTRAINT `item_cart_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `item_cart_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of item_cart
 -- ----------------------------
-INSERT INTO `item_cart` VALUES (39, 28, 24, NULL, 1, NULL, 3690000, 1);
 
 -- ----------------------------
 -- Table structure for order
@@ -124,7 +127,7 @@ CREATE TABLE `order`  (
   INDEX `iduser`(`user_id`) USING BTREE,
   INDEX `donhang2`(`status`) USING BTREE,
   CONSTRAINT `order_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 50 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 51 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of order
@@ -137,6 +140,7 @@ INSERT INTO `order` VALUES (46, 28, 'Giao thành công', '2021-02-10', '35/1/2 �
 INSERT INTO `order` VALUES (47, 28, 'Giao thành công', '2021-02-11', '35/1/2 Đặng Thị Rành P. Linh Tây Q.Thủ Đức TPHCM, Đắk Sắk, Đắk Mil, Đắk Nông', 'Vũ Minh Hiếu', '0964494830', 29318000.00, 1, 'Trực tiếp');
 INSERT INTO `order` VALUES (48, 28, 'Giao thành công', '2021-05-15', '35/1/2 Đặng Thị Rành P. Linh Tây Q.Thủ Đức TPHCM, Hoà Liên, Hoà Vang, Đà Nẵng', 'Vũ Minh Hiếu', '0964494830', 33625000.00, 1, 'Online');
 INSERT INTO `order` VALUES (49, 28, 'Giao thành công', '2021-04-14', '35/1/2 Đặng Thị Rành P. Linh Tây Q.Thủ Đức TPHCM, 3, Cao Lãnh, Đồng Tháp', 'Vũ Minh Hiếu', '0964494830', 24850000.00, 1, 'Trực tiếp');
+INSERT INTO `order` VALUES (50, 28, 'Giao thành công', '2021-06-11', '35/1/2 Đặng Thị Rành P. Linh Tây Q.Thủ Đức TPHCM, Điền Hải, Đông Hải, Bạc Liêu', 'Vũ Minh Hiếu', '0964494830', 3690000.00, 1, 'Trực tiếp');
 
 -- ----------------------------
 -- Table structure for order_detail
@@ -152,18 +156,18 @@ CREATE TABLE `order_detail`  (
   `total_price` bigint NULL DEFAULT NULL,
   `price` int NULL DEFAULT NULL,
   `active` int NULL DEFAULT 1,
-  `is_review` int NULL DEFAULT NULL,
+  `is_review` int NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `chitietdonhang2`(`product_id`) USING BTREE,
   INDEX `chitietdonhang1`(`order_id`) USING BTREE,
   CONSTRAINT `order_detail_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `order_detail_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 91 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 92 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of order_detail
 -- ----------------------------
-INSERT INTO `order_detail` VALUES (57, 42, 6, 1, 3690000, 0, 3690000, 3690000, 1, 0);
+INSERT INTO `order_detail` VALUES (57, 42, 6, 1, 3690000, 0, 3690000, 3690000, 1, 1);
 INSERT INTO `order_detail` VALUES (58, 42, 101, 1, 4390000, 0, 4390000, 4390000, 1, 0);
 INSERT INTO `order_detail` VALUES (59, 42, 111, 3, 13170000, 0, 13170000, 4390000, 1, 0);
 INSERT INTO `order_detail` VALUES (60, 43, 95, 1, 3490000, 0, 3490000, 3490000, 1, 0);
@@ -197,6 +201,7 @@ INSERT INTO `order_detail` VALUES (87, 48, 89, 1, 5290000, 0, 5290000, 5290000, 
 INSERT INTO `order_detail` VALUES (88, 49, 22, 1, 3490000, 0, 3490000, 3490000, 1, 0);
 INSERT INTO `order_detail` VALUES (89, 49, 83, 2, 8780000, 0, 8780000, 4390000, 1, 0);
 INSERT INTO `order_detail` VALUES (90, 49, 21, 2, 12580000, 0, 12580000, 6290000, 1, 0);
+INSERT INTO `order_detail` VALUES (91, 50, 6, 1, 3690000, 3690000, 0, 3690000, 1, 0);
 
 -- ----------------------------
 -- Table structure for pin
@@ -565,10 +570,11 @@ INSERT INTO `ram` VALUES (6, '12 GB', 1);
 -- ----------------------------
 DROP TABLE IF EXISTS `review`;
 CREATE TABLE `review`  (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NULL DEFAULT NULL,
   `product_id` int NULL DEFAULT NULL,
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `created_date` date NULL DEFAULT NULL,
   `stars` int NULL DEFAULT NULL,
   `active` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
@@ -576,11 +582,12 @@ CREATE TABLE `review`  (
   INDEX `review_ibfk_2`(`product_id`) USING BTREE,
   CONSTRAINT `review_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `review_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of review
 -- ----------------------------
+INSERT INTO `review` VALUES (9, 28, 6, 'Sản phẩm này thật tuyệt vời', '2021-06-11', 3, 1);
 
 -- ----------------------------
 -- Table structure for role

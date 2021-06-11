@@ -74,6 +74,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
     private Set<Favorite> favorites;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private Set<Review> reviews;
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,

@@ -74,4 +74,6 @@ public class Product {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
     private Set<Favorite> favorites;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+    private Set<Review> reviews;
 }

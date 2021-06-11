@@ -30,14 +30,14 @@ public class FavoriteController {
     public ModelAndView favoritePage(@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
         User user = MyUserDetail.getUserIns();
         ModelAndView model = new ModelAndView("/consumer/favorite");
-        model.addObject("CONTENT_TITLE", "Danh Sách Yêu Thích");
         Specification<Favorite> spec = Specification.where(favoriteService.getFavoriteByUserId(user.getId()));
         Pageable pageable = PageRequest.of(page - 1, ITEM_PER_PAGE);
-        Page<Favorite> list = favoriteService.favoritesByUser(spec, pageable);
+        Page<Favorite> list = favoriteService.findBySpec(spec, pageable);
         model.addObject("currentPage", page);
         model.addObject("totalPages", list.getTotalPages());
         model.addObject("totalRecords", list.getTotalElements());
         model.addObject("favorites", list.getContent());
+        model.addObject("CONTENT_TITLE", "Danh Sách Yêu Thích");
         return model;
     }
 
