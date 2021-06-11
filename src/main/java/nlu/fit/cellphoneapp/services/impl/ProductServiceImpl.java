@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -90,6 +91,11 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public Specification<Product> getProductByName(String name) {
         return productSpec.getProductByName(name);
+    }
+
+    @Override
+    public Product insertIntoTable(Product product) {
+        return productRepo.save(product);
     }
 
 

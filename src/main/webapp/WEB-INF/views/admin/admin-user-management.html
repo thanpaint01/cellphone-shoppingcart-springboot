@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/admin-layout.html}" th:with="isHomePage=true">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{extensions/sticky-header/bootstrap-table-sticky-header.css}">
+    <link rel="stylesheet" th:href="@{extensions/fixed-columns/bootstrap-table-fixed-columns.css}">
+</th:block>
+
+
+<body class="sb-nav-fixed">
+<main layout:fragment="body">
+    <main class="c-main">
+        <div class="container-fluid pt-5">
+            <h1 class="mt-4">Quản lý người dùng</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Danh mục quản lý <i class="fas fa-chevron-right p-1"></i>
+                    <b>Người dùng</b>
+                </li>
+            </ol>
+            <!-- table data -->
+            <div class="container p-0">
+                <div class="fade-in">
+                    <div class="card">
+                        <div class="card-header">
+                            <span><i class="fa fa-users mr-1"></i>Danh sách người dùng (10/125)</span>
+                            <button class="btn btn-success float-right"><i class="fa fa-plus mr-1"></i>Thêm mới
+                                người dùng
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="DataTables_Table_0_wrapper"
+                                 class="dataTables_wrapper dt-bootstrap4 no-footer">
+                                <div class="row mb-4">
+                                    <div class="fomr-group form-inline col-sm-12 col-md-6">
+                                        <div class="dataTables_length" id="DataTables_Table_0_length">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input-group">
+                                            <input class="form-control" type="text"
+                                                   placeholder="Nhập thông tin người dùng (tên, email,...)"
+                                                   aria-label="Search" aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-success" type="button"><i
+                                                        class="fas fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-bordered col-md-12" id="dataTable"
+                                               cellspacing="0">
+                                            <thead class="col-md-12 thead align-middle text-center">
+                                            <tr>
+                                                <th class="col-md-2 col3">Họ và tên</th>
+                                                <th class="col-md-3 col3">Địa chỉ email</th>
+                                                <th class="col-md-2 col2">Ngày đăng kí</th>
+                                                <th class="col-md-1 col2">Role</th>
+                                                <th class="col-md-1 col1">Active</th>
+                                                <th class="col-md-3 col2">Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="col-md-12">
+                                            <!-- tr1 -->
+                                            <tr th:each="user:${users}">
+                                                <td class="text-center align-middle col-md-2">
+                                                    <b th:text="${user.fullName}"></b>
+                                                </td>
+                                                <td class="text-center align-middle col-md-3" th:text="${user.email}">
+                                                </td>
+                                                <td class="text-center align-middle col-md-2" th:text="${user.birth}">
+                                                </td>
+                                                <td class="text-center align-middle col-md-1" th:text="${user.role == 1?'USER':'ADMIN'}">
+
+                                                </td>
+                                                <td class="col-md-1 col1 text-center text-wrapper align-middle">
+                                                    <span class="badge badge-success" th:text="${user.active == 1 ? 'Active' : 'Inactive'}">Active</span>
+                                                </td>
+                                                <td class="col-md-3 text-center text-wrapper align-middle">
+                                                    <a class="btn btn-success text-light"><i
+                                                            class="fas fa-edit"></i></a>
+                                                    <a class="btn btn-danger text-light"><i
+                                                            class="fas fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- paging -->
+<!--                                <div class="row">-->
+<!--                                    <div class="col-sm-12 col-md-5">-->
+<!--                                        <div class="dataTables_info" id="DataTables_Table_0_info" role="status"-->
+<!--                                             aria-live="polite">Showing 1 to 10 of 32 entries-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-sm-12 col-md-7">-->
+<!--                                        <div class="clearfix">-->
+<!--                                            <ul class="pagination float-right">-->
+<!--                                                <li class="page-item"><a href="#" class="page-link">Previous</a>-->
+<!--                                                </li>-->
+<!--                                                <li class="page-item"><a href="#" class="page-link">1</a></li>-->
+<!--                                                <li class="page-item"><a href="#" class="page-link">2</a></li>-->
+<!--                                                <li class="page-item"><a href="#" class="page-link">3</a></li>-->
+<!--                                                <li class="page-item active"><a href="#" class="page-link">4</a>-->
+<!--                                                </li>-->
+<!--                                                <li class="page-item"><a href="#" class="page-link">5</a></li>-->
+<!--                                                <li class="page-item"><a href="#" class="page-link">6</a></li>-->
+<!--                                                <li class="page-item"><a href="#" class="page-link">7</a></li>-->
+<!--                                                <li class="page-item"><a href="#" class="page-link">Next</a>-->
+<!--                                                </li>-->
+<!--                                            </ul>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </main>
+</main>
+<!-- script -->
+<th:block layout:fragment="scripts">
+    <script th:src="@{extensions/sticky-header/bootstrap-table-sticky-header.js}"></script>
+    <script th:src="@{extensions/fixed-columns/bootstrap-table-fixed-columns.js}"></script>
+</th:block>
+
+
+</body>
+
+
+</html>

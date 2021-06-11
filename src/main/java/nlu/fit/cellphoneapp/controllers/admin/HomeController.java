@@ -23,7 +23,6 @@ public class HomeController {
     @Autowired
     IReportService reportService;
 
-
     @RequestMapping(value = "")
     public ModelAndView homePage() {
 //        User user = (User) session.getAttribute(User.SESSION);
@@ -65,5 +64,6 @@ public class HomeController {
             return reportService.getCategoryData(category, type, from, to);
         }
     }
+
 
 }

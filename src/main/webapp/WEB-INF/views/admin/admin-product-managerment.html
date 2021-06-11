@@ -2,7 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout/admin-layout.html}" th:with="isHomePage=true">
 
-<script src="../../../ckfinder/ckfinder.js"></script>
 <th:block layout:fragment="css">
     <link rel="stylesheet" th:href="@{/admin-static/my/css/admin-index.css}">
     <link rel="stylesheet" th:href="@{/css/my-css/toast.css}">
@@ -63,11 +62,11 @@
                                 <th class="col-md-1 col1">Mã</th>
                                 <th class="col-md-3 col2">Hình ảnh</th>
                                 <th class="col-md-3 col3">Tên sản phẩm</th>
-                                <th class="col-md-1 col2">Thương hiệu</th>
+                                <th class="col-md-2 col2">Thương hiệu</th>
                                 <th class="col-md-1 col3">Giá niêm yết</th>
                                 <th class="col-md-1 col1">SL</th>
                                 <th class="col-md-1 col1">Active</th>
-                                <th class="col-md-1 col3">Action</th>
+                                <th class="col-md-2 col3">Action</th>
                             </tr>
                             </thead>
                             <tbody class="col-md-12">
@@ -76,11 +75,11 @@
                                 <td class="text-center align-middle col-md-1 col1">
                                     <b class="col-md-1" th:text="${product.id}"></b>
                                 </td>
-                                <td class="col-md-3 col2">
-                                    <img class="image" height="140" width="150"
+                                <td class="col-md-2 col2">
+                                    <img class="image" height="130" width="140"
                                          th:src="${product.img.host+product.img.relativePath}">
                                 </td>
-                                <td class="text-center align-middle col-md-3 col3">
+                                <td class="text-center align-middle col-md-3 col2">
                                     <b th:text="${product.name}"></b>
 
                                 </td>
@@ -138,7 +137,7 @@
                 </div>
                 <div class="modal-body">
                     <!-- start form product info-->
-                    <form>
+                    <form th:action="@{/admin/product/new}" th:method="POST" th:object="${productInfo}">
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <div class="input-group mb-1">
@@ -153,71 +152,56 @@
                             <div class="form-group col-md-6">
                                 <label for="inputProductName">Tên sản phẩm</label>
                                 <input type="text" class="form-control" id="inputProductName"
-                                       placeholder="Nhập tên sản phẩm">
+                                       placeholder="Nhập tên sản phẩm" th:field="*{name}">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputProductBrand">Thương hiệu</label>
-                                <select id="inputProductBrand" class="form-control">
-                                    <option selected>Chọn...</option>
-                                    <option>Samsung</option>
-                                    <option>Huawei</option>
-                                    <option>Vsmart</option>
+                                <select id="inputProductBrand" class="form-control" th:field="*{brandID}" >
+                                    <option th:each="brand:${allBrands}" th:value="${brand.id}" th:text="${brand.name}"></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputProductPrice">Giá sản phẩm</label>
-                            <input type="text" class="form-control" id="inputProductPrice"
+                            <input th:field="*{price}" type="text" class="form-control" id="inputProductPrice"
                                    placeholder="Nhập giá sản phẩm (24.000.000)">
                         </div>
 
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="inputProductRam">Dung lượng Ram</label>
-                                <select id="inputProductRam" class="form-control">
-                                    <option selected>Chọn...</option>
-                                    <option>2 GB</option>
-                                    <option>3 GB</option>
-                                    <option>4 GB</option>
-                                    <option>8 GB</option>
+                                <select id="inputProductRam" class="form-control" th:field="*{ramID}">
+                                    <option th:each="ram:${allRams}" th:value="${ram.id}" th:text="${ram.capacity}"></option>
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="inputProductRom">Dung lượng Rom</label>
-                                <select id="inputProductRom" class="form-control">
-                                    <option selected>Chọn...</option>
-                                    <option>12 GB</option>
-                                    <option>24 GB</option>
-                                    <option>32 GB</option>
-                                    <option>64 GB</option>
+                                <select id="inputProductRom" class="form-control" th:field="*{romID}">
+                                    <option th:each="rom:${allRoms}" th:value="${rom.id}" th:text="${rom.capacity}"></option>
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="inputProductPin">Pin</label>
-                                <select id="inputProductPin" class="form-control">
-                                    <option selected>Chọn...</option>
-                                    <option>1500 mAh</option>
-                                    <option>3200 mAh</option>
-                                    <option>3570 mAh</option>
-                                    <option>5000 mAh</option>
+                                <select id="inputProductPin" class="form-control" th:field="*{pinID}">
+                                    <option th:each="pin:${allPins}" th:value="${pin.id}" th:text="${pin.capacity}"></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputProductSize">Thông tin màn hình</label>
                             <input type="text" class="form-control" id="inputProductSize"
-                                   placeholder="Nhập thông tin màn hình">
+                                   placeholder="Nhập thông tin màn hình" th:field="*{size}">
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="inputProductSelfieCamera">Camera trước</label>
                                 <input type="text" class="form-control" id="inputProductSelfieCamera"
-                                       placeholder="Nhập thông tin camera trước">
+                                       placeholder="Nhập thông tin camera trước" th:field="*{selfieCamera}">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputProductMainCamera">Camera sau</label>
                                 <input type="text" class="form-control" id="inputProductMainCamera"
-                                       placeholder="Nhập thông tin camera sau">
+                                       placeholder="Nhập thông tin camera sau" th:field="*{mainCamera}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -226,36 +210,21 @@
                                       placeholder="Đường dẫn liên kết"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="inputProductImgDes2">Hình ảnh mô tả 2</label>
-                            <input type="text" class="form-control" id="inputProductImgDes2"
-                                   placeholder="Đường dẫn liên kết">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputProductImgDes3">Hình ảnh mô tả 3</label>
-                            <input type="text" class="form-control" id="inputProductImgDes3"
-                                   placeholder="Đường dẫn liên kết">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputProductImgDes4">Hình ảnh mô tả 4</label>
-                            <input type="text" class="form-control" id="inputProductImgDes4"
-                                   placeholder="Đường dẫn liên kết">
-                        </div>
-
-                        <div class="form-group">
                             <label for="inputProductActive">Active</label>
-                            <select id="inputProductActive" class="form-control">
-                                <option selected>Chọn...</option>
-                                <option>Active</option>
-                                <option>Disable</option>
+                            <select id="inputProductActive" class="form-control" th:field="*{active}">
+                                <option th:value="1">Active</option>
+                                <option th:value="0">Disable</option>
                             </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+                            <button id="btnSubmitAddNewProduct" type="submit" class="btn btn-success">Lưu thay đổi</button>
                         </div>
                     </form>
                     <!-- end form product info -->
+
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
-                    <button type="submit" class="btn btn-success">Lưu thay đổi</button>
-                </div>
+
             </div>
         </div>
     </div>
@@ -290,10 +259,21 @@
     <script th:src="@{/js/my-js/format-price-of-product.js}"></script>
     <script th:src="@{/js/my-js/modal-add-product.js}"></script>
     <script th:src="@{/js/my-js/admin-product-management.js}"></script>
+    <script>
+        // $('#btnSubmitAddNewProduct').click(function () {
+        //     $.ajax({
+        //         type:'POST',
+        //         contentType:'application/json',
+        //         data: JSON.stringify([[${productInfo.img}]]),
+        //         url:"/admin/product/new",
+        //         success: function (rs) {
+        //             alert(rs)
+        //         }
+        //     })
+        // })
+    </script>
 </th:block>
-<script>
 
-</script>
 
 </body>
 

@@ -1,5 +1,7 @@
 package nlu.fit.cellphoneapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import nlu.fit.cellphoneapp.DTOs.CartItemRequest;

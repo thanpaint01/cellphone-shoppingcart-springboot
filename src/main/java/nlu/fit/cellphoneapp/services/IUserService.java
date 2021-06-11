@@ -2,6 +2,8 @@ package nlu.fit.cellphoneapp.services;
 
 import nlu.fit.cellphoneapp.entities.User;
 
+import java.util.Collection;
+
 
 public interface IUserService {
     boolean isEmailUnique(String email);
@@ -20,6 +22,5 @@ public interface IUserService {
 
     boolean isCurPassword(String curPassword);
 
-
-
+    Collection<User> getAllListUser();
 }

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
+
 
 @Service
 
@@ -61,6 +63,11 @@ public class UserServiceImpl implements IUserService {
     @Override
     public boolean isCurPassword(String curPassword) {
         return false;
+    }
+
+    @Override
+    public Collection<User> getAllListUser() {
+        return userRepo.findAll();
     }
 
 

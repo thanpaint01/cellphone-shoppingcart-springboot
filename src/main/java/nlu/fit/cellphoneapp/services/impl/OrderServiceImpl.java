@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class OrderServiceImpl implements IOrderService {
@@ -70,6 +71,11 @@ public class OrderServiceImpl implements IOrderService {
     public Collection<Order> getListOrderOfUser(int userID) {
         Collection<Order> ls =orderRepo.getAllByUserId(userID);
         return null == ls ? null : ls;
+    }
+
+    @Override
+    public List<Order> listOrderByStatus(String status) {
+        return orderRepo.getAllByOrderStatus(status);
     }
 
 }

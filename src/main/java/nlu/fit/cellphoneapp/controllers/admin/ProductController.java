@@ -1,9 +1,10 @@
 package nlu.fit.cellphoneapp.controllers.admin;
 
+import nlu.fit.cellphoneapp.DTOs.ProductDTO;
 import nlu.fit.cellphoneapp.entities.Product;
 import nlu.fit.cellphoneapp.helper.UploadFileHelper;
 import nlu.fit.cellphoneapp.receiver.JSONFileUpload;
-import nlu.fit.cellphoneapp.services.IProductService;
+import nlu.fit.cellphoneapp.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,13 +23,21 @@ import javax.servlet.ServletContext;
 import java.io.File;
 
 @Controller("adminProductController")
-@RequestMapping("/admin")
+@RequestMapping("/admin/products-manage")
 public class ProductController implements ServletContextAware {
     private ServletContext context;
     @Autowired
     private IProductService productService;
+    @Autowired
+    private IBrandService brandService;
+    @Autowired
+    private IRamService ramService;
+    @Autowired
+    private IRomService romService;
+    @Autowired
+    private IPinService pinService;
 
-    @GetMapping("/products-manage")
+    @GetMapping
     public String goToProductManagement(@RequestParam(value = "page", required = false, defaultValue = "1") int page, @RequestParam(value = "find", required = false, defaultValue = "") String find, Model model){
         Page<Product> productPage = productService.findPaginated(page, 10);
         if(find !="" || find != null || !find.equals("")){
@@ -44,10 +53,15 @@ public class ProductController implements ServletContextAware {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", productPage.getTotalPages());
         model.addAttribute("totalRecords", productPage.getTotalElements());
+        model.addAttribute("productInfo", new ProductDTO());
+        model.addAttribute("allBrands", brandService.findAllByActive(1));
+        model.addAttribute("allRams", ramService.findAllByActive(1));
+        model.addAttribute("allRoms", romService.findAllByActive(1));
+        model.addAttribute("allPins", pinService.findAllByActive(1));
         return "admin/admin-product-managerment";
     }
 
-    @PutMapping("/products-manage/{id}")
+    @PutMapping("/{id}")
     public String updateProductInfo(int id) {
         if(null == productService.findOneByID(id)) return "error";
 
@@ -61,7 +75,6 @@ public class ProductController implements ServletContextAware {
     public void setServletContext(ServletContext servletContext) {
         this.context = servletContext;
     }
-
 
     @RequestMapping(value = "upload_ckeditor", method = RequestMethod.POST, produces = {MimeTypeUtils.APPLICATION_JSON_VALUE})
     public ResponseEntity<JSONFileUpload> uploadByCKEditor(@RequestParam("upload") MultipartFile upload){
@@ -78,6 +91,13 @@ public class ProductController implements ServletContextAware {
         File folder = new File(context.getRealPath("/images/"));
         modelMap.put("files", folder.listFiles());
         return "admin/images-upload";
+    }
+
+    @PostMapping("/new")
+    @ResponseBody
+    public ResponseEntity<ProductDTO> createNewProduct(ProductDTO product){
+        System.out.println("product post = "+product.getImg());
+        return  new ResponseEntity<ProductDTO>(product, HttpStatus.OK);
     }
 
 

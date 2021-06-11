@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 public interface IOrderService {
     Order insertIntoTable(Order order);
@@ -15,4 +16,5 @@ public interface IOrderService {
     double profitByMonth(Date date,String payment);
     double getProfitHalfYearAgo();
     Collection<Order> getListOrderOfUser(int userID);
+    List<Order> listOrderByStatus(String status);
 }

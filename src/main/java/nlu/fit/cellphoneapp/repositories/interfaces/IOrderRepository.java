@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.List;
 
 @Repository
 public interface IOrderRepository extends JpaRepository<Order, Integer> {
@@ -26,5 +27,8 @@ public interface IOrderRepository extends JpaRepository<Order, Integer> {
 
     Collection<Order> getAllByUserId(int userID);
 
+
+    @Query(value = " select o from Order o where o.orderStatus=:status")
+    List<Order> getAllByOrderStatus(@Param("status") String status);
 
 }

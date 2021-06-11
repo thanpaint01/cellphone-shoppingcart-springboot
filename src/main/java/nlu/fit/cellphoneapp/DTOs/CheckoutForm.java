@@ -1,8 +1,5 @@
 package nlu.fit.cellphoneapp.DTOs;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 public class CheckoutForm {
     private String fullName;
     private String phone;

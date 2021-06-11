@@ -38,21 +38,21 @@
                 <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
                      data-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                        <a class="nav-link collapsed" href="admin-pending-order-managerment.html">
+                        <a class="nav-link collapsed" th:href="@{/admin/orders-manage/pending}">
                             Chờ xử lý
                         </a>
-                        <a class="nav-link collapsed" href="admin-delivering-order-managerment.html">
+                        <a class="nav-link collapsed" th:href="@{/admin/orders-manage/delivering}">
                             Đang vận chuyển
                         </a>
-                        <a class="nav-link collapsed" href="admin-finished-order-managerment.html">
+                        <a class="nav-link collapsed" th:href="@{/admin/orders-manage/finish}">
                             Giao thành công
                         </a>
-                        <a class="nav-link collapsed" href="admin-deny-order-managerment.html">
+                        <a class="nav-link collapsed" th:href="@{/admin/orders-manage/deny}">
                             Hủy đơn hàng
                         </a>
                     </nav>
                 </div>
-                <a class="nav-link" href="admin-user-managerment.html">
+                <a class="nav-link" th:href="@{/admin/users-manage}">
                     <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                     Người dùng
                 </a>
