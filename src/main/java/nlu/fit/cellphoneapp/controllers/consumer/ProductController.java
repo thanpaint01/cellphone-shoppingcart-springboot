@@ -1,8 +1,10 @@
 package nlu.fit.cellphoneapp.controllers.consumer;
 
+import nlu.fit.cellphoneapp.entities.Comment;
 import nlu.fit.cellphoneapp.entities.Product;
 import nlu.fit.cellphoneapp.entities.Review;
 import nlu.fit.cellphoneapp.helper.StringHelper;
+import nlu.fit.cellphoneapp.services.ICommentService;
 import nlu.fit.cellphoneapp.services.IProductService;
 import nlu.fit.cellphoneapp.services.IReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,8 @@ public class ProductController {
     IProductService productService;
     @Autowired
     IReviewService reviewService;
+    @Autowired
+    ICommentService commentService;
     private static final int ITEM_PER_PAGE = 15;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -86,6 +90,9 @@ public class ProductController {
         if ((product = productService.findOneForConsumer(id)) != null) {
             ModelAndView model = new ModelAndView("consumer/product-detail");
             List<Review> reviews = reviewService.findAllBySpec(reviewService.getByActiveProduct(product.getId()));
+            reviews.forEach(s -> {
+                s.setComments(commentService.findAllBySpec(commentService.getByActiveReviewId(s.getId())));
+            });
             model.addObject("product", product);
             model.addObject("reviews", reviews);
             model.addObject("CONTENT_TITLE", product.getName());

@@ -2,8 +2,10 @@ package nlu.fit.cellphoneapp.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import nlu.fit.cellphoneapp.helper.DateHelper;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "comment")
@@ -15,9 +17,15 @@ public class Comment {
     @Column(name = "id")
     private int id;
     @ManyToOne(fetch = FetchType.LAZY)
-    Review review;
+    private Review review;
     @ManyToOne(fetch = FetchType.LAZY)
-    User user;
-    String content;
-    Integer active;
+    private User user;
+    @Column(name = "created_date")
+    private Date createdDate;
+    private String content;
+    private Integer active;
+
+    public String toStringCreatedDate() {
+        return DateHelper.convertToString(this.createdDate, "dd/MM/yyyy");
+    }
 }

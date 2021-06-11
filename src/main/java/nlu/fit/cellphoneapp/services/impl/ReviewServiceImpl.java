@@ -53,4 +53,14 @@ public class ReviewServiceImpl implements IReviewService {
     public Specification<Review> getByActiveProduct(int productId) {
         return spec.getByActiveProduct(productId);
     }
+
+    @Override
+    public Specification<Review> getOneByActiveId(int reviewId) {
+        return spec.getOneByActiveId(reviewId);
+    }
+
+    @Override
+    public Review findOneBySpec(Specification spec) {
+        return (Review) repo.findOne(spec).orElse(null);
+    }
 }

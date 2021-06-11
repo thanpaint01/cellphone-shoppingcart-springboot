@@ -19,4 +19,8 @@ public interface IReviewService {
 
     Specification<Review> getByActiveProduct(int productId);
 
+    Specification<Review> getOneByActiveId(int reviewId);
+
+    Review findOneBySpec(Specification spec);
+
 }

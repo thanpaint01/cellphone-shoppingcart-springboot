@@ -16,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Date;
+
 @Controller
 @RequestMapping(value = "/user/review")
 public class ReviewController {
@@ -79,6 +81,7 @@ public class ReviewController {
             review.setActive(1);
             review.setProduct(orderDetail.getProduct());
             review.setStars(stars);
+            review.setCreatedDate(new Date());
             orderDetail.setIsReviewd(1);
             if (!service.save(review) || !orderDetailService.save(orderDetail)) {
                 return "failed";
