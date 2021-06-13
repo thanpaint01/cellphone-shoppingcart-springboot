@@ -60,7 +60,6 @@ $('#btnOrder').click(function () {
         var phoneNumber = $('#phoneNumber').val();
         var totalPrice = convert(reverseFormatNumber($('#lastPrice2').text(), "vi-VN"));
         var payment = $('#cash').prop('checked') === true ? 'cash' : 'paypal';
-        alert(totalPrice)
         var order = {
             "address": address,
             "nameOfClient": nameClient,

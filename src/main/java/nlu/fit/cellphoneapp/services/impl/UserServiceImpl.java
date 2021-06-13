@@ -70,6 +70,11 @@ public class UserServiceImpl implements IUserService {
         return userRepo.findAll();
     }
 
+    @Override
+    public User findOneById(int id) {
+        return userRepo.getOne(id);
+    }
+
 
     @Override
     public User findOneByToken(String token) {

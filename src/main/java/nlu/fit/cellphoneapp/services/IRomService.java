@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface IRomService {
     List<Rom> findAllByActive(int active);
+    Rom findOneById(int id);
 }

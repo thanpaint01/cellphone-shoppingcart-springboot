@@ -16,4 +16,9 @@ public class RomServiceImpl implements IRomService {
     public List<Rom> findAllByActive(int active) {
         return romRepo.findAllByActive(active);
     }
+
+    @Override
+    public Rom findOneById(int id) {
+        return romRepo.getOne(id);
+    }
 }

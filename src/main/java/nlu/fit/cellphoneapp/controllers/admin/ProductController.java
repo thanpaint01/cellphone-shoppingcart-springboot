@@ -86,18 +86,32 @@ public class ProductController implements ServletContextAware {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    @RequestMapping(value = "/filebrowser", method = RequestMethod.GET)
+    @RequestMapping(value = "filebrowser", method = RequestMethod.GET)
     public String fileBrowser(ModelMap modelMap){
         File folder = new File(context.getRealPath("/images/"));
         modelMap.put("files", folder.listFiles());
         return "admin/images-upload";
     }
 
-    @PostMapping("/new")
+    @PostMapping("new")
     @ResponseBody
-    public ResponseEntity<ProductDTO> createNewProduct(ProductDTO product){
-        System.out.println("product post = "+product.getImg());
-        return  new ResponseEntity<ProductDTO>(product, HttpStatus.OK);
+    public String createNewProduct(@RequestBody ProductDTO product){
+        //convert to entities
+        Product productEntity = product.toProductEntity();
+        productEntity.setBrand(brandService.findOneById(product.getBrandID()));
+        productEntity.setRam(ramService.findOneById(product.getRamID()));
+        productEntity.setRom(romService.findOneById(product.getRomID()));
+        productEntity.setPin(pinService.findOneById(product.getPinID()));
+
+        if(null == productService.insertIntoTable(productEntity)) return "error";
+        return "success";
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public String removeProduct(@PathVariable int id){
+        productService.deleteOneById(id);
+        return "success";
     }
 
 

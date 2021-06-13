@@ -98,5 +98,11 @@ public class ProductServiceImpl implements IProductService {
         return productRepo.save(product);
     }
 
+    @Override
+    public boolean deleteOneById(int id) {
+        productRepo.deleteById(id);
+        return true;
+    }
+
 
 }

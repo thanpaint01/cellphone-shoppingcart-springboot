@@ -16,4 +16,9 @@ public class RamServiceImpl implements IRamService {
     public List<Ram> findAllByActive(int active) {
         return ramRepo.findAllByActive(active);
     }
+
+    @Override
+    public Ram findOneById(int id) {
+        return ramRepo.getOne(id);
+    }
 }

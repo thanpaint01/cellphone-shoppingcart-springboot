@@ -10,4 +10,5 @@ import lombok.Setter;
 public class ImageAddress {
     private String host;
     private String relativePath;
+
 }

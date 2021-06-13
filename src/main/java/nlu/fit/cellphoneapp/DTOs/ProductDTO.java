@@ -1,5 +1,9 @@
 package nlu.fit.cellphoneapp.DTOs;
 
+import nlu.fit.cellphoneapp.converters.ImageAddress;
+import nlu.fit.cellphoneapp.converters.ImageAddressConventer;
+import nlu.fit.cellphoneapp.entities.Product;
+
 public class ProductDTO {
     private String id;
     private String name;
@@ -15,13 +19,40 @@ public class ProductDTO {
     private String img01;
     private String img02;
     private String img03;
+    private String img04;
     private String title01;
     private String title02;
     private String title03;
+    private String title04;
     private String script01;
     private String script02;
     private String script03;
+    private String script04;
     private int active;
+
+    public String getImg04() {
+        return img04;
+    }
+
+    public void setImg04(String img04) {
+        this.img04 = img04;
+    }
+
+    public String getTitle04() {
+        return title04;
+    }
+
+    public void setTitle04(String title04) {
+        this.title04 = title04;
+    }
+
+    public String getScript04() {
+        return script04;
+    }
+
+    public void setScript04(String script04) {
+        this.script04 = script04;
+    }
 
     public String getSize() {
         return size;
@@ -189,5 +220,24 @@ public class ProductDTO {
 
     public void setActive(int active) {
         this.active = active;
+    }
+
+    public Product toProductEntity(){
+        Product product = new Product();
+        product.setName(this.name);
+        product.setImg(new ImageAddressConventer().convertToEntityAttribute(img));
+        product.setActive(active);
+        product.setImg01(new ImageAddressConventer().convertToEntityAttribute(img01));
+        product.setImg02(new ImageAddressConventer().convertToEntityAttribute(img02));
+        product.setImg03(new ImageAddressConventer().convertToEntityAttribute(img03));
+        product.setImg04(new ImageAddressConventer().convertToEntityAttribute(img04));
+        product.setSelfieCamera(selfieCamera);
+        product.setMainCamera(mainCamera);
+        product.setSize(size);
+        product.setPrice(price);
+        product.setWarranty(12);
+        product.setAmount(30);
+
+        return product;
     }
 }

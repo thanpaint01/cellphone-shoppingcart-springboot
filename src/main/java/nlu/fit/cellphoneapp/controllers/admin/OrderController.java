@@ -3,13 +3,13 @@ package nlu.fit.cellphoneapp.controllers.admin;
 
 import nlu.fit.cellphoneapp.entities.Order;
 import nlu.fit.cellphoneapp.services.IOrderService;
+import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Collections;
 import java.util.List;
 
 @Controller("adminOrderController")
@@ -43,4 +43,23 @@ public class OrderController {
         mv.addObject("orders", orderService.listOrderByStatus("Đã hủy"));
         return mv;
     }
+    @PutMapping("pending/{id}")
+    @ResponseBody
+    public String acceptOrder(@PathVariable("id") int id){
+        Order order = orderService.getOne(id);
+        if(null == order) return "error";
+        order.setOrderStatus("Đang giao hàng");
+        orderService.insertIntoTable(order);
+        return "success";
+    }
+
+    @GetMapping("order-detail")
+    public ModelAndView goToDetailOrderPage(@Param("id") int id){
+        ModelAndView mv = new ModelAndView("admin/order-detail");
+        Order order = orderService.getOne(id);
+        if(null == order) return null;
+        mv.addObject("order", order);
+        return mv;
+    }
+
 }

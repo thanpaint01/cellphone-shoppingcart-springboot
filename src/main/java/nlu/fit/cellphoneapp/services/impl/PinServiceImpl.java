@@ -15,4 +15,9 @@ public class PinServiceImpl implements IPinService {
     public List<Pin> findAllByActive(int active) {
         return pinRepo.findAllByActive(active);
     }
+
+    @Override
+    public Pin findOneById(int id) {
+        return pinRepo.getOne(id);
+    }
 }

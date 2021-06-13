@@ -23,10 +23,7 @@
         var funcNum = getUrlParam( 'CKEditorFuncNum' );
         $('#fileExplorer').on('click', 'img', function () {
             var fileUrl = "http://localhost:8080/images/"+$(this).attr('title');
-            // var inp_src = window.opener.document.querySelector('.cke_dialog_ui_input_text input.cke_dialog_ui_input_text');
-            // if(inp_src) inp_src.value = fileUrl;
             window.opener.CKEDITOR.tools.callFunction(funcNum, fileUrl);
-            alert(funcNum)
             window.close();
         }).hover(function () {
             $(this).css('cursor', 'pointer')

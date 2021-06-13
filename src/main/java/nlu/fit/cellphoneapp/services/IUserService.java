@@ -23,4 +23,5 @@ public interface IUserService {
     boolean isCurPassword(String curPassword);
 
     Collection<User> getAllListUser();
+    User findOneById(int id);
 }

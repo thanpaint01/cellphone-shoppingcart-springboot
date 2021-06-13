@@ -82,29 +82,13 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label th:for="'inputProductImgDes1'+${product.id}">Hình ảnh mô tả 1</label>
+                            <label th:for="'inputProductImgDes1'+${product.id}">Mô tả sản phẩm</label>
                             <textarea type="text" class="form-control ckeditor" th:id="'inputProductImgDes1'+${product.id}"
                                    placeholder="Đường dẫn liên kết">
                                 <h1 th:text="${product.name}"></h1>
                                 <img style="height: 100px; width: 100px;" th:src="${product.img.host+product.img.relativePath}"/>
                             </textarea>
                         </div>
-                        <div class="form-group">
-                            <label th:for="'inputProductImgDes2'+${product.id}">Hình ảnh mô tả 2</label>
-                            <input type="text" class="form-control" th:id="'inputProductImgDes2'+${product.id}"
-                                   placeholder="Đường dẫn liên kết">
-                        </div>
-                        <div class="form-group">
-                            <label th:for="'inputProductImgDes3'+${product.id}">Hình ảnh mô tả 3</label>
-                            <input type="text" class="form-control" th:id="'inputProductImgDes3'+${product.id}"
-                                   placeholder="Đường dẫn liên kết">
-                        </div>
-                        <div class="form-group">
-                            <label th:for="'inputProductImgDes4'+${product.id}">Hình ảnh mô tả 4</label>
-                            <input type="text" class="form-control" th:id="'inputProductImgDes4'+${product.id}"
-                                   placeholder="Đường dẫn liên kết">
-                        </div>
-
                         <div class="form-group">
                             <label th:for="'inputProductActive'+${product.id}">Active</label>
                             <select th:id="'inputProductActive'+${product.id}" class="form-control">

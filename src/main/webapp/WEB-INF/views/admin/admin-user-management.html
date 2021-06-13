@@ -3,10 +3,12 @@
       layout:decorate="~{/layout/admin-layout.html}" th:with="isHomePage=true">
 
 <th:block layout:fragment="css">
-    <link rel="stylesheet" th:href="@{extensions/sticky-header/bootstrap-table-sticky-header.css}">
-    <link rel="stylesheet" th:href="@{extensions/fixed-columns/bootstrap-table-fixed-columns.css}">
+    <style>
+        .toast {
+            animation: slideLeft ease 1.5s, fadeOut linear 1s 5s forwards !important;
+        }
+    </style>
 </th:block>
-
 
 <body class="sb-nav-fixed">
 <main layout:fragment="body">
@@ -23,7 +25,7 @@
                 <div class="fade-in">
                     <div class="card">
                         <div class="card-header">
-                            <span><i class="fa fa-users mr-1"></i>Danh sách người dùng (10/125)</span>
+                            <span><i class="fa fa-users mr-1"></i>Danh sách người dùng</span>
                             <button class="btn btn-success float-right"><i class="fa fa-plus mr-1"></i>Thêm mới
                                 người dùng
                             </button>
@@ -59,7 +61,7 @@
                                                 <th class="col-md-2 col2">Ngày đăng kí</th>
                                                 <th class="col-md-1 col2">Role</th>
                                                 <th class="col-md-1 col1">Active</th>
-                                                <th class="col-md-3 col2">Action</th>
+                                                <th class="col-md-3 col2">Edit/Block</th>
                                             </tr>
                                             </thead>
                                             <tbody class="col-md-12">
@@ -72,16 +74,19 @@
                                                 </td>
                                                 <td class="text-center align-middle col-md-2" th:text="${user.birth}">
                                                 </td>
-                                                <td class="text-center align-middle col-md-1" th:text="${user.role == 1?'USER':'ADMIN'}">
+                                                <td class="text-center align-middle col-md-1"
+                                                    th:text="${user.role == 1?'USER':'ADMIN'}">
 
                                                 </td>
                                                 <td class="col-md-1 col1 text-center text-wrapper align-middle">
-                                                    <span class="badge badge-success" th:text="${user.active == 1 ? 'Active' : 'Inactive'}">Active</span>
+                                                    <span class="badge badge-success"
+                                                          th:text="${user.active == 1 ? 'Active' : 'Inactive'}">Active</span>
                                                 </td>
                                                 <td class="col-md-3 text-center text-wrapper align-middle">
-                                                    <a class="btn btn-success text-light"><i
+                                                    <a class="btn btn-success text-light" data-toggle="modal"
+                                                       th:data-target="'#exampleModalLong'+${user.id}"><i
                                                             class="fas fa-edit"></i></a>
-                                                    <a class="btn btn-danger text-light"><i
+                                                    <a class="btn btnRemove btn-danger text-light" th:id="${user.id}"><i
                                                             class="fas fa-trash"></i></a>
                                                 </td>
                                             </tr>
@@ -89,43 +94,70 @@
                                         </table>
                                     </div>
                                 </div>
-                                <!-- paging -->
-<!--                                <div class="row">-->
-<!--                                    <div class="col-sm-12 col-md-5">-->
-<!--                                        <div class="dataTables_info" id="DataTables_Table_0_info" role="status"-->
-<!--                                             aria-live="polite">Showing 1 to 10 of 32 entries-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-sm-12 col-md-7">-->
-<!--                                        <div class="clearfix">-->
-<!--                                            <ul class="pagination float-right">-->
-<!--                                                <li class="page-item"><a href="#" class="page-link">Previous</a>-->
-<!--                                                </li>-->
-<!--                                                <li class="page-item"><a href="#" class="page-link">1</a></li>-->
-<!--                                                <li class="page-item"><a href="#" class="page-link">2</a></li>-->
-<!--                                                <li class="page-item"><a href="#" class="page-link">3</a></li>-->
-<!--                                                <li class="page-item active"><a href="#" class="page-link">4</a>-->
-<!--                                                </li>-->
-<!--                                                <li class="page-item"><a href="#" class="page-link">5</a></li>-->
-<!--                                                <li class="page-item"><a href="#" class="page-link">6</a></li>-->
-<!--                                                <li class="page-item"><a href="#" class="page-link">7</a></li>-->
-<!--                                                <li class="page-item"><a href="#" class="page-link">Next</a>-->
-<!--                                                </li>-->
-<!--                                            </ul>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- modal edit user -->
+            <div th:each="user:${users}" class="modal fade" th:id="'exampleModalLong'+${user.id}" tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Thông tin người dùng</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- start form product info-->
+                            <form>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label>Họ tên người dùng</label>
+                                        <input type="text" class="form-control inputFullName"
+                                               placeholder="Nhập họ tên người dùng" th:value="${user.fullName}">
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label>Địa chỉ email</label>
+                                        <input type="text" class="form-control inputEmail"
+                                               placeholder="Nhập email" th:value="${user.email}">
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label>Quyền truy cập (Role)</label>
+                                        <select class="form-control selectRole">
+                                            <option th:value="1" th:selected="${user.role == 1}">USER</option>
+                                            <option th:value="2" th:selected="${user.role == 2}">ADMIN</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Active/Block</label>
+                                    <select class="form-control selectActive">
+                                        <option th:value="1" th:selected="${user.active == 1}">Active</option>
+                                        <option th:value="-1" th:selected="${user.active == -1}">Inactive</option>
+                                    </select>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+                                    <button type="submit" class="btn btn-success">Lưu thay đổi</button>
+                                </div>
+                            </form>
+                            <!-- end form product info -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
     </main>
+    <div id="toast"></div>
 </main>
+
 <!-- script -->
 <th:block layout:fragment="scripts">
-    <script th:src="@{extensions/sticky-header/bootstrap-table-sticky-header.js}"></script>
-    <script th:src="@{extensions/fixed-columns/bootstrap-table-fixed-columns.js}"></script>
+    <script th:src="@{/js/my-js/admin-user-management.js}"></script>
 </th:block>
 
 

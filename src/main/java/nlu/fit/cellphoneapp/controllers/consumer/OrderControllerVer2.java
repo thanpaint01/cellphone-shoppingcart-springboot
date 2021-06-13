@@ -7,6 +7,7 @@ import nlu.fit.cellphoneapp.entities.CartItem;
 import nlu.fit.cellphoneapp.entities.Order;
 import nlu.fit.cellphoneapp.entities.OrderDetail;
 import nlu.fit.cellphoneapp.entities.User;
+import nlu.fit.cellphoneapp.others.Link;
 import nlu.fit.cellphoneapp.security.MyUserDetail;
 import nlu.fit.cellphoneapp.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ public class OrderControllerVer2 {
     ICartService cartService;
     @Autowired
     IUserService userService;
+    @Autowired
+    EmailSenderService emailSenderService;
 
     @PostMapping
     @ResponseBody
@@ -81,6 +84,15 @@ public class OrderControllerVer2 {
         user.getOrders().add(order);
         CustomResponseCart.clearCart();
         user.getCartItems().clear();
+
+        StringBuilder body = new StringBuilder();
+        body.append("<p>Vừa nhận được yêu cầu tiếp nhận đơn hàng từ hệ thống!</p>");
+        body.append("<p>Đơn hàng có mã "+ order.getId()+", bao gồm: "+ order.getOrderDetails().size() +" sản phẩm.</p>");
+        body.append("<p>Tổng tiền đơn hàng là: "+order.getTotalPrice()+".</p>");
+        body.append("<a href=\"http://localhost:8080/admin/orders-manage/pending\">NHẤN VÀO ĐÂY ĐỂ XÁC THỰC ĐƠN HÀNG!.</a>");
+
+        emailSenderService.sendEmail("ongdinh1099@gmail.com", body.toString(),
+                "ĐƠN HÀNG MỚI.");
         return orderResponse;
     }
 

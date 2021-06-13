@@ -40,4 +40,6 @@ public interface IProductService {
     Specification<Product> getProductByName(String name);
 
     Product insertIntoTable(Product product);
+
+    boolean deleteOneById(int id);
 }

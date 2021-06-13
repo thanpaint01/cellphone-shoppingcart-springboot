@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IBrandService {
     List<Brand> findAll();
-    Brand findOneByById(int id);
+    Brand findOneById(int id);
     List<Brand> findAllByActive(int active);
 
 }

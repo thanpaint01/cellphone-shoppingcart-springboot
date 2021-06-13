@@ -52,7 +52,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/checkout",
             "/cart/delete",
             "/order",
-            "/api/**"
+            "/api/**",
+            "/ckeditor/**"
 
     };
 

@@ -20,8 +20,8 @@ public class BrandServiceImpl implements IBrandService {
     }
 
     @Override
-    public Brand findOneByById(int id) {
-        return null;
+    public Brand findOneById(int id) {
+        return brandRepo.getOne(id);
     }
 
     @Override

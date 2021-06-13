@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface IPinService {
     List<Pin> findAllByActive(int active);
+
+    Pin findOneById(int id);
 }

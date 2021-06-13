@@ -6,6 +6,11 @@
     <link rel="stylesheet" th:href="@{/admin-static/my/css/admin-index.css}">
     <link rel="stylesheet" th:href="@{/css/my-css/toast.css}">
     <link rel="stylesheet" th:href="@{/admin-static/my/css/product-manage.css}">
+    <style>
+        .toast {
+            animation: slideLeft ease 1.5s, fadeOut linear 1s 5s forwards !important;
+        }
+    </style>
 </th:block>
 
 
@@ -76,8 +81,19 @@
                                     <b class="col-md-1" th:text="${product.id}"></b>
                                 </td>
                                 <td class="col-md-2 col2">
-                                    <img class="image" height="130" width="140"
-                                         th:src="${product.img.host+product.img.relativePath}">
+                                    <!--/*@thymesVar id="relativePath" type="java"*/-->
+                                    <div th:if="${product.img01.relativePath != null}">
+                                        <div th:each="imageURL : ${#strings.arraySplit(product.img01.relativePath, '')}">
+                                            <img class="image" height="130" width="140" th:if="${imageURL[0].equals('h')}"
+                                                 th:src="${product.img01.relativePath}">
+                                        </div>
+                                    </div>
+                                    <div th:if="${product.img01.relativePath != null}">
+                                        <div th:each="imageURL : ${#strings.arraySplit(product.img01.relativePath, '')}">
+                                            <img class="image" height="130" width="140" th:if="${imageURL[0].equals('i')}"
+                                                 th:src="${product.img.host+product.img.relativePath}">
+                                        </div>
+                                    </div>
                                 </td>
                                 <td class="text-center align-middle col-md-3 col2">
                                     <b th:text="${product.name}"></b>
@@ -106,9 +122,9 @@
                                     <a class="btn btn-success text-light" href="" data-toggle="modal"
                                        th:data-target="'#exampleModalLong'+${product.id}">
                                         <i class="fas fa-edit"
-                                     ></i></a>
-                                    <a class="btn btn-danger text-light" data-toggle="modal"
-                                      data-target="#exampleModalConfirmDelete"><i class="fas fa-trash"></i></a>
+                                        ></i></a>
+                                    <a class="btn btnRemove btn-danger text-light" th:id="'del-'+${product.id}" data-toggle="modal"
+                                       data-target="#exampleModalConfirmDelete"><i class="fas fa-trash"></i></a>
                                 </td>
 
                             </tr>
@@ -137,14 +153,17 @@
                 </div>
                 <div class="modal-body">
                     <!-- start form product info-->
-                    <form th:action="@{/admin/product/new}" th:method="POST" th:object="${productInfo}">
+                    <!--                    <form th:action="@{/admin/products-manage/new}" th:method="POST" th:object="${productInfo}">-->
+                    <form th:object="${productInfo}">
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <div class="input-group mb-1">
                                     <div class="input-group-prepend">
-                                        <input type="file" style="width: 105px" class="input-group" id="btnUploadImage"/></span>
+                                        <input type="file" style="width: 105px" class="input-group"
+                                               id="btnUploadImage"/></span>
                                     </div>
-                                    <a type="input" target="_blank" rel="noopener noreferrer" id="fileImgNewProduct" class="form-control" placeholder="Đường dẫn liên kết"></a>
+                                    <a type="input" target="_blank" rel="noopener noreferrer" id="fileImgNewProduct"
+                                       class="form-control" placeholder="Đường dẫn liên kết"></a>
                                 </div>
                             </div>
                         </div>
@@ -156,8 +175,9 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputProductBrand">Thương hiệu</label>
-                                <select id="inputProductBrand" class="form-control" th:field="*{brandID}" >
-                                    <option th:each="brand:${allBrands}" th:value="${brand.id}" th:text="${brand.name}"></option>
+                                <select id="inputProductBrand" class="form-control" th:field="*{brandID}">
+                                    <option th:each="brand:${allBrands}" th:value="${brand.id}"
+                                            th:text="${brand.name}"></option>
                                 </select>
                             </div>
                         </div>
@@ -171,19 +191,22 @@
                             <div class="form-group col-md-4">
                                 <label for="inputProductRam">Dung lượng Ram</label>
                                 <select id="inputProductRam" class="form-control" th:field="*{ramID}">
-                                    <option th:each="ram:${allRams}" th:value="${ram.id}" th:text="${ram.capacity}"></option>
+                                    <option th:each="ram:${allRams}" th:value="${ram.id}"
+                                            th:text="${ram.capacity}"></option>
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="inputProductRom">Dung lượng Rom</label>
                                 <select id="inputProductRom" class="form-control" th:field="*{romID}">
-                                    <option th:each="rom:${allRoms}" th:value="${rom.id}" th:text="${rom.capacity}"></option>
+                                    <option th:each="rom:${allRoms}" th:value="${rom.id}"
+                                            th:text="${rom.capacity}"></option>
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="inputProductPin">Pin</label>
                                 <select id="inputProductPin" class="form-control" th:field="*{pinID}">
-                                    <option th:each="pin:${allPins}" th:value="${pin.id}" th:text="${pin.capacity}"></option>
+                                    <option th:each="pin:${allPins}" th:value="${pin.id}"
+                                            th:text="${pin.capacity}"></option>
                                 </select>
                             </div>
                         </div>
@@ -216,18 +239,21 @@
                                 <option th:value="0">Disable</option>
                             </select>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
-                            <button id="btnSubmitAddNewProduct" type="submit" class="btn btn-success">Lưu thay đổi</button>
+                        <div class="content-for-ckeditor">
+
                         </div>
+
                     </form>
                     <!-- end form product info -->
-
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+                        <button id="btnSubmitAddNewProduct" type="submit" class="btn btn-success">Lưu thay đổi</button>
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
+    <div id="toast"></div>
     <!-- end div modal product info-->
     <div th:replace="static-fragment/modal-product-info::modal-product-info"></div>
     <!-- modal confirm delete -->
@@ -246,7 +272,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
-                    <button type="button" class="btn btn-primary">Có</button>
+                    <button id="btnConfirmDelete" type="submit" class="btn btn-primary">Có</button>
                 </div>
             </div>
         </div>
@@ -259,19 +285,6 @@
     <script th:src="@{/js/my-js/format-price-of-product.js}"></script>
     <script th:src="@{/js/my-js/modal-add-product.js}"></script>
     <script th:src="@{/js/my-js/admin-product-management.js}"></script>
-    <script>
-        // $('#btnSubmitAddNewProduct').click(function () {
-        //     $.ajax({
-        //         type:'POST',
-        //         contentType:'application/json',
-        //         data: JSON.stringify([[${productInfo.img}]]),
-        //         url:"/admin/product/new",
-        //         success: function (rs) {
-        //             alert(rs)
-        //         }
-        //     })
-        // })
-    </script>
 </th:block>
 
 
