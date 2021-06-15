@@ -7,6 +7,8 @@ import nlu.fit.cellphoneapp.entities.CartItem;
 import nlu.fit.cellphoneapp.entities.Order;
 import nlu.fit.cellphoneapp.entities.OrderDetail;
 import nlu.fit.cellphoneapp.entities.User;
+import nlu.fit.cellphoneapp.helper.NumberHelper;
+import nlu.fit.cellphoneapp.helper.StringHelper;
 import nlu.fit.cellphoneapp.others.Link;
 import nlu.fit.cellphoneapp.security.MyUserDetail;
 import nlu.fit.cellphoneapp.services.*;
@@ -88,7 +90,7 @@ public class OrderControllerVer2 {
         StringBuilder body = new StringBuilder();
         body.append("<p>Vừa nhận được yêu cầu tiếp nhận đơn hàng từ hệ thống!</p>");
         body.append("<p>Đơn hàng có mã "+ order.getId()+", bao gồm: "+ order.getOrderDetails().size() +" sản phẩm.</p>");
-        body.append("<p>Tổng tiền đơn hàng là: "+order.getTotalPrice()+".</p>");
+        body.append("<p>Tổng tiền đơn hàng là: "+ StringHelper.formatNumber((long) order.getTotalPrice())+"VNĐ .</p>");
         body.append("<a href=\"http://localhost:8080/admin/orders-manage/pending\">NHẤN VÀO ĐÂY ĐỂ XÁC THỰC ĐƠN HÀNG!.</a>");
 
         emailSenderService.sendEmail("ongdinh1099@gmail.com", body.toString(),
@@ -154,7 +156,7 @@ public class OrderControllerVer2 {
             od.setPrice(c.getPriceProduct());
             od.setInitialPrice(c.getTotalPrice());
             od.updateSalePrice(0);
-            od.updateTotalPrice();
+            od.setTotalPrice(c.getTotalPrice());
             listOrderDetails.add(od);
 
         }

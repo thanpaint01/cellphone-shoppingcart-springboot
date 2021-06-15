@@ -21,4 +21,9 @@ public class RomServiceImpl implements IRomService {
     public Rom findOneById(int id) {
         return romRepo.getOne(id);
     }
+
+    @Override
+    public List<Rom> findAll() {
+        return romRepo.findAll();
+    }
 }

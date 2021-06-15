@@ -8,4 +8,5 @@ public interface IPinService {
     List<Pin> findAllByActive(int active);
 
     Pin findOneById(int id);
+    List<Pin> findAll();
 }

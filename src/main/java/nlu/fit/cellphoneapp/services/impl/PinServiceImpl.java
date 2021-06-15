@@ -20,4 +20,9 @@ public class PinServiceImpl implements IPinService {
     public Pin findOneById(int id) {
         return pinRepo.getOne(id);
     }
+
+    @Override
+    public List<Pin> findAll() {
+        return pinRepo.findAll();
+    }
 }

@@ -25,9 +25,6 @@ public class HomeController {
 
     @RequestMapping(value = "")
     public ModelAndView homePage() {
-//        User user = (User) session.getAttribute(User.SESSION);
-//        if (user == null || user.getRole() != User.ROLE.ADMIN.value())
-//            return new ModelAndView("redirect:/");
         ModelAndView model = new ModelAndView("admin/admin-index");
         model.addObject("CONTENT_TITLE", "Trang chủ");
         return model;
