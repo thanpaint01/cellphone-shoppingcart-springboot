@@ -79,4 +79,9 @@ public class Product {
     private Set<Favorite> favorites;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
     private Set<Review> reviews;
+
+    public ImageAddress getImg(){
+        if(!img.getRelativePath().split("")[0].equals('i')) return new ImageAddress("", img.getRelativePath());
+        return this.img;
+    }
 }

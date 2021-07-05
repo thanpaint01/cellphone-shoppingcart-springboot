@@ -82,18 +82,18 @@
                                 </td>
                                 <td class="col-md-2 col2">
                                     <!--/*@thymesVar id="relativePath" type="java"*/-->
-                                    <div th:if="${product.img01.relativePath != null}">
-                                        <div th:each="imageURL : ${#strings.arraySplit(product.img01.relativePath, '')}">
-                                            <img class="image" height="130" width="140"
-                                                 th:if="${imageURL[0].equals('h')}"
-                                                 th:src="${product.img01.relativePath}">
-                                        </div>
+                                    <div th:if="${product.img.relativePath != null}">
+                                    <div th:each="imageURL : ${#strings.arraySplit(product.img.relativePath, '')}">
+                                        <img class="image" height="130" width="140"
+                                             th:if="${imageURL[0].equals('b')}"
+                                             th:src="${product.img.relativePath}">
                                     </div>
-                                    <div th:if="${product.img01.relativePath != null}">
+                                </div>
+                                    <div th:if="${product.img.relativePath != null}">
                                         <div th:each="imageURL : ${#strings.arraySplit(product.img01.relativePath, '')}">
                                             <img class="image" height="130" width="140"
                                                  th:if="${imageURL[0].equals('i')}"
-                                                 th:src="${product.img.host+product.img.relativePath}">
+                                                 th:src="${product.img01.host+product.img01.relativePath}">
                                         </div>
                                     </div>
                                 </td>
@@ -162,11 +162,12 @@
                             <div class="form-group col-md-12">
                                 <div class="input-group mb-1">
                                     <div class="input-group-prepend">
-                                        <input type="file" class="input-group"
-                                               id="btnUploadImage" th:field="*{img}" /></span>
+                                        <input type="file" class="input-group" style="width: 85px"
+                                               id="btnUploadImage"/></span>
                                     </div>
-<!--                                    <a type="input" target="_blank" rel="noopener noreferrer" id="fileImgNewProduct"-->
-<!--                                       class="form-control" placeholder="Đường dẫn liên kết" th:field="*{img}"></a>-->
+                                    <a type="input" target="_blank" rel="noopener noreferrer" id="fileImgNewProduct"
+                                       class="form-control" placeholder="Đường dẫn liên kết" th:field="*{img}"></a>
+                                    <a type="button" class="btn btn-outline-success text-dark"><i class="fa fa-plus"></i> Thêm ảnh</a>
                                 </div>
                             </div>
                         </div>
@@ -289,6 +290,11 @@
     <script th:src="@{/js/my-js/format-price-of-product.js}"></script>
     <script th:src="@{/js/my-js/modal-add-product.js}"></script>
     <script th:src="@{/js/my-js/admin-product-management.js}"></script>
+    <script>
+        $('input[type=file]').change(function () {
+            console.log(this.files[0].mozFullPath);
+        });
+    </script>
 </th:block>
 
 
