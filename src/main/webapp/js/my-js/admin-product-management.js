@@ -69,17 +69,18 @@ var script04 = '';
 $('#btnSubmitAddNewProduct').click(function () {
     var b = ckeditor.getData();
     var htmlText = `${b}`
-    $('.content-for-ckeditor').html(htmlText)
-    var titles = $('.content-for-ckeditor').find($('h1'))
-    var imgs = $('.content-for-ckeditor').find($('img'))
-    var scripts = $('.content-for-ckeditor').find($('p'))
-
-    allTitles(titles)
-    allScript(scripts)
-    allImgDes(imgs)
+    // $('.content-for-ckeditor').html(htmlText)
+    // var titles = $('.content-for-ckeditor').find($('h1'))
+    // var imgs = $('.content-for-ckeditor').find($('img'))
+    // var scripts = $('.content-for-ckeditor').find($('p'))
+    //
+    // allTitles(titles)
+    // allScript(scripts)
+    // allImgDes(imgs)
 
     //ajax post new product
-    var productInfo = getInfoProduct();
+    var productInfo = getInfoProduct(htmlText);
+    console.log(JSON.stringify(productInfo))
     $.ajax({
         type: 'POST',
         contentType:'application/json',
@@ -162,7 +163,7 @@ function allScript(scripts) {
     });
 }
 
-function getInfoProduct() {
+function getInfoProduct(longText) {
     var name = $('#inputProductName').val();
     let price = $('#inputProductPrice').val();
     var img = $('#btnUploadImage').val();
@@ -188,18 +189,19 @@ function getInfoProduct() {
         "selfieCamera":selfieCamera,
         "mainCamera":mainCamera,
         "active":active,
-        "img01":img01,
-        "img02":img02,
-        "img03":img03,
-        "img04":img04,
-        "title01":title01,
-        "title02":title02,
-        "title03":title03,
-        "title04":title04,
-        "script01":script01,
-        "script02":script02,
-        "script03":script03,
-        "script04":script04
+        "longDescription":longText
+        // "img01":img01,
+        // "img02":img02,
+        // "img03":img03,
+        // "img04":img04,
+        // "title01":title01,
+        // "title02":title02,
+        // "title03":title03,
+        // "title04":title04,
+        // "script01":script01,
+        // "script02":script02,
+        // "script03":script03,
+        // "script04":script04
     }
     return productInfo;
 }

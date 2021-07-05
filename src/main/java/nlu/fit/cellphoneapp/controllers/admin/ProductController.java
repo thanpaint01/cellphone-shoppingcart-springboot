@@ -1,8 +1,11 @@
 package nlu.fit.cellphoneapp.controllers.admin;
 
 import nlu.fit.cellphoneapp.DTOs.ProductDTO;
+import nlu.fit.cellphoneapp.converters.ImageAddress;
+import nlu.fit.cellphoneapp.converters.ImageAddressConventer;
 import nlu.fit.cellphoneapp.entities.Product;
 import nlu.fit.cellphoneapp.helper.UploadFileHelper;
+import nlu.fit.cellphoneapp.others.Link;
 import nlu.fit.cellphoneapp.receiver.JSONFileUpload;
 import nlu.fit.cellphoneapp.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,17 +97,26 @@ public class ProductController implements ServletContextAware {
     }
 
     @PostMapping("new")
-    @ResponseBody
-    public String createNewProduct(@RequestBody ProductDTO product){
+    public String createNewProduct(ProductDTO product){
+        System.out.println("Product Image Upload File = "+product.getImg());
         //convert to entities
         Product productEntity = product.toProductEntity();
+        ImageAddress imgAddress = new ImageAddressConventer().convertToEntityAttribute("img/sanpham/samsung/note10/1.jpg");
+        productEntity.setImg(new ImageAddress(Link.HOST, "1.jpg"));
         productEntity.setBrand(brandService.findOneById(product.getBrandID()));
         productEntity.setRam(ramService.findOneById(product.getRamID()));
         productEntity.setRom(romService.findOneById(product.getRomID()));
         productEntity.setPin(pinService.findOneById(product.getPinID()));
+        productEntity.setImg01(new ImageAddress(Link.HOST, "1.jpg"));
+        productEntity.setImg02(new ImageAddress(Link.HOST, "1.jpg"));
+        productEntity.setImg03(new ImageAddress(Link.HOST, "1.jpg"));
+        productEntity.setImg04(new ImageAddress(Link.HOST, "1.jpg"));
+        productEntity.setLongDescription(product.getLongDescription());
+
+        System.out.println(productEntity.getImg().getHost()+productEntity.getImg().getRelativePath());
 
         if(null == productService.insertIntoTable(productEntity)) return "error";
-        return "success";
+        return "redirect:/admin/products-manage";
     }
 
     @DeleteMapping("/{id}")

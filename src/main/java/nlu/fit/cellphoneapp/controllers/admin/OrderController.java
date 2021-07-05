@@ -45,10 +45,11 @@ public class OrderController {
     }
     @PutMapping("pending/{id}")
     @ResponseBody
-    public String acceptOrder(@PathVariable("id") int id){
+    public String acceptOrder(@PathVariable("id") int id, @RequestHeader(required = false) String action){
         Order order = orderService.getOne(id);
         if(null == order) return "error";
         order.setOrderStatus("Đang giao hàng");
+        if(action.equals("refuse")) order.setOrderStatus("Đã hủy");
         orderService.insertIntoTable(order);
         return "success";
     }
@@ -60,6 +61,18 @@ public class OrderController {
         if(null == order) return null;
         mv.addObject("order", order);
         return mv;
+    }
+
+    @PutMapping("delivering/{id}")
+    @ResponseBody
+    public String finishOrderDelivering(@PathVariable int id){
+        System.out.println("ID REQUEST = "+id);
+        Order order;
+        if(null == (order = orderService.getOne(id)))
+            return "fail";
+        order.setOrderStatus(Order.STATUS.SUCCESS.value());
+        orderService.insertIntoTable(order);
+        return "success";
     }
 
 }

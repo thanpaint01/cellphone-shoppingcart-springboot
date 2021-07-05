@@ -9,4 +9,5 @@ public interface IPinService {
 
     Pin findOneById(int id);
     List<Pin> findAll();
+    Pin save(Pin pin);
 }

@@ -26,7 +26,8 @@
                     <div class="card">
                         <div class="card-header">
                             <span><i class="fa fa-users mr-1"></i>Danh sách người dùng</span>
-                            <button class="btn btn-success float-right"><i class="fa fa-plus mr-1"></i>Thêm mới
+                            <button class="btn btn-success float-right" data-toggle="modal"
+                                    data-target="#modalAddNewUser"><i class="fa fa-plus mr-1"></i>Thêm mới
                                 người dùng
                             </button>
                         </div>
@@ -58,10 +59,10 @@
                                             <tr>
                                                 <th class="col-md-2 col3">Họ và tên</th>
                                                 <th class="col-md-3 col3">Địa chỉ email</th>
-                                                <th class="col-md-2 col2">Ngày đăng kí</th>
+                                                <th class="col-md-2 col2">Số điện thoại</th>
                                                 <th class="col-md-1 col2">Role</th>
                                                 <th class="col-md-1 col1">Active</th>
-                                                <th class="col-md-3 col2">Edit/Block</th>
+                                                <th class="col-md-3 col2">Action</th>
                                             </tr>
                                             </thead>
                                             <tbody class="col-md-12">
@@ -72,7 +73,7 @@
                                                 </td>
                                                 <td class="text-center align-middle col-md-3" th:text="${user.email}">
                                                 </td>
-                                                <td class="text-center align-middle col-md-2" th:text="${user.birth}">
+                                                <td class="text-center align-middle col-md-2" th:text="${user.phone}">
                                                 </td>
                                                 <td class="text-center align-middle col-md-1"
                                                     th:text="${user.role == 1?'USER':'ADMIN'}">
@@ -83,11 +84,10 @@
                                                           th:text="${user.active == 1 ? 'Active' : 'Inactive'}">Active</span>
                                                 </td>
                                                 <td class="col-md-3 text-center text-wrapper align-middle">
-                                                    <a class="btn btn-success text-light" data-toggle="modal"
-                                                       th:data-target="'#exampleModalLong'+${user.id}"><i
-                                                            class="fas fa-edit"></i></a>
-                                                    <a class="btn btnRemove btn-danger text-light" th:id="${user.id}"><i
-                                                            class="fas fa-trash"></i></a>
+<!--                                                    <a class="btn btn-success text-light" data-toggle="modal"-->
+<!--                                                       th:data-target="'#exampleModalLong'+${user.id}"><i-->
+<!--                                                            class="fas fa-edit"></i></a>-->
+                                                    <a class="btn btnRemove text-light" th:classappend="${user.active == 1?'btn-danger':'btn-success'}" th:id="${user.id}" th:text="${user.active == 1 ?'Blocked':'Unblocked'}"></a>
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -99,65 +99,155 @@
                     </div>
                 </div>
             </div>
-            <!-- modal edit user -->
-            <div th:each="user:${users}" class="modal fade" th:id="'exampleModalLong'+${user.id}" tabindex="-1"
-                 role="dialog"
-                 aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Thông tin người dùng</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+        </div>
+        <!-- modal edit user -->
+        <div th:each="user:${users}" class="modal fade" th:id="'exampleModalLong'+${user.id}" tabindex="-1"
+                   role="dialog"
+                   aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Thông tin người dùng</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- start form product info-->
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label>Họ tên người dùng</label>
+                                <input type="text" class="form-control inputFullName"
+                                       placeholder="Nhập họ tên người dùng" th:value="${user.fullName}">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Địa chỉ email</label>
+                                <input type="text" class="form-control inputEmail"
+                                       placeholder="Nhập email" th:value="${user.email}">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Quyền truy cập (Role)</label>
+                                <select class="form-control selectRole">
+                                    <option th:value="1" th:selected="${user.role == 1}">USER</option>
+                                    <option th:value="2" th:selected="${user.role == 2}">ADMIN</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="modal-body">
-                            <!-- start form product info-->
-                            <form>
-                                <div class="form-row">
-                                    <div class="form-group col-md-12">
-                                        <label>Họ tên người dùng</label>
-                                        <input type="text" class="form-control inputFullName"
-                                               placeholder="Nhập họ tên người dùng" th:value="${user.fullName}">
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <label>Địa chỉ email</label>
-                                        <input type="text" class="form-control inputEmail"
-                                               placeholder="Nhập email" th:value="${user.email}">
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <label>Quyền truy cập (Role)</label>
-                                        <select class="form-control selectRole">
-                                            <option th:value="1" th:selected="${user.role == 1}">USER</option>
-                                            <option th:value="2" th:selected="${user.role == 2}">ADMIN</option>
-                                        </select>
-                                    </div>
+                        <div class="form-group">
+                            <label>Active/Block</label>
+                            <select class="form-control selectActive">
+                                <option th:value="1" th:selected="${user.active == 1}">Active</option>
+                                <option th:value="-1" th:selected="${user.active == -1}">Inactive</option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+                            <button type="button" class="btn btn-success btnUpdateUser" th:value="${user.id}">Lưu thay đổi</button>
+                        </div>
+                    </form>
+                    <!-- end form product info -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+        <div class="modal fade" id="modalAddNewUser" tabindex="-1"
+             role="dialog"
+             aria-labelledby="modalAddNewUser" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Thông tin người dùng</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- start form product info-->
+                        <form id="formAddNewUser" th:object="${userNew}">
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>Họ tên người dùng</label>
+                                    <input type="text" class="form-control inputFullName"
+                                           placeholder="Nhập họ tên người dùng" th:field="${userNew.fullName}">
                                 </div>
-                                <div class="form-group">
-                                    <label>Active/Block</label>
-                                    <select class="form-control selectActive">
-                                        <option th:value="1" th:selected="${user.active == 1}">Active</option>
-                                        <option th:value="-1" th:selected="${user.active == -1}">Inactive</option>
+                                <div class="form-group col-md-12">
+                                    <label>Địa chỉ email</label>
+                                    <input type="text" class="form-control inputEmail"
+                                           placeholder="Nhập email" th:field="${userNew.emailAddress}">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label>Mật khẩu</label>
+                                    <input type="text" class="form-control inputPassword"
+                                           placeholder="Nhập mật khẩu" th:field="${userNew.password}">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label>Xác thực mật khẩu</label>
+                                    <input type="text" class="form-control inputConfirmPassword"
+                                           placeholder="Nhập lại mật khẩu">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label>Quyền truy cập (Role)</label>
+                                    <select class="form-control selectRole" th:field="${userNew.role}">
+                                        <option value="1">USER</option>
+                                        <option value="2">ADMIN</option>
                                     </select>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
-                                    <button type="submit" class="btn btn-success">Lưu thay đổi</button>
-                                </div>
-                            </form>
-                            <!-- end form product info -->
-                        </div>
-
+                            </div>
+                            <div class="form-group">
+                                <label>Active/Block</label>
+                                <select class="form-control selectActive" th:field="${userNew.active}">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+                                <button id="btnSubmitAddNewProduct" type="button" class="btn btn-success">Lưu thay đổi</button>
+                            </div>
+                        </form>
+                        <!-- end form product info -->
                     </div>
+
                 </div>
             </div>
+        </div>
     </main>
+
     <div id="toast"></div>
 </main>
 
 <!-- script -->
 <th:block layout:fragment="scripts">
     <script th:src="@{/js/my-js/admin-user-management.js}"></script>
+    <script>
+        $('#btnSubmitAddNewProduct').click(function () {
+            var user = [[${userNew}]]
+            var data = {
+                "fullName": user.fullName,
+                "emailAddress":user.emailAddress,
+                "password":user.password,
+                "role":user.role,
+                "active":user.active
+            }
+
+            $.post({
+                data: JSON.stringify(data),
+                url: '/admin/users-manage/new',
+                success: function (rs) {
+                    $('#modalAddNewUser').toggle("modal");
+                },
+                error: function (rs) {
+                    showErrorMessage("Thất bại", "Thông tin người dùng không hợp lệ!")
+                }
+            })
+        })
+
+        //update user
+
+    </script>
 </th:block>
 
 

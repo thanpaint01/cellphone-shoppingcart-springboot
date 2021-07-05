@@ -3,6 +3,9 @@
       layout:decorate="~{/layout/consumer-layout.html}" th:with="isProductPage=true">
 <th:block layout:fragment="css">
     <link rel="stylesheet" th:href="@{/css/my-css/shop-detail.css}">
+    <style>
+        #more {display: none;}
+    </style>
 </th:block>
 <body>
 <!-- Start Shop Detail  -->
@@ -28,6 +31,8 @@
                 <th:block th:replace="/consumer/product-detail-fragments/summary :: summary"></th:block>
                 <th:block th:replace="/consumer/product-detail-fragments/specification :: specification"></th:block>
                 <th:block th:replace="/consumer/product-detail-fragments/description :: description"></th:block>
+
+                </div>
                 <th:block th:replace="/consumer/product-detail-fragments/reviews :: reviews"></th:block>
             </div>
             <div th:replace="/consumer/product-detail-fragments/related-products :: related-products"></div>
@@ -82,6 +87,23 @@
     <script th:src="@{/js/my-js/add-to-cart.js}"></script>
     <script th:src="@{/js/my-js/favorite.js}"></script>
     <script th:src="@{/js/my-js/shop-detail-custom.js}"></script>
+    <script>
+        function readMoreAction() {
+            var dots = document.getElementById("dots");
+            var moreText = document.getElementById("more");
+            var btnText = document.getElementById("btnMore");
+
+            if (dots.style.display === "none") {
+                dots.style.display = "inline";
+                btnText.innerHTML = "Xem Thêm";
+                moreText.style.display = "none";
+            } else {
+                dots.style.display = "none";
+                btnText.innerHTML = "Rút gọn";
+                moreText.style.display = "inline";
+            }
+        }
+    </script>
 </th:block>
 </body>
 </html>

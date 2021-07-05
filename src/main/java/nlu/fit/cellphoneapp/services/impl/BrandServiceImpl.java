@@ -29,5 +29,10 @@ public class BrandServiceImpl implements IBrandService {
         return brandRepo.findAllByActive(active);
     }
 
+    @Override
+    public Brand save(Brand brand) {
+        return brandRepo.save(brand);
+    }
+
 
 }

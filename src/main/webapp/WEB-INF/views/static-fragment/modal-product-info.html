@@ -19,28 +19,31 @@
                             <div class="form-group col-md-12">
                                 <div class="input-group mb-1">
                                     <div class="input-group-prepend">
-                                        <input type="file" style="width: 105px;" class="input-group" th:id="'btnUploadImage'+${product.id}">
+                                        <input type="file" class="input-group bordered"
+                                               th:id="'btnUploadImage'+${product.id}" th:text="${product.img.host+product.img.relativePath}">
                                     </div>
-                                    <a type="input" target="_blank" rel="noopener noreferrer" class="form-control" placeholder="Đường dẫn liên kết" th:href="${product.img.host+product.img.relativePath}" th:text="${product.img.host+product.img.relativePath}"></a>
                                 </div>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label th:for="'inputProductName'+${product.id}">Tên sản phẩm</label>
-                                <input type="text" class="form-control font-weight-bold" th:id="'inputProductName'+${product.id}"
+                                <input type="text" class="form-control font-weight-bold"
+                                       th:id="'inputProductName'+${product.id}"
                                        placeholder="Nhập tên sản phẩm" th:value="${product.name}">
                             </div>
                             <div class="form-group col-md-6">
                                 <label th:for="'inputProductBrand'+${product.id}">Thương hiệu</label>
                                 <select th:id="'inputProductBrand'+${product.id}" class="form-control">
-                                    <option th:each="brand : ${allBrands}" th:text="${brand.name}" th:value="${brand.id}" th:selected="${brand.id==product.brand.id}"></option>
+                                    <option th:each="brand : ${allBrands}" th:text="${brand.name}"
+                                            th:value="${brand.id}" th:selected="${brand.id==product.brand.id}"></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label th:for="'inputProductPrice'+${product.id}">Giá sản phẩm</label>
-                            <input type="text" class="form-control product-price" th:id="'inputProductPrice'+${product.id}"
+                            <input type="text" class="form-control product-price"
+                                   th:id="'inputProductPrice'+${product.id}"
                                    placeholder="Nhập giá sản phẩm (24.000.000)" th:value="${product.price}">
                         </div>
 
@@ -48,19 +51,22 @@
                             <div class="form-group col-md-4">
                                 <label th:for="'inputProductRam'+${product.id}">Dung lượng Ram</label>
                                 <select th:id="'inputProductRam'+${product.id}" class="form-control">
-                                    <option th:each="ram:${allRams}" th:value="${ram.id}" th:text="${ram.capacity}" th:selected="${ram.id == product.ram.id}"></option>
+                                    <option th:each="ram:${allRams}" th:value="${ram.id}" th:text="${ram.capacity}"
+                                            th:selected="${ram.id == product.ram.id}"></option>
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
                                 <label th:for="'inputProductRom'+${product.id}">Dung lượng Rom</label>
                                 <select th:id="'inputProductRom'+${product.id}" class="form-control">
-                                    <option th:each="rom:${allRoms}" th:value="${rom.id}" th:text="${rom.capacity}" th:selected="${rom.id == product.rom.id}"></option>
+                                    <option th:each="rom:${allRoms}" th:value="${rom.id}" th:text="${rom.capacity}"
+                                            th:selected="${rom.id == product.rom.id}"></option>
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
                                 <label th:for="'inputProductPin'+${product.id}">Pin</label>
                                 <select th:id="'inputProductPin'+${product.id}" class="form-control">
-                                    <option th:each="pin:${allPins}" th:value="${pin.id}" th:text="${pin.capacity}" th:selected="${pin.id == product.pin.id}"></option>
+                                    <option th:each="pin:${allPins}" th:value="${pin.id}" th:text="${pin.capacity}"
+                                            th:selected="${pin.id == product.pin.id}"></option>
                                 </select>
                             </div>
                         </div>
@@ -78,15 +84,14 @@
                             <div class="form-group col-md-6">
                                 <label th:for="'inputProductMainCamera'+${product.id}">Camera sau</label>
                                 <input type="text" class="form-control" th:id="'inputProductMainCamera'+${product.id}"
-                                       placeholder="Nhập thông tin camera sau"  th:value="${product.mainCamera}">
+                                       placeholder="Nhập thông tin camera sau" th:value="${product.mainCamera}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label th:for="'inputProductImgDes1'+${product.id}">Mô tả sản phẩm</label>
-                            <textarea type="text" class="form-control ckeditor" th:id="'inputProductImgDes1'+${product.id}"
-                                   placeholder="Đường dẫn liên kết">
-                                <h1 th:text="${product.name}"></h1>
-                                <img style="height: 100px; width: 100px;" th:src="${product.img.host+product.img.relativePath}"/>
+                            <textarea type="text" class="form-control ckeditor"
+                                      th:id="'inputProductImgDes1'+${product.id}"
+                                      placeholder="Đường dẫn liên kết" th:utext="${product.longDescription}">
                             </textarea>
                         </div>
                         <div class="form-group">

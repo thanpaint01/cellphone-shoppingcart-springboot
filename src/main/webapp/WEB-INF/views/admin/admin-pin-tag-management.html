@@ -5,6 +5,11 @@
 <th:block layout:fragment="css">
     <link rel="stylesheet" th:href="@{/admin-static/my/css/admin-index.css}">
     <link rel="stylesheet" th:href="@{/css/my-css/toast.css}">
+    <style>
+        .toast {
+            animation: slideLeft ease 1.5s, fadeOut linear 1s 5s forwards !important;
+        }
+    </style>
 </th:block>
 <body>
 <main layout:fragment="body">
@@ -77,7 +82,7 @@
                                                        data-toggle="modal" data-target="#exampleModalLong">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
-                                                    <a class="btn btn-danger text-light" data-toggle="modal"
+                                                    <a class="btn btn-danger text-light btnRemovePins" th:value="${pin.id}" data-toggle="modal"
                                                        data-target="#exampleModalConfirmDelete">
                                                         <i class="fas fa-trash"></i>
                                                     </a>
@@ -97,6 +102,7 @@
     </main>
 </main>
 <th:block layout:fragment="scripts">
+    <script th:src="@{/js/my-js/admin-tags-management.js}"></script>
     <script th:src="@{/js/my-js/toast-setup.js}"></script>
 </th:block>
 </body>

@@ -45,6 +45,9 @@ public class Product {
     @Column(name = "main_camera")
     private String mainCamera;
     private int active;
+    //add new long description
+    @Column(name = "long_description")
+    private String longDescription;
 
     //relationship to other table
     @ManyToOne(fetch = FetchType.LAZY)

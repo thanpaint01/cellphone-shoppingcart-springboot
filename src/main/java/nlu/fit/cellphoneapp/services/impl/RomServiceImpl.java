@@ -26,4 +26,9 @@ public class RomServiceImpl implements IRomService {
     public List<Rom> findAll() {
         return romRepo.findAll();
     }
+
+    @Override
+    public Rom save(Rom rom) {
+        return romRepo.save(rom);
+    }
 }

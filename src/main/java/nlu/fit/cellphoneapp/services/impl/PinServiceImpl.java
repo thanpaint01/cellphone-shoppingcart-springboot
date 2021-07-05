@@ -25,4 +25,9 @@ public class PinServiceImpl implements IPinService {
     public List<Pin> findAll() {
         return pinRepo.findAll();
     }
+
+    @Override
+    public Pin save(Pin pin) {
+        return pinRepo.save(pin);
+    }
 }

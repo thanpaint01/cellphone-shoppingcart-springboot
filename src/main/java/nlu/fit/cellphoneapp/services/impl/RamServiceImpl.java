@@ -26,4 +26,9 @@ public class RamServiceImpl implements IRamService {
     public List<Ram> findAll() {
         return ramRepo.findAll();
     }
+
+    @Override
+    public Ram save(Ram ram) {
+        return ramRepo.save(ram);
+    }
 }

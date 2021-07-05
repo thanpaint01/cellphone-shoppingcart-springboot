@@ -84,13 +84,15 @@
                                     <!--/*@thymesVar id="relativePath" type="java"*/-->
                                     <div th:if="${product.img01.relativePath != null}">
                                         <div th:each="imageURL : ${#strings.arraySplit(product.img01.relativePath, '')}">
-                                            <img class="image" height="130" width="140" th:if="${imageURL[0].equals('h')}"
+                                            <img class="image" height="130" width="140"
+                                                 th:if="${imageURL[0].equals('h')}"
                                                  th:src="${product.img01.relativePath}">
                                         </div>
                                     </div>
                                     <div th:if="${product.img01.relativePath != null}">
                                         <div th:each="imageURL : ${#strings.arraySplit(product.img01.relativePath, '')}">
-                                            <img class="image" height="130" width="140" th:if="${imageURL[0].equals('i')}"
+                                            <img class="image" height="130" width="140"
+                                                 th:if="${imageURL[0].equals('i')}"
                                                  th:src="${product.img.host+product.img.relativePath}">
                                         </div>
                                     </div>
@@ -123,7 +125,8 @@
                                        th:data-target="'#exampleModalLong'+${product.id}">
                                         <i class="fas fa-edit"
                                         ></i></a>
-                                    <a class="btn btnRemove btn-danger text-light" th:id="'del-'+${product.id}" data-toggle="modal"
+                                    <a class="btn btnRemove btn-danger text-light" th:id="'del-'+${product.id}"
+                                       data-toggle="modal"
                                        data-target="#exampleModalConfirmDelete"><i class="fas fa-trash"></i></a>
                                 </td>
 
@@ -153,17 +156,17 @@
                 </div>
                 <div class="modal-body">
                     <!-- start form product info-->
-                    <!--                    <form th:action="@{/admin/products-manage/new}" th:method="POST" th:object="${productInfo}">-->
-                    <form th:object="${productInfo}">
+                    <form th:action="@{/admin/products-manage/new}" th:method="POST" th:object="${productInfo}">
+                        <!--                    <form th:object="${productInfo}">-->
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <div class="input-group mb-1">
                                     <div class="input-group-prepend">
-                                        <input type="file" style="width: 105px" class="input-group"
-                                               id="btnUploadImage"/></span>
+                                        <input type="file" class="input-group"
+                                               id="btnUploadImage" th:field="*{img}" /></span>
                                     </div>
-                                    <a type="input" target="_blank" rel="noopener noreferrer" id="fileImgNewProduct"
-                                       class="form-control" placeholder="Đường dẫn liên kết"></a>
+<!--                                    <a type="input" target="_blank" rel="noopener noreferrer" id="fileImgNewProduct"-->
+<!--                                       class="form-control" placeholder="Đường dẫn liên kết" th:field="*{img}"></a>-->
                                 </div>
                             </div>
                         </div>
@@ -230,7 +233,7 @@
                         <div class="form-group">
                             <label for="inputProductImgDes1">Mô tả sản phẩm</label>
                             <textarea class="form-control" id="inputProductImgDes1"
-                                      placeholder="Đường dẫn liên kết"></textarea>
+                                      placeholder="Đường dẫn liên kết" th:field="*{longDescription}"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="inputProductActive">Active</label>
@@ -242,13 +245,14 @@
                         <div class="content-for-ckeditor">
 
                         </div>
-
+                        <!-- end form product info -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+                            <button id="btnSubmitAddNewProduct" type="submit" class="btn btn-success">Lưu thay đổi
+                            </button>
+                        </div>
                     </form>
-                    <!-- end form product info -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
-                        <button id="btnSubmitAddNewProduct" type="submit" class="btn btn-success">Lưu thay đổi</button>
-                    </div>
+
                 </div>
             </div>
         </div>

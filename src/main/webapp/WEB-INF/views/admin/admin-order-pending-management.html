@@ -5,6 +5,11 @@
 <th:block layout:fragment="css">
     <link rel="stylesheet" th:href="@{extensions/sticky-header/bootstrap-table-sticky-header.css}">
     <link rel="stylesheet" th:href="@{extensions/fixed-columns/bootstrap-table-fixed-columns.css}">
+    <style>
+        .toast {
+            animation: slideLeft ease 1.5s, fadeOut linear 1s 5s forwards !important;
+        }
+    </style>
 </th:block>
 
 
@@ -58,9 +63,9 @@
                                                 <th class="col-md-1 col1">Mã đơn hàng</th>
                                                 <th class="col-md-1 col3">Thông tin khách hàng</th>
                                                 <th class="col-md-3 col2">Ngày đặt hàng</th>
-                                                <th class="col-md-3 col2">Tổng tiền</th>
+                                                <th class="col-md-2 col2">Tổng tiền</th>
                                                 <th class="col-md-1 col1">Xem chi tiết</th>
-                                                <th class="col-md-1 col1">Accept</th>
+                                                <th class="col-md-2 col2">Chấp nhận/Từ chối</th>
                                             </tr>
                                             </thead>
                                             <tbody class="col-md-12">
@@ -81,7 +86,7 @@
                                                     th:text="${order.createdDate}">
 
                                                 </td>
-                                                <td class="text-center align-middle col-md-3 col2 product-price"
+                                                <td class="text-center align-middle col-md-2 col2 product-price"
                                                     th:text="${order.totalPrice}">
                                                 </td>
                                                 <td class="col-md-1 col1 text-center text-wrapper align-middle">
@@ -89,9 +94,11 @@
                                                         chi tiết</a>
                                                 </td>
                                                 <td
-                                                        class="col-md-1 col1 text-center text-wrapper align-middle">
+                                                        class="col-md-2 col2 text-center text-wrapper align-middle">
                                                     <a class="btn btnAccept btn-success text-light" th:id="${order.id}">
                                                         <i class="fas fa-check"></i></a>
+                                                    <a class="btn btnRefuse btn-danger text-light" th:id="${order.id}">
+                                                        <i class="fas fa-times"></i></a>
                                                 </td>
                                             </tr>
                                             </tbody>

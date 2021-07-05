@@ -25,7 +25,7 @@
                 <div class="fade-in">
                     <div class="card">
                         <div class="card-header">
-                                    <span><i class="fa fa-list-alt mr-1"></i>Danh sách đơn hàng đã hủy</span>
+                            <span><i class="fa fa-list-alt mr-1"></i>Danh sách đơn hàng đã hủy</span>
                         </div>
                         <div class="card-body">
                             <div id="DataTables_Table_0_wrapper"
@@ -68,15 +68,21 @@
                                                         class="col-md-3" th:text="${order.id}"></b>
                                                 </td>
                                                 <td class="text-left col-md-3 col3">
-                                                    <small><b>Khách hàng tên: </b><span th:text="${order.nameOfClient}"></span></small><br/>
-                                                    <small>Địa chỉ: <span th:text="${order.address}"></span></small></br>
-                                                    <small>Số điện thoại:<span th:text="${order.phoneNumberOfClient}"></span> </small></br>
+                                                    <small><b>Khách hàng tên: </b><span
+                                                            th:text="${order.nameOfClient}"></span></small><br/>
+                                                    <small>Địa chỉ: <span
+                                                            th:text="${order.address}"></span></small></br>
+                                                    <small>Số điện thoại:<span
+                                                            th:text="${order.phoneNumberOfClient}"></span> </small></br>
                                                 </td>
-                                                <td class="text-center align-middle col-md-3 col2" th:text="${order.createdDate}"></td>
-                                                <td class="text-center align-middle col-md-3 col2 product-price" th:text="${order.totalPrice}">
+                                                <td class="text-center align-middle col-md-3 col2"
+                                                    th:text="${order.createdDate}"></td>
+                                                <td class="text-center align-middle col-md-3 col2 product-price"
+                                                    th:text="${order.totalPrice}">
                                                 </td>
                                                 <td class="col-md-1 col2 text-center text-wrapper align-middle">
-                                                    <a class="btn btn-success" th:href="@{'order-detail?id='+${order.id}}">Xem chi tiết</a>
+                                                    <a class="btn btn-success"
+                                                       th:href="@{'order-detail?id='+${order.id}}">Xem chi tiết</a>
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -84,26 +90,7 @@
                                     </div>
                                 </div>
                                 <!-- paging -->
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12">
-                                        <div class="clearfix">
-                                            <ul class="pagination float-right">
-                                                <li class="page-item"><a href="#" class="page-link">Previous</a>
-                                                </li>
-                                                <li class="page-item"><a href="#" class="page-link">1</a></li>
-                                                <li class="page-item"><a href="#" class="page-link">2</a></li>
-                                                <li class="page-item"><a href="#" class="page-link">3</a></li>
-                                                <li class="page-item active"><a href="#" class="page-link">4</a>
-                                                </li>
-                                                <li class="page-item"><a href="#" class="page-link">5</a></li>
-                                                <li class="page-item"><a href="#" class="page-link">6</a></li>
-                                                <li class="page-item"><a href="#" class="page-link">7</a></li>
-                                                <li class="page-item"><a href="#" class="page-link">Next</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+                                <!-- end pagination -->
                             </div>
                         </div>
                     </div>
