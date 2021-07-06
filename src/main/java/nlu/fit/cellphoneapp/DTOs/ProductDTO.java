@@ -2,12 +2,17 @@ package nlu.fit.cellphoneapp.DTOs;
 
 import nlu.fit.cellphoneapp.converters.ImageAddressConventer;
 import nlu.fit.cellphoneapp.entities.Product;
+import org.springframework.web.multipart.MultipartFile;
 
 public class ProductDTO {
     private String id;
     private String name;
     private double price;
-    private String img;
+    private MultipartFile img;
+    private MultipartFile img01;
+    private MultipartFile img02;
+    private MultipartFile img03;
+    private MultipartFile img04;
     private int brandID;
     private int ramID;
     private int romID;
@@ -17,6 +22,46 @@ public class ProductDTO {
     private String mainCamera;
     private String longDescription;
     private int active;
+
+    public MultipartFile getImg01() {
+        return img01;
+    }
+
+    public void setImg01(MultipartFile img01) {
+        this.img01 = img01;
+    }
+
+    public MultipartFile getImg02() {
+        return img02;
+    }
+
+    public void setImg02(MultipartFile img02) {
+        this.img02 = img02;
+    }
+
+    public MultipartFile getImg03() {
+        return img03;
+    }
+
+    public void setImg03(MultipartFile img03) {
+        this.img03 = img03;
+    }
+
+    public MultipartFile getImg04() {
+        return img04;
+    }
+
+    public void setImg04(MultipartFile img04) {
+        this.img04 = img04;
+    }
+
+    public MultipartFile getImg() {
+        return img;
+    }
+
+    public void setImg(MultipartFile img) {
+        this.img = img;
+    }
 
     public int getActive() {
         return active;
@@ -48,14 +93,6 @@ public class ProductDTO {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
     }
 
     public int getBrandID() {

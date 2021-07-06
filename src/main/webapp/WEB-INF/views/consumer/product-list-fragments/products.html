@@ -10,7 +10,22 @@
                             <div class="type-lb">
                                 <p class="sale">Sale</p>
                             </div>
-                            <img th:src="${product.img.host+product.img.relativePath}" class="img-fluid" alt="Image">
+                            <th:block th:if="${product.img.relativePath !=null}">
+                                <div>
+                                    <img th:each="imageURL : ${#strings.arraySplit(product.img.relativePath, '')}"
+                                         class="img-fluid" alt="Image" style="height: 255px!important; width: 255px!important;"
+                                         th:if="${!imageURL[0].equals('i')}"
+                                         th:src="*{'data:image/jpeg;base64,'+product.img.relativePath}">
+                                </div>
+                            </th:block>
+                            <th:block th:if="${product.img.relativePath !=null}">
+                                <div th:each="imageURL : ${#strings.arraySplit(product.img.relativePath, '')}">
+                                    <img
+                                          th:if="${imageURL[0].equals('i')}" th:src="${product.img.host+product.img.relativePath}" class="img-fluid"
+                                         alt="Image">
+                                </div>
+                            </th:block>
+
                             <div class="mask-icon">
                                 <ul>
                                     <li><a th:href="@{'/product/detail/'+${product.id}}" data-toggle="tooltip"

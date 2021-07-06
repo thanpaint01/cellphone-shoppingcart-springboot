@@ -28,7 +28,7 @@
                         <div class="card-header">
                             <span><i class="fas fa-list-ul mr-1"></i>Danh sách thương hiệu (1/1)</span>
                             <button type="button" class="btn btn-success float-right" data-toggle="modal"
-                                    data-target="#exampleModalLong">
+                                    data-target="#exampleModalCenter">
                                 <i class="fas fa-plus"></i>
                                 Thêm mới thương hiệu
                             </button>
@@ -38,17 +38,17 @@
                                  class="dataTables_wrapper dt-bootstrap4 no-footer">
                                 <div class="row mb-4">
                                     <div class="fomr-group form-inline col-sm-12 col-md-6">
-                                        <div class="dataTables_length" id="DataTables_Table_0_length">
-                                            <label>Show
-                                                <select name="DataTables_Table_0_length"
-                                                        aria-controls="DataTables_Table_0"
-                                                        class="custom-select custom-select-sm form-control form-control-sm">
-                                                    <option value="10">10</option>
-                                                    <option value="25">25</option>
-                                                    <option value="50">50</option>
-                                                    <option value="100">100</option>
-                                                </select> entries</label>
-                                        </div>
+                                        <!--                                        <div class="dataTables_length" id="DataTables_Table_0_length">-->
+                                        <!--                                            <label>Show-->
+                                        <!--                                                <select name="DataTables_Table_0_length"-->
+                                        <!--                                                        aria-controls="DataTables_Table_0"-->
+                                        <!--                                                        class="custom-select custom-select-sm form-control form-control-sm">-->
+                                        <!--                                                    <option value="10">10</option>-->
+                                        <!--                                                    <option value="25">25</option>-->
+                                        <!--                                                    <option value="50">50</option>-->
+                                        <!--                                                    <option value="100">100</option>-->
+                                        <!--                                                </select> entries</label>-->
+                                        <!--                                        </div>-->
                                     </div>
                                     <div class="col-sm-12 col-md-6">
                                         <div class="input-group">
@@ -82,21 +82,29 @@
                                                         class="col-md-3" th:text="${brand.id}"></b>
                                                 </td>
                                                 <td class="text-center align-middle col-md-3 col2">
-                                                    <img th:src="'https://st5group08.000webhostapp.com/'+${brand.logo}"/>
+                                                    <img th:each="imageURL : ${#strings.arraySplit(brand.logo, '')}"
+                                                         th:if="${imageURL[0].equals('i')}"
+                                                         th:src="'https://st5group08.000webhostapp.com/'+${brand.logo}"/>
+                                                    <img th:each="imageURL : ${#strings.arraySplit(brand.logo, '')}"
+                                                         th:if="${!imageURL[0].equals('i')}"
+                                                         th:src="*{'data:image/jpeg;base64,'+brand.logo}"/>
                                                 </td>
-                                                <td class="text-center align-middle col-md-3 col2" th:text="${brand.name}">
+                                                <td class="text-center align-middle col-md-3 col2"
+                                                    th:text="${brand.name}">
 
                                                 </td>
                                                 <td
                                                         class="col-md-1 col1 text-center text-wrapper align-middle">
-                                                    <span th:classappend="${brand.active == 1 ? 'badge badge-success' :'badge badge-danger'}" th:text="${brand.active == 1? 'Active' : 'Inactive'}"></span>
+                                                    <span th:classappend="${brand.active == 1 ? 'badge badge-success' :'badge badge-danger'}"
+                                                          th:text="${brand.active == 1? 'Active' : 'Inactive'}"></span>
                                                 </td>
                                                 <td class="col-md-1 col2 text-center text-wrapper align-middle">
                                                     <a class="btn btn-success text-light"
                                                        data-toggle="modal" data-target="#exampleModalLong">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
-                                                    <a class="btn btn-danger text-light btnRemoveBrand" th:value="${brand.id}" data-toggle="modal"
+                                                    <a class="btn btn-danger text-light btnRemoveBrand"
+                                                       th:value="${brand.id}" data-toggle="modal"
                                                        data-target="#exampleModalConfirmDelete">
                                                         <i class="fas fa-trash"></i>
                                                     </a>
@@ -113,6 +121,63 @@
                     </div>
                 </div>
             </div>
+
+            <!-- modal add new brand -->
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Thông tin thương hiệu</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- start form product info-->
+                            <form th:action="@{brands/new}" th:object="${brandDTO}" method="post"
+                                  enctype="multipart/form-data">
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <div class="input-group form-group mb-1">
+                                            <div class="input-group-prepend">
+                                                <input type="file" th:field="${brandDTO.logo}" class="input-group"
+                                                       id="btnUploadImage">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="inputBrandName">Tên thương hiệu</label>
+                                        <input type="text" th:field="${brandDTO.name}" class="form-control"
+                                               id="inputBrandName"
+                                               placeholder="Nhập tên thương hiệu">
+                                        <p style="color: red;" th:if="${#fields.hasErrors('name')}"
+                                           th:class="${#fields.hasErrors('name')}? error" th:errors="*{name}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Active</label>
+                                    <select class="form-control" th:field="${brandDTO.active}">
+                                        <option th:value="1">Active</option>
+                                        <option th:value="0">Disable</option>
+                                    </select>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+                                    <button type="submit" class="btn btn-success">Lưu thay đổi</button>
+                                </div>
+                            </form>
+                            <!-- end form product info -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- end div modal product info-->
         </div>
     </main>
 </main>

@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 import nlu.fit.cellphoneapp.converters.ImageAddress;
 import nlu.fit.cellphoneapp.converters.ImageAddressConventer;
+import nlu.fit.cellphoneapp.others.Link;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.context.annotation.Lazy;
@@ -80,8 +81,4 @@ public class Product {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
     private Set<Review> reviews;
 
-    public ImageAddress getImg(){
-        if(!img.getRelativePath().split("")[0].equals('i')) return new ImageAddress("", img.getRelativePath());
-        return this.img;
-    }
 }

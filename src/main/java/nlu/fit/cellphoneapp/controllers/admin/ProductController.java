@@ -22,8 +22,12 @@ import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
+import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
+
 import javax.servlet.ServletContext;
 import java.io.File;
+import java.io.IOException;
+import java.util.Base64;
 
 @Controller("adminProductController")
 @RequestMapping("/admin/products-manage")
@@ -97,24 +101,21 @@ public class ProductController implements ServletContextAware {
     }
 
     @PostMapping("new")
-    public String createNewProduct(ProductDTO product){
-        System.out.println("Product Image Upload File = "+product.getImg());
+    public String createNewProduct(ProductDTO product) throws IOException {
         //convert to entities
         Product productEntity = product.toProductEntity();
         ImageAddress imgAddress = new ImageAddressConventer().convertToEntityAttribute("img/sanpham/samsung/note10/1.jpg");
-        productEntity.setImg(new ImageAddress(Link.HOST, "1.jpg"));
+        productEntity.setImg(new ImageAddress(Link.HOST, Base64.getEncoder().encodeToString(product.getImg().getBytes())));;
         productEntity.setBrand(brandService.findOneById(product.getBrandID()));
         productEntity.setRam(ramService.findOneById(product.getRamID()));
         productEntity.setRom(romService.findOneById(product.getRomID()));
         productEntity.setPin(pinService.findOneById(product.getPinID()));
-        productEntity.setImg01(new ImageAddress(Link.HOST, "1.jpg"));
-        productEntity.setImg02(new ImageAddress(Link.HOST, "1.jpg"));
-        productEntity.setImg03(new ImageAddress(Link.HOST, "1.jpg"));
-        productEntity.setImg04(new ImageAddress(Link.HOST, "1.jpg"));
+        productEntity.setImg01(new ImageAddress(Link.HOST, product.getImg01()!=null?Base64.getEncoder().encodeToString(product.getImg01().getBytes()):""));
+        productEntity.setImg02(new ImageAddress(Link.HOST, product.getImg02()!=null?Base64.getEncoder().encodeToString(product.getImg02().getBytes()):""));
+        productEntity.setImg03(new ImageAddress(Link.HOST, product.getImg03()!=null?Base64.getEncoder().encodeToString(product.getImg03().getBytes()):""));
+        productEntity.setImg04(new ImageAddress(Link.HOST, product.getImg04()!=null?Base64.getEncoder().encodeToString(product.getImg04().getBytes()):""));
+
         productEntity.setLongDescription(product.getLongDescription());
-
-        System.out.println(productEntity.getImg().getHost()+productEntity.getImg().getRelativePath());
-
         if(null == productService.insertIntoTable(productEntity)) return "error";
         return "redirect:/admin/products-manage";
     }

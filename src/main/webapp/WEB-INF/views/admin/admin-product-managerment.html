@@ -85,8 +85,8 @@
                                     <div th:if="${product.img.relativePath != null}">
                                     <div th:each="imageURL : ${#strings.arraySplit(product.img.relativePath, '')}">
                                         <img class="image" height="130" width="140"
-                                             th:if="${imageURL[0].equals('b')}"
-                                             th:src="${product.img.relativePath}">
+                                             th:if="${!imageURL[0].equals('i')}"
+                                             th:src="*{'data:image/jpeg;base64,'+product.img.relativePath}">
                                     </div>
                                 </div>
                                     <div th:if="${product.img.relativePath != null}">
@@ -156,18 +156,18 @@
                 </div>
                 <div class="modal-body">
                     <!-- start form product info-->
-                    <form th:action="@{/admin/products-manage/new}" th:method="POST" th:object="${productInfo}">
+                    <form th:action="@{/admin/products-manage/new}" th:method="POST" th:object="${productInfo}" enctype="multipart/form-data">
                         <!--                    <form th:object="${productInfo}">-->
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <div class="input-group mb-1">
-                                    <div class="input-group-prepend">
-                                        <input type="file" class="input-group" style="width: 85px"
-                                               id="btnUploadImage"/></span>
+                                <div class="input-group mb-1 d-flex row-img">
+                                    <div class="input-group-prepend float-left col-md-10">
+                                        <input type="file" class="input-group"
+                                               id="btnUploadImage" th:field="*{img}"/></span>
                                     </div>
-                                    <a type="input" target="_blank" rel="noopener noreferrer" id="fileImgNewProduct"
-                                       class="form-control" placeholder="Đường dẫn liên kết" th:field="*{img}"></a>
-                                    <a type="button" class="btn btn-outline-success text-dark"><i class="fa fa-plus"></i> Thêm ảnh</a>
+<!--                                    <a type="input" target="_blank" rel="noopener noreferrer" id="fileImgNewProduct"-->
+<!--                                       class="form-control" placeholder="Đường dẫn liên kết" th:field="*{img}"></a>-->
+                                    <a type="button" id="btnAddMultipleImage" class="btn btn-outline-success text-light float-right"><i class="fa fa-plus"></i> Thêm ảnh</a>
                                 </div>
                             </div>
                         </div>
@@ -294,6 +294,20 @@
         $('input[type=file]').change(function () {
             console.log(this.files[0].mozFullPath);
         });
+        let i = 0;
+        $('#btnAddMultipleImage').click(function () {
+            i+=1;
+            if(i<=4) {
+                $('.row-img').append(
+                    `<div class="input-group-prepend mb-1 float-left col-md-10">
+                     <input type="file" class="input-group"
+                             name="img0${i}"/></span>
+                 </div>`
+                )
+            }else{
+                alert("Đã đủ ảnh!")
+            }
+        })
     </script>
 </th:block>
 
