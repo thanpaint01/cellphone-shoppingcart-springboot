@@ -1,6 +1,7 @@
 package nlu.fit.cellphoneapp.controllers.admin;
 
 import nlu.fit.cellphoneapp.DTOs.BrandDTO;
+import nlu.fit.cellphoneapp.DTOs.TagAttrDTO;
 import nlu.fit.cellphoneapp.entities.Brand;
 import nlu.fit.cellphoneapp.entities.Pin;
 import nlu.fit.cellphoneapp.entities.Ram;
@@ -131,6 +132,69 @@ public class TagsController {
         return "redirect:/admin/tags-manage/brands";
     }
 
+    //add a new rams, roms, pins
+    @PostMapping("tags/new")//pending
+    @ResponseBody
+    public String createNewTags(@RequestBody TagAttrDTO tagDTO){
+        switch (tagDTO.getName()) {
+            case "rams":
+                ramService.save(new Ram().updateInfo(tagDTO));//saved into db
+                break;
+            case "roms":
+                romService.save(new Rom().updateInfo(tagDTO));//saved into db
+                break;
+            case "pins":
+                pinService.save(new Pin().updateInfo(tagDTO));///saved into db
+                break;
+        }
+        return "success";
+    }
+
+    //edit a brand
+    @PutMapping("brands/{id}")//okay
+    @ResponseBody
+    public String editBrands(@PathVariable int id, BrandDTO brandEdited) throws IOException {
+        Brand brand;
+        if (null == (brand = brandService.findOneById(id))) return "fail";//fail to put id brands
+        Brand brandAfterEdit = brandEdited.toBrandEntity();
+        brandAfterEdit.setLogo(Base64.getEncoder().encodeToString(brandEdited.getLogo().getBytes()));
+        brandAfterEdit.setId(brand.getId());
+        ///saved into db
+        brandService.save(brandAfterEdit);
+        return "success";
+    }
+
+    //edit a ram,rom,pin
+    @PutMapping("{name}/{id}")//okay
+    @ResponseBody
+    public String editTags(@PathVariable String name, @PathVariable int id, @RequestBody TagAttrDTO tagDTO) {
+        switch (name) {
+            case "rams":
+                Ram ram = ramService.findOneById(id);
+                if (!isExisted(ram)) return "fail";
+                Ram ramAfterEdited = ram.updateInfo(tagDTO);
+                ramService.updateRam(id, ramAfterEdited);//saved into db
+                break;
+            case "roms":
+                Rom rom = romService.findOneById(id);
+                if (!isExisted(rom)) return "fail";
+                Rom romAfterEdited = rom.updateInfo(tagDTO);
+                romService.updateRom(id, romAfterEdited);//saved into db
+                break;
+            case "pins":
+                Pin pin = pinService.findOneById(id);
+                if (!isExisted(pin)) return "fail";
+                Pin pinAfterEdited = pin.updateInfo(tagDTO);
+                pinService.updatePin(id, pinAfterEdited);//saved into db
+                break;
+        }
+        return "success";
+    }
+
+    private boolean isExisted(Object obj) {
+        if (obj != null) return true;
+        return false;
+    }
 
 
 }

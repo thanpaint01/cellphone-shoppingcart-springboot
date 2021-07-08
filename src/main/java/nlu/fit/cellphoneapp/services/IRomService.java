@@ -9,4 +9,5 @@ public interface IRomService {
     Rom findOneById(int id);
     List<Rom> findAll();
     Rom save (Rom rom);
+    Rom updateRom(int id, Rom rom);
 }

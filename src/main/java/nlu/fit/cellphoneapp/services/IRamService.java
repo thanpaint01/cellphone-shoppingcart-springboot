@@ -7,4 +7,5 @@ public interface IRamService {
     Ram findOneById(int id);
     List<Ram> findAll();
     Ram save(Ram ram);
+    Ram updateRam(int id, Ram ram);
 }

@@ -2,6 +2,7 @@ package nlu.fit.cellphoneapp.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import nlu.fit.cellphoneapp.DTOs.TagAttrDTO;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,4 +24,11 @@ public class Ram {
     private List<Product> products = new ArrayList<>();
 
 
+    public Ram updateInfo(TagAttrDTO tagDTO) {
+        Ram ram = new Ram();
+        ram.id = tagDTO.getId();
+        ram.capacity = tagDTO.getCapacity();
+        ram.active = tagDTO.getActive();
+        return ram;
+    }
 }

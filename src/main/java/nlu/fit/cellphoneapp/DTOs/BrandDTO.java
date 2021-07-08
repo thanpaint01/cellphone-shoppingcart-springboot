@@ -1,12 +1,9 @@
 package nlu.fit.cellphoneapp.DTOs;
 
-import com.sun.org.apache.xml.internal.security.utils.Base64;
 import nlu.fit.cellphoneapp.entities.Brand;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.validation.constraints.NotBlank;
-import java.io.IOException;
 
 @Validated
 public class BrandDTO {
@@ -53,12 +50,11 @@ public class BrandDTO {
         return "BrandDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", logo=" + logo +
                 ", active=" + active +
                 '}';
     }
 
-    public Brand toBrandEntity() throws IOException {
+    public Brand toBrandEntity() {
         Brand brand = new Brand();
         brand.setName(name);
         brand.setActive(active);

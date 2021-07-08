@@ -38,17 +38,6 @@
                                  class="dataTables_wrapper dt-bootstrap4 no-footer">
                                 <div class="row mb-4">
                                     <div class="fomr-group form-inline col-sm-12 col-md-6">
-                                        <!--                                        <div class="dataTables_length" id="DataTables_Table_0_length">-->
-                                        <!--                                            <label>Show-->
-                                        <!--                                                <select name="DataTables_Table_0_length"-->
-                                        <!--                                                        aria-controls="DataTables_Table_0"-->
-                                        <!--                                                        class="custom-select custom-select-sm form-control form-control-sm">-->
-                                        <!--                                                    <option value="10">10</option>-->
-                                        <!--                                                    <option value="25">25</option>-->
-                                        <!--                                                    <option value="50">50</option>-->
-                                        <!--                                                    <option value="100">100</option>-->
-                                        <!--                                                </select> entries</label>-->
-                                        <!--                                        </div>-->
                                     </div>
                                     <div class="col-sm-12 col-md-6">
                                         <div class="input-group">
@@ -100,7 +89,7 @@
                                                 </td>
                                                 <td class="col-md-1 col2 text-center text-wrapper align-middle">
                                                     <a class="btn btn-success text-light"
-                                                       data-toggle="modal" data-target="#exampleModalLong">
+                                                       data-toggle="modal" th:data-target="${'#exampleModalLong'+brand.id}">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                     <a class="btn btn-danger text-light btnRemoveBrand"
@@ -178,10 +167,76 @@
                 </div>
             </div>
             <!-- end div modal product info-->
+            <!-- modal edit info tags-->
+            <th:block th:each="brand:${brands}">
+            <div  class="modal fade" th:id="${'exampleModalLong'+brand.id}" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Thông tin thương hiệu</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- start form product info-->
+                            <form enctype="multipart/form-data">
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <div class="input-group form-group mb-1">
+                                            <div class="input-group mb-2">
+                                                <input type="file" th:onchange="@{'previewFile('+${brand.id}+')'}" class="input-group" th:id="${'imgUploadEdit'+brand.id}">
+                                                <small class="error error-img-tags" ></small>
+                                            </div>
+                                            <span class="float-left">Ảnh Thương Hiệu</span>
+                                            <div class="input-group form-group justify-content-center">
+                                                <img class="border" th:each="imageURL : ${#strings.arraySplit(brand.logo, '')}"
+                                                     th:if="${imageURL[0].equals('i')}"
+                                                     th:src="'https://st5group08.000webhostapp.com/'+${brand.logo}"/>
+                                                <img th:id="${'img'+brand.id}" class="border" th:each="imageURL : ${#strings.arraySplit(brand.logo, '')}"
+                                                     th:if="${!imageURL[0].equals('i')}" width="115px" height="45px"
+                                                     th:src="*{'data:image/jpeg;base64,'+brand.logo}"/>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label>Tên thương hiệu</label>
+                                        <input type="text" class="form-control" th:value="${brand.name}"
+                                               th:id="${'inputBrandNameEdit'+brand.id}"
+                                               placeholder="Nhập tên thương hiệu">
+                                        <small class="error error-name-tags" ></small>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Active</label>
+                                    <select class="form-control" th:id="${'activeBrandEdit'+brand.id}">
+                                        <option th:selected="${brand.active == 1 ? true : false}" value="1">Active</option>
+                                        <option th:selected="${brand.active != 1 ? true : false}" value="0">Inactive</option>
+                                    </select>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+                                    <button type="button" class="btn btn-success btnUpdateInfoTag" th:value="${brand.id}">Lưu thay đổi</button>
+                                </div>
+                            </form>
+                            <!-- end form product info -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- end modal edit info tags-->
+            </th:block>
         </div>
     </main>
 </main>
 <th:block layout:fragment="scripts">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script th:src="@{/js/my-js/admin-tags-management.js}"></script>
     <script th:src="@{/js/my-js/toast-setup.js}"></script>
 </th:block>

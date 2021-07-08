@@ -1,6 +1,7 @@
 package nlu.fit.cellphoneapp.services.impl;
 
 import nlu.fit.cellphoneapp.entities.Pin;
+import nlu.fit.cellphoneapp.entities.Ram;
 import nlu.fit.cellphoneapp.repositories.interfaces.IPinRepository;
 import nlu.fit.cellphoneapp.services.IPinService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,13 @@ public class PinServiceImpl implements IPinService {
     @Override
     public Pin save(Pin pin) {
         return pinRepo.save(pin);
+    }
+
+    @Override
+    public Pin updatePin(int id, Pin pin) {
+        Pin current = pinRepo.getOne(id);
+        current.setActive(pin.getActive());
+        current.setCapacity(pin.getCapacity());
+        return pinRepo.save(current);
     }
 }

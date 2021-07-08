@@ -30,7 +30,7 @@
                             <button type="button" class="btn btn-success float-right" data-toggle="modal"
                                     data-target="#exampleModalLong">
                                 <i class="fas fa-plus"></i>
-                                Thêm mới ram
+                                Thêm mới rom
                             </button>
                         </div>
                         <div class="card-body">
@@ -42,7 +42,7 @@
                                     <div class="col-sm-12 col-md-6">
                                         <div class="input-group">
                                             <input class="form-control" type="text"
-                                                   placeholder="Nhập thông tin ram (mã, dung lượng,...)"
+                                                   placeholder="Nhập thông tin rom (mã, dung lượng,...)"
                                                    aria-label="Search" aria-describedby="basic-addon2">
                                             <div class="input-group-append">
                                                 <button class="btn btn-success" type="button"><i
@@ -76,7 +76,7 @@
                                                 </td>
                                                 <td class="col-md-1 col2 text-center text-wrapper align-middle">
                                                     <a class="btn btn-success text-light"
-                                                       data-toggle="modal" data-target="#exampleModalLong">
+                                                       data-toggle="modal" th:data-target="${'#exampleModalLong'+rom.id}">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                     <a class="btn btn-danger text-light btnRemoveRoms" th:value="${rom.id}" data-toggle="modal"
@@ -96,6 +96,90 @@
                 </div>
             </div>
         </div>
+        <!-- Modal add new rom -->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Thông tin rom</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- start form product info-->
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>Dung lượng rom</label>
+                                    <input type="text" class="form-control" id="inputCapacity"
+                                           placeholder="Nhập dung lượng rom (2 GB)">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Active</label>
+                                <select class="form-control" id="inputActive">
+                                    <option value="1">Active</option>
+                                    <option value="-1">Inactive</option>
+                                </select>
+                            </div>
+                        </form>
+                        <!-- end form product info -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-success btnAddTagsSubmit">Lưu thay đổi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </th:block>
+        <!-- end div modal product info-->
+        <!-- Modal -->
+        <th:block th:each="rom:${roms}">
+            <div class="modal fade" th:id="${'exampleModalLong'+rom.id}" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Thông tin rom</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- start form product info-->
+                            <form>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label>Dung lượng rom</label>
+                                        <input type="text" class="form-control" th:id="${'inputCapacity'+rom.id}"
+                                               th:value="${rom.capacity}" placeholder="Nhập dung lượng rom (2 GB)">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Active</label>
+                                    <select th:id="${'inputActive'+rom.id}" class="form-control">
+                                        <option th:selected="${rom.active == 1?true:false}" value="1">Active</option>
+                                        <option th:selected="${rom.active != 1?true:false}" value="-1">Inactive</option>
+                                    </select>
+                                </div>
+                            </form>
+                            <!-- end form product info -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+                            <button type="button" class="btn btn-success btnTagsEdit" th:value="${'roms-'+rom.id}">Lưu
+                                thay đổi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+        <!-- end div modal product info-->
     </main>
 </main>
 <th:block layout:fragment="scripts">
