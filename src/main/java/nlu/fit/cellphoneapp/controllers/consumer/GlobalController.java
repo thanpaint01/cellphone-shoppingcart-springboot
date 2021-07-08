@@ -28,6 +28,32 @@ import java.util.Map;
 
 @ControllerAdvice(basePackages = "nlu.fit.cellphoneapp.controllers")
 public class GlobalController extends ResponseEntityExceptionHandler {
+    @Autowired
+    IBrandService brandService;
+    @Autowired
+    IPinService pinService;
+    @Autowired
+    IRomService romService;
+    @Autowired
+    IRamService ramService;
+    @ModelAttribute("allBrands")
+    public List<Brand> allBrands() {
+        return brandService.findAllByActive(1);
+    }
+    @ModelAttribute("allRams")
+    public List<Ram> allRams() {
+        return ramService.findAllByActive(1);
+    }
+
+    @ModelAttribute("allRoms")
+    public List<Rom> allRoms() {
+        return romService.findAllByActive(1);
+    }
+
+    @ModelAttribute("allPins")
+    public List<Pin> allPins() {
+        return pinService.findAllByActive(1);
+    }
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseBody
     protected ResponseEntity<Object> handleConstraint(ConstraintViolationException e,
