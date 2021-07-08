@@ -65,3 +65,29 @@ function showWarning(title, message) {
         duration: 5000
     })
 }
+function showSuccessMessage(title, message) {
+    toast({
+        type: "success",
+        title: title,
+        message: message,
+        duration: 5000
+    })
+}
+
+function showErrorMessage(title, message) {
+    toast({
+        type: "error",
+        title: title,
+        message: message,
+        duration: 5000
+    })
+}
+
+function showWarningMessage(title, message) {
+    toast({
+        type: "warning",
+        title: title,
+        message: message,
+        duration: 5000
+    })
+}

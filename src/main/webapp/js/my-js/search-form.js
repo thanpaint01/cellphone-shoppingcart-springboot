@@ -95,7 +95,7 @@ $("#search").on("click", function (e) {
       hasOneSortValue(sortType, sortOrder) &&
       !hasSortValue(sortType, sortOrder)
     ) {
-      //TOAST
+      showWarningMessage("Chọn sắp xếp","Bạn hãy chọn cả hai option sắp xếp để có thể sắp xếp");
     } else {
       if (isPositiveInteger(brand)) params.append("brand", brand);
       if (isPositiveInteger(pin)) params.append("pin", pin);
@@ -111,6 +111,6 @@ $("#search").on("click", function (e) {
       location.search = params.toString();
     }
   } else {
-    //TOAST
+    showWarningMessage("Không có tiêu chí","Bạn chưa chọn một tiêu chí để tìm sản phẩm");
   }
 });
