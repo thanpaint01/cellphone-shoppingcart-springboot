@@ -63,4 +63,14 @@ public class ReviewServiceImpl implements IReviewService {
     public Review findOneBySpec(Specification spec) {
         return (Review) repo.findOne(spec).orElse(null);
     }
+
+    @Override
+    public Page<Review> findAllByPage(Pageable pageable) {
+        return repo.findAll(pageable);
+    }
+
+    @Override
+    public Review getOneById(int id) {
+        return repo.findById(id).get();
+    }
 }

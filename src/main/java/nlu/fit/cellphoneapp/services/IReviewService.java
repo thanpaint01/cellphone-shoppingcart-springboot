@@ -13,6 +13,8 @@ public interface IReviewService {
 
     Page<Review> findAllBySpec(Specification spec, Pageable pageable);
 
+    Page<Review> findAllByPage(Pageable pageable);
+
     List<Review> findAllBySpec(Specification spec);
 
     Specification<Review> getByActiveUser(int userId);
@@ -22,5 +24,7 @@ public interface IReviewService {
     Specification<Review> getOneByActiveId(int reviewId);
 
     Review findOneBySpec(Specification spec);
+
+    Review getOneById(int id);
 
 }

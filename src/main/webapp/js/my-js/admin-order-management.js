@@ -4,7 +4,7 @@ $('.btnAccept').click(function () {
 
     $.ajax({
         type: 'PUT',
-        data: {id: id},
+        data: {id: id, action: "accept"},
         url: "/admin/orders-manage/pending/"+id,
         success: function (rs) {
             if (rs === "error") showErrorMessage("Lỗi", "Hệ thống đang gặp sự cố. Thử lại sau!");

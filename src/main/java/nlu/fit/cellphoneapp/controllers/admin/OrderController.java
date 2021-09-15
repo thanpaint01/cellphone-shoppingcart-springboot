@@ -45,7 +45,7 @@ public class OrderController {
     }
     @PutMapping("pending/{id}")
     @ResponseBody
-    public String acceptOrder(@PathVariable("id") int id, @RequestHeader(required = false) String action){
+    public String acceptOrder(@PathVariable("id") int id, @RequestHeader(required = false, defaultValue = "null") String action){
         Order order = orderService.getOne(id);
         if(null == order) return "error";
         order.setOrderStatus("Đang giao hàng");
