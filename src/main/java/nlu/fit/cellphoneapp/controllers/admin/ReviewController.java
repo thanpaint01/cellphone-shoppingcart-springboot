@@ -42,7 +42,7 @@ public class ReviewController {
             review.setActive(0);
         }else {
             System.out.println("hiện đánh giá");
-            review.setActive(0);
+            review.setActive(1);
         }
         reviewService.save(review);
         return "success";
